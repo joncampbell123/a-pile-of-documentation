@@ -13,8 +13,35 @@ class Table:
     base_json = None
     description = None
     notes = [ ]
+    table = { }
     columns = [ ]
+    sources = [ ]
+    key_column = None
     table_format_type = None
+    def filter_key_value_by_type(self,key):
+        if not self.key_column == None:
+            type = self.key_column.get("type")
+            if type == "uint8_t" or type == "uint16_t" or type == "uint32_t" or type == "uint":
+                return int(key,0)
+        #
+        return key
+    def add_info(self,json):
+        source_idx = None
+        if "source" in json:
+            source_idx = len(self.sources)
+            self.sources.append(json["source"])
+        if "table" in json:
+            s_table = json["table"]
+            if isinstance(s_table, dict):
+                keys = s_table.keys()
+                for key in keys:
+                    if self.table_format_type == "key=value":
+                        table_key = self.filter_key_value_by_type(key)
+                        if not key in self.table:
+                            self.table[table_key] = [ ]
+                        if not source_idx == None:
+                            s_table[key]["source index"] = source_idx
+                        self.table[table_key].append(s_table[key])
     def __init__(self,json):
         self.base_json = json
         if "id" in json:
@@ -49,7 +76,8 @@ class Table:
             obj = json["table format"]
             self.table_format_type = obj.get("type")
             if self.table_format_type == "key=value":
-                self.columns = [ obj["key"], obj["value"] ] # will throw exception if these keys do not exist
+                self.key_column = obj["key"] # will throw exception if these keys do not exist
+                self.columns = [ obj["value"] ] # will throw exception if these keys do not exist
             else:
                 raise Exception("Table json unknown table format type "+str(self.table_format_type)+" in "+self.id)
 
@@ -70,5 +98,23 @@ def load_tables_base():
                     raise Exception("Table "+table.id+" already defined")
                 tables_by_id[table.id] = table
 
+def load_tables():
+    g = glob.glob("tables/**/*.json",recursive=True)
+    for path in g:
+        table_id = None
+        json = load_json(path)
+        if "base definition" in json:
+            if json["base definition"] == True:
+                continue
+        if "id" in json:
+            table_id = json["id"]
+        #
+        if table_id in tables_by_id:
+            table = tables_by_id[table_id]
+            table.add_info(json)
+        else:
+            raise Exception("Table json refers to undefined table id "+str(table_id)+" in json file "+path)
+
 load_tables_base()
+load_tables()
 
