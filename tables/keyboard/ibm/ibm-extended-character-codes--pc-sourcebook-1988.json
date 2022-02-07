@@ -42,6 +42,16 @@
 		"0x41": { "value": "Function key 7" },
 		"0x42": { "value": "Function key 8" },
 		"0x43": { "value": "Function key 9" },
-		"0x44": { "value": "Function key 10" }
+		"0x44": { "value": "Function key 10" },
+		"0x47": { "value": "Home" },
+		"0x48": { "value": "Up arrow" },
+		"0x49": { "value": "Page Up" },
+		"0x4B": { "value": "Left arrow" },
+		"0x4D": { "value": "Right arrow" },
+		"0x4F": { "value": "End" },
+		"0x50": { "value": "Down arrow" },
+		"0x51": { "value": "Page Down" },
+		"0x52": { "value": "Insert" },
+		"0x53": { "value": "Delete" }
 	}
 }
