@@ -1,0 +1,12 @@
+{
+	"interrupt": "MS-DOS system call interface",
+	"interrupt number": "0x21",
+	"id": "msdos-int21",
+	"combinable": true,
+	"description": "Primary system call interface into MS-DOS",
+	"base definition": true,
+	"function select": {
+		"by": "register",
+		"register": "ah"
+	}
+}
