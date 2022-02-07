@@ -122,6 +122,28 @@
 				"dos version >= 1.0"
 			],
 			"title": "Auxiliary output"
+		},
+		{
+			"match": {
+				"registers": {
+					"ah": "0x05"
+				}
+			},
+			"in": {
+				"registers": {
+					"dl": "8-bit char to print"
+				}
+			},
+			"out": {
+			},
+			"notes": [
+				"This function does not check status of printer port, buffer output, or return error codes",
+				"Obsolete function; in DOS 2.x or later use function 40H instead"
+			],
+			"requirements": [
+				"dos version >= 1.0"
+			],
+			"title": "Print character"
 		}
 	]
 }
