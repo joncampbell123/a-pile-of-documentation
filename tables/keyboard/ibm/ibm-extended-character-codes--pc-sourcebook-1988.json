@@ -98,6 +98,9 @@
 		"0x7E": { "value": "Alt + upper row 7" },
 		"0x7F": { "value": "Alt + upper row 8" },
 		"0x80": { "value": "Alt + upper row 9" },
-		"0x81": { "value": "Alt + upper row 0" }
+		"0x81": { "value": "Alt + upper row 0" },
+		"0x82": { "value": "Alt+hyphen" },
+		"0x83": { "value": "Alt+equals" },
+		"0x84": { "value": "Control+PgUp" }
 	}
 }
