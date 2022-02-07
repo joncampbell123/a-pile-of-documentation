@@ -32,6 +32,16 @@
 		"0x2F": { "value": "Alt+V" },
 		"0x30": { "value": "Alt+B" },
 		"0x31": { "value": "Alt+N" },
-		"0x32": { "value": "Alt+M" }
+		"0x32": { "value": "Alt+M" },
+		"0x3B": { "value": "Function key 1" },
+		"0x3C": { "value": "Function key 2" },
+		"0x3D": { "value": "Function key 3" },
+		"0x3E": { "value": "Function key 4" },
+		"0x3F": { "value": "Function key 5" },
+		"0x40": { "value": "Function key 6" },
+		"0x41": { "value": "Function key 7" },
+		"0x42": { "value": "Function key 8" },
+		"0x43": { "value": "Function key 9" },
+		"0x44": { "value": "Function key 10" }
 	}
 }
