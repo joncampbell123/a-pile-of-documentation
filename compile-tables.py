@@ -27,7 +27,21 @@ class Table:
             elif isinstance(json["notes"], list):
                 self.notes.extend(json["notes"])
             else:
-                raise Exception("Notes element is neither string nor array")
+                raise Exception("Notes element is neither string nor array in "+self.id)
+        #
+        ok = False
+        if "base definition" in json:
+            if json["base definition"] == True:
+                ok = True
+        if not ok == True:
+            raise Exception("Table json is not base definition in "+self.id)
+        #--NTS: We'll support non-combineable later
+        ok = False
+        if "combinable" in json:
+            if json["combinable"] == True:
+                ok = True
+        if not ok == True:
+            raise Exception("Table json is not combinable in "+self.id)
 
 def load_json(path):
     f = open(path,"r",encoding='utf-8')
