@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import os
 import glob
 import json
 
@@ -29,6 +30,7 @@ class Table:
         source_idx = None
         if "source" in json:
             source_idx = len(self.sources)
+            json["source"]["source index"] = source_idx
             self.sources.append(json["source"])
         if "table" in json:
             s_table = json["table"]
@@ -36,11 +38,12 @@ class Table:
                 keys = s_table.keys()
                 for key in keys:
                     if self.table_format_type == "key=value":
-                        table_key = self.filter_key_value_by_type(key)
+                        table_key = key.lower().strip()
                         if not table_key in self.table:
                             self.table[table_key] = [ ]
                         if not source_idx == None:
                             s_table[key]["source index"] = source_idx
+                        s_table[key]["key"] = self.filter_key_value_by_type(key)
                         self.table[table_key].append(s_table[key])
     def __init__(self,json):
         self.base_json = json
@@ -118,3 +121,29 @@ def load_tables():
 load_tables_base()
 load_tables()
 
+try:
+    os.mkdir("compiled",mode=0o755)
+except:
+    True
+
+final_json = { }
+final_json["tables"] = { }
+final_json["sources"] = [ ]
+for table_id in tables_by_id.keys():
+    table = tables_by_id[table_id]
+    for source in table.sources:
+        final_json["sources"].append(source)
+    final_json["tables"][table_id] = { }
+    final_json["tables"][table_id]["table"] = table.table
+    final_json["tables"][table_id]["sources"] = table.sources
+    final_json["tables"][table_id]["description"] = table.description
+    final_json["tables"][table_id]["notes"] = table.notes
+    final_json["tables"][table_id]["name"] = table.name
+    final_json["tables"][table_id]["columns"] = table.columns
+    final_json["tables"][table_id]["table format type"] = table.table_format_type
+    if not table.key_column == None:
+        final_json["tables"][table_id]["key column"] = table.key_column
+
+f = open("compiled/tables.json","w")
+json.dump(final_json,f)
+f.close()
