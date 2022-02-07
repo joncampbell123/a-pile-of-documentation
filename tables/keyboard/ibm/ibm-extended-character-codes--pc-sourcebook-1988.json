@@ -1,27 +1,21 @@
 {
-	"table": "IBM Extended Character Codes, BIOS Keyboard Interface",
 	"id": "ibm-extended-char-codes-bios-keyboard",
-	"combinable": true,
-	"description": "Extended character codes returned by the IBM BIOS in the keyboard buffer, through INT 16h, and at the MS-DOS console driver as 00h <code>",
 	"source": {
 		"book": "programmer-pc-sourcebook-ms-press-1988",
 		"subsection": "1.23"
 	},
-	"table format": {
-		"type": "key=value",
-		"key": {
-			"type": "uint8_t",
-			"title": "Character code",
-			"description": "Character code returned by the BIOS"
-		},
-		"value": {
-			"type": "string",
-			"title": "Key combination",
-			"description": "Key combination that generates the character code"
-		}
-	},
 	"table": {
 		"0x03": { "value": "Null character (none)" },
-		"0x0F": { "value": "Shift Tab" }
+		"0x0F": { "value": "Shift Tab" },
+		"0x10": { "value": "Alt+Q" },
+		"0x11": { "value": "Alt+W" },
+		"0x12": { "value": "Alt+E" },
+		"0x13": { "value": "Alt+R" },
+		"0x14": { "value": "Alt+T" },
+		"0x15": { "value": "Alt+Y" },
+		"0x16": { "value": "Alt+U" },
+		"0x17": { "value": "Alt+I" },
+		"0x18": { "value": "Alt+O" },
+		"0x19": { "value": "Alt+P" }
 	}
 }

@@ -1,0 +1,20 @@
+{
+	"table": "IBM Extended Character Codes, BIOS Keyboard Interface",
+	"id": "ibm-extended-char-codes-bios-keyboard",
+	"combinable": true,
+	"description": "Extended character codes returned by the IBM BIOS in the keyboard buffer, through INT 16h, and at the MS-DOS console driver as 00h <code>",
+	"base definition": true,
+	"table format": {
+		"type": "key=value",
+		"key": {
+			"type": "uint8_t",
+			"title": "Character code",
+			"description": "Character code returned by the BIOS"
+		},
+		"value": {
+			"type": "string",
+			"title": "Key combination",
+			"description": "Key combination that generates the character code"
+		}
+	}
+}
