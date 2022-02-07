@@ -62,6 +62,16 @@
 		"0x5A": { "value": "Shift+F7" },
 		"0x5B": { "value": "Shift+F8" },
 		"0x5C": { "value": "Shift+F9" },
-		"0x5D": { "value": "Shift+F10" }
+		"0x5D": { "value": "Shift+F10" },
+		"0x5E": { "value": "Control+F1" },
+		"0x5F": { "value": "Control+F2" },
+		"0x60": { "value": "Control+F3" },
+		"0x61": { "value": "Control+F4" },
+		"0x62": { "value": "Control+F5" },
+		"0x63": { "value": "Control+F6" },
+		"0x64": { "value": "Control+F7" },
+		"0x65": { "value": "Control+F8" },
+		"0x66": { "value": "Control+F9" },
+		"0x67": { "value": "Control+F10" }
 	}
 }
