@@ -72,6 +72,16 @@
 		"0x64": { "value": "Control+F7" },
 		"0x65": { "value": "Control+F8" },
 		"0x66": { "value": "Control+F9" },
-		"0x67": { "value": "Control+F10" }
+		"0x67": { "value": "Control+F10" },
+		"0x68": { "value": "Alt+F1" },
+		"0x69": { "value": "Alt+F2" },
+		"0x6A": { "value": "Alt+F3" },
+		"0x6B": { "value": "Alt+F4" },
+		"0x6C": { "value": "Alt+F5" },
+		"0x6D": { "value": "Alt+F6" },
+		"0x6E": { "value": "Alt+F7" },
+		"0x6F": { "value": "Alt+F8" },
+		"0x70": { "value": "Alt+F9" },
+		"0x71": { "value": "Alt+F10" }
 	}
 }
