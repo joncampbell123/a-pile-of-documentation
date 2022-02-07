@@ -16,6 +16,15 @@
 		"0x16": { "value": "Alt+U" },
 		"0x17": { "value": "Alt+I" },
 		"0x18": { "value": "Alt+O" },
-		"0x19": { "value": "Alt+P" }
+		"0x19": { "value": "Alt+P" },
+		"0x1E": { "value": "Alt+A" },
+		"0x1F": { "value": "Alt+S" },
+		"0x20": { "value": "Alt+D" },
+		"0x21": { "value": "Alt+F" },
+		"0x22": { "value": "Alt+G" },
+		"0x23": { "value": "Alt+H" },
+		"0x24": { "value": "Alt+J" },
+		"0x25": { "value": "Alt+K" },
+		"0x26": { "value": "Alt+L" }
 	}
 }
