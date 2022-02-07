@@ -1,15 +1,15 @@
 {
-        "title": "The Programmer's PC Sourcebook",
-        "author": "Thom Hogan",
-        "publisher": "Microsoft Press",
-        "copyright": {
-                "year": 1988,
-                "by": "Thom Hogan"
-        },
-        "isbn": {
-                "isbn-10": "1-55615-118-7",
-                "isbn-13": "9-781556-151187"
-        },
+	"title": "The Programmer's PC Sourcebook",
+	"author": "Thom Hogan",
+	"publisher": "Microsoft Press",
+	"copyright": {
+		"year": 1988,
+		"by": "Thom Hogan"
+	},
+	"isbn": {
+		"isbn-10": "1-55615-118-7",
+		"isbn-13": "9-781556-151187"
+	},
 	"parts": [
 		"Part 1": {
 			"title": "Miscellaneous Information",
@@ -19,7 +19,8 @@
 					"subsections": [
 						"1.23": {
 							"title": "IBM Extended Character Codes",
-							"page": "29"
+							"page": "29",
+							"source": "IBM PC/XT Technical Reference, page 2-14"
 						}
 					]
 				}
