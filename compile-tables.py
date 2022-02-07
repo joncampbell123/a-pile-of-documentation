@@ -13,6 +13,8 @@ class Table:
     base_json = None
     description = None
     notes = [ ]
+    columns = [ ]
+    table_format_type = None
     def __init__(self,json):
         self.base_json = json
         if "id" in json:
@@ -42,6 +44,14 @@ class Table:
                 ok = True
         if not ok == True:
             raise Exception("Table json is not combinable in "+self.id)
+        #
+        if "table format" in json:
+            obj = json["table format"]
+            self.table_format_type = obj.get("type")
+            if self.table_format_type == "key=value":
+                self.columns = [ obj["key"], obj["value"] ] # will throw exception if these keys do not exist
+            else:
+                raise Exception("Table json unknown table format type "+str(self.table_format_type)+" in "+self.id)
 
 def load_json(path):
     f = open(path,"r",encoding='utf-8')
