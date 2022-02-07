@@ -82,6 +82,12 @@
 		"0x6E": { "value": "Alt+F7" },
 		"0x6F": { "value": "Alt+F8" },
 		"0x70": { "value": "Alt+F9" },
-		"0x71": { "value": "Alt+F10" }
+		"0x71": { "value": "Alt+F10" },
+		"0x72": { "value": "Control+PrtSc" },
+		"0x73": { "value": "Control+Left arrow" },
+		"0x74": { "value": "Control+Right arrow" },
+		"0x75": { "value": "Control+End" },
+		"0x76": { "value": "Control+PgDn" },
+		"0x77": { "value": "Control+Home" }
 	}
 }
