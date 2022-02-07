@@ -52,6 +52,16 @@
 		"0x50": { "value": "Down arrow" },
 		"0x51": { "value": "Page Down" },
 		"0x52": { "value": "Insert" },
-		"0x53": { "value": "Delete" }
+		"0x53": { "value": "Delete" },
+		"0x54": { "value": "Shift+F1" },
+		"0x55": { "value": "Shift+F2" },
+		"0x56": { "value": "Shift+F3" },
+		"0x57": { "value": "Shift+F4" },
+		"0x58": { "value": "Shift+F5" },
+		"0x59": { "value": "Shift+F6" },
+		"0x5A": { "value": "Shift+F7" },
+		"0x5B": { "value": "Shift+F8" },
+		"0x5C": { "value": "Shift+F9" },
+		"0x5D": { "value": "Shift+F10" }
 	}
 }
