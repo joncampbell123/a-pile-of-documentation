@@ -88,6 +88,16 @@
 		"0x74": { "value": "Control+Right arrow" },
 		"0x75": { "value": "Control+End" },
 		"0x76": { "value": "Control+PgDn" },
-		"0x77": { "value": "Control+Home" }
+		"0x77": { "value": "Control+Home" },
+		"0x78": { "value": "Alt + upper row 1" },
+		"0x79": { "value": "Alt + upper row 2" },
+		"0x7A": { "value": "Alt + upper row 3" },
+		"0x7B": { "value": "Alt + upper row 4" },
+		"0x7C": { "value": "Alt + upper row 5" },
+		"0x7D": { "value": "Alt + upper row 6" },
+		"0x7E": { "value": "Alt + upper row 7" },
+		"0x7F": { "value": "Alt + upper row 8" },
+		"0x80": { "value": "Alt + upper row 9" },
+		"0x81": { "value": "Alt + upper row 0" }
 	}
 }
