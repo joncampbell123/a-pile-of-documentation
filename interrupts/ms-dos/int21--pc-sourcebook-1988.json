@@ -144,6 +144,62 @@
 				"dos version >= 1.0"
 			],
 			"title": "Print character"
+		},
+		{
+			"match": {
+				"registers": {
+					"ah": "0x06",
+					"dl": "!0xFF"
+				}
+			},
+			"in": {
+				"registers": {
+					"dl": "8-bit char"
+				}
+			},
+			"out": {
+			},
+			"notes": [
+				"Obsolete function; in DOS 2.x or later use function 3FH and 40H",
+				"If DL=FFH, console input is performed, otherwise DL is sent to console"
+			],
+			"json notes": [
+				"The PC programmer's sourcebook shows INT 21h AH=06H as one entry, and shows both DL=!FFh and DL=FFh cases. This JSON reference splits it into two based on DL"
+			],
+			"requirements": [
+				"dos version >= 1.0"
+			],
+			"title": "Direct console output",
+			"original title": "Direct console I/O"
+		},
+		{
+			"match": {
+				"registers": {
+					"ah": "0x06",
+					"dl": "0xFF"
+				}
+			},
+			"in": {
+			},
+			"out": {
+				"registers": {
+					"al": "8-bit char or 00H",
+					"zf": "ZF flag clear if AL contains character, ZF flag set otherwise"
+				}
+			},
+			"notes": [
+				"Obsolete function; in DOS 2.x or later use function 3FH and 40H",
+				"If DL=FFH, console input is performed, otherwise DL is sent to console",
+				"If ZeroFlag is clear, AL contains character from console; otherwise AL = 0"
+			],
+			"json notes": [
+				"The PC programmer's sourcebook shows INT 21h AH=06H as one entry, and shows both DL=!FFh and DL=FFh cases. This JSON reference splits it into two based on DL"
+			],
+			"requirements": [
+				"dos version >= 1.0"
+			],
+			"title": "Direct console input",
+			"original title": "Direct console I/O"
 		}
 	]
 }
