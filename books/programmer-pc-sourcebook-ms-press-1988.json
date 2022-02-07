@@ -9,5 +9,21 @@
         "isbn": {
                 "isbn-10": "1-55615-118-7",
                 "isbn-13": "9-781556-151187"
-        }
+        },
+	"parts": [
+		"Part 1": {
+			"title": "Miscellaneous Information",
+			"sections": [
+				"Section 1": {
+					"title": "General Information",
+					"subsections": [
+						"1.23": {
+							"title": "IBM Extended Character Codes",
+							"page": "29"
+						}
+					]
+				}
+			]
+		}
+	]
 }
