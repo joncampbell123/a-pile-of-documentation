@@ -29,7 +29,7 @@
 				"Obsolete function; in DOS 2.x or later use function 31H or 4CH instead"
 			],
 			"requirements": [
-				"dos version >= 1.0"
+				"dos_version >= 1.0"
 			],
 			"title": "Terminate program"
 		},
@@ -52,7 +52,7 @@
 				"Either 8-bit IBM ASCII code, or one of two bytes of an IBM Extended ASCII code"
 			],
 			"requirements": [
-				"dos version >= 1.0"
+				"dos_version >= 1.0"
 			],
 			"title": "Read keyboard and echo"
 		},
@@ -74,7 +74,7 @@
 				"Cursor position updated; if character is a backspace (08H), the cursor is moved to the left one position, but the character there is not erased"
 			],
 			"requirements": [
-				"dos version >= 1.0"
+				"dos_version >= 1.0"
 			],
 			"title": "Display character"
 		},
@@ -97,7 +97,7 @@
 				"DOS initializes the standard auxiliary device to 2400 baud, no parity, one stop bit, and 8-bit words"
 			],
 			"requirements": [
-				"dos version >= 1.0"
+				"dos_version >= 1.0"
 			],
 			"title": "Auxiliary input"
 		},
@@ -119,7 +119,7 @@
 				"Obsolete function; in DOS 2.x or later use function 40H instead"
 			],
 			"requirements": [
-				"dos version >= 1.0"
+				"dos_version >= 1.0"
 			],
 			"title": "Auxiliary output"
 		},
@@ -141,7 +141,7 @@
 				"Obsolete function; in DOS 2.x or later use function 40H instead"
 			],
 			"requirements": [
-				"dos version >= 1.0"
+				"dos_version >= 1.0"
 			],
 			"title": "Print character"
 		},
@@ -167,7 +167,7 @@
 				"The PC programmer's sourcebook shows INT 21h AH=06H as one entry, and shows both DL=!FFh and DL=FFh cases. This JSON reference splits it into two based on DL"
 			],
 			"requirements": [
-				"dos version >= 1.0"
+				"dos_version >= 1.0"
 			],
 			"title": "Direct console output",
 			"original title": "Direct console I/O"
@@ -196,7 +196,7 @@
 				"The PC programmer's sourcebook shows INT 21h AH=06H as one entry, and shows both DL=!FFh and DL=FFh cases. This JSON reference splits it into two based on DL"
 			],
 			"requirements": [
-				"dos version >= 1.0"
+				"dos_version >= 1.0"
 			],
 			"title": "Direct console input",
 			"original title": "Direct console I/O"
