@@ -128,11 +128,8 @@ except:
 
 final_json = { }
 final_json["tables"] = { }
-final_json["sources"] = [ ]
 for table_id in tables_by_id.keys():
     table = tables_by_id[table_id]
-    for source in table.sources:
-        final_json["sources"].append(source)
     final_json["tables"][table_id] = { }
     final_json["tables"][table_id]["table"] = table.table
     final_json["tables"][table_id]["sources"] = table.sources
