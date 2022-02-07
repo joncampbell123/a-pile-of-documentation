@@ -145,5 +145,5 @@ for table_id in tables_by_id.keys():
         final_json["tables"][table_id]["key column"] = table.key_column
 
 f = open("compiled/tables.json","w")
-json.dump(final_json,f)
+json.dump(final_json,f,indent="\t")
 f.close()
