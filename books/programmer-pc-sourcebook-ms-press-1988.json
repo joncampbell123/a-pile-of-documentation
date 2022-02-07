@@ -25,6 +25,18 @@
 					]
 				}
 			]
+		},
+		"Part 2": {
+			"title": "Software",
+			"sections": [
+				"Section 2": {
+					"title": "DOS Commands, Utilities, and Summaries"
+				},
+				"Section 3": {
+					"title": "DOS Function Calls and Support Tables",
+					"page": "71"
+				}
+			]
 		}
 	]
 }
