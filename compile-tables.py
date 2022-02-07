@@ -37,7 +37,7 @@ class Table:
                 for key in keys:
                     if self.table_format_type == "key=value":
                         table_key = self.filter_key_value_by_type(key)
-                        if not key in self.table:
+                        if not table_key in self.table:
                             self.table[table_key] = [ ]
                         if not source_idx == None:
                             s_table[key]["source index"] = source_idx
