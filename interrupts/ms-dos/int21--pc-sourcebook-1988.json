@@ -100,6 +100,28 @@
 				"dos version >= 1.0"
 			],
 			"title": "Auxiliary input"
+		},
+		{
+			"match": {
+				"registers": {
+					"ah": "0x04"
+				}
+			},
+			"in": {
+				"registers": {
+					"dl": "8-bit char to AUX"
+				}
+			},
+			"out": {
+			},
+			"notes": [
+				"This function does not check status of AUX port, buffer output, or return error codes",
+				"Obsolete function; in DOS 2.x or later use function 40H instead"
+			],
+			"requirements": [
+				"dos version >= 1.0"
+			],
+			"title": "Auxiliary output"
 		}
 	]
 }
