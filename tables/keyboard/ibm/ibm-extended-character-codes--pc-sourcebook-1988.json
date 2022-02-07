@@ -25,6 +25,13 @@
 		"0x23": { "value": "Alt+H" },
 		"0x24": { "value": "Alt+J" },
 		"0x25": { "value": "Alt+K" },
-		"0x26": { "value": "Alt+L" }
+		"0x26": { "value": "Alt+L" },
+		"0x2C": { "value": "Alt+Z" },
+		"0x2D": { "value": "Alt+X" },
+		"0x2E": { "value": "Alt+C" },
+		"0x2F": { "value": "Alt+V" },
+		"0x30": { "value": "Alt+B" },
+		"0x31": { "value": "Alt+N" },
+		"0x32": { "value": "Alt+M" }
 	}
 }
