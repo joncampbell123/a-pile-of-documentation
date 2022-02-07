@@ -23,7 +23,7 @@ class Table:
         if not self.key_column == None:
             type = self.key_column.get("type")
             if type == "uint8_t" or type == "uint16_t" or type == "uint32_t" or type == "uint":
-                return int(key,0)
+                return hex(int(key,0))
         #
         return key
     def add_info(self,json):
@@ -38,12 +38,13 @@ class Table:
                 keys = s_table.keys()
                 for key in keys:
                     if self.table_format_type == "key=value":
-                        table_key = key.lower().strip()
+                        key_str = key
+                        table_key = self.filter_key_value_by_type(key)
                         if not table_key in self.table:
                             self.table[table_key] = [ ]
                         if not source_idx == None:
                             s_table[key]["source index"] = source_idx
-                        s_table[key]["key"] = self.filter_key_value_by_type(key)
+                        s_table[key]["original key"] = key_str
                         self.table[table_key].append(s_table[key])
     def __init__(self,json):
         self.base_json = json

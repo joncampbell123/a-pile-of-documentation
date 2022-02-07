@@ -2,683 +2,683 @@
 	"tables": {
 		"ibm-extended-char-codes-bios-keyboard": {
 			"table": {
-				"0x03": [
+				"0x3": [
 					{
 						"value": "Null character (none)",
 						"source index": 0,
-						"key": 3
+						"original key": "0x03"
 					}
 				],
-				"0x0f": [
+				"0xf": [
 					{
 						"value": "Shift Tab",
 						"source index": 0,
-						"key": 15
+						"original key": "0x0F"
 					}
 				],
 				"0x10": [
 					{
 						"value": "Alt+Q",
 						"source index": 0,
-						"key": 16
+						"original key": "0x10"
 					}
 				],
 				"0x11": [
 					{
 						"value": "Alt+W",
 						"source index": 0,
-						"key": 17
+						"original key": "0x11"
 					}
 				],
 				"0x12": [
 					{
 						"value": "Alt+E",
 						"source index": 0,
-						"key": 18
+						"original key": "0x12"
 					}
 				],
 				"0x13": [
 					{
 						"value": "Alt+R",
 						"source index": 0,
-						"key": 19
+						"original key": "0x13"
 					}
 				],
 				"0x14": [
 					{
 						"value": "Alt+T",
 						"source index": 0,
-						"key": 20
+						"original key": "0x14"
 					}
 				],
 				"0x15": [
 					{
 						"value": "Alt+Y",
 						"source index": 0,
-						"key": 21
+						"original key": "0x15"
 					}
 				],
 				"0x16": [
 					{
 						"value": "Alt+U",
 						"source index": 0,
-						"key": 22
+						"original key": "0x16"
 					}
 				],
 				"0x17": [
 					{
 						"value": "Alt+I",
 						"source index": 0,
-						"key": 23
+						"original key": "0x17"
 					}
 				],
 				"0x18": [
 					{
 						"value": "Alt+O",
 						"source index": 0,
-						"key": 24
+						"original key": "0x18"
 					}
 				],
 				"0x19": [
 					{
 						"value": "Alt+P",
 						"source index": 0,
-						"key": 25
+						"original key": "0x19"
 					}
 				],
 				"0x1e": [
 					{
 						"value": "Alt+A",
 						"source index": 0,
-						"key": 30
+						"original key": "0x1E"
 					}
 				],
 				"0x1f": [
 					{
 						"value": "Alt+S",
 						"source index": 0,
-						"key": 31
+						"original key": "0x1F"
 					}
 				],
 				"0x20": [
 					{
 						"value": "Alt+D",
 						"source index": 0,
-						"key": 32
+						"original key": "0x20"
 					}
 				],
 				"0x21": [
 					{
 						"value": "Alt+F",
 						"source index": 0,
-						"key": 33
+						"original key": "0x21"
 					}
 				],
 				"0x22": [
 					{
 						"value": "Alt+G",
 						"source index": 0,
-						"key": 34
+						"original key": "0x22"
 					}
 				],
 				"0x23": [
 					{
 						"value": "Alt+H",
 						"source index": 0,
-						"key": 35
+						"original key": "0x23"
 					}
 				],
 				"0x24": [
 					{
 						"value": "Alt+J",
 						"source index": 0,
-						"key": 36
+						"original key": "0x24"
 					}
 				],
 				"0x25": [
 					{
 						"value": "Alt+K",
 						"source index": 0,
-						"key": 37
+						"original key": "0x25"
 					}
 				],
 				"0x26": [
 					{
 						"value": "Alt+L",
 						"source index": 0,
-						"key": 38
+						"original key": "0x26"
 					}
 				],
 				"0x2c": [
 					{
 						"value": "Alt+Z",
 						"source index": 0,
-						"key": 44
+						"original key": "0x2C"
 					}
 				],
 				"0x2d": [
 					{
 						"value": "Alt+X",
 						"source index": 0,
-						"key": 45
+						"original key": "0x2D"
 					}
 				],
 				"0x2e": [
 					{
 						"value": "Alt+C",
 						"source index": 0,
-						"key": 46
+						"original key": "0x2E"
 					}
 				],
 				"0x2f": [
 					{
 						"value": "Alt+V",
 						"source index": 0,
-						"key": 47
+						"original key": "0x2F"
 					}
 				],
 				"0x30": [
 					{
 						"value": "Alt+B",
 						"source index": 0,
-						"key": 48
+						"original key": "0x30"
 					}
 				],
 				"0x31": [
 					{
 						"value": "Alt+N",
 						"source index": 0,
-						"key": 49
+						"original key": "0x31"
 					}
 				],
 				"0x32": [
 					{
 						"value": "Alt+M",
 						"source index": 0,
-						"key": 50
+						"original key": "0x32"
 					}
 				],
 				"0x3b": [
 					{
 						"value": "Function key 1",
 						"source index": 0,
-						"key": 59
+						"original key": "0x3B"
 					}
 				],
 				"0x3c": [
 					{
 						"value": "Function key 2",
 						"source index": 0,
-						"key": 60
+						"original key": "0x3C"
 					}
 				],
 				"0x3d": [
 					{
 						"value": "Function key 3",
 						"source index": 0,
-						"key": 61
+						"original key": "0x3D"
 					}
 				],
 				"0x3e": [
 					{
 						"value": "Function key 4",
 						"source index": 0,
-						"key": 62
+						"original key": "0x3E"
 					}
 				],
 				"0x3f": [
 					{
 						"value": "Function key 5",
 						"source index": 0,
-						"key": 63
+						"original key": "0x3F"
 					}
 				],
 				"0x40": [
 					{
 						"value": "Function key 6",
 						"source index": 0,
-						"key": 64
+						"original key": "0x40"
 					}
 				],
 				"0x41": [
 					{
 						"value": "Function key 7",
 						"source index": 0,
-						"key": 65
+						"original key": "0x41"
 					}
 				],
 				"0x42": [
 					{
 						"value": "Function key 8",
 						"source index": 0,
-						"key": 66
+						"original key": "0x42"
 					}
 				],
 				"0x43": [
 					{
 						"value": "Function key 9",
 						"source index": 0,
-						"key": 67
+						"original key": "0x43"
 					}
 				],
 				"0x44": [
 					{
 						"value": "Function key 10",
 						"source index": 0,
-						"key": 68
+						"original key": "0x44"
 					}
 				],
 				"0x47": [
 					{
 						"value": "Home",
 						"source index": 0,
-						"key": 71
+						"original key": "0x47"
 					}
 				],
 				"0x48": [
 					{
 						"value": "Up arrow",
 						"source index": 0,
-						"key": 72
+						"original key": "0x48"
 					}
 				],
 				"0x49": [
 					{
 						"value": "Page Up",
 						"source index": 0,
-						"key": 73
+						"original key": "0x49"
 					}
 				],
 				"0x4b": [
 					{
 						"value": "Left arrow",
 						"source index": 0,
-						"key": 75
+						"original key": "0x4B"
 					}
 				],
 				"0x4d": [
 					{
 						"value": "Right arrow",
 						"source index": 0,
-						"key": 77
+						"original key": "0x4D"
 					}
 				],
 				"0x4f": [
 					{
 						"value": "End",
 						"source index": 0,
-						"key": 79
+						"original key": "0x4F"
 					}
 				],
 				"0x50": [
 					{
 						"value": "Down arrow",
 						"source index": 0,
-						"key": 80
+						"original key": "0x50"
 					}
 				],
 				"0x51": [
 					{
 						"value": "Page Down",
 						"source index": 0,
-						"key": 81
+						"original key": "0x51"
 					}
 				],
 				"0x52": [
 					{
 						"value": "Insert",
 						"source index": 0,
-						"key": 82
+						"original key": "0x52"
 					}
 				],
 				"0x53": [
 					{
 						"value": "Delete",
 						"source index": 0,
-						"key": 83
+						"original key": "0x53"
 					}
 				],
 				"0x54": [
 					{
 						"value": "Shift+F1",
 						"source index": 0,
-						"key": 84
+						"original key": "0x54"
 					}
 				],
 				"0x55": [
 					{
 						"value": "Shift+F2",
 						"source index": 0,
-						"key": 85
+						"original key": "0x55"
 					}
 				],
 				"0x56": [
 					{
 						"value": "Shift+F3",
 						"source index": 0,
-						"key": 86
+						"original key": "0x56"
 					}
 				],
 				"0x57": [
 					{
 						"value": "Shift+F4",
 						"source index": 0,
-						"key": 87
+						"original key": "0x57"
 					}
 				],
 				"0x58": [
 					{
 						"value": "Shift+F5",
 						"source index": 0,
-						"key": 88
+						"original key": "0x58"
 					}
 				],
 				"0x59": [
 					{
 						"value": "Shift+F6",
 						"source index": 0,
-						"key": 89
+						"original key": "0x59"
 					}
 				],
 				"0x5a": [
 					{
 						"value": "Shift+F7",
 						"source index": 0,
-						"key": 90
+						"original key": "0x5A"
 					}
 				],
 				"0x5b": [
 					{
 						"value": "Shift+F8",
 						"source index": 0,
-						"key": 91
+						"original key": "0x5B"
 					}
 				],
 				"0x5c": [
 					{
 						"value": "Shift+F9",
 						"source index": 0,
-						"key": 92
+						"original key": "0x5C"
 					}
 				],
 				"0x5d": [
 					{
 						"value": "Shift+F10",
 						"source index": 0,
-						"key": 93
+						"original key": "0x5D"
 					}
 				],
 				"0x5e": [
 					{
 						"value": "Control+F1",
 						"source index": 0,
-						"key": 94
+						"original key": "0x5E"
 					}
 				],
 				"0x5f": [
 					{
 						"value": "Control+F2",
 						"source index": 0,
-						"key": 95
+						"original key": "0x5F"
 					}
 				],
 				"0x60": [
 					{
 						"value": "Control+F3",
 						"source index": 0,
-						"key": 96
+						"original key": "0x60"
 					}
 				],
 				"0x61": [
 					{
 						"value": "Control+F4",
 						"source index": 0,
-						"key": 97
+						"original key": "0x61"
 					}
 				],
 				"0x62": [
 					{
 						"value": "Control+F5",
 						"source index": 0,
-						"key": 98
+						"original key": "0x62"
 					}
 				],
 				"0x63": [
 					{
 						"value": "Control+F6",
 						"source index": 0,
-						"key": 99
+						"original key": "0x63"
 					}
 				],
 				"0x64": [
 					{
 						"value": "Control+F7",
 						"source index": 0,
-						"key": 100
+						"original key": "0x64"
 					}
 				],
 				"0x65": [
 					{
 						"value": "Control+F8",
 						"source index": 0,
-						"key": 101
+						"original key": "0x65"
 					}
 				],
 				"0x66": [
 					{
 						"value": "Control+F9",
 						"source index": 0,
-						"key": 102
+						"original key": "0x66"
 					}
 				],
 				"0x67": [
 					{
 						"value": "Control+F10",
 						"source index": 0,
-						"key": 103
+						"original key": "0x67"
 					}
 				],
 				"0x68": [
 					{
 						"value": "Alt+F1",
 						"source index": 0,
-						"key": 104
+						"original key": "0x68"
 					}
 				],
 				"0x69": [
 					{
 						"value": "Alt+F2",
 						"source index": 0,
-						"key": 105
+						"original key": "0x69"
 					}
 				],
 				"0x6a": [
 					{
 						"value": "Alt+F3",
 						"source index": 0,
-						"key": 106
+						"original key": "0x6A"
 					}
 				],
 				"0x6b": [
 					{
 						"value": "Alt+F4",
 						"source index": 0,
-						"key": 107
+						"original key": "0x6B"
 					}
 				],
 				"0x6c": [
 					{
 						"value": "Alt+F5",
 						"source index": 0,
-						"key": 108
+						"original key": "0x6C"
 					}
 				],
 				"0x6d": [
 					{
 						"value": "Alt+F6",
 						"source index": 0,
-						"key": 109
+						"original key": "0x6D"
 					}
 				],
 				"0x6e": [
 					{
 						"value": "Alt+F7",
 						"source index": 0,
-						"key": 110
+						"original key": "0x6E"
 					}
 				],
 				"0x6f": [
 					{
 						"value": "Alt+F8",
 						"source index": 0,
-						"key": 111
+						"original key": "0x6F"
 					}
 				],
 				"0x70": [
 					{
 						"value": "Alt+F9",
 						"source index": 0,
-						"key": 112
+						"original key": "0x70"
 					}
 				],
 				"0x71": [
 					{
 						"value": "Alt+F10",
 						"source index": 0,
-						"key": 113
+						"original key": "0x71"
 					}
 				],
 				"0x72": [
 					{
 						"value": "Control+PrtSc",
 						"source index": 0,
-						"key": 114
+						"original key": "0x72"
 					}
 				],
 				"0x73": [
 					{
 						"value": "Control+Left arrow",
 						"source index": 0,
-						"key": 115
+						"original key": "0x73"
 					}
 				],
 				"0x74": [
 					{
 						"value": "Control+Right arrow",
 						"source index": 0,
-						"key": 116
+						"original key": "0x74"
 					}
 				],
 				"0x75": [
 					{
 						"value": "Control+End",
 						"source index": 0,
-						"key": 117
+						"original key": "0x75"
 					}
 				],
 				"0x76": [
 					{
 						"value": "Control+PgDn",
 						"source index": 0,
-						"key": 118
+						"original key": "0x76"
 					}
 				],
 				"0x77": [
 					{
 						"value": "Control+Home",
 						"source index": 0,
-						"key": 119
+						"original key": "0x77"
 					}
 				],
 				"0x78": [
 					{
 						"value": "Alt + upper row 1",
 						"source index": 0,
-						"key": 120
+						"original key": "0x78"
 					}
 				],
 				"0x79": [
 					{
 						"value": "Alt + upper row 2",
 						"source index": 0,
-						"key": 121
+						"original key": "0x79"
 					}
 				],
 				"0x7a": [
 					{
 						"value": "Alt + upper row 3",
 						"source index": 0,
-						"key": 122
+						"original key": "0x7A"
 					}
 				],
 				"0x7b": [
 					{
 						"value": "Alt + upper row 4",
 						"source index": 0,
-						"key": 123
+						"original key": "0x7B"
 					}
 				],
 				"0x7c": [
 					{
 						"value": "Alt + upper row 5",
 						"source index": 0,
-						"key": 124
+						"original key": "0x7C"
 					}
 				],
 				"0x7d": [
 					{
 						"value": "Alt + upper row 6",
 						"source index": 0,
-						"key": 125
+						"original key": "0x7D"
 					}
 				],
 				"0x7e": [
 					{
 						"value": "Alt + upper row 7",
 						"source index": 0,
-						"key": 126
+						"original key": "0x7E"
 					}
 				],
 				"0x7f": [
 					{
 						"value": "Alt + upper row 8",
 						"source index": 0,
-						"key": 127
+						"original key": "0x7F"
 					}
 				],
 				"0x80": [
 					{
 						"value": "Alt + upper row 9",
 						"source index": 0,
-						"key": 128
+						"original key": "0x80"
 					}
 				],
 				"0x81": [
 					{
 						"value": "Alt + upper row 0",
 						"source index": 0,
-						"key": 129
+						"original key": "0x81"
 					}
 				],
 				"0x82": [
 					{
 						"value": "Alt+hyphen",
 						"source index": 0,
-						"key": 130
+						"original key": "0x82"
 					}
 				],
 				"0x83": [
 					{
 						"value": "Alt+equals",
 						"source index": 0,
-						"key": 131
+						"original key": "0x83"
 					}
 				],
 				"0x84": [
 					{
 						"value": "Control+PgUp",
 						"source index": 0,
-						"key": 132
+						"original key": "0x84"
 					}
 				]
 			},
