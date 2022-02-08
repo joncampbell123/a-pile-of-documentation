@@ -346,11 +346,11 @@ def emit_table_as_html(path,tp):
                             x = x + ", "
                         x = x + str(year)
                     if not x == "":
-                        f.write(x+"<br>")
+                        f.write(html_escape(x)+"<br>")
                     #
                     url = citation.get("url")
                     if not url == None:
-                        f.write("URL: "+url+"<br>")
+                        f.write("URL: "+html_escape(url)+"<br>")
                 if not where == None:
                     x = ""
                     for whi in where:
@@ -368,7 +368,7 @@ def emit_table_as_html(path,tp):
                                 x = x + " => "
                             x = x + y
                     if not x == "":
-                        f.write(x+"<br>")
+                        f.write(html_escape(x)+"<br>")
             f.write("</td>")
             #
             f.write("</tr>")
