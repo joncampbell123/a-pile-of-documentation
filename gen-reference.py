@@ -240,7 +240,7 @@ def emit_table_as_html(path,tp):
         if desci > 0:
             f.write("</table><br>")
         #
-        f.write("<table style=\"border: 1px solid black;\">")
+        f.write("<table style=\"border: 1px solid black; border-spacing: 0px;\">")
         #
         f.write("<tr style=\"background-color: rgb(224,224,224);\">")
         for ci in range(len(tp.display.colsiz)):
@@ -253,7 +253,7 @@ def emit_table_as_html(path,tp):
             else:
                 style = "border-right: 1px solid black;"
             #
-            style = style + " padding-right: 1em;"
+            style = style + " padding: 0.2em; padding-right: 1em;"
             style = style + " border-bottom: 1px solid black;"
             #
             f.write("<th style=\""+style.strip()+"\">"+html_escape(x)+"</th>")
@@ -278,7 +278,7 @@ def emit_table_as_html(path,tp):
                             show_sources = True
                         #
                         f.write("<td style=\"")
-                        f.write("white-space: pre; padding-right: 1em;")
+                        f.write("white-space: pre; padding: 0.2em; padding-right: 1em;")
                         if not coli == len(columns)-1:
                             f.write(" border-right: 1px solid black;")
                         if not rowidx == len(tp.display.disptable)-1:
