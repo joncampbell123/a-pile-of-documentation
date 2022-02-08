@@ -737,18 +737,27 @@
 				"sections": [
 					{
 						"title": "General Information",
-						"parent name lookup": "Part 1",
+						"parent lookup": {
+							"name": "Part 1",
+							"type": "parts"
+						},
 						"name lookup": "Section 1"
 					},
 					{
 						"title": "DOS Commands, Utilities, and Summaries",
-						"parent name lookup": "Part 2",
+						"parent lookup": {
+							"name": "Part 2",
+							"type": "parts"
+						},
 						"name lookup": "Section 2"
 					},
 					{
 						"title": "DOS Function Calls and Support Tables",
 						"page": "71",
-						"parent name lookup": "Part 2",
+						"parent lookup": {
+							"name": "Part 2",
+							"type": "parts"
+						},
 						"name lookup": "Section 3"
 					}
 				],
@@ -757,7 +766,10 @@
 						"title": "IBM Extended Character Codes",
 						"page": "29",
 						"source": "IBM PC/XT Technical Reference, page 2-14",
-						"parent name lookup": "Section 1",
+						"parent lookup": {
+							"name": "Section 1",
+							"type": "sections"
+						},
 						"name lookup": "1.23"
 					}
 				]

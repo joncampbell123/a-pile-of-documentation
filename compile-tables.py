@@ -53,6 +53,7 @@ class Book:
                     self.hierarchy_root = json[self.hierarchy[0]] # blow up if it does not exist
                     search = [ self.hierarchy_root ]
                     newsearch = None
+                    prev_what = None
                     for what in self.hierarchy:
                         if what in self.hierarchy_search:
                             raise Exception("Hierarchy name specified more than once: "+what)
@@ -67,7 +68,7 @@ class Book:
                                         newsearch[i] = hobj[what]
                                         del hobj[what]
                                         for hobjname in newsearch[i]:
-                                            newsearch[i][hobjname]["parent name lookup"] = parent_name
+                                            newsearch[i][hobjname]["parent lookup"] = { "name": parent_name, "type": prev_what }
                                         continue
                                 #
                                 newsearch[i] = { }
@@ -81,6 +82,8 @@ class Book:
                                 hobj["name lookup"] = hobjname
                                 self.hierarchy_search[what].append(hobj)
                                 newsearch.append(hobj)
+                        #
+                        prev_what = what
 
 # table object
 class Table:
