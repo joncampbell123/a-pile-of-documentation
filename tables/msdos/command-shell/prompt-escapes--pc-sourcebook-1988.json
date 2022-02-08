@@ -1,0 +1,23 @@
+{
+	"id": "msdos-command-shell-prompt-escapes",
+	"source": {
+		"book": "programmer-pc-sourcebook-ms-press-1988",
+		"subsection": "2.17"
+	},
+	"table": {
+		"$b": { "value": [ "Vertical slash (|)", "$p$b", "C:\\MYDIR}" ] },
+		"$d": { "value": [ "Current system date", "$d $n$g", "Mon 9-5-1986 C>" ] },
+		"$e": { "value": [ "Escape character (for use with ANSI.SYS)", "$e[32m$n$g$e[0m", "C> (prompt is green)" ] },
+		"$g": { "value": [ "Greater than sign ( > )", "$p$g", "C:\\MYDIR>" ] },
+		"$h": { "value": [ "", "", "" ] },
+		"$l": { "value": [ "", "", "" ] },
+		"$n": { "value": [ "", "", "" ] },
+		"$p": { "value": [ "", "", "" ] },
+		"$q": { "value": [ "", "", "" ] },
+		"$t": { "value": [ "", "", "" ] },
+		"$v": { "value": [ "", "", "" ] },
+		"$_": { "value": [ "", "", "" ] },
+		"$$": { "value": [ "", "", "" ] },
+		"Any other": { "value": [ "", "", "" ] }
+	}
+}

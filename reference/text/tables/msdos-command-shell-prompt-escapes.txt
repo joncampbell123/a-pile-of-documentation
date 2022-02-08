@@ -1,0 +1,31 @@
+
+$PROMPT escape codes
+====================
+
+Special escape codes in the $PROMPT environment variable interpreted by COMMAND.COM
+
+Character sequence | Displays as                              | Example         | Example displays as 
+===================|==========================================|=================|=====================
+$$                 |                                          |                 |                     
+$_                 |                                          |                 |                     
+$b                 | Vertical slash (|)                       | $p$b            | C:\MYDIR}           
+$d                 | Current system date                      | $d $n$g         | Mon 9-5-1986 C>     
+$e                 | Escape character (for use with ANSI.SYS) | $e[32m$n$g$e[0m | C> (prompt is green)
+$g                 | Greater than sign ( > )                  | $p$g            | C:\MYDIR>           
+$h                 |                                          |                 |                     
+$l                 |                                          |                 |                     
+$n                 |                                          |                 |                     
+$p                 |                                          |                 |                     
+$q                 |                                          |                 |                     
+$t                 |                                          |                 |                     
+$v                 |                                          |                 |                     
+Any other          |                                          |                 |                     
+
+Sources
+=======
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.17, Prompt Special Characters
+
+Notes
+-----
+

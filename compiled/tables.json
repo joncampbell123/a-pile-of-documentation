@@ -1,5 +1,216 @@
 {
 	"tables": {
+		"msdos-command-shell-prompt-escapes": {
+			"table": {
+				"$b": [
+					{
+						"value": [
+							"Vertical slash (|)",
+							"$p$b",
+							"C:\\MYDIR}"
+						],
+						"source index": 0,
+						"original key": "$b"
+					}
+				],
+				"$d": [
+					{
+						"value": [
+							"Current system date",
+							"$d $n$g",
+							"Mon 9-5-1986 C>"
+						],
+						"source index": 0,
+						"original key": "$d"
+					}
+				],
+				"$e": [
+					{
+						"value": [
+							"Escape character (for use with ANSI.SYS)",
+							"$e[32m$n$g$e[0m",
+							"C> (prompt is green)"
+						],
+						"source index": 0,
+						"original key": "$e"
+					}
+				],
+				"$g": [
+					{
+						"value": [
+							"Greater than sign ( > )",
+							"$p$g",
+							"C:\\MYDIR>"
+						],
+						"source index": 0,
+						"original key": "$g"
+					}
+				],
+				"$h": [
+					{
+						"value": [
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "$h"
+					}
+				],
+				"$l": [
+					{
+						"value": [
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "$l"
+					}
+				],
+				"$n": [
+					{
+						"value": [
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "$n"
+					}
+				],
+				"$p": [
+					{
+						"value": [
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "$p"
+					}
+				],
+				"$q": [
+					{
+						"value": [
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "$q"
+					}
+				],
+				"$t": [
+					{
+						"value": [
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "$t"
+					}
+				],
+				"$v": [
+					{
+						"value": [
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "$v"
+					}
+				],
+				"$_": [
+					{
+						"value": [
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "$_"
+					}
+				],
+				"$$": [
+					{
+						"value": [
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "$$"
+					}
+				],
+				"Any other": [
+					{
+						"value": [
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "Any other"
+					}
+				]
+			},
+			"sources": [
+				{
+					"book": "programmer-pc-sourcebook-ms-press-1988",
+					"source index": 0,
+					"citation": {
+						"title": "The Programmer's PC Sourcebook",
+						"author": "Thom Hogan",
+						"publisher": "Microsoft Press",
+						"year": 1988,
+						"type": "book"
+					},
+					"where": [
+						{
+							"path": "Part 2",
+							"type": "part",
+							"title": "Software"
+						},
+						{
+							"path": "Section 2",
+							"type": "section",
+							"title": "DOS Commands, Utilities, and Summaries"
+						},
+						{
+							"path": "2.17",
+							"type": "subsection",
+							"title": "Prompt Special Characters",
+							"page": "48"
+						}
+					]
+				}
+			],
+			"description": "Special escape codes in the $PROMPT environment variable interpreted by COMMAND.COM",
+			"notes": [],
+			"name": "$PROMPT escape codes",
+			"columns": [
+				{
+					"type": "string",
+					"title": "Displays as"
+				},
+				{
+					"type": "string",
+					"title": "Example"
+				},
+				{
+					"type": "string",
+					"title": "Example displays as"
+				}
+			],
+			"table format type": "key=value",
+			"key column": {
+				"type": "string",
+				"title": "Character sequence"
+			}
+		},
 		"ibm-extended-char-codes-bios-keyboard": {
 			"table": {
 				"0x1": [
@@ -1666,6 +1877,16 @@
 							"type": "sections"
 						},
 						"name lookup": "1.23"
+					},
+					{
+						"title": "Prompt Special Characters",
+						"page": "48",
+						"source": "IBM DOS 3.3 Reference, page 7-177",
+						"parent lookup": {
+							"name": "Section 2",
+							"type": "sections"
+						},
+						"name lookup": "2.17"
 					}
 				]
 			}
