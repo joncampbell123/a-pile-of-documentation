@@ -39,6 +39,14 @@ class TablePresentation:
             self.display.colhdr.append(col.get("title"))
             self.display.coldesc.append(col.get("description"))
         #
+        for coli in range(len(self.display.colhdr)):
+            cht = self.display.colhdr[coli]
+            if cht == None:
+                cht = ""
+            clen = len(cht)
+            if self.display.colsiz[coli] < clen:
+                self.display.colsiz[coli] = clen
+        #
         self.display.disptable = [ ]
         for rowkey in self.table:
             rowent = self.table[rowkey]
