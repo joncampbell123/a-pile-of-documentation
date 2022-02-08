@@ -350,7 +350,7 @@ def emit_table_as_html(path,tp):
                     #
                     url = citation.get("url")
                     if not url == None:
-                        f.write("URL: "+html_escape(url)+"<br>")
+                        f.write("URL: <a href=\""+url+"\" target=\"_blank\">"+html_escape(url)+"</a><br>")
                 if not where == None:
                     x = ""
                     for whi in where:
