@@ -20,7 +20,7 @@ class Book:
     copyright_by = None
     hierarchy = [ ]
     hierarchy_root = None
-    hierarchy_search = { }
+    hierarchy_search = None
     base_json = None
     def serialize_to_compiled_json(self):
         f = { }
@@ -75,6 +75,7 @@ class Book:
             self.copyright_year = obj.get("year")
             self.copyright_by = obj.get("by")
         #
+        self.hierarchy_search = { } # FIXME: Why does initializing as { } in the class fail to reinit, but assiging here makes it work?
         if "hierarchy" in json:
             if isinstance(json["hierarchy"], list):
                 self.hierarchy = json["hierarchy"]
