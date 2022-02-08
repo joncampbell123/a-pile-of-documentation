@@ -64,7 +64,12 @@ class TablePresentation:
                 if len(rowbuild) > 0 and rowbuild[len(rowbuild)-1]["columns"] == newrowcols:
                     rowbuild[len(rowbuild)-1]["source index"].append(row.get("source index"))
                 else:
-                    rowbuild.append( { "columns": newrowcols, "source index": [ row.get("source index") ] } )
+                    samekey = False
+                    if len(rowbuild) > 0:
+                        if rowbuild[len(rowbuild)-1]["columns"][0] == newrowcols[0]:
+                            samekey = True
+                            rowbuild[len(rowbuild)-1]["same key"] = samekey
+                    rowbuild.append( { "columns": newrowcols, "source index": [ row.get("source index") ], "same key": samekey } )
             #
             self.display.disptable.extend(rowbuild)
         #
@@ -165,6 +170,13 @@ def emit_table_as_text(path,tp):
                             val = ""
                         x = (val + (" "*tp.display.colsiz[coli]))[0:tp.display.colsiz[coli]]
                         f.write(x)
+                    #
+                    if row.get("same key") == True:
+                        sia = row.get("source index")
+                        if not sia == None:
+                            for si in sia:
+                                f.write(" [*"+str(si)+"]")
+                    #
                     f.write("\n")
             #
             f.write("\n")
