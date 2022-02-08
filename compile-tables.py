@@ -113,6 +113,18 @@ class Table:
     sources = [ ]
     key_column = None
     table_format_type = None
+    def serialize_to_compiled_json(self):
+        f = { }
+        f["table"] = table.table
+        f["sources"] = table.sources
+        f["description"] = table.description
+        f["notes"] = table.notes
+        f["name"] = table.name
+        f["columns"] = table.columns
+        f["table format type"] = table.table_format_type
+        if not table.key_column == None:
+            f["key column"] = table.key_column
+        return f;
     def filter_key_value_by_type(self,key):
         if not self.key_column == None:
             type = self.key_column.get("type")
@@ -237,16 +249,7 @@ final_json = { }
 final_json["tables"] = { }
 for table_id in tables_by_id.keys():
     table = tables_by_id[table_id]
-    final_json["tables"][table_id] = { }
-    final_json["tables"][table_id]["table"] = table.table
-    final_json["tables"][table_id]["sources"] = table.sources
-    final_json["tables"][table_id]["description"] = table.description
-    final_json["tables"][table_id]["notes"] = table.notes
-    final_json["tables"][table_id]["name"] = table.name
-    final_json["tables"][table_id]["columns"] = table.columns
-    final_json["tables"][table_id]["table format type"] = table.table_format_type
-    if not table.key_column == None:
-        final_json["tables"][table_id]["key column"] = table.key_column
+    final_json["tables"][table_id] = table.serialize_to_compiled_json()
 
 final_json["sources"] = { }
 for book_id in book_by_id.keys():
