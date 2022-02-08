@@ -254,7 +254,7 @@ def emit_table_as_html(path,tp):
                 style = "border-right: 1px solid black;"
             #
             style = style + " padding: 0.2em; padding-right: 1em;"
-            style = style + " border-bottom: 1px solid black;"
+            style = style + " border-bottom: 1px solid black; font-size: 0.9em; text-align: left;"
             #
             f.write("<th style=\""+style.strip()+"\">"+html_escape(x)+"</th>")
         f.write("</tr>")
@@ -278,7 +278,7 @@ def emit_table_as_html(path,tp):
                             show_sources = True
                         #
                         f.write("<td style=\"")
-                        f.write("white-space: pre; padding: 0.2em; padding-right: 1em;")
+                        f.write("white-space: pre; padding: 0.2em; padding-right: 1em; font-size: 0.9em; text-align: left;")
                         if not coli == len(columns)-1:
                             f.write(" border-right: 1px solid black;")
                         if not rowidx == len(tp.display.disptable)-1:
