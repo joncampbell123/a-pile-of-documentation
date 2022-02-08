@@ -38,8 +38,7 @@ class TablePresentation:
         if self.display.header == None:
             self.display.header = "Untitled"
 
-def emit_table_as_text(path,table_id_json):
-    tp = TablePresentation(table_id_json)
+def emit_table_as_text(path,tp):
     #
     f = open(path,"w",encoding="UTF-8")
     f.write("\n")
@@ -255,5 +254,6 @@ tables_json = common_json_help_module.load_json("compiled/tables.json")
 tables = tables_json.get("tables")
 if not tables == None:
     for table_id in tables:
-        emit_table_as_text("reference/text/tables/"+table_id+".txt",tables[table_id])
+        tp = TablePresentation(tables[table_id])
+        emit_table_as_text("reference/text/tables/"+table_id+".txt",tp)
 
