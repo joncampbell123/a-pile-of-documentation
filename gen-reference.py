@@ -7,53 +7,74 @@ import pathlib
 
 import common_json_help_module
 
+class TablePresentation:
+    name = None
+    notes = None
+    table = None
+    sources = None
+    columns = None
+    display = None
+    base_json = None
+    key_column = None
+    description = None
+    table_format_type = None
+    #
+    class DisplayInfo:
+        header = None
+    #
+    def __init__(self,json):
+        self.base_json = json
+        self.table = json.get("table")
+        self.sources = json.get("sources")
+        self.description = json.get("description")
+        self.table_format_type = json.get("table format type")
+        self.key_column = json.get("key column")
+        self.columns = json.get("columns")
+        self.notes = json.get("notes")
+        self.name = json.get("name")
+        #
+        self.display = TablePresentation.DisplayInfo()
+        self.display.header = self.name
+        if self.display.header == None:
+            self.display.header = "Untitled"
+
 def emit_table_as_text(path,table_id_json):
-    table = table_id_json.get("table")
-    sources = table_id_json.get("sources")
-    description = table_id_json.get("description")
-    table_format_type = table_id_json.get("table format type")
-    key_column = table_id_json.get("key column")
-    columns = table_id_json.get("columns")
-    notes = table_id_json.get("notes")
-    name = table_id_json.get("name")
+    tp = TablePresentation(table_id_json)
     #
     f = open(path,"w",encoding="UTF-8")
     f.write("\n")
     #
-    hdr = name
-    if hdr == None:
-        hdr = "Untitled table"
-    f.write(hdr+"\n")
-    f.write(("="*len(hdr))+"\n")
+    f.write(tp.display.header+"\n")
+    f.write(("="*len(tp.display.header))+"\n")
     f.write("\n")
     #
-    if not description == None:
-        f.write(description+"\n")
+    if not tp.description == None:
+        f.write(tp.description+"\n")
         f.write("\n")
     #
-    if not table == None:
-        if table_format_type == "key=value":
+    if not tp.table == None:
+        if tp.table_format_type == "key=value":
             colsiz = [ 1 ]
             colhdr = [ None ]
-            if not key_column == None:
-                colhdr[0] = key_column
+            if not tp.key_column == None:
+                colhdr[0] = tp.key_column
                 if not colhdr[0] == None:
                     if "title" in colhdr[0]:
                         keyl = len(colhdr[0]["title"])
                         if colsiz[0] < keyl:
                             colsiz[0] = keyl
             #
-            for col in columns:
+            for col in tp.columns:
                 colhdr.append(col)
                 colsiz.append(1)
             #
-            for rowkey in table:
-                row = table[rowkey]
+            for rowkey in tp.table:
+                row = tp.table[rowkey]
                 keyl = len(rowkey)
                 if colsiz[0] < keyl:
                     colsiz[0] = keyl
-                if len(columns) > 0:
-                    colhdr[1] = columns[0]
+                if len(tp.columns) > 0:
+                    colhdr[1] = tp.columns[0]
                     #
                     if not colhdr[1] == None:
                         if "title" in colhdr[1]:
@@ -103,8 +124,8 @@ def emit_table_as_text(path,table_id_json):
                 f.write(x)
             f.write("\n")
             #
-            for rowkey in table:
-                row = table[rowkey]
+            for rowkey in tp.table:
+                row = tp.table[rowkey]
                 key = rowkey
                 disprows = [ ]
                 dispsrcs = [ ]
@@ -149,11 +170,11 @@ def emit_table_as_text(path,table_id_json):
             #
             f.write("\n")
             #
-            if not sources == None:
+            if not tp.sources == None:
                 f.write("Sources\n")
                 f.write("=======\n")
-                for sii in range(len(sources)):
-                    sobj = sources[sii]
+                for sii in range(len(tp.sources)):
+                    sobj = tp.sources[sii]
                     if not int(sobj.get("source index")) == sii:
                         raise Exception("source index is wrong")
                     head = "  [*"+str(sii)+"] "
@@ -218,10 +239,10 @@ def emit_table_as_text(path,table_id_json):
                                 f.write(x+"\n")
                 f.write("\n")
     #
-    if not notes == None:
+    if not tp.notes == None:
         f.write("Notes\n")
         f.write("-----\n")
-        for note in notes:
+        for note in tp.notes:
             f.write(" * "+note+"\n")
         f.write("\n")
     #
