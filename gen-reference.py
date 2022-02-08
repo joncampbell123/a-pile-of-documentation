@@ -291,13 +291,87 @@ def emit_table_as_html(path,tp):
                             sia = row.get("source index")
                             if not sia == None:
                                 for si in sia:
-                                    f.write("<sup style=\"color: rgb(0,0,192);\"><i> [*"+str(si)+"]</i></sup>")
+                                    f.write(" <sup style=\"color: rgb(0,0,192);\"><i>[*"+str(si)+"]</i></sup>")
                         #
                         f.write("</td>")
                     #
                     f.write("</tr>")
             #
             f.write("\n")
+        #
+        f.write("</table>")
+    #
+    if not tp.sources == None:
+        f.write("<p><span style=\"border-bottom: solid; border-bottom-width: thin;\">Sources</span></p>\n")
+        f.write("<table style=\"font-size: 0.8em;\">")
+        for sii in range(len(tp.sources)):
+            f.write("<tr valign=\"top\">")
+            sobj = tp.sources[sii]
+            if not int(sobj.get("source index")) == sii:
+                raise Exception("source index is wrong")
+            #
+            f.write("<td style=\"padding-left: 2em; padding-bottom: 1em;\"><sup style=\"color: rgb(0,0,192);\"><i>[*"+str(sii)+"]</i></sup></td>")
+            #
+            if "book" in sobj:
+                book = sobj["book"]
+            elif "website" in sobj:
+                book = sobj["website"]
+            else:
+                book = None
+
+            f.write("<td style=\"padding-bottom: 1em;\">")
+            if not book == None:
+                where = sobj.get("where")
+                citation = sobj.get("citation")
+                if not citation == None:
+                    x = ""
+                    title = citation.get("title")
+                    if not title == None:
+                        if not x == "":
+                            x = x + ", "
+                        x = x + title
+                    author = citation.get("author")
+                    if not author == None:
+                        if not x == "":
+                            x = x + ", "
+                        x = x + author
+                    publisher = citation.get("publisher")
+                    if not publisher == None:
+                        if not x == "":
+                            x = x + ", "
+                        x = x + publisher
+                    year = citation.get("year")
+                    if not year == None:
+                        if not x == "":
+                            x = x + ", "
+                        x = x + str(year)
+                    if not x == "":
+                        f.write(x+"<br>")
+                    #
+                    url = citation.get("url")
+                    if not url == None:
+                        f.write("URL: "+url+"<br>")
+                if not where == None:
+                    x = ""
+                    for whi in where:
+                        y = ""
+                        if "path" in whi:
+                            if not y == "":
+                                y = y + ", "
+                            y = y + whi["path"]
+                        if "title" in whi:
+                            if not y == "":
+                                y = y + ", "
+                            y = y + whi["title"]
+                        if not y == "":
+                            if not x == "":
+                                x = x + " => "
+                            x = x + y
+                    if not x == "":
+                        f.write(x+"<br>")
+            f.write("</td>")
+            #
+            f.write("</tr>")
         #
         f.write("</table>")
     #
