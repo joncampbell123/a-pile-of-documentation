@@ -150,6 +150,24 @@ def emit_table_as_text(path,tp):
             x = "="*tp.display.colsiz[ci]
             f.write(x)
         f.write("\n")
+        #
+        if len(tp.display.disptable) > 0:
+            for row in tp.display.disptable:
+                columns = row.get("columns")
+                if not columns == None:
+                    for coli in range(len(columns)):
+                        if coli > 0:
+                            f.write(" | ")
+                        #
+                        col = columns[coli]
+                        val = col.get("value")
+                        if val == None:
+                            val = ""
+                        x = (val + (" "*tp.display.colsiz[coli]))[0:tp.display.colsiz[coli]]
+                        f.write(x)
+                    f.write("\n")
+            #
+            f.write("\n")
     #
     if not tp.sources == None:
         f.write("Sources\n")

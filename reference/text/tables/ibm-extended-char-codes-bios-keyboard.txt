@@ -9,6 +9,153 @@ Extended character codes returned by the IBM BIOS in the keyboard buffer, throug
 
 Char | Key combination          
 =====|==========================
+0x01 | Alt+Esc                  
+0x03 | Ctrl+2                   
+0x03 | Null character (none)    
+0x0E | Alt+Backspace            
+0x0F | Shift+Backspace          
+0x0F | Shift Tab                
+0x10 | Alt+Q                    
+0x11 | Alt+W                    
+0x12 | Alt+E                    
+0x13 | Alt+R                    
+0x14 | Alt+T                    
+0x15 | Alt+Y                    
+0x16 | Alt+U                    
+0x17 | Alt+I                    
+0x18 | Alt+O                    
+0x19 | Alt+P                    
+0x1A | Alt+[                    
+0x1B | Alt+]                    
+0x1C | Alt+Enter                
+0x1E | Alt+A                    
+0x1F | Alt+S                    
+0x20 | Alt+D                    
+0x21 | Alt+F                    
+0x22 | Alt+G                    
+0x23 | Alt+H                    
+0x24 | Alt+J                    
+0x25 | Alt+K                    
+0x26 | Alt+L                    
+0x27 | Alt+;                    
+0x28 | Alt+'                    
+0x29 | Alt+`                    
+0x2B | Alt+\                    
+0x2C | Alt+Z                    
+0x2D | Alt+X                    
+0x2E | Alt+C                    
+0x2F | Alt+V                    
+0x30 | Alt+B                    
+0x31 | Alt+N                    
+0x32 | Alt+M                    
+0x33 | Alt+,                    
+0x34 | Alt+.                    
+0x35 | Alt+/                    
+0x37 | Alt+*                    
+0x3B | Function key 1           
+0x3C | Function key 2           
+0x3D | Function key 3           
+0x3E | Function key 4           
+0x3F | Function key 5           
+0x40 | Function key 6           
+0x41 | Function key 7           
+0x42 | Function key 8           
+0x43 | Function key 9           
+0x44 | Function key 10          
+0x47 | Home                     
+0x48 | Up arrow                 
+0x49 | Page Up                  
+0x4A | Alt+-                    
+0x4B | Left arrow               
+0x4C | Center Key 5             
+0x4D | Right arrow              
+0x4E | Alt++                    
+0x4F | End                      
+0x50 | Down arrow               
+0x51 | Page Down                
+0x52 | Insert                   
+0x53 | Delete                   
+0x54 | Shift+F1                 
+0x55 | Shift+F2                 
+0x56 | Shift+F3                 
+0x57 | Shift+F4                 
+0x58 | Shift+F5                 
+0x59 | Shift+F6                 
+0x5A | Shift+F7                 
+0x5B | Shift+F8                 
+0x5C | Shift+F9                 
+0x5D | Shift+F10                
+0x5E | Control+F1               
+0x5F | Control+F2               
+0x60 | Control+F3               
+0x61 | Control+F4               
+0x62 | Control+F5               
+0x63 | Control+F6               
+0x64 | Control+F7               
+0x65 | Control+F8               
+0x66 | Control+F9               
+0x67 | Control+F10              
+0x68 | Alt+F1                   
+0x69 | Alt+F2                   
+0x6A | Alt+F3                   
+0x6B | Alt+F4                   
+0x6C | Alt+F5                   
+0x6D | Alt+F6                   
+0x6E | Alt+F7                   
+0x6F | Alt+F8                   
+0x70 | Alt+F9                   
+0x71 | Alt+F10                  
+0x72 | Control+PrtSc            
+0x73 | Control+Left arrow       
+0x74 | Control+Right arrow      
+0x75 | Control+End              
+0x76 | Control+PgDn             
+0x77 | Control+Home             
+0x78 | Alt + upper row 1        
+0x79 | Alt + upper row 2        
+0x7A | Alt + upper row 3        
+0x7B | Alt + upper row 4        
+0x7C | Alt + upper row 5        
+0x7D | Alt + upper row 6        
+0x7E | Alt + upper row 7        
+0x7F | Alt + upper row 8        
+0x80 | Alt + upper row 9        
+0x81 | Alt + upper row 0        
+0x82 | Alt+hyphen               
+0x83 | Alt+equals               
+0x84 | Control+PgUp             
+0x85 | Function key 11          
+0x86 | Function key 12          
+0x87 | Shift+F11                
+0x88 | Shift+F12                
+0x89 | Ctrl+F11                 
+0x8A | Ctrl+F12                 
+0x8B | Alt+F11                  
+0x8C | Alt+F12                  
+0x8D | Ctrl+Up arrow            
+0x8E | Ctrl+-                   
+0x8F | Ctrl+Center Key 5        
+0x90 | Ctrl++                   
+0x91 | Ctrl+Down arrow          
+0x92 | Ctrl+Ins                 
+0x93 | Ctrl+Del                 
+0x94 | Ctrl+Tab                 
+0x95 | Ctrl+/ (101-key)         
+0x96 | Ctrl+*                   
+0x97 | Alt+Home (101-key)       
+0x98 | Alt+Up arrow (101-key)   
+0x99 | Alt+Page up (101-key)    
+0x9B | Alt+Left arrow (101-key) 
+0x9D | Alt+Right arrow (101-key)
+0x9F | Alt+End (101-key)        
+0xA0 | Alt+Down arrow (101-key) 
+0xA1 | Alt+Page down (101-key)  
+0xA2 | Alt+Insert (101-key)     
+0xA3 | Alt+Delete (101-key)     
+0xA4 | Alt+/ (101-key)          
+0xA5 | Alt+Tab                  
+0xA6 | Alt+Enter (101-key)      
+
 Sources
 =======
   [*0] Keyboard scan code/character code combinations returned in AH/AL by INT 16h functions 00h/01h (standard) and functions 01h/11h (extended)
