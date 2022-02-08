@@ -191,7 +191,6 @@ class Table:
             matchnamep.pop()
         #
         src["where"] = [ ]
-        src["where order"] = matchname;
         for i in range(valid_len):
             if matchname[i] in src:
                 del src[matchname[i]]
@@ -199,6 +198,8 @@ class Table:
             obj = { }
             if not match[i] == None:
                 obj["path"] = match[i]
+            if not matchname[i] == None:
+                obj["type"] = matchname[i]
             if not matchobj[i] == None:
                 if isinstance(matchobj[i],dict):
                     if "title" in matchobj[i]:
