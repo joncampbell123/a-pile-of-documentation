@@ -63,8 +63,11 @@ class Book:
                                 hobj = newsearch[i]
                                 if isinstance(hobj, dict):
                                     if what in hobj:
+                                        parent_name = hobj["name lookup"]
                                         newsearch[i] = hobj[what]
                                         del hobj[what]
+                                        for hobjname in newsearch[i]:
+                                            newsearch[i][hobjname]["parent name lookup"] = parent_name
                                         continue
                                 #
                                 newsearch[i] = { }
