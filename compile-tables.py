@@ -24,6 +24,18 @@ class Book:
     hierarchy_root = None
     hierarchy_search = { }
     base_json = None
+    def serialize_to_compiled_json(self):
+        f = { }
+        f["type"] = book.type
+        f["title"] = book.title
+        f["author"] = book.author
+        f["publisher"] = book.publisher
+        f["copyright"] = { }
+        f["copyright"]["year"] = book.copyright_year
+        f["copyright"]["by"] = book.copyright_by
+        f["hierarchy"] = book.hierarchy
+        f["hierarchy search"] = book.hierarchy_search
+        return f;
     def add_sectionobj(self,obj,json):
         if not json == None:
             if isinstance(json, dict):
@@ -239,16 +251,7 @@ for table_id in tables_by_id.keys():
 final_json["sources"] = { }
 for book_id in book_by_id.keys():
     book = book_by_id[book_id];
-    final_json["sources"][book_id] = { }
-    final_json["sources"][book_id]["type"] = book.type
-    final_json["sources"][book_id]["title"] = book.title
-    final_json["sources"][book_id]["author"] = book.author
-    final_json["sources"][book_id]["publisher"] = book.publisher
-    final_json["sources"][book_id]["copyright"] = { }
-    final_json["sources"][book_id]["copyright"]["year"] = book.copyright_year
-    final_json["sources"][book_id]["copyright"]["by"] = book.copyright_by
-    final_json["sources"][book_id]["hierarchy"] = book.hierarchy
-    final_json["sources"][book_id]["hierarchy search"] = book.hierarchy_search
+    final_json["sources"][book_id] = book.serialize_to_compiled_json()
 
 f = open("compiled/tables.json","w")
 json.dump(final_json,f,indent="\t")
