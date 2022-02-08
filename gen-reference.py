@@ -76,6 +76,15 @@ def emit_table_as_text(path,table_id_json):
                         if colsiz[1] < vall:
                             colsiz[1] = vall
             #
+            desci = 0
+            for ci in range(len(colsiz)):
+                col = colhdr[ci]
+                if "title" in col and "description" in col:
+                    f.write(" - "+col["title"]+": "+col["description"]+"\n")
+                    desci = desci + 1
+            if desci > 0:
+                f.write("\n")
+            #
             for ci in range(len(colsiz)):
                 if ci > 0:
                     f.write(" | ")
@@ -124,7 +133,7 @@ def emit_table_as_text(path,table_id_json):
                     x = (x + (" "*colsiz[0]))[0:colsiz[0]]
                     f.write(x)
                     #
-                    f.write("   ")
+                    f.write(" | ")
                     #
                     x = ""
                     if "value" in row:
