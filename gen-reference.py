@@ -242,7 +242,7 @@ def emit_table_as_html(path,tp):
         #
         f.write("<table style=\"border: 1px solid black;\">")
         #
-        f.write("<tr>")
+        f.write("<tr style=\"background-color: rgb(224,224,224);\">")
         for ci in range(len(tp.display.colsiz)):
             x = ""
             if not tp.display.colhdr[ci] == None:
@@ -260,7 +260,8 @@ def emit_table_as_html(path,tp):
         f.write("</tr>")
         #
         if len(tp.display.disptable) > 0:
-            for row in tp.display.disptable:
+            for rowidx in range(len(tp.display.disptable)):
+                row = tp.display.disptable[rowidx]
                 columns = row.get("columns")
                 if not columns == None:
                     f.write("<tr valign=\"top\">")
@@ -280,6 +281,8 @@ def emit_table_as_html(path,tp):
                         f.write("white-space: pre; padding-right: 1em;")
                         if not coli == len(columns)-1:
                             f.write(" border-right: 1px solid black;")
+                        if not rowidx == len(tp.display.disptable)-1:
+                            f.write(" border-bottom: 1px solid black;")
                         f.write("\">")
                         #
                         f.write(html_escape(val))
