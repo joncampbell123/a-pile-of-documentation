@@ -697,7 +697,8 @@
 						},
 						{
 							"path": "1.23",
-							"title": "IBM Extended Character Codes"
+							"title": "IBM Extended Character Codes",
+							"page": "29"
 						}
 					],
 					"where order": [
