@@ -5,101 +5,11 @@ import glob
 import json
 import pathlib
 
+import common_json_help_module
+import book_reader_module
+
 # dictionary: table id -> table object
 tables_by_id = { }
-
-# dictionary: book id -> book object (TODO: Common library module in this project)
-book_by_id = { }
-
-# book object
-class Book:
-    id = None
-    type = None
-    title = None
-    author = None
-    publisher = None
-    copyright_year = None
-    copyright_by = None
-    hierarchy = [ ]
-    hierarchy_root = None
-    hierarchy_search = { }
-    base_json = None
-    def serialize_to_compiled_json(self):
-        f = { }
-        f["type"] = book.type
-        f["title"] = book.title
-        f["author"] = book.author
-        f["publisher"] = book.publisher
-        f["copyright"] = { }
-        f["copyright"]["year"] = book.copyright_year
-        f["copyright"]["by"] = book.copyright_by
-        f["hierarchy"] = book.hierarchy
-        f["hierarchy search"] = book.hierarchy_search
-        return f;
-    def add_sectionobj(self,obj,json):
-        if not json == None:
-            if isinstance(json, dict):
-                for name in json.keys():
-                    if not name in obj:
-                        obj[name] = [ ]
-                    obj[name].append(json[name])
-
-    def __init__(self,json,file_path):
-        self.base_json = json
-        file_path = pathlib.Path(file_path)
-        if len(file_path.parts) > 0:
-            self.id = file_path.parts[len(file_path.parts)-1]
-            if self.id[-5:] == ".json":
-                self.id = self.id[:-5]
-        if self.id == None:
-            raise Exception("Book with unknown id given path "+str(file_path))
-        self.type = json.get("type")
-        self.title = json.get("title")
-        self.author = json.get("author")
-        self.publisher = json.get("publisher")
-        if "copyright" in json:
-            obj = json["copyright"]
-            self.copyright_year = obj.get("year")
-            self.copyright_by = obj.get("by")
-        #
-        if "hierarchy" in json:
-            if isinstance(json["hierarchy"], list):
-                self.hierarchy = json["hierarchy"]
-                if len(self.hierarchy) > 0:
-                    self.hierarchy_root = json[self.hierarchy[0]] # blow up if it does not exist
-                    search = [ self.hierarchy_root ]
-                    newsearch = None
-                    prev_what = None
-                    for what in self.hierarchy:
-                        if what in self.hierarchy_search:
-                            raise Exception("Hierarchy name specified more than once: "+what)
-                        self.hierarchy_search[what] = [ ]
-                        #
-                        if not newsearch == None:
-                            for i in range(len(newsearch)):
-                                hobj = newsearch[i]
-                                if isinstance(hobj, dict):
-                                    if what in hobj:
-                                        parent_name = hobj["name lookup"]
-                                        newsearch[i] = hobj[what]
-                                        del hobj[what]
-                                        for hobjname in newsearch[i]:
-                                            newsearch[i][hobjname]["parent lookup"] = { "name": parent_name, "type": prev_what }
-                                        continue
-                                #
-                                newsearch[i] = { }
-                            #
-                            search = newsearch
-                        #
-                        newsearch = [ ]
-                        for searchobj in search:
-                            for hobjname in searchobj:
-                                hobj = searchobj[hobjname]
-                                hobj["name lookup"] = hobjname
-                                self.hierarchy_search[what].append(hobj)
-                                newsearch.append(hobj)
-                        #
-                        prev_what = what
 
 # table object
 class Table:
@@ -114,10 +24,9 @@ class Table:
     key_column = None
     table_format_type = None
     def expand_source_book(self,src,bookid):
-        global book_by_id
-        if not bookid in book_by_id:
+        if not bookid in book_reader_module.book_by_id:
             raise Exception("No such book "+bookid)
-        book = book_by_id[bookid]
+        book = book_reader_module.book_by_id[bookid]
         #
         citation = { }
         if not book.title == None:
@@ -226,15 +135,15 @@ class Table:
                 self.expand_source_book(src,src["book"])
     def serialize_to_compiled_json(self):
         f = { }
-        f["table"] = table.table
-        f["sources"] = table.sources
-        f["description"] = table.description
-        f["notes"] = table.notes
-        f["name"] = table.name
-        f["columns"] = table.columns
-        f["table format type"] = table.table_format_type
-        if not table.key_column == None:
-            f["key column"] = table.key_column
+        f["table"] = self.table
+        f["sources"] = self.sources
+        f["description"] = self.description
+        f["notes"] = self.notes
+        f["name"] = self.name
+        f["columns"] = self.columns
+        f["table format type"] = self.table_format_type
+        if not self.key_column == None:
+            f["key column"] = self.key_column
         return f;
     def filter_key_value_by_type(self,key):
         if not self.key_column == None:
@@ -302,16 +211,10 @@ class Table:
             else:
                 raise Exception("Table json unknown table format type "+str(self.table_format_type)+" in "+self.id)
 
-def load_json(path):
-    f = open(path,"r",encoding='utf-8')
-    j = json.load(f)
-    f.close()
-    return j
-
 def load_tables_base():
     g = glob.glob("tables/**/*--base.json",recursive=True)
     for path in g:
-        json = load_json(path)
+        json = common_json_help_module.load_json(path)
         if "table" in json:
             table = Table(json)
             if not table.id == None:
@@ -323,7 +226,7 @@ def load_tables():
     g = glob.glob("tables/**/*.json",recursive=True)
     for path in g:
         table_id = None
-        json = load_json(path)
+        json = common_json_help_module.load_json(path)
         if "base definition" in json:
             if json["base definition"] == True:
                 continue
@@ -336,17 +239,7 @@ def load_tables():
         else:
             raise Exception("Table json refers to undefined table id "+str(table_id)+" in json file "+path)
 
-def load_books():
-    g = glob.glob("sources/*.json",recursive=True)
-    for path in g:
-        json = load_json(path)
-        book = Book(json,path)
-        if not book.id == None:
-            if book.id in book_by_id:
-                raise Exception("Book "+book.id+" already defined")
-            book_by_id[book.id] = book
-
-load_books()
+book_reader_module.load_books()
 load_tables_base()
 load_tables()
 
@@ -364,8 +257,8 @@ for table_id in tables_by_id.keys():
     final_json["tables"][table_id] = table.serialize_to_compiled_json()
 
 final_json["sources"] = { }
-for book_id in book_by_id.keys():
-    book = book_by_id[book_id];
+for book_id in book_reader_module.book_by_id.keys():
+    book = book_reader_module.book_by_id[book_id];
     final_json["sources"][book_id] = book.serialize_to_compiled_json()
 
 f = open("compiled/tables.json","w")
