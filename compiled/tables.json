@@ -5,7 +5,7 @@
 				"$b": [
 					{
 						"value": [
-							"Vertical slash (|)",
+							"Vertical slash ( | )",
 							"$p$b",
 							"C:\\MYDIR}"
 						],
@@ -49,9 +49,9 @@
 				"$h": [
 					{
 						"value": [
-							"",
-							"",
-							""
+							"Destructive backspace",
+							"$t$h$h$h $p$g",
+							"09:30:26 C:\\MYDIR>"
 						],
 						"source index": 0,
 						"original key": "$h"
@@ -60,9 +60,9 @@
 				"$l": [
 					{
 						"value": [
-							"",
-							"",
-							""
+							"Less than sign ( < )",
+							"$l$n$g",
+							"<C>"
 						],
 						"source index": 0,
 						"original key": "$l"
@@ -71,9 +71,9 @@
 				"$n": [
 					{
 						"value": [
-							"",
-							"",
-							""
+							"Current drive letter",
+							"Drive is $n$g",
+							"Drive is C>"
 						],
 						"source index": 0,
 						"original key": "$n"
@@ -82,9 +82,9 @@
 				"$p": [
 					{
 						"value": [
-							"",
-							"",
-							""
+							"Current pathname directory",
+							"Path is $p$g",
+							"Path is C:\\MYDIR>"
 						],
 						"source index": 0,
 						"original key": "$p"
@@ -93,9 +93,9 @@
 				"$q": [
 					{
 						"value": [
-							"",
-							"",
-							""
+							"Equals sign ( = )",
+							"Drive $q $n$g",
+							"Drive = C>"
 						],
 						"source index": 0,
 						"original key": "$q"
@@ -104,9 +104,9 @@
 				"$t": [
 					{
 						"value": [
-							"",
-							"",
-							""
+							"Current system time",
+							"Time is $t",
+							"Time is 09:30:25.93"
 						],
 						"source index": 0,
 						"original key": "$t"
@@ -115,9 +115,9 @@
 				"$v": [
 					{
 						"value": [
-							"",
-							"",
-							""
+							"DOS version number",
+							"$v",
+							"IBM Personal Computer DOS Version   3.20"
 						],
 						"source index": 0,
 						"original key": "$v"
@@ -126,9 +126,9 @@
 				"$_": [
 					{
 						"value": [
-							"",
-							"",
-							""
+							"Carriage return/line feed",
+							"$t$h$h$h$_$p$g",
+							"9:30:25\nC:\\MYDIR>"
 						],
 						"source index": 0,
 						"original key": "$_"
@@ -137,9 +137,9 @@
 				"$$": [
 					{
 						"value": [
-							"",
-							"",
-							""
+							"Dollar sign ( $ )",
+							"Time is $$$g",
+							"Time is $>"
 						],
 						"source index": 0,
 						"original key": "$$"
@@ -148,9 +148,9 @@
 				"Any other": [
 					{
 						"value": [
-							"",
-							"",
-							""
+							"Treated as character typed",
+							"This is a prompt",
+							"This is a prompt"
 						],
 						"source index": 0,
 						"original key": "Any other"
