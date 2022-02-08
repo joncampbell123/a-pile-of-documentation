@@ -119,6 +119,19 @@ class Table:
             raise Exception("No such book "+bookid)
         book = book_by_id[bookid]
         #
+        citation = { }
+        if not book.title == None:
+            citation["title"] = book.title
+        if not book.author == None:
+            citation["author"] = book.author
+        if not book.publisher == None:
+            citation["publisher"] = book.publisher
+        if not book.copyright_year == None:
+            citation["year"] = book.copyright_year
+        if not book.type == None:
+            citation["type"] = book.type
+        src["citation"] = citation
+        #
         searchobj = None
         hierarchy_key = None
         match = [ ]
