@@ -1424,7 +1424,7 @@
 				],
 				"0x95": [
 					{
-						"value": "Ctrl+/",
+						"value": "Ctrl+/ (101-key)",
 						"extended": true,
 						"source index": 0,
 						"original key": "0x95"
@@ -1440,7 +1440,7 @@
 				],
 				"0x97": [
 					{
-						"value": "Alt+Home",
+						"value": "Alt+Home (101-key)",
 						"extended": true,
 						"source index": 0,
 						"original key": "0x97"
@@ -1448,7 +1448,7 @@
 				],
 				"0x98": [
 					{
-						"value": "Alt+Up arrow",
+						"value": "Alt+Up arrow (101-key)",
 						"extended": true,
 						"source index": 0,
 						"original key": "0x98"
@@ -1456,7 +1456,7 @@
 				],
 				"0x99": [
 					{
-						"value": "Alt+Page up",
+						"value": "Alt+Page up (101-key)",
 						"extended": true,
 						"source index": 0,
 						"original key": "0x99"
@@ -1464,7 +1464,7 @@
 				],
 				"0x9b": [
 					{
-						"value": "Alt+Left arrow",
+						"value": "Alt+Left arrow (101-key)",
 						"extended": true,
 						"source index": 0,
 						"original key": "0x9B"
@@ -1472,7 +1472,7 @@
 				],
 				"0x9d": [
 					{
-						"value": "Alt+Right arrow",
+						"value": "Alt+Right arrow (101-key)",
 						"extended": true,
 						"source index": 0,
 						"original key": "0x9D"
@@ -1480,7 +1480,7 @@
 				],
 				"0x9f": [
 					{
-						"value": "Alt+End",
+						"value": "Alt+End (101-key)",
 						"extended": true,
 						"source index": 0,
 						"original key": "0x9F"
@@ -1488,7 +1488,7 @@
 				],
 				"0xa0": [
 					{
-						"value": "Alt+Down arrow",
+						"value": "Alt+Down arrow (101-key)",
 						"extended": true,
 						"source index": 0,
 						"original key": "0xA0"
@@ -1496,7 +1496,7 @@
 				],
 				"0xa1": [
 					{
-						"value": "Alt+Page down",
+						"value": "Alt+Page down (101-key)",
 						"extended": true,
 						"source index": 0,
 						"original key": "0xA1"
@@ -1504,7 +1504,7 @@
 				],
 				"0xa2": [
 					{
-						"value": "Alt+Insert",
+						"value": "Alt+Insert (101-key)",
 						"extended": true,
 						"source index": 0,
 						"original key": "0xA2"
@@ -1512,7 +1512,7 @@
 				],
 				"0xa3": [
 					{
-						"value": "Alt+Delete",
+						"value": "Alt+Delete (101-key)",
 						"extended": true,
 						"source index": 0,
 						"original key": "0xA3"
@@ -1520,7 +1520,7 @@
 				],
 				"0xa4": [
 					{
-						"value": "Alt+/",
+						"value": "Alt+/ (101-key)",
 						"extended": true,
 						"source index": 0,
 						"original key": "0xA4"
@@ -1536,7 +1536,7 @@
 				],
 				"0xa6": [
 					{
-						"value": "Alt+Enter",
+						"value": "Alt+Enter (101-key)",
 						"extended": true,
 						"source index": 0,
 						"original key": "0xA6"
