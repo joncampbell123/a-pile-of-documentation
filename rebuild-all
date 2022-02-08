@@ -1,0 +1,4 @@
+#!/bin/bash
+./compile-tables.py || exit 1
+./gen-reference.py || exit 1
+
