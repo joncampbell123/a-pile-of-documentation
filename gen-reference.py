@@ -291,7 +291,7 @@ def emit_table_as_html(path,table_id,tp):
                             sia = row.get("source index")
                             if not sia == None:
                                 for si in sia:
-                                    f.write(" <a style=\"text-decoration: none;\" href=\"#source_"+str(si)+"\"><sup style=\"color: rgb(0,0,192);\"><i>[*"+str(si)+"]</i></sup></a>")
+                                    f.write(" <a style=\"text-decoration: none;\" href=\"#"+table_id+"_source_"+str(si)+"\"><sup style=\"color: rgb(0,0,192);\"><i>[*"+str(si)+"]</i></sup></a>")
                         #
                         f.write("</td>")
                     #
@@ -310,7 +310,7 @@ def emit_table_as_html(path,table_id,tp):
             if not int(sobj.get("source index")) == sii:
                 raise Exception("source index is wrong")
             #
-            f.write("<td style=\"padding-left: 2em; padding-bottom: 1em;\" id=\"source_"+str(sii)+"\"><sup style=\"color: rgb(0,0,192);\"><i>[*"+str(sii)+"]</i></sup></td>")
+            f.write("<td style=\"padding-left: 2em; padding-bottom: 1em;\" id=\""+table_id+"_source_"+str(sii)+"\"><sup style=\"color: rgb(0,0,192);\"><i>[*"+str(sii)+"]</i></sup></td>")
             #
             if "book" in sobj:
                 book = sobj["book"]
