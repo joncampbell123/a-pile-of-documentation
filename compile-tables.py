@@ -18,6 +18,7 @@ class Book:
     author = None
     publisher = None
     copyright_year = None
+    copyright_by = None
     hierarchy = [ ]
     hierarchy_root = None
     hierarchy_search = { }
@@ -194,6 +195,10 @@ def load_books():
     for path in g:
         json = load_json(path)
         book = Book(json,path)
+        if not book.id == None:
+            if book.id in book_by_id:
+                raise Exception("Book "+book.id+" already defined")
+            book_by_id[book.id] = book
 
 load_books()
 load_tables_base()
@@ -205,6 +210,7 @@ except:
     True
 
 final_json = { }
+
 final_json["tables"] = { }
 for table_id in tables_by_id.keys():
     table = tables_by_id[table_id]
@@ -218,6 +224,19 @@ for table_id in tables_by_id.keys():
     final_json["tables"][table_id]["table format type"] = table.table_format_type
     if not table.key_column == None:
         final_json["tables"][table_id]["key column"] = table.key_column
+
+final_json["sources"] = { }
+for book_id in book_by_id.keys():
+    book = book_by_id[book_id];
+    final_json["sources"][book_id] = { }
+    final_json["sources"][book_id]["title"] = book.title
+    final_json["sources"][book_id]["author"] = book.author
+    final_json["sources"][book_id]["publisher"] = book.publisher
+    final_json["sources"][book_id]["copyright"] = { }
+    final_json["sources"][book_id]["copyright"]["year"] = book.copyright_year
+    final_json["sources"][book_id]["copyright"]["by"] = book.copyright_by
+    final_json["sources"][book_id]["hierarchy"] = book.hierarchy
+    final_json["sources"][book_id]["hierarchy search"] = book.hierarchy_search
 
 f = open("compiled/tables.json","w")
 json.dump(final_json,f,indent="\t")
