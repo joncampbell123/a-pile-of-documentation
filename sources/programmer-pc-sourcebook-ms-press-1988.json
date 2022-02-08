@@ -10,6 +10,7 @@
 		"isbn-10": "1-55615-118-7",
 		"isbn-13": "9-781556-151187"
 	},
+	"hierarchy": [ "parts", "sections", "subsections" ],
 	"parts": {
 		"Part 1": {
 			"title": "Miscellaneous Information",

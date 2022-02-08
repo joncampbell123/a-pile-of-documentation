@@ -3,9 +3,79 @@
 import os
 import glob
 import json
+import pathlib
 
 # dictionary: table id -> table object
 tables_by_id = { }
+
+# dictionary: book id -> book object (TODO: Common library module in this project)
+book_by_id = { }
+
+# book object
+class Book:
+    id = None
+    title = None
+    author = None
+    publisher = None
+    copyright_year = None
+    hierarchy = [ ]
+    hierarchy_root = None
+    hierarchy_search = { }
+    base_json = None
+    def add_sectionobj(self,obj,json):
+        if not json == None:
+            if isinstance(json, dict):
+                for name in json.keys():
+                    if not name in obj:
+                        obj[name] = [ ]
+                    obj[name].append(json[name])
+
+    def __init__(self,json,file_path):
+        self.base_json = json
+        file_path = pathlib.Path(file_path)
+        if len(file_path.parts) > 0:
+            self.id = file_path.parts[len(file_path.parts)-1]
+        if self.id == None:
+            raise Exception("Book with unknown id given path "+str(file_path))
+        self.title = json.get("title")
+        self.author = json.get("author")
+        self.publisher = json.get("publisher")
+        if "copyright" in json:
+            obj = json["copyright"]
+            self.copyright_year = obj.get("year")
+            self.copyright_by = obj.get("by")
+        #
+        if "hierarchy" in json:
+            if isinstance(json["hierarchy"], list):
+                self.hierarchy = json["hierarchy"]
+                if len(self.hierarchy) > 0:
+                    self.hierarchy_root = json[self.hierarchy[0]] # blow up if it does not exist
+                    search = [ self.hierarchy_root ]
+                    newsearch = None
+                    for what in self.hierarchy:
+                        if what in self.hierarchy_search:
+                            raise Exception("Hierarchy name specified more than once: "+what)
+                        self.hierarchy_search[what] = [ ]
+                        #
+                        if not newsearch == None:
+                            for i in range(len(newsearch)):
+                                hobj = newsearch[i]
+                                if isinstance(hobj, dict):
+                                    if what in hobj:
+                                        newsearch[i] = hobj[what]
+                                        continue
+                                #
+                                newsearch[i] = { }
+                            #
+                            search = newsearch
+                        #
+                        newsearch = [ ]
+                        for searchobj in search:
+                            for hobjname in searchobj:
+                                hobj = searchobj[hobjname]
+                                hobj["name lookup"] = hobjname
+                                self.hierarchy_search[what].append(hobj)
+                                newsearch.append(hobj)
 
 # table object
 class Table:
@@ -119,6 +189,13 @@ def load_tables():
         else:
             raise Exception("Table json refers to undefined table id "+str(table_id)+" in json file "+path)
 
+def load_books():
+    g = glob.glob("sources/*.json",recursive=True)
+    for path in g:
+        json = load_json(path)
+        book = Book(json,path)
+
+load_books()
 load_tables_base()
 load_tables()
 
