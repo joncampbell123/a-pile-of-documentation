@@ -685,8 +685,17 @@
 			"sources": [
 				{
 					"book": "programmer-pc-sourcebook-ms-press-1988",
-					"subsection": "1.23",
-					"source index": 0
+					"source index": 0,
+					"where path": [
+						"Part 1",
+						"Section 1",
+						"1.23"
+					],
+					"where order": [
+						"part",
+						"section",
+						"subsection"
+					]
 				}
 			],
 			"description": "Extended character codes returned by the IBM BIOS in the keyboard buffer, through INT 16h, and at the MS-DOS console driver as 00h <code>",

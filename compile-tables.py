@@ -113,6 +113,89 @@ class Table:
     sources = [ ]
     key_column = None
     table_format_type = None
+    def expand_source_book(self,src,bookid):
+        global book_by_id
+        if not bookid in book_by_id:
+            raise Exception("No such book "+bookid)
+        book = book_by_id[bookid]
+        #
+        searchobj = None
+        hierarchy_key = None
+        match = [ ]
+        matches = 0;
+        matchname = [ ]
+        matchnamep = [ ]
+        for h in book.hierarchy:
+            # plural to singular. The book says "parts", "sections", the reference says "part", "section"
+            k = h
+            if k[-1:] == 's':
+                k = k[:-1]
+            # match
+            m = None
+            if k in src:
+                matches = matches + 1
+                m = src[k]
+            match.append(m);
+            matchname.append(k)
+            matchnamep.append(h)
+        if matches == 0:
+            return
+        # fill in the gaps by searching upward
+        i = len(match) - 1
+        valid_len = None
+        while i >= 0:
+            if match[i] == None:
+                i = i - 1
+                continue
+            #
+            if valid_len == None:
+                valid_len = i + 1
+            # look up the parent this came from
+            search = book.hierarchy_search.get(matchnamep[i])
+            if search == None:
+                raise Exception("Book hiearchy missing search map for "+matchnamep[i])
+            #
+            obj = None
+            for tobj in search:
+                if tobj["name lookup"] == match[i]:
+                    obj = tobj;
+                    break
+            if obj == None:
+                raise Exception("No such "+matchname[i]+" named "+match[i])
+            if i < 1:
+                break
+            pobj = obj.get("parent lookup")
+            if pobj == None:
+                raise Exception("No parent for "+matchname[i]+" named "+match[i])
+            if not pobj["type"] in book.hierarchy_search:
+                raise Exception("Book hiearchy missing search map for "+pobj["type"])
+            i = i - 1
+            if not pobj["type"] == matchnamep[i]:
+                raise Exception("Wrong parent type. Wanted "+pobj["type"]+" got "+matchnamep[i])
+            if not match[i] == None:
+                if not pobj["name"] == match[i]:
+                    raise Exception("Wrong parent name. Wanted "+pobj["name"]+" got "+match[i])
+            else:
+                match[i] = pobj["name"]
+        #
+        if valid_len == None:
+            valid_len = 0
+        while len(match) > valid_len:
+            match.pop()
+        while len(matchname) > valid_len:
+            matchname.pop()
+        while len(matchnamep) > valid_len:
+            matchnamep.pop()
+        #
+        src["where path"] = match
+        src["where order"] = matchname;
+        for i in range(valid_len):
+            if matchname[i] in src:
+                del src[matchname[i]]
+    def expand_source(self):
+        for src in self.sources:
+            if "book" in src:
+                self.expand_source_book(src,src["book"])
     def serialize_to_compiled_json(self):
         f = { }
         f["table"] = table.table
@@ -249,6 +332,7 @@ final_json = { }
 final_json["tables"] = { }
 for table_id in tables_by_id.keys():
     table = tables_by_id[table_id]
+    table.expand_source()
     final_json["tables"][table_id] = table.serialize_to_compiled_json()
 
 final_json["sources"] = { }
