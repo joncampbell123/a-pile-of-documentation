@@ -190,12 +190,18 @@ class Table:
         while len(matchnamep) > valid_len:
             matchnamep.pop()
         #
-        src["where path"] = match
+        src["where"] = [ ]
         src["where order"] = matchname;
-        src["where titles"] = matchtitle
         for i in range(valid_len):
             if matchname[i] in src:
                 del src[matchname[i]]
+            #
+            obj = { }
+            if not match[i] == None:
+                obj["path"] = match[i]
+            if not matchtitle[i] == None:
+                obj["title"] = matchtitle[i]
+            src["where"].append(obj)
     def expand_source(self):
         for src in self.sources:
             if "book" in src:

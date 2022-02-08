@@ -686,20 +686,24 @@
 				{
 					"book": "programmer-pc-sourcebook-ms-press-1988",
 					"source index": 0,
-					"where path": [
-						"Part 1",
-						"Section 1",
-						"1.23"
+					"where": [
+						{
+							"path": "Part 1",
+							"title": "Miscellaneous Information"
+						},
+						{
+							"path": "Section 1",
+							"title": "General Information"
+						},
+						{
+							"path": "1.23",
+							"title": "IBM Extended Character Codes"
+						}
 					],
 					"where order": [
 						"part",
 						"section",
 						"subsection"
-					],
-					"where titles": [
-						"Miscellaneous Information",
-						"General Information",
-						"IBM Extended Character Codes"
 					]
 				}
 			],
