@@ -200,6 +200,10 @@ def emit_table_as_text(path,tp):
                             collines = len(vallines)
                     # second pass: draw the columns, multiple lines if needed
                     for collc in range(collines):
+                        show_sources = False
+                        if collc == 0 and row.get("same key") == True:
+                            show_sources = True
+                        #
                         for coli in range(len(columns)):
                             if coli > 0:
                                 f.write(" | ")
@@ -212,9 +216,13 @@ def emit_table_as_text(path,tp):
                                     val = ""
                             #
                             x = (val + (" "*tp.display.colsiz[coli]))[0:tp.display.colsiz[coli]]
+                            #
+                            if not show_sources == True and coli == len(columns) - 1:
+                                x = x.rstrip()
+                            #
                             f.write(x)
                         #
-                        if collc == 0 and row.get("same key") == True:
+                        if show_sources == True:
                             sia = row.get("source index")
                             if not sia == None:
                                 for si in sia:
