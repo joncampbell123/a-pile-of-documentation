@@ -1453,6 +1453,94 @@
 						"source index": 0,
 						"original key": "0x98"
 					}
+				],
+				"0x99": [
+					{
+						"value": "Alt+Page up",
+						"extended": true,
+						"source index": 0,
+						"original key": "0x99"
+					}
+				],
+				"0x9b": [
+					{
+						"value": "Alt+Left arrow",
+						"extended": true,
+						"source index": 0,
+						"original key": "0x9B"
+					}
+				],
+				"0x9d": [
+					{
+						"value": "Alt+Right arrow",
+						"extended": true,
+						"source index": 0,
+						"original key": "0x9D"
+					}
+				],
+				"0x9f": [
+					{
+						"value": "Alt+End",
+						"extended": true,
+						"source index": 0,
+						"original key": "0x9F"
+					}
+				],
+				"0xa0": [
+					{
+						"value": "Alt+Down arrow",
+						"extended": true,
+						"source index": 0,
+						"original key": "0xA0"
+					}
+				],
+				"0xa1": [
+					{
+						"value": "Alt+Page down",
+						"extended": true,
+						"source index": 0,
+						"original key": "0xA1"
+					}
+				],
+				"0xa2": [
+					{
+						"value": "Alt+Insert",
+						"extended": true,
+						"source index": 0,
+						"original key": "0xA2"
+					}
+				],
+				"0xa3": [
+					{
+						"value": "Alt+Delete",
+						"extended": true,
+						"source index": 0,
+						"original key": "0xA3"
+					}
+				],
+				"0xa4": [
+					{
+						"value": "Alt+/",
+						"extended": true,
+						"source index": 0,
+						"original key": "0xA4"
+					}
+				],
+				"0xa5": [
+					{
+						"value": "Alt+Tab",
+						"extended": true,
+						"source index": 0,
+						"original key": "0xA5"
+					}
+				],
+				"0xa6": [
+					{
+						"value": "Alt+Enter",
+						"extended": true,
+						"source index": 0,
+						"original key": "0xA6"
+					}
 				]
 			},
 			"sources": [
