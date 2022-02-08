@@ -32,7 +32,7 @@
 				],
 				"0xf": [
 					{
-						"value": "Shift+Backspace",
+						"value": "Shift Tab",
 						"source index": 0,
 						"original key": "0x0F"
 					},

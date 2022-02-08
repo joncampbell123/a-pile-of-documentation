@@ -7,7 +7,7 @@
 		"0x01": { "value": "Alt+Esc", "extended": true },
 		"0x03": { "value": "Ctrl+2" },
 		"0x0E": { "value": "Alt+Backspace", "extended": true },
-		"0x0F": { "value": "Shift+Backspace" },
+		"0x0F": { "value": "Shift Tab" },
 		"0x10": { "value": "Alt+Q" },
 		"0x11": { "value": "Alt+W" },
 		"0x12": { "value": "Alt+E" },

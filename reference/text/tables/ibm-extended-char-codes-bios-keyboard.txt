@@ -13,8 +13,7 @@ Character code | Key combination
 0x03           | Ctrl+2                    [*0]
 0x03           | Null character (none)     [*1]
 0x0E           | Alt+Backspace            
-0x0F           | Shift+Backspace           [*0]
-0x0F           | Shift Tab                 [*1]
+0x0F           | Shift Tab                
 0x10           | Alt+Q                    
 0x11           | Alt+W                    
 0x12           | Alt+E                    
