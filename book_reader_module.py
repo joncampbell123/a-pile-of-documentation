@@ -12,6 +12,7 @@ book_by_id = { }
 # book object
 class Book:
     id = None
+    url = None
     type = None
     title = None
     author = None
@@ -24,6 +25,8 @@ class Book:
     base_json = None
     def serialize_to_compiled_json(self):
         f = { }
+        if not self.url == None:
+            f["url"] = self.url
         if not self.type == None:
             f["type"] = self.type
         if not self.title == None:
@@ -66,6 +69,7 @@ class Book:
                 self.id = self.id[:-5]
         if self.id == None:
             raise Exception("Book with unknown id given path "+str(file_path))
+        self.url = json.get("url")
         self.type = json.get("type")
         self.title = json.get("title")
         self.author = json.get("author")
