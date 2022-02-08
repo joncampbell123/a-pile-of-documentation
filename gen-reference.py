@@ -160,6 +160,12 @@ def emit_table_as_text(path,table_id_json):
                     f.write(head)
                     if "book" in sobj:
                         book = sobj["book"]
+                    elif "website" in sobj:
+                        book = sobj["website"]
+                    else:
+                        book = None
+
+                    if not book == None:
                         where = sobj.get("where")
                         citation = sobj.get("citation")
                         if not citation == None:
@@ -186,6 +192,11 @@ def emit_table_as_text(path,table_id_json):
                                 x = x + str(year)
                             if not x == "":
                                 f.write(x+"\n")
+                            #
+                            url = citation.get("url")
+                            if not url == None:
+                                f.write(" "*len(head))
+                                f.write("URL: "+url+"\n")
                         if not where == None:
                             x = ""
                             for whi in where:
@@ -205,10 +216,6 @@ def emit_table_as_text(path,table_id_json):
                             if not x == "":
                                 f.write(" "*len(head))
                                 f.write(x+"\n")
-                    elif "website" in sobj:
-                        f.write("Website\n")
-                    else:
-                        f.write("??\n")
                 f.write("\n")
     #
     if not notes == None:
