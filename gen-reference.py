@@ -98,9 +98,11 @@ def emit_table_as_text(path,table_id_json):
                 row = table[rowkey]
                 key = rowkey
                 disprows = [ ]
+                dispsrcs = [ ]
                 if len(row) > 0:
                     chkrow = row[0]
                     disprows.append(chkrow)
+                    dispsrcs.append([ chkrow.get("source index") ])
                     for i in range(1,len(row)):
                         currow = row[i]
                         dif = False
@@ -110,8 +112,12 @@ def emit_table_as_text(path,table_id_json):
                         if dif == True:
                             chkrow = currow
                             disprows.append(chkrow)
+                            dispsrcs.append([ chkrow.get("source index") ])
+                        else:
+                            dispsrcs[len(dispsrcs)-1].append(currow.get("source index"))
                 #
-                for row in disprows:
+                for rowi in range(len(disprows)):
+                    row = disprows[rowi]
                     x = rowkey
                     if "original key" in row:
                         x = row["original key"]
@@ -125,6 +131,10 @@ def emit_table_as_text(path,table_id_json):
                         x = row["value"]
                     x = (x + (" "*colsiz[1]))[0:colsiz[1]]
                     f.write(x)
+                    #
+                    if len(disprows) > 1:
+                        for si in dispsrcs[rowi]:
+                            f.write(" [*"+str(si)+"]")
                     #
                     f.write("\n")
             #
