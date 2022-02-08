@@ -210,7 +210,12 @@ class Table:
             self.table_format_type = obj.get("type")
             if self.table_format_type == "key=value":
                 self.key_column = obj["key"] # will throw exception if these keys do not exist
-                self.columns = [ obj["value"] ] # will throw exception if these keys do not exist
+
+                # will throw exception if these keys do not exist
+                if isinstance(obj["value"],list):
+                    self.columns = obj["value"]
+                else:
+                    self.columns = [ obj["value"] ]
             else:
                 raise Exception("Table json unknown table format type "+str(self.table_format_type)+" in "+self.id)
 
