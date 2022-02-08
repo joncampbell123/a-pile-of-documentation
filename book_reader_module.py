@@ -24,15 +24,30 @@ class Book:
     base_json = None
     def serialize_to_compiled_json(self):
         f = { }
-        f["type"] = self.type
-        f["title"] = self.title
-        f["author"] = self.author
-        f["publisher"] = self.publisher
+        if not self.type == None:
+            f["type"] = self.type
+        if not self.title == None:
+            f["title"] = self.title
+        if not self.author == None:
+            f["author"] = self.author
+        if not self.publisher == None:
+            f["publisher"] = self.publisher
+
         f["copyright"] = { }
-        f["copyright"]["year"] = self.copyright_year
-        f["copyright"]["by"] = self.copyright_by
-        f["hierarchy"] = self.hierarchy
-        f["hierarchy search"] = self.hierarchy_search
+        if not self.copyright_year == None:
+            f["copyright"]["year"] = self.copyright_year
+        if not self.copyright_by == None:
+            f["copyright"]["by"] = self.copyright_by
+        if not f["copyright"]:
+            del f["copyright"]
+
+        if not self.hierarchy == None:
+            if len(self.hierarchy) > 0:
+                f["hierarchy"] = self.hierarchy
+        if not self.hierarchy_search == None:
+            if self.hierarchy_search:
+                f["hierarchy search"] = self.hierarchy_search
+
         return f;
     def add_sectionobj(self,obj,json):
         if not json == None:
