@@ -180,7 +180,7 @@ def emit_table_as_text(path,table_id,tp):
             #
             f.write("\n")
     #
-    if not tp.notes == None:
+    if not tp.notes == None and len(tp.notes) > 0:
         f.write("Notes\n")
         f.write("-----\n")
         for note in tp.notes:
@@ -375,7 +375,7 @@ def emit_table_as_html(path,table_id,tp):
         #
         f.write("</table>")
     #
-    if not tp.notes == None:
+    if not tp.notes == None and len(tp.notes) > 0:
         f.write("<p><span style=\"border-bottom: solid; border-bottom-width: thin;\">Notes</span></p>")
         f.write("<ul style=\"font-size: 0.8em;\">")
         for note in tp.notes:

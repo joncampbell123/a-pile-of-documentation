@@ -41,6 +41,3 @@ Sources
   [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
        Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.17, Prompt Special Characters
 
-Notes
------
-
