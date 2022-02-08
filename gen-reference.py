@@ -276,7 +276,11 @@ def emit_table_as_html(path,tp):
                         if row.get("same key") == True:
                             show_sources = True
                         #
-                        f.write("<td style=\"white-space: pre;\">")
+                        f.write("<td style=\"")
+                        f.write("white-space: pre; padding-right: 1em;")
+                        if not coli == len(columns)-1:
+                            f.write(" border-right: 1px solid black;")
+                        f.write("\">")
                         #
                         f.write(html_escape(val))
                         #
