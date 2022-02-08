@@ -16,10 +16,10 @@ class Table:
     name = None
     base_json = None
     description = None
-    notes = [ ]
-    table = { }
-    columns = [ ]
-    sources = [ ]
+    notes = None
+    table = None
+    columns = None
+    sources = None
     key_column = None
     table_format_type = None
     def expand_source_book(self,src,bookid):
@@ -176,6 +176,10 @@ class Table:
                         s_table[key]["original key"] = key_str
                         self.table[table_key].append(s_table[key])
     def __init__(self,json):
+        self.table = { }
+        self.notes = [ ]
+        self.columns = [ ]
+        self.sources = [ ]
         self.base_json = json
         if "id" in json:
             self.id = json["id"]
