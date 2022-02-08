@@ -189,7 +189,118 @@ def emit_table_as_text(path,tp):
     #
     f.close()
 
+def html_escape(e):
+    r = ""
+    for c in e:
+        if c == '&':
+            r = r + "&amp;"
+        elif c == '<':
+            r = r + "&lt;"
+        elif c == '>':
+            r = r + "&gt;"
+        elif c == '"':
+            r = r + "&quot;"
+        elif c == '\'':
+            r = r + "&apos;"
+        else:
+            r = r + c
+    #
+    return r
+
+def emit_table_as_html(path,tp):
+    #
+    title = tp.display.header
+    #
+    f = open(path,"w",encoding="UTF-8")
+    f.write("<!DOCTYPE HTML>\n")
+    f.write("<html>")
+    #
+    f.write("<head>")
+    f.write("<meta charset=\"utf-8\">")
+    f.write("<title>"+html_escape(title)+"</title>")
+    f.write("</head>")
+    #
+    f.write("<body>");
+    f.write("<h2><span style=\"border-bottom: double;\">"+html_escape(title)+"</span></h2>")
+    #
+    if not tp.description == None:
+        f.write("<p>"+html_escape(tp.description)+"</p>")
+    #
+    if not tp.display.disptable == None:
+        desci = 0
+        for ci in range(len(tp.display.colsiz)):
+            if not tp.display.colhdr[ci] == None and not tp.display.coldesc[ci] == None:
+                if desci == 0:
+                    f.write("<table>")
+                f.write("<tr>")
+                f.write("<td style=\"font-weight: 700; padding-right: 1em; white-space: pre;\">"+html_escape(tp.display.colhdr[ci])+":</td>")
+                f.write("<td>"+html_escape(tp.display.coldesc[ci])+"</td>")
+                f.write("</tr>")
+                desci = desci + 1
+        if desci > 0:
+            f.write("</table><br>")
+        #
+        f.write("<table style=\"border: 1px solid black;\">")
+        #
+        f.write("<tr>")
+        for ci in range(len(tp.display.colsiz)):
+            x = ""
+            if not tp.display.colhdr[ci] == None:
+                x = tp.display.colhdr[ci]
+            #
+            if ci == len(tp.display.colsiz)-1:
+                style = ""
+            else:
+                style = "border-right: 1px solid black;"
+            #
+            style = style + " padding-right: 1em;"
+            style = style + " border-bottom: 1px solid black;"
+            #
+            f.write("<th style=\""+style.strip()+"\">"+html_escape(x)+"</th>")
+        f.write("</tr>")
+        #
+        if len(tp.display.disptable) > 0:
+            for row in tp.display.disptable:
+                columns = row.get("columns")
+                if not columns == None:
+                    f.write("<tr valign=\"top\">")
+                    show_sources = False
+                    # HTML can handle multi-line just fine for us
+                    for coli in range(len(columns)):
+                        #
+                        col = columns[coli]
+                        val = col.get("value")
+                        if val == None:
+                            val = ""
+                        #
+                        if row.get("same key") == True:
+                            show_sources = True
+                        #
+                        f.write("<td style=\"white-space: pre;\">")
+                        #
+                        f.write(html_escape(val))
+                        #
+                        if coli == len(columns)-1 and show_sources == True:
+                            sia = row.get("source index")
+                            if not sia == None:
+                                for si in sia:
+                                    f.write("<sup style=\"color: rgb(0,0,192);\"><i> [*"+str(si)+"]</i></sup>")
+                        #
+                        f.write("</td>")
+                    #
+                    f.write("</tr>")
+            #
+            f.write("\n")
+        #
+        f.write("</table>")
+    #
+    f.write("</body>");
+    #
+    f.write("</html>")
+    f.close()
+
 os.system("rm -Rf reference/text/tables; mkdir -p reference/text/tables")
+os.system("rm -Rf reference/html/tables; mkdir -p reference/html/tables")
 
 tables_json = common_json_help_module.load_json("compiled/tables.json")
 
@@ -198,4 +309,5 @@ if not tables == None:
     for table_id in tables:
         tp = table_presentation_module.TablePresentation(tables[table_id])
         emit_table_as_text("reference/text/tables/"+table_id+".txt",tp)
+        emit_table_as_html("reference/html/tables/"+table_id+".htm",tp)
 
