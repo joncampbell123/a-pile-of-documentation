@@ -57,6 +57,8 @@ class TablePresentation:
         if not self.key_column == None:
             if self.key_column["type"][0:4] == "uint":
                 sortFunc = dict_sorted_uint_func
+            if self.key_column["type"][0:6] == "string":
+                sortFunc = dict_sorted_text_func
         #
         self.display.disptable = [ ]
         for rowkey in sorted(self.table,key=sortFunc):
@@ -145,14 +147,8 @@ def emit_table_as_text(path,tp):
     if not tp.display.disptable == None:
         desci = 0
         for ci in range(len(tp.display.colsiz)):
-            x = ""
-            if not tp.display.colhdr[ci] == None:
-                x = x + tp.display.colhdr[ci]
-            if not tp.display.coldesc[ci] == None:
-                if not x == "":
-                    x = x + ": "
-                x = x + tp.display.coldesc[ci]
-            if not x == "":
+            if not tp.display.colhdr[ci] == None and not tp.display.coldesc[ci] == None:
+                x = tp.display.colhdr[ci] + ": " + tp.display.coldesc[ci]
                 f.write(" - "+x+"\n")
                 desci = desci + 1
         if desci > 0:
