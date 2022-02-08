@@ -32,12 +32,14 @@ class TablePresentation:
         colhdr = None
         colobj = None
         coldesc = None
+        columns_have_newlines = False
     #
     def build_table_key_value(self,json):
         self.display.colsiz = [ 1 ]
         self.display.colobj = [ self.key_column ]
         self.display.colhdr = [ self.key_column.get("title") ]
         self.display.coldesc = [ self.key_column.get("description") ]
+        self.display.columns_have_newlines = False
         #
         for col in self.columns:
             self.display.colsiz.append(1)
@@ -103,7 +105,10 @@ class TablePresentation:
                     if ctxt == None:
                         ctxt = ""
                     # Problem: The text may have newlines! Split by newline then use the longest line
-                    for ctxtlin in ctxt.split('\n'):
+                    ctxtlines = ctxt.split('\n')
+                    if len(ctxtlines) > 1:
+                        self.display.columns_have_newlines = True
+                    for ctxtlin in ctxtlines:
                         clen = len(ctxtlin)
                         if self.display.colsiz[coli] < clen:
                             self.display.colsiz[coli] = clen
@@ -215,6 +220,14 @@ def emit_table_as_text(path,tp):
                                 for si in sia:
                                     f.write(" [*"+str(si)+"]")
                         #
+                        f.write("\n")
+                    # Problem: If any column has multiple lines, the per-line text format becomes confusing, and lines are needed to visually separate them
+                    if tp.display.columns_have_newlines == True:
+                        for ci in range(len(tp.display.colsiz)):
+                            if ci > 0:
+                                f.write("-+-")
+                            x = "-"*tp.display.colsiz[ci]
+                            f.write(x)
                         f.write("\n")
             #
             f.write("\n")
