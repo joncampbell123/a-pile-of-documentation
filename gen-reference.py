@@ -102,9 +102,11 @@ class TablePresentation:
                     ctxt = cobj.get("value")
                     if ctxt == None:
                         ctxt = ""
-                    clen = len(ctxt)
-                    if self.display.colsiz[coli] < clen:
-                        self.display.colsiz[coli] = clen
+                    # Problem: The text may have newlines! Split by newline then use the longest line
+                    for ctxtlin in ctxt.split('\n'):
+                        clen = len(ctxtlin)
+                        if self.display.colsiz[coli] < clen:
+                            self.display.colsiz[coli] = clen
     #
     def __init__(self,json):
         self.base_json = json
