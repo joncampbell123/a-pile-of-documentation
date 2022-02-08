@@ -10,25 +10,25 @@
 		"isbn-10": "1-55615-118-7",
 		"isbn-13": "9-781556-151187"
 	},
-	"parts": [
+	"parts": {
 		"Part 1": {
 			"title": "Miscellaneous Information",
-			"sections": [
+			"sections": {
 				"Section 1": {
 					"title": "General Information",
-					"subsections": [
+					"subsections": {
 						"1.23": {
 							"title": "IBM Extended Character Codes",
 							"page": "29",
 							"source": "IBM PC/XT Technical Reference, page 2-14"
 						}
-					]
+					}
 				}
-			]
+			}
 		},
 		"Part 2": {
 			"title": "Software",
-			"sections": [
+			"sections": {
 				"Section 2": {
 					"title": "DOS Commands, Utilities, and Summaries"
 				},
@@ -36,7 +36,7 @@
 					"title": "DOS Function Calls and Support Tables",
 					"page": "71"
 				}
-			]
+			}
 		}
-	]
+	}
 }
