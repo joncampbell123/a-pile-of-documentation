@@ -232,9 +232,9 @@ def emit_table_as_html(path,tp):
             if not tp.display.colhdr[ci] == None and not tp.display.coldesc[ci] == None:
                 if desci == 0:
                     f.write("<table>")
-                f.write("<tr>")
-                f.write("<td style=\"font-weight: 700; padding-right: 1em; white-space: pre;\">"+html_escape(tp.display.colhdr[ci])+":</td>")
-                f.write("<td>"+html_escape(tp.display.coldesc[ci])+"</td>")
+                f.write("<tr style=\"font-size: 0.9em;\">")
+                f.write("<td style=\"font-weight: 700; padding-right: 1em; white-space: pre; text-align: left;\">"+html_escape(tp.display.colhdr[ci])+":</td>")
+                f.write("<td style=\"text-align: left;\">"+html_escape(tp.display.coldesc[ci])+"</td>")
                 f.write("</tr>")
                 desci = desci + 1
         if desci > 0:
