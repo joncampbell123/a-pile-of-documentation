@@ -7,8 +7,8 @@ Special escape codes in the $PROMPT environment variable interpreted by COMMAND.
 Character sequence | Displays as                              | Example          | Example displays as                     
 ===================|==========================================|==================|=========================================
 $$                 | Dollar sign ( $ )                        | Time is $$$g     | Time is $>                              
-$_                 | Carriage return/line feed                | $t$h$h$h$_$p$g   | 9:30:25
-C:\MYDIR>                       
+$_                 | Carriage return/line feed                | $t$h$h$h$_$p$g   | 9:30:25                                 
+                   |                                          |                  | C:\MYDIR>                               
 $b                 | Vertical slash ( | )                     | $p$b             | C:\MYDIR}                               
 $d                 | Current system date                      | $d $n$g          | Mon 9-5-1986 C>                         
 $e                 | Escape character (for use with ANSI.SYS) | $e[32m$n$g$e[0m  | C> (prompt is green)                    

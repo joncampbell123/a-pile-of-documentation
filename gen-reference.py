@@ -177,24 +177,45 @@ def emit_table_as_text(path,tp):
             for row in tp.display.disptable:
                 columns = row.get("columns")
                 if not columns == None:
+                    # NTS: array of arrays, because column values can have newlines
+                    coltext = [ ]
+                    collines = 1
+                    # first pass: grab each column value, split by newline, stuff into coltext
                     for coli in range(len(columns)):
-                        if coli > 0:
-                            f.write(" | ")
-                        #
                         col = columns[coli]
                         val = col.get("value")
                         if val == None:
                             val = ""
-                        x = (val + (" "*tp.display.colsiz[coli]))[0:tp.display.colsiz[coli]]
-                        f.write(x)
-                    #
-                    if row.get("same key") == True:
-                        sia = row.get("source index")
-                        if not sia == None:
-                            for si in sia:
-                                f.write(" [*"+str(si)+"]")
-                    #
-                    f.write("\n")
+                        #
+                        vallines = val.split('\n')
+                        coltext.append(vallines)
+                        # how many vertical lines will this column need?
+                        # to render correctly, all columns will be printed with this many vertical lines.
+                        if collines < len(vallines):
+                            collines = len(vallines)
+                    # second pass: draw the columns, multiple lines if needed
+                    for collc in range(collines):
+                        for coli in range(len(columns)):
+                            if coli > 0:
+                                f.write(" | ")
+                            #
+                            val = ""
+                            cola = coltext[coli]
+                            if collc < len(cola):
+                                val = cola[collc]
+                                if val == None:
+                                    val = ""
+                            #
+                            x = (val + (" "*tp.display.colsiz[coli]))[0:tp.display.colsiz[coli]]
+                            f.write(x)
+                        #
+                        if collc == 0 and row.get("same key") == True:
+                            sia = row.get("source index")
+                            if not sia == None:
+                                for si in sia:
+                                    f.write(" [*"+str(si)+"]")
+                        #
+                        f.write("\n")
             #
             f.write("\n")
     #
