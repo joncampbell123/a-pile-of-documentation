@@ -38,6 +38,8 @@ class Table:
             citation["year"] = book.copyright_year
         if not book.type == None:
             citation["type"] = book.type
+        if not book.url == None:
+            citation["url"] = book.url
         src["citation"] = citation
         #
         searchobj = None
@@ -132,6 +134,8 @@ class Table:
         for src in self.sources:
             if "book" in src:
                 self.expand_source_book(src,src["book"])
+            elif "website" in src:
+                self.expand_source_book(src,src["website"])
     def serialize_to_compiled_json(self):
         f = { }
         f["table"] = self.table
