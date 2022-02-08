@@ -727,49 +727,16 @@
 				"parts": [
 					{
 						"title": "Miscellaneous Information",
-						"sections": {
-							"Section 1": {
-								"title": "General Information",
-								"subsections": {
-									"1.23": {
-										"title": "IBM Extended Character Codes",
-										"page": "29",
-										"source": "IBM PC/XT Technical Reference, page 2-14",
-										"name lookup": "1.23"
-									}
-								},
-								"name lookup": "Section 1"
-							}
-						},
 						"name lookup": "Part 1"
 					},
 					{
 						"title": "Software",
-						"sections": {
-							"Section 2": {
-								"title": "DOS Commands, Utilities, and Summaries",
-								"name lookup": "Section 2"
-							},
-							"Section 3": {
-								"title": "DOS Function Calls and Support Tables",
-								"page": "71",
-								"name lookup": "Section 3"
-							}
-						},
 						"name lookup": "Part 2"
 					}
 				],
 				"sections": [
 					{
 						"title": "General Information",
-						"subsections": {
-							"1.23": {
-								"title": "IBM Extended Character Codes",
-								"page": "29",
-								"source": "IBM PC/XT Technical Reference, page 2-14",
-								"name lookup": "1.23"
-							}
-						},
 						"name lookup": "Section 1"
 					},
 					{

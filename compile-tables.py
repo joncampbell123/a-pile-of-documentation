@@ -64,6 +64,7 @@ class Book:
                                 if isinstance(hobj, dict):
                                     if what in hobj:
                                         newsearch[i] = hobj[what]
+                                        del hobj[what]
                                         continue
                                 #
                                 newsearch[i] = { }
