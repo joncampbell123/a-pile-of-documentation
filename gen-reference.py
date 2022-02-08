@@ -20,7 +20,65 @@ class TablePresentation:
     table_format_type = None
     #
     class DisplayInfo:
+        disptable = [ ]
         header = None
+        colsiz = None
+        colhdr = None
+        colobj = None
+        coldesc = None
+    #
+    def build_table_key_value(self,json):
+        self.display.colsiz = [ 1 ]
+        self.display.colobj = [ self.key_column ]
+        self.display.colhdr = [ self.key_column.get("title") ]
+        self.display.coldesc = [ self.key_column.get("description") ]
+        #
+        for col in self.columns:
+            self.display.colsiz.append(1)
+            self.display.colobj.append(col)
+            self.display.colhdr.append(col.get("title"))
+            self.display.coldesc.append(col.get("description"))
+        #
+        self.display.disptable = [ ]
+        for rowkey in self.table:
+            rowent = self.table[rowkey]
+            #
+            key = rowkey
+            for row in rowent:
+                if "original key" in row:
+                    key = row["original key"]
+                    break
+            #
+            rowbuild = [ ]
+            for row in rowent:
+                newrowcols = [ { "value": key } ]
+                #
+                value = row.get("value")
+                if not isinstance(value,list):
+                    value = [ value ]
+                #
+                for coli in range(len(self.columns)):
+                    col = self.columns[coli]
+                    newrowcols.append({ "value": value[coli] })
+                #
+                if len(rowbuild) > 0 and rowbuild[len(rowbuild)-1]["columns"] == newrowcols:
+                    rowbuild[len(rowbuild)-1]["source index"].append(row.get("source index"))
+                else:
+                    rowbuild.append( { "columns": newrowcols, "source index": [ row.get("source index") ] } )
+            #
+            self.display.disptable.extend(rowbuild)
+        #
+        for row in self.display.disptable:
+            if "columns" in row:
+                columns = row["columns"]
+                for coli in range(len(columns)):
+                    cobj = columns[coli]
+                    ctxt = cobj.get("value")
+                    if ctxt == None:
+                        ctxt = ""
+                    clen = len(ctxt)
+                    if self.display.colsiz[coli] < clen:
+                        self.display.colsiz[coli] = clen
     #
     def __init__(self,json):
         self.base_json = json
@@ -37,6 +95,15 @@ class TablePresentation:
         self.display.header = self.name
         if self.display.header == None:
             self.display.header = "Untitled"
+        #
+        self.display.colsiz = [ ]
+        self.display.colhdr = [ ]
+        self.display.colobj = [ ]
+        self.display.coldesc = [ ]
+        #
+        if not self.table == None:
+            if self.table_format_type == "key=value":
+                self.build_table_key_value(json)
 
 def emit_table_as_text(path,tp):
     #
@@ -51,192 +118,108 @@ def emit_table_as_text(path,tp):
         f.write(tp.description+"\n")
         f.write("\n")
     #
-    if not tp.table == None:
-        if tp.table_format_type == "key=value":
-            colsiz = [ 1 ]
-            colhdr = [ None ]
-            if not tp.key_column == None:
-                colhdr[0] = tp.key_column
-                if not colhdr[0] == None:
-                    if "title" in colhdr[0]:
-                        keyl = len(colhdr[0]["title"])
-                        if colsiz[0] < keyl:
-                            colsiz[0] = keyl
-            #
-            for col in tp.columns:
-                colhdr.append(col)
-                colsiz.append(1)
-            #
-            for rowkey in tp.table:
-                row = tp.table[rowkey]
-                keyl = len(rowkey)
-                if colsiz[0] < keyl:
-                    colsiz[0] = keyl
-                if len(tp.columns) > 0:
-                    colhdr[1] = tp.columns[0]
-                    #
-                    if not colhdr[1] == None:
-                        if "title" in colhdr[1]:
-                            keyl = len(colhdr[1]["title"])
-                            if colsiz[1] < keyl:
-                                colsiz[1] = keyl
-                    #
-                    for sii in range(len(row)):
-                        val = row[sii]
-                        key = val.get("original key")
-                        if key == None:
-                            key = rowkey
-                        keyl = len(key)
-                        if colsiz[0] < keyl:
-                            colsiz[0] = keyl
-                        val = val.get("value")
-                        if val == None:
-                            val = ""
-                        vall = len(val)
-                        if colsiz[1] < vall:
-                            colsiz[1] = vall
-            #
-            desci = 0
-            for ci in range(len(colsiz)):
-                col = colhdr[ci]
-                if "title" in col and "description" in col:
-                    f.write(" - "+col["title"]+": "+col["description"]+"\n")
-                    desci = desci + 1
-            if desci > 0:
-                f.write("\n")
-            #
-            for ci in range(len(colsiz)):
-                if ci > 0:
-                    f.write(" | ")
-                x = ""
-                if not colhdr[ci] == None:
-                    if "title" in colhdr[ci]:
-                        x = colhdr[ci]["title"]
-                x = (x + (" "*colsiz[ci]))[0:colsiz[ci]]
-                f.write(x)
+    if not tp.display.disptable == None:
+        desci = 0
+        for ci in range(len(tp.display.colsiz)):
+            x = ""
+            if not tp.display.colhdr[ci] == None:
+                x = x + tp.display.colhdr[ci]
+            if not tp.display.coldesc[ci] == None:
+                if not x == "":
+                    x = x + ": "
+                x = x + tp.display.coldesc[ci]
+            if not x == "":
+                f.write(" - "+x+"\n")
+                desci = desci + 1
+        if desci > 0:
             f.write("\n")
-            #
-            for ci in range(len(colsiz)):
-                if ci > 0:
-                    f.write("=|=")
-                x = "="*colsiz[ci]
-                f.write(x)
-            f.write("\n")
-            #
-            for rowkey in tp.table:
-                row = tp.table[rowkey]
-                key = rowkey
-                disprows = [ ]
-                dispsrcs = [ ]
-                if len(row) > 0:
-                    chkrow = row[0]
-                    disprows.append(chkrow)
-                    dispsrcs.append([ chkrow.get("source index") ])
-                    for i in range(1,len(row)):
-                        currow = row[i]
-                        dif = False
-                        if not currow.get("value") == chkrow.get("value"):
-                            dif = True
-                        #
-                        if dif == True:
-                            chkrow = currow
-                            disprows.append(chkrow)
-                            dispsrcs.append([ chkrow.get("source index") ])
-                        else:
-                            dispsrcs[len(dispsrcs)-1].append(currow.get("source index"))
-                #
-                for rowi in range(len(disprows)):
-                    row = disprows[rowi]
-                    x = rowkey
-                    if "original key" in row:
-                        x = row["original key"]
-                    x = (x + (" "*colsiz[0]))[0:colsiz[0]]
-                    f.write(x)
-                    #
-                    f.write(" | ")
-                    #
-                    x = ""
-                    if "value" in row:
-                        x = row["value"]
-                    x = (x + (" "*colsiz[1]))[0:colsiz[1]]
-                    f.write(x)
-                    #
-                    if len(disprows) > 1:
-                        for si in dispsrcs[rowi]:
-                            f.write(" [*"+str(si)+"]")
-                    #
-                    f.write("\n")
-            #
-            f.write("\n")
-            #
-            if not tp.sources == None:
-                f.write("Sources\n")
-                f.write("=======\n")
-                for sii in range(len(tp.sources)):
-                    sobj = tp.sources[sii]
-                    if not int(sobj.get("source index")) == sii:
-                        raise Exception("source index is wrong")
-                    head = "  [*"+str(sii)+"] "
-                    f.write(head)
-                    if "book" in sobj:
-                        book = sobj["book"]
-                    elif "website" in sobj:
-                        book = sobj["website"]
-                    else:
-                        book = None
+        #
+        for ci in range(len(tp.display.colsiz)):
+            if ci > 0:
+                f.write(" | ")
+            x = ""
+            if not tp.display.colhdr[ci] == None:
+                x = tp.display.colhdr[ci]
+            x = (x + (" "*tp.display.colsiz[ci]))[0:tp.display.colsiz[ci]]
+            f.write(x)
+        f.write("\n")
+        #
+        for ci in range(len(tp.display.colsiz)):
+            if ci > 0:
+                f.write("=|=")
+            x = "="*tp.display.colsiz[ci]
+            f.write(x)
+        f.write("\n")
+    #
+    if not tp.sources == None:
+        f.write("Sources\n")
+        f.write("=======\n")
+        for sii in range(len(tp.sources)):
+            sobj = tp.sources[sii]
+            if not int(sobj.get("source index")) == sii:
+                raise Exception("source index is wrong")
+            head = "  [*"+str(sii)+"] "
+            f.write(head)
+            if "book" in sobj:
+                book = sobj["book"]
+            elif "website" in sobj:
+                book = sobj["website"]
+            else:
+                book = None
 
-                    if not book == None:
-                        where = sobj.get("where")
-                        citation = sobj.get("citation")
-                        if not citation == None:
-                            x = ""
-                            title = citation.get("title")
-                            if not title == None:
-                                if not x == "":
-                                    x = x + ", "
-                                x = x + title
-                            author = citation.get("author")
-                            if not author == None:
-                                if not x == "":
-                                    x = x + ", "
-                                x = x + author
-                            publisher = citation.get("publisher")
-                            if not publisher == None:
-                                if not x == "":
-                                    x = x + ", "
-                                x = x + publisher
-                            year = citation.get("year")
-                            if not year == None:
-                                if not x == "":
-                                    x = x + ", "
-                                x = x + str(year)
+            if not book == None:
+                where = sobj.get("where")
+                citation = sobj.get("citation")
+                if not citation == None:
+                    x = ""
+                    title = citation.get("title")
+                    if not title == None:
+                        if not x == "":
+                            x = x + ", "
+                        x = x + title
+                    author = citation.get("author")
+                    if not author == None:
+                        if not x == "":
+                            x = x + ", "
+                        x = x + author
+                    publisher = citation.get("publisher")
+                    if not publisher == None:
+                        if not x == "":
+                            x = x + ", "
+                        x = x + publisher
+                    year = citation.get("year")
+                    if not year == None:
+                        if not x == "":
+                            x = x + ", "
+                        x = x + str(year)
+                    if not x == "":
+                        f.write(x+"\n")
+                    #
+                    url = citation.get("url")
+                    if not url == None:
+                        f.write(" "*len(head))
+                        f.write("URL: "+url+"\n")
+                if not where == None:
+                    x = ""
+                    for whi in where:
+                        y = ""
+                        if "path" in whi:
+                            if not y == "":
+                                y = y + ", "
+                            y = y + whi["path"]
+                        if "title" in whi:
+                            if not y == "":
+                                y = y + ", "
+                            y = y + whi["title"]
+                        if not y == "":
                             if not x == "":
-                                f.write(x+"\n")
-                            #
-                            url = citation.get("url")
-                            if not url == None:
-                                f.write(" "*len(head))
-                                f.write("URL: "+url+"\n")
-                        if not where == None:
-                            x = ""
-                            for whi in where:
-                                y = ""
-                                if "path" in whi:
-                                    if not y == "":
-                                        y = y + ", "
-                                    y = y + whi["path"]
-                                if "title" in whi:
-                                    if not y == "":
-                                        y = y + ", "
-                                    y = y + whi["title"]
-                                if not y == "":
-                                    if not x == "":
-                                        x = x + " => "
-                                    x = x + y
-                            if not x == "":
-                                f.write(" "*len(head))
-                                f.write(x+"\n")
-                f.write("\n")
+                                x = x + " => "
+                            x = x + y
+                    if not x == "":
+                        f.write(" "*len(head))
+                        f.write(x+"\n")
+            #
+            f.write("\n")
     #
     if not tp.notes == None:
         f.write("Notes\n")
