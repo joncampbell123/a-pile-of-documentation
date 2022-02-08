@@ -14,6 +14,7 @@ book_by_id = { }
 # book object
 class Book:
     id = None
+    type = None
     title = None
     author = None
     publisher = None
@@ -40,6 +41,7 @@ class Book:
                 self.id = self.id[:-5]
         if self.id == None:
             raise Exception("Book with unknown id given path "+str(file_path))
+        self.type = json.get("type")
         self.title = json.get("title")
         self.author = json.get("author")
         self.publisher = json.get("publisher")
@@ -238,6 +240,7 @@ final_json["sources"] = { }
 for book_id in book_by_id.keys():
     book = book_by_id[book_id];
     final_json["sources"][book_id] = { }
+    final_json["sources"][book_id]["type"] = book.type
     final_json["sources"][book_id]["title"] = book.title
     final_json["sources"][book_id]["author"] = book.author
     final_json["sources"][book_id]["publisher"] = book.publisher
