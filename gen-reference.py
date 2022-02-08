@@ -8,7 +8,7 @@ import pathlib
 import common_json_help_module
 import table_presentation_module
 
-def emit_table_as_text(path,tp):
+def emit_table_as_text(path,table_id,tp):
     #
     f = open(path,"w",encoding="UTF-8")
     f.write("\n")
@@ -207,7 +207,7 @@ def html_escape(e):
     #
     return r
 
-def emit_table_as_html(path,tp):
+def emit_table_as_html(path,table_id,tp):
     #
     title = tp.display.header
     #
@@ -389,6 +389,6 @@ tables = tables_json.get("tables")
 if not tables == None:
     for table_id in tables:
         tp = table_presentation_module.TablePresentation(tables[table_id])
-        emit_table_as_text("reference/text/tables/"+table_id+".txt",tp)
-        emit_table_as_html("reference/html/tables/"+table_id+".htm",tp)
+        emit_table_as_text("reference/text/tables/"+table_id+".txt",table_id,tp)
+        emit_table_as_html("reference/html/tables/"+table_id+".htm",table_id,tp)
 
