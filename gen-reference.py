@@ -7,6 +7,12 @@ import pathlib
 
 import common_json_help_module
 
+def dict_sorted_uint_func(a):
+    return int(a,0)
+
+def dict_sorted_text_func(a):
+    return a.lower()
+
 class TablePresentation:
     name = None
     notes = None
@@ -47,8 +53,13 @@ class TablePresentation:
             if self.display.colsiz[coli] < clen:
                 self.display.colsiz[coli] = clen
         #
+        sortFunc = None
+        if not self.key_column == None:
+            if self.key_column["type"][0:4] == "uint":
+                sortFunc = dict_sorted_uint_func
+        #
         self.display.disptable = [ ]
-        for rowkey in self.table:
+        for rowkey in sorted(self.table,key=sortFunc):
             rowent = self.table[rowkey]
             #
             key = rowkey

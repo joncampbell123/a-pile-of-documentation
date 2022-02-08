@@ -151,7 +151,7 @@ class Table:
     def filter_key_value_by_type(self,key):
         if not self.key_column == None:
             type = self.key_column.get("type")
-            if type == "uint8_t" or type == "uint16_t" or type == "uint32_t" or type == "uint":
+            if type[0:4] == "uint":
                 return hex(int(key,0))
         #
         return key
