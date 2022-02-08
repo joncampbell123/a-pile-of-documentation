@@ -695,6 +695,11 @@
 						"part",
 						"section",
 						"subsection"
+					],
+					"where titles": [
+						"Miscellaneous Information",
+						"General Information",
+						"IBM Extended Character Codes"
 					]
 				}
 			],

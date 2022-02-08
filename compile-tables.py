@@ -125,6 +125,7 @@ class Table:
         matches = 0;
         matchname = [ ]
         matchnamep = [ ]
+        matchtitle = [ ]
         for h in book.hierarchy:
             # plural to singular. The book says "parts", "sections", the reference says "part", "section"
             k = h
@@ -138,6 +139,7 @@ class Table:
             match.append(m);
             matchname.append(k)
             matchnamep.append(h)
+            matchtitle.append(None)
         if matches == 0:
             return
         # fill in the gaps by searching upward
@@ -162,6 +164,7 @@ class Table:
                     break
             if obj == None:
                 raise Exception("No such "+matchname[i]+" named "+match[i])
+            matchtitle[i] = obj.get("title")
             if i < 1:
                 break
             pobj = obj.get("parent lookup")
@@ -189,6 +192,7 @@ class Table:
         #
         src["where path"] = match
         src["where order"] = matchname;
+        src["where titles"] = matchtitle
         for i in range(valid_len):
             if matchname[i] in src:
                 del src[matchname[i]]
