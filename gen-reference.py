@@ -148,6 +148,68 @@ def emit_table_as_text(path,table_id_json):
                     f.write("\n")
             #
             f.write("\n")
+            #
+            if not sources == None:
+                f.write("Sources\n")
+                f.write("=======\n")
+                for sii in range(len(sources)):
+                    sobj = sources[sii]
+                    if not int(sobj.get("source index")) == sii:
+                        raise Exception("source index is wrong")
+                    head = "  [*"+str(sii)+"] "
+                    f.write(head)
+                    if "book" in sobj:
+                        book = sobj["book"]
+                        where = sobj.get("where")
+                        citation = sobj.get("citation")
+                        if not citation == None:
+                            x = ""
+                            title = citation.get("title")
+                            if not title == None:
+                                if not x == "":
+                                    x = x + ", "
+                                x = x + title
+                            author = citation.get("author")
+                            if not author == None:
+                                if not x == "":
+                                    x = x + ", "
+                                x = x + author
+                            publisher = citation.get("publisher")
+                            if not publisher == None:
+                                if not x == "":
+                                    x = x + ", "
+                                x = x + publisher
+                            year = citation.get("year")
+                            if not year == None:
+                                if not x == "":
+                                    x = x + ", "
+                                x = x + str(year)
+                            if not x == "":
+                                f.write(x+"\n")
+                        if not where == None:
+                            x = ""
+                            for whi in where:
+                                y = ""
+                                if "path" in whi:
+                                    if not y == "":
+                                        y = y + ", "
+                                    y = y + whi["path"]
+                                if "title" in whi:
+                                    if not y == "":
+                                        y = y + ", "
+                                    y = y + whi["title"]
+                                if not y == "":
+                                    if not x == "":
+                                        x = x + " => "
+                                    x = x + y
+                            if not x == "":
+                                f.write(" "*len(head))
+                                f.write(x+"\n")
+                    elif "website" in sobj:
+                        f.write("Website\n")
+                    else:
+                        f.write("??\n")
+                f.write("\n")
     #
     if not notes == None:
         f.write("Notes\n")
