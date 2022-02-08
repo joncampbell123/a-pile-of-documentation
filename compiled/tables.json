@@ -1546,7 +1546,12 @@
 			"sources": [
 				{
 					"website": "sites-google-pcdosretro-scancodes",
-					"source index": 0
+					"source index": 0,
+					"citation": {
+						"title": "Keyboard scan code/character code combinations returned in AH/AL by INT 16h functions 00h/01h (standard) and functions 01h/11h (extended)",
+						"type": "website",
+						"url": "https://sites.google.com/site/pcdosretro/scancodes"
+					}
 				},
 				{
 					"book": "programmer-pc-sourcebook-ms-press-1988",
@@ -1666,6 +1671,7 @@
 			}
 		},
 		"sites-google-pcdosretro-scancodes": {
+			"url": "https://sites.google.com/site/pcdosretro/scancodes",
 			"type": "website",
 			"title": "Keyboard scan code/character code combinations returned in AH/AL by INT 16h functions 00h/01h (standard) and functions 01h/11h (extended)"
 		}
