@@ -36,6 +36,8 @@ class Book:
         file_path = pathlib.Path(file_path)
         if len(file_path.parts) > 0:
             self.id = file_path.parts[len(file_path.parts)-1]
+            if self.id[-5:] == ".json":
+                self.id = self.id[:-5]
         if self.id == None:
             raise Exception("Book with unknown id given path "+str(file_path))
         self.title = json.get("title")

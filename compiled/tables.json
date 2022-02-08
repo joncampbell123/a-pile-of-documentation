@@ -710,7 +710,7 @@
 		}
 	},
 	"sources": {
-		"programmer-pc-sourcebook-ms-press-1988.json": {
+		"programmer-pc-sourcebook-ms-press-1988": {
 			"title": "The Programmer's PC Sourcebook",
 			"author": "Thom Hogan",
 			"publisher": "Microsoft Press",
