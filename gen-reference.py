@@ -387,8 +387,280 @@ def emit_table_as_html(path,table_id,tp):
     f.write("</html>")
     f.close()
 
+# the world's simplest PDF generator class
+class PDFGen:
+    class PDFName:
+        name = None
+        def __init__(self,name):
+            self.name = name
+        def __str__(self):
+            return self.name
+    class PDFIndirect:
+        id = None
+        def __init__(self,id):
+            if not type(id) == int:
+                raise Exception("PDFIndirect id must be integer")
+            self.id = id
+    class PDFStream:
+        data = None
+        def __init__(self,data):
+            self.data = data
+    class Object:
+        id = None
+        value = None
+        type = None # boolean, integer, real, text string, hex string, name, array, dict, stream, null, indirect
+        def __init__(self,value=None,*,vtype=None):
+            self.type = None
+            self.set(value,vtype=vtype)
+        def set(self,value=None,*,vtype=None):
+            if vtype == None:
+                if type(value) == bool:
+                    vtype = bool
+                elif type(value) == int:
+                    vtype = int
+                elif type(value) == float:
+                    vtype = float
+                elif type(value) == str:
+                    vtype = str
+                elif type(value) == bytes:
+                    vtype = bytes
+                elif type(value) == PDFGen.PDFName:
+                    vtype = PDFGen.PDFName
+                elif type(value) == list:
+                    vtype = list
+                elif type(value) == dict:
+                    vtype = dict
+                elif type(value) == PDFGen.PDFStream:
+                    vtype = PDFGen.PDFStream
+                elif value == None:
+                    vtype = None
+                elif type(value) == PDFGen.PDFIndirect:
+                    vtype = PDFGen.PDFIndirect
+                else:
+                    raise Exception("Unable to determine type")
+            #
+            self.type = vtype
+            if vtype == None:
+                self.value = None
+            elif vtype == bool:
+                self.value = (value == True)
+            elif vtype == int:
+                if type(value) == int:
+                    self.value = value
+                else:
+                    self.value = int(str(value),0)
+            elif vtype == float:
+                if type(value) == float:
+                    self.value = value
+                else:
+                    self.value = float(str(value))
+            elif vtype == str:
+                if type(value) == str:
+                    self.value = value
+                else:
+                    self.value = str(value)
+            elif vtype == bytes:
+                if type(value) == bytes:
+                    self.value = value
+                else:
+                    raise Exception("bytes must be bytes")
+            elif vtype == PDFGen.PDFName:
+                if type(value) == str:
+                    self.value = PDFGen.PDFName(value)
+                elif type(value) == PDFGen.PDFName:
+                    self.value = value
+                else:
+                    raise Exception("PDFName must be PDFName")
+            elif vtype == list:
+                if type(value) == list:
+                    self.value = value
+                else:
+                    raise Exception("list must be list")
+            elif vtype == dict:
+                if type(value) == dict:
+                    self.value = value
+                else:
+                    raise Exception("dict must be dict")
+            elif vtype == PDFGen.PDFStream:
+                if type(value) == bytes:
+                    self.value = PDFGen.PDFStream(value)
+                elif type(value) == PDFGen.PDFStream:
+                    self.value = value
+                else:
+                    raise Exception("PDFStream must be PDFStream")
+            elif vtype == None:
+                if value == None:
+                    self.value = value
+                else:
+                    raise Exception("None must be none")
+            elif vtype == PDFGen.PDFIndirect:
+                if type(value) == int:
+                    self.value = PDFGen.PDFIndirect(value)
+                elif type(value) == PDFGen.PDFIndirect:
+                    self.value = value
+                else:
+                    raise Exception("PDFIndirect must be PDFIndirect")
+            else:
+                raise Exception("Don't know how to handle type "+str(vtype)+" value "+str(value))
+    #
+    pdfver = None
+    objects = None
+    #
+    def __init__(self,optobj=None):
+        self.pdfver = [ 1, 4 ]
+        self.objects = [ None ] # object 0 is always NULL because most PDFs seem to count from 1
+    #
+    def new_object(self,value=None,*,vtype=None):
+        id = len(self.objects)
+        obj = PDFGen.Object(value,vtype=vtype)
+        self.objects.append(obj)
+        obj.id = id
+        return obj
+    #
+    def pdf_str_escape(self,v):
+        r = ""
+        for c in v:
+            if c == '\n':
+                r = r + "\\n"
+            elif c == '\r':
+                r = r + "\\r"
+            elif c == '\t':
+                r = r + "\\t"
+            elif c == '\b':
+                r = r + "\\b"
+            elif c == '\f':
+                r = r + "\\f"
+            elif c == '(':
+                r = r + "\\("
+            elif c == ')':
+                r = r + "\\)"
+            elif c == '\\':
+                r = r + "\\\\"
+            else:
+                r = r + c
+        #
+        return r
+    #
+    def serialize(self,obj):
+        if not type(obj) == PDFGen.Object:
+            obj = PDFGen.Object(obj)
+        #
+        if obj.type == bool:
+            if obj.value == True:
+                return "true"
+            else:
+                return "false"
+        elif obj.type == int:
+            return str(obj.value)
+        elif obj.type == float:
+            return str(obj.value)
+        elif obj.type == str:
+            return "("+self.pdf_str_escape(obj.value)+")"
+        elif obj.type == bytes:
+            return "" # TODO
+        elif obj.type == PDFGen.PDFName:
+            return "/" + str(obj.value.name)
+        elif obj.type == list:
+            r = "["
+            for ent in obj.value:
+                r = r + " " + self.serialize(ent)
+            r = r + " ]"
+            return r
+        elif obj.type == dict:
+            r = "<<\n"
+            for key in obj.value:
+                objval = obj.value[key]
+                r = r + self.serialize(key) + " " + self.serialize(objval) + "\n"
+            r = r + " >>"
+            return r
+        elif obj.type == PDFGen.PDFStream:
+            return "" # TODO
+        elif obj.type == None:
+            return "null"
+        elif obj.type == PDFGen.PDFIndirect:
+            return str(obj.value.id)+" 0 R"
+        else:
+            raise Exception("Unknown type on serialize")
+    #
+    def write_file(self,f):
+        objofs = [ ]
+
+        f.seek(0)
+        f.write("%PDF-"+str(self.pdfver[0])+"."+str(self.pdfver[1])+"\n")
+        f.write("\xf0\xf1\xf2\xf3\xf4\xf5\n\n") # non-ASCII chars to convince other programs this is not text
+        for objid in range(len(self.objects)):
+            obj = self.objects[objid]
+            if not obj == None:
+                if not obj.id == objid:
+                    raise Exception("Object has wrong id")
+            #
+            if obj == None:
+                if len(objofs) == objid:
+                    objofs.append(None)
+                else:
+                    raise Exception("objid count error")
+                continue
+            elif not type(obj) == PDFGen.Object:
+                raise Exception("PDF object list contains not a PDF object, instead is type "+str(type(obj)))
+            #
+            if len(objofs) == objid:
+                objofs.append(f.tell())
+            else:
+                raise Exception("objid count error")
+            #
+            f.write(str(objid)+" 0 obj\n")
+            f.write(self.serialize(obj))
+            f.write("\n")
+            f.write("endobj\n\n")
+        #
+        xrefofs = f.tell()
+        f.write("xref\n")
+        f.write("0 "+str(len(self.objects))+"\n")
+        for objid in range(len(self.objects)):
+            ofs = objofs[objid]
+            if not ofs == None:
+                s = str(ofs)[0:10]
+                if len(s) < 10:
+                    s = ("0"*(10-len(s)))+s
+                f.write(s+" 00000 n\n")
+            else:
+                f.write("0000000000 65536 f\n")
+        f.write("\n")
+        #
+        f.write("trailer\n")
+        f.write("<<\n")
+        f.write("  /Size "+str(len(self.objects))+"\n")
+        f.write("  /Root 1 0 R\n") # TODO: Allow caller to set root node
+        f.write(">>\n")
+        #
+        f.write("startxref\n")
+        f.write(str(xrefofs)+"\n")
+        f.write("%%EOF\n")
+
+def emit_table_as_pdf(path,table_id,tp):
+    pdf = PDFGen()
+    #
+    root = pdf.new_object({
+        PDFGen.PDFName("Type"): PDFGen.PDFName("Catalog"),
+        PDFGen.PDFName("Lang"): "en-US"
+    })
+    page1 = pdf.new_object({
+        PDFGen.PDFName("Type"): PDFGen.PDFName("Page")
+    })
+    pages = pdf.new_object({
+        PDFGen.PDFName("Type"): PDFGen.PDFName("Pages"),
+        PDFGen.PDFName("Count"): 1,
+        PDFGen.PDFName("Kids"): [ PDFGen.PDFIndirect(page1.id) ]
+    })
+    root.value[PDFGen.PDFName("Pages")] = PDFGen.PDFIndirect(pages.id)
+    #
+    f = open(path,"w",encoding="UTF-8")
+    pdf.write_file(f)
+    f.close()
+
 os.system("rm -Rf reference/text/tables; mkdir -p reference/text/tables")
 os.system("rm -Rf reference/html/tables; mkdir -p reference/html/tables")
+os.system("rm -Rf reference/pdf/tables; mkdir -p reference/pdf/tables")
 
 tables_json = common_json_help_module.load_json("compiled/tables.json")
 
@@ -398,4 +670,5 @@ if not tables == None:
         tp = table_presentation_module.TablePresentation(tables[table_id])
         emit_table_as_text("reference/text/tables/"+table_id+".txt",table_id,tp)
         emit_table_as_html("reference/html/tables/"+table_id+".htm",table_id,tp)
+        emit_table_as_pdf("reference/pdf/tables/"+table_id+".pdf",table_id,tp)
 
