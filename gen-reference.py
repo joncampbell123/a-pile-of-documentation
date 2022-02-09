@@ -708,6 +708,7 @@ class TTFFileTable:
         return "{ tag="+self.tag.decode()+" chk="+hex(self.checksum)+" offset="+str(self.offset)+" size="+str(self.length)+" }"
 
 class TTFInfoForPDF:
+    fontWeight = None
     italicAngle = None
     unitsPerEm = None
     xMin = None
@@ -757,6 +758,11 @@ class TTFFile:
             # skip the two created/modified timestamps, each 8 bytes long
             [r.xMin,r.yMin,r.xMax,r.yMax] = struct.unpack(">hhhh",head.data[36:36+8])
             del head
+        #
+        os2 = self.lookup("OS/2")
+        if not os2 == None:
+            [version,xAvgCharWidth,r.fontWeight] = struct.unpack(">HhH",os2.data[0:6])
+            del os2
         #
         return r
 
@@ -843,6 +849,8 @@ class PDFGenHL:
                 pdfinfo = ttf.get_info_for_pdf()
                 if not pdfinfo.italicAngle == None:
                     fdo[PDFName("ItalicAngle")] = pdfinfo.italicAngle
+                if not pdfinfo.fontWeight == None:
+                    fdo[PDFName("FontWeight")] = pdfinfo.fontWeight
                 if not pdfinfo.xMin == None:
                     fdo[PDFName("FontBBox")] = [ pdfinfo.xMin, pdfinfo.yMin, pdfinfo.xMax, pdfinfo.yMax ]
             #
