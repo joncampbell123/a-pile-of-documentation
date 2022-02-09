@@ -662,7 +662,7 @@ class PDFGen:
                 f.write("stream\n".encode())
                 f.write(obj.data)
                 f.write("\n".encode())
-                f.write("endstream\n".encode())
+                f.write("endstream".encode())
             else:
                 raise Exception("unsupported object")
             #
@@ -957,7 +957,8 @@ def emit_table_as_pdf(path,table_id,tp):
     font13 = pdfhl.add_font({
         PDFName("Subtype"): PDFName("TrueType"),
         PDFName("Name"): PDFName("F13"),
-        PDFName("BaseFont"): PDFName("ABCDEE+Ubuntu")
+        PDFName("BaseFont"): PDFName("ABCDEE+Ubuntu"),
+        PDFName("Encoding"): PDFName("WinAnsiEncoding")
     },
     desc={
     },
