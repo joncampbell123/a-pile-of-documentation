@@ -708,6 +708,8 @@ class TTFFileTable:
         return "{ tag="+self.tag.decode()+" chk="+hex(self.checksum)+" offset="+str(self.offset)+" size="+str(self.length)+" }"
 
 class TTFInfoForPDF:
+    Ascent = None
+    Descent = None
     isFixedPitch = None
     fontWeight = None
     italicAngle = None
@@ -764,6 +766,11 @@ class TTFFile:
         if not os2 == None:
             [version,xAvgCharWidth,r.fontWeight] = struct.unpack(">HhH",os2.data[0:6])
             del os2
+        #
+        hhea = self.lookup("hhea")
+        if not hhea == None:
+            [tableVersion,r.Ascent,r.Descent] = struct.unpack(">Lhh",hhea.data[0:8])
+            del hhea
         #
         return r
 
@@ -854,6 +861,10 @@ class PDFGenHL:
                     fdo[PDFName("FontWeight")] = pdfinfo.fontWeight
                 if not pdfinfo.xMin == None:
                     fdo[PDFName("FontBBox")] = [ pdfinfo.xMin, pdfinfo.yMin, pdfinfo.xMax, pdfinfo.yMax ]
+                if not pdfinfo.Ascent == None:
+                    fdo[PDFName("Ascent")] = pdfinfo.Ascent
+                if not pdfinfo.Descent == None:
+                    fdo[PDFName("Descent")] = pdfinfo.Descent
                 #
                 # CAREFUL! Adobe documents LSB as bit 1 and MSB as bit 32
                 #
