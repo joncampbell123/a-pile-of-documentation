@@ -870,6 +870,8 @@ def emit_table_as_pdf(path,table_id,tp):
     page1cmd.stroke_and_fill()
     #
     page1content = pdfhl.make_page_content_stream(page1,data=page1cmd.data())
+    del page1cmd
+    #
     page2 = pdfhl.new_page()
     page1o = pdfhl.get_page(1)
     #
