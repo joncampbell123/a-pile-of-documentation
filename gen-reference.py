@@ -691,8 +691,12 @@ class PDFGenHL:
     root_node = None
     pages_node = None
     pages = None
+    page_size = None
+    page_dpi = None
     def __init__(self,pdf):
         self.pdf = pdf
+        self.page_size = [ 8, 11 ]
+        self.page_dpi = 72
         self.pages = [ None ] # count from 1, fill slot 0, array of PDFIndirect
         #
         self.root_node = self.pdf.new_object({
@@ -710,7 +714,8 @@ class PDFGenHL:
         self.pages_node.setkey(PDFName("Kids"), self.pages[1:])
     def new_page(self):
         pagedir = self.pdf.new_object({
-            PDFName("Type"): PDFName("Page")
+            PDFName("Type"): PDFName("Page"),
+            PDFName("MediaBox"): [ 0, 0, self.page_size[0]*self.page_dpi, self.page_size[1]*self.page_dpi ]
         })
         pagedir.index = len(self.pages)
         pageindir = PDFIndirect(pagedir)
