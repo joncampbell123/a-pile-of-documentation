@@ -3,6 +3,7 @@
 import os
 import glob
 import json
+import struct
 import pathlib
 
 import common_json_help_module
@@ -692,6 +693,38 @@ class PDFGen:
         f.write((str(xrefofs)+"\n").encode())
         f.write("%%EOF\n".encode())
 
+class TTFFileTable:
+    tag = None
+    offset = None
+    length = None
+    checksum = None
+    def __init__(self,tag,checksum,offset,length):
+        self.tag = tag
+        self.checksum = checksum
+        self.offset = offset
+        self.length = length
+    def __str__(self):
+        return "{ tag="+self.tag.decode()+" chk="+hex(self.checksum)+" offset="+str(self.offset)+" size="+str(self.length)+" }"
+
+class TTFFile:
+    tables = None
+    version = None
+    def __init__(self,data):
+        [self.version,numTables,searchRange,entrySelector,rangeShift] = struct.unpack(">LHHHH",data[0:12])
+        self.tables = [ ]
+        for ti in range(numTables):
+            ofs = 12+(ti*16)
+            #
+            tag = data[ofs:ofs+4]
+            [checkSum,offset,length] = struct.unpack(">LLL",data[ofs+4:ofs+16])
+            #
+            self.tables.append(TTFFileTable(tag,checkSum,offset,length))
+    def lookup(self,id):
+        for ti in self.tables:
+            if ti.tag.decode().strip() == id:
+                return ti
+        return None
+
 class PDFGenHL:
     pdf = None
     root_node = None
@@ -758,8 +791,22 @@ class PDFGenHL:
             font_obj.setkey(PDFName(fontname), PDFIndirect(info))
         else:
             raise Exception("Font already added")
-    def add_font(self,fontdict):
+    def add_font(self,fontdict,*,desc=None,ttffile=None):
         fontdict[PDFName("Type")] = PDFName("Font")
+        if not desc == None:
+            fdo = {
+                PDFName("Type"): PDFName("FontDescriptor")
+            }
+            #
+            if PDFName("BaseFont") in fontdict:
+                fdo[PDFName("FontName")] = fontdict[PDFName("BaseFont")]
+            #
+            if not ttffile == None:
+                f = open(ttffile,"rb")
+                ttf = TTFFile(f.read())
+                f.close()
+            #
+            fontdict[PDFName("FontDescriptor")] = PDFIndirect(self.pdf.new_object(fdo))
         return self.pdf.new_object(fontdict)
 
 class PDFPageContentWriter:
@@ -830,7 +877,10 @@ def emit_table_as_pdf(path,table_id,tp):
         PDFName("Subtype"): PDFName("TrueType"),
         PDFName("Name"): PDFName("F13"),
         PDFName("BaseFont"): PDFName("sans-serif")
-    })
+    },
+    desc={
+    },
+    ttffile="ttf/Ubuntu-R.ttf")
     #
     page1 = pdfhl.new_page()
     pdfhl.add_page_font_ref(page1,font13)
