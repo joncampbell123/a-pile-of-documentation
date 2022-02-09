@@ -799,7 +799,7 @@ class PDFPageContentWriter:
         if not self.intxt == True:
             raise Exception("Not in text")
         self.wd += " T*".encode()
-    def color(self,r,g,b):
+    def fill_color(self,r,g,b):
         self.wd += (" "+str(r)+" "+str(g)+" "+str(b)+" rg").encode()
     def stroke_color(self,r,g,b):
         self.wd += (" "+str(r)+" "+str(g)+" "+str(b)+" RG").encode()
@@ -813,6 +813,10 @@ class PDFPageContentWriter:
         self.wd += (" h").encode()
     def stroke(self):
         self.wd += (" S").encode()
+    def fill(self):
+        self.wd += (" f").encode()
+    def stroke_and_fill(self):
+        self.wd += (" B").encode()
     def finish(self):
         if self.intxt == True:
             self.end_text()
@@ -830,12 +834,12 @@ def emit_table_as_pdf(path,table_id,tp):
     page1cmd.text_leading(12)
     page1cmd.set_text_font(13,12)
     page1cmd.text_move_to(288,270)
-    page1cmd.color(0,0,0.5)
+    page1cmd.fill_color(0,0,0.5)
     page1cmd.text("Hello World. ")
-    page1cmd.color(0,0,1.0)
+    page1cmd.fill_color(0,0,1.0)
     page1cmd.text("This is a PDF")
     page1cmd.text_next_line()
-    page1cmd.color(1.0,0,0)
+    page1cmd.fill_color(1.0,0,0)
     page1cmd.text("1234ABCD")
     page1cmd.end_text()
     page1cmd.linewidth(2.0)
@@ -846,6 +850,25 @@ def emit_table_as_pdf(path,table_id,tp):
     page1cmd.lineto(50,100)
     page1cmd.close_subpath()
     page1cmd.stroke()
+    #
+    page1cmd.stroke_color(0,0.5,0)
+    page1cmd.fill_color(0.5,0,0)
+    page1cmd.moveto(150,50)
+    page1cmd.lineto(200,50)
+    page1cmd.lineto(200,100)
+    page1cmd.lineto(150,100)
+    page1cmd.close_subpath()
+    page1cmd.fill()
+    #
+    page1cmd.stroke_color(0,0.5,0)
+    page1cmd.fill_color(0.5,0,0)
+    page1cmd.moveto(250,50)
+    page1cmd.lineto(300,50)
+    page1cmd.lineto(300,100)
+    page1cmd.lineto(250,100)
+    page1cmd.close_subpath()
+    page1cmd.stroke_and_fill()
+    #
     page1content = pdfhl.make_page_content_stream(page1,data=page1cmd.data())
     page2 = pdfhl.new_page()
     page1o = pdfhl.get_page(1)
