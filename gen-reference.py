@@ -388,121 +388,124 @@ def emit_table_as_html(path,table_id,tp):
     f.close()
 
 # the world's simplest PDF generator class
-class PDFGen:
-    class PDFName:
-        name = None
-        def __init__(self,name):
-            self.name = name
-        def __str__(self):
-            return self.name
-    class PDFIndirect:
-        id = None
-        def __init__(self,id):
-            if not type(id) == int:
-                raise Exception("PDFIndirect id must be integer")
-            self.id = id
-    class PDFStream:
-        data = None
-        def __init__(self,data):
-            self.data = data
-    class Object:
-        id = None
-        value = None
-        type = None # boolean, integer, real, text string, hex string, name, array, dict, stream, null, indirect
-        def __init__(self,value=None,*,vtype=None):
-            self.type = None
-            self.set(value,vtype=vtype)
-        def set(self,value=None,*,vtype=None):
-            if vtype == None:
-                if type(value) == bool:
-                    vtype = bool
-                elif type(value) == int:
-                    vtype = int
-                elif type(value) == float:
-                    vtype = float
-                elif type(value) == str:
-                    vtype = str
-                elif type(value) == bytes:
-                    vtype = bytes
-                elif type(value) == PDFGen.PDFName:
-                    vtype = PDFGen.PDFName
-                elif type(value) == list:
-                    vtype = list
-                elif type(value) == dict:
-                    vtype = dict
-                elif type(value) == PDFGen.PDFStream:
-                    vtype = PDFGen.PDFStream
-                elif value == None:
-                    vtype = None
-                elif type(value) == PDFGen.PDFIndirect:
-                    vtype = PDFGen.PDFIndirect
-                else:
-                    raise Exception("Unable to determine type")
-            #
-            self.type = vtype
-            if vtype == None:
-                self.value = None
-            elif vtype == bool:
-                self.value = (value == True)
-            elif vtype == int:
-                if type(value) == int:
-                    self.value = value
-                else:
-                    self.value = int(str(value),0)
-            elif vtype == float:
-                if type(value) == float:
-                    self.value = value
-                else:
-                    self.value = float(str(value))
-            elif vtype == str:
-                if type(value) == str:
-                    self.value = value
-                else:
-                    self.value = str(value)
-            elif vtype == bytes:
-                if type(value) == bytes:
-                    self.value = value
-                else:
-                    raise Exception("bytes must be bytes")
-            elif vtype == PDFGen.PDFName:
-                if type(value) == str:
-                    self.value = PDFGen.PDFName(value)
-                elif type(value) == PDFGen.PDFName:
-                    self.value = value
-                else:
-                    raise Exception("PDFName must be PDFName")
-            elif vtype == list:
-                if type(value) == list:
-                    self.value = value
-                else:
-                    raise Exception("list must be list")
-            elif vtype == dict:
-                if type(value) == dict:
-                    self.value = value
-                else:
-                    raise Exception("dict must be dict")
-            elif vtype == PDFGen.PDFStream:
-                if type(value) == bytes:
-                    self.value = PDFGen.PDFStream(value)
-                elif type(value) == PDFGen.PDFStream:
-                    self.value = value
-                else:
-                    raise Exception("PDFStream must be PDFStream")
-            elif vtype == None:
-                if value == None:
-                    self.value = value
-                else:
-                    raise Exception("None must be none")
-            elif vtype == PDFGen.PDFIndirect:
-                if type(value) == int:
-                    self.value = PDFGen.PDFIndirect(value)
-                elif type(value) == PDFGen.PDFIndirect:
-                    self.value = value
-                else:
-                    raise Exception("PDFIndirect must be PDFIndirect")
+class PDFName:
+    name = None
+    def __init__(self,name):
+        self.name = name
+    def __str__(self):
+        return self.name
+
+class PDFIndirect:
+    id = None
+    def __init__(self,id):
+        if not type(id) == int:
+            raise Exception("PDFIndirect id must be integer")
+        self.id = id
+
+class PDFStream:
+    data = None
+    def __init__(self,data):
+        self.data = data
+
+class PDFObject:
+    id = None
+    value = None
+    type = None # boolean, integer, real, text string, hex string, name, array, dict, stream, null, indirect
+    def __init__(self,value=None,*,vtype=None):
+        self.type = None
+        self.set(value,vtype=vtype)
+    def set(self,value=None,*,vtype=None):
+        if vtype == None:
+            if type(value) == bool:
+                vtype = bool
+            elif type(value) == int:
+                vtype = int
+            elif type(value) == float:
+                vtype = float
+            elif type(value) == str:
+                vtype = str
+            elif type(value) == bytes:
+                vtype = bytes
+            elif type(value) == PDFName:
+                vtype = PDFName
+            elif type(value) == list:
+                vtype = list
+            elif type(value) == dict:
+                vtype = dict
+            elif type(value) == PDFStream:
+                vtype = PDFStream
+            elif value == None:
+                vtype = None
+            elif type(value) == PDFIndirect:
+                vtype = PDFIndirect
             else:
-                raise Exception("Don't know how to handle type "+str(vtype)+" value "+str(value))
-    #
+                raise Exception("Unable to determine type")
+        #
+        self.type = vtype
+        if vtype == None:
+            self.value = None
+        elif vtype == bool:
+            self.value = (value == True)
+        elif vtype == int:
+            if type(value) == int:
+                self.value = value
+            else:
+                self.value = int(str(value),0)
+        elif vtype == float:
+            if type(value) == float:
+                self.value = value
+            else:
+                self.value = float(str(value))
+        elif vtype == str:
+            if type(value) == str:
+                self.value = value
+            else:
+                self.value = str(value)
+        elif vtype == bytes:
+            if type(value) == bytes:
+                self.value = value
+            else:
+                raise Exception("bytes must be bytes")
+        elif vtype == PDFName:
+            if type(value) == str:
+                self.value = PDFName(value)
+            elif type(value) == PDFName:
+                self.value = value
+            else:
+                raise Exception("PDFName must be PDFName")
+        elif vtype == list:
+            if type(value) == list:
+                self.value = value
+            else:
+                raise Exception("list must be list")
+        elif vtype == dict:
+            if type(value) == dict:
+                self.value = value
+            else:
+                raise Exception("dict must be dict")
+        elif vtype == PDFStream:
+            if type(value) == bytes:
+                self.value = PDFStream(value)
+            elif type(value) == PDFStream:
+                self.value = value
+            else:
+                raise Exception("PDFStream must be PDFStream")
+        elif vtype == None:
+            if value == None:
+                self.value = value
+            else:
+                raise Exception("None must be none")
+        elif vtype == PDFIndirect:
+            if type(value) == int:
+                self.value = PDFIndirect(value)
+            elif type(value) == PDFIndirect:
+                self.value = value
+            else:
+                raise Exception("PDFIndirect must be PDFIndirect")
+        else:
+            raise Exception("Don't know how to handle type "+str(vtype)+" value "+str(value))
+
+class PDFGen:
     pdfver = None
     objects = None
     #
@@ -512,7 +515,7 @@ class PDFGen:
     #
     def new_object(self,value=None,*,vtype=None):
         id = len(self.objects)
-        obj = PDFGen.Object(value,vtype=vtype)
+        obj = PDFObject(value,vtype=vtype)
         self.objects.append(obj)
         obj.id = id
         return obj
@@ -542,8 +545,8 @@ class PDFGen:
         return r
     #
     def serialize(self,obj):
-        if not type(obj) == PDFGen.Object:
-            obj = PDFGen.Object(obj)
+        if not type(obj) == PDFObject:
+            obj = PDFObject(obj)
         #
         if obj.type == bool:
             if obj.value == True:
@@ -558,7 +561,7 @@ class PDFGen:
             return "("+self.pdf_str_escape(obj.value)+")"
         elif obj.type == bytes:
             return "" # TODO
-        elif obj.type == PDFGen.PDFName:
+        elif obj.type == PDFName:
             return "/" + str(obj.value.name)
         elif obj.type == list:
             r = "["
@@ -573,11 +576,11 @@ class PDFGen:
                 r = r + self.serialize(key) + " " + self.serialize(objval) + "\n"
             r = r + " >>"
             return r
-        elif obj.type == PDFGen.PDFStream:
+        elif obj.type == PDFStream:
             return "" # TODO
         elif obj.type == None:
             return "null"
-        elif obj.type == PDFGen.PDFIndirect:
+        elif obj.type == PDFIndirect:
             return str(obj.value.id)+" 0 R"
         else:
             raise Exception("Unknown type on serialize")
@@ -600,7 +603,7 @@ class PDFGen:
                 else:
                     raise Exception("objid count error")
                 continue
-            elif not type(obj) == PDFGen.Object:
+            elif not type(obj) == PDFObject:
                 raise Exception("PDF object list contains not a PDF object, instead is type "+str(type(obj)))
             #
             if len(objofs) == objid:
@@ -641,18 +644,18 @@ def emit_table_as_pdf(path,table_id,tp):
     pdf = PDFGen()
     #
     root = pdf.new_object({
-        PDFGen.PDFName("Type"): PDFGen.PDFName("Catalog"),
-        PDFGen.PDFName("Lang"): "en-US"
+        PDFName("Type"): PDFName("Catalog"),
+        PDFName("Lang"): "en-US"
     })
     page1 = pdf.new_object({
-        PDFGen.PDFName("Type"): PDFGen.PDFName("Page")
+        PDFName("Type"): PDFName("Page")
     })
     pages = pdf.new_object({
-        PDFGen.PDFName("Type"): PDFGen.PDFName("Pages"),
-        PDFGen.PDFName("Count"): 1,
-        PDFGen.PDFName("Kids"): [ PDFGen.PDFIndirect(page1.id) ]
+        PDFName("Type"): PDFName("Pages"),
+        PDFName("Count"): 1,
+        PDFName("Kids"): [ PDFIndirect(page1.id) ]
     })
-    root.value[PDFGen.PDFName("Pages")] = PDFGen.PDFIndirect(pages.id)
+    root.value[PDFName("Pages")] = PDFIndirect(pages.id)
     #
     f = open(path,"w",encoding="UTF-8")
     pdf.write_file(f)
