@@ -416,6 +416,11 @@ class PDFObject:
     def __init__(self,value=None,*,vtype=None):
         self.type = None
         self.set(value,vtype=vtype)
+    def setkey(self,key,value):
+        if type(self.value) == dict:
+            self.value[key] = value
+        else:
+            raise Exception("Data type does not accept key value mapping ("+str(type(self.value)))
     def set(self,value=None,*,vtype=None):
         if vtype == None:
             if type(value) == bool:
@@ -666,8 +671,8 @@ def emit_table_as_pdf(path,table_id,tp):
         PDFName("Count"): 1,
         PDFName("Kids"): [ PDFIndirect(page1) ]
     })
-    root.value[PDFName("Pages")] = PDFIndirect(pages)
-    page1.value[PDFName("Data")] = bytes([1,2,3,4,0xA0,0xA1,0xA2,0xA3])
+    root.setkey(PDFName("Pages"), PDFIndirect(pages))
+    page1.setkey(PDFName("Data"), bytes([1,2,3,4,0xA0,0xA1,0xA2,0xA3]))
     #
     f = open(path,"w",encoding="UTF-8")
     pdf.write_file(f)
