@@ -2,6 +2,17 @@
 	"tables": {
 		"msdos-command-shell-prompt-escapes": {
 			"table": {
+				"$a": [
+					{
+						"value": [
+							"Ampersand ( & )",
+							"$a",
+							"&"
+						],
+						"source index": 0,
+						"original key": "$a"
+					}
+				],
 				"$b": [
 					{
 						"value": [
@@ -11,6 +22,26 @@
 						],
 						"source index": 0,
 						"original key": "$b"
+					},
+					{
+						"value": [
+							"Vertical slash ( | )",
+							"$p$b",
+							"C:\\MYDIR}"
+						],
+						"source index": 1,
+						"original key": "$b"
+					}
+				],
+				"$c": [
+					{
+						"value": [
+							"Left parenthesis",
+							"$c",
+							"("
+						],
+						"source index": 0,
+						"original key": "$c"
 					}
 				],
 				"$d": [
@@ -21,6 +52,15 @@
 							"Mon 9-5-1986 C>"
 						],
 						"source index": 0,
+						"original key": "$d"
+					},
+					{
+						"value": [
+							"Current system date",
+							"$d $n$g",
+							"Mon 9-5-1986 C>"
+						],
+						"source index": 1,
 						"original key": "$d"
 					}
 				],
@@ -33,6 +73,26 @@
 						],
 						"source index": 0,
 						"original key": "$e"
+					},
+					{
+						"value": [
+							"Escape character (for use with ANSI.SYS)",
+							"$e[32m$n$g$e[0m",
+							"C> (prompt is green)"
+						],
+						"source index": 1,
+						"original key": "$e"
+					}
+				],
+				"$f": [
+					{
+						"value": [
+							"Right parenthesis",
+							"$f",
+							")"
+						],
+						"source index": 0,
+						"original key": "$f"
 					}
 				],
 				"$g": [
@@ -43,6 +103,15 @@
 							"C:\\MYDIR>"
 						],
 						"source index": 0,
+						"original key": "$g"
+					},
+					{
+						"value": [
+							"Greater than sign ( > )",
+							"$p$g",
+							"C:\\MYDIR>"
+						],
+						"source index": 1,
 						"original key": "$g"
 					}
 				],
@@ -55,6 +124,15 @@
 						],
 						"source index": 0,
 						"original key": "$h"
+					},
+					{
+						"value": [
+							"Destructive backspace",
+							"$t$h$h$h $p$g",
+							"09:30:26 C:\\MYDIR>"
+						],
+						"source index": 1,
+						"original key": "$h"
 					}
 				],
 				"$l": [
@@ -65,6 +143,15 @@
 							"<C>"
 						],
 						"source index": 0,
+						"original key": "$l"
+					},
+					{
+						"value": [
+							"Less than sign ( < )",
+							"$l$n$g",
+							"<C>"
+						],
+						"source index": 1,
 						"original key": "$l"
 					}
 				],
@@ -77,6 +164,15 @@
 						],
 						"source index": 0,
 						"original key": "$n"
+					},
+					{
+						"value": [
+							"Current drive letter",
+							"Drive is $n$g",
+							"Drive is C>"
+						],
+						"source index": 1,
+						"original key": "$n"
 					}
 				],
 				"$p": [
@@ -87,6 +183,15 @@
 							"Path is C:\\MYDIR>"
 						],
 						"source index": 0,
+						"original key": "$p"
+					},
+					{
+						"value": [
+							"Current pathname directory",
+							"Path is $p$g",
+							"Path is C:\\MYDIR>"
+						],
+						"source index": 1,
 						"original key": "$p"
 					}
 				],
@@ -99,6 +204,26 @@
 						],
 						"source index": 0,
 						"original key": "$q"
+					},
+					{
+						"value": [
+							"Equals sign ( = )",
+							"Drive $q $n$g",
+							"Drive = C>"
+						],
+						"source index": 1,
+						"original key": "$q"
+					}
+				],
+				"$s": [
+					{
+						"value": [
+							"Space",
+							"$p$s$g",
+							"C:\\MYDIR >"
+						],
+						"source index": 0,
+						"original key": "$s"
 					}
 				],
 				"$t": [
@@ -109,6 +234,15 @@
 							"Time is 09:30:25.93"
 						],
 						"source index": 0,
+						"original key": "$t"
+					},
+					{
+						"value": [
+							"Current system time",
+							"Time is $t",
+							"Time is 09:30:25.93"
+						],
+						"source index": 1,
 						"original key": "$t"
 					}
 				],
@@ -121,6 +255,15 @@
 						],
 						"source index": 0,
 						"original key": "$v"
+					},
+					{
+						"value": [
+							"DOS version number",
+							"$v",
+							"IBM Personal Computer DOS Version   3.20"
+						],
+						"source index": 1,
+						"original key": "$v"
 					}
 				],
 				"$_": [
@@ -131,6 +274,15 @@
 							"9:30:25\nC:\\MYDIR>"
 						],
 						"source index": 0,
+						"original key": "$_"
+					},
+					{
+						"value": [
+							"Carriage return/line feed",
+							"$t$h$h$h$_$p$g",
+							"9:30:25\nC:\\MYDIR>"
+						],
+						"source index": 1,
 						"original key": "$_"
 					}
 				],
@@ -143,6 +295,37 @@
 						],
 						"source index": 0,
 						"original key": "$$"
+					},
+					{
+						"value": [
+							"Dollar sign ( $ )",
+							"Time is $$$g",
+							"Time is $>"
+						],
+						"source index": 1,
+						"original key": "$$"
+					}
+				],
+				"$+": [
+					{
+						"value": [
+							"Zero or more consecutive plus ( + ) according to PUSHD stack depth\n(Command Extension)",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "$+"
+					}
+				],
+				"$m": [
+					{
+						"value": [
+							"Remote name associated with the current drive letter if network drive\n(Command Extension)",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "$m"
 					}
 				],
 				"Any other": [
@@ -154,13 +337,31 @@
 						],
 						"source index": 0,
 						"original key": "Any other"
+					},
+					{
+						"value": [
+							"Treated as character typed",
+							"This is a prompt",
+							"This is a prompt"
+						],
+						"source index": 1,
+						"original key": "Any other"
 					}
 				]
 			},
 			"sources": [
 				{
-					"book": "programmer-pc-sourcebook-ms-press-1988",
+					"website": "computerhope-prompthl",
 					"source index": 0,
+					"citation": {
+						"title": "MS-DOS and Windows command line prompt command",
+						"type": "website",
+						"url": "https://www.computerhope.com/prompthl.htm"
+					}
+				},
+				{
+					"book": "programmer-pc-sourcebook-ms-press-1988",
+					"source index": 1,
 					"citation": {
 						"title": "The Programmer's PC Sourcebook",
 						"author": "Thom Hogan",
@@ -1895,6 +2096,11 @@
 			"url": "https://sites.google.com/site/pcdosretro/scancodes",
 			"type": "website",
 			"title": "Keyboard scan code/character code combinations returned in AH/AL by INT 16h functions 00h/01h (standard) and functions 01h/11h (extended)"
+		},
+		"computerhope-prompthl": {
+			"url": "https://www.computerhope.com/prompthl.htm",
+			"type": "website",
+			"title": "MS-DOS and Windows command line prompt command"
 		}
 	}
 }
