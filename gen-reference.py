@@ -398,7 +398,9 @@ class PDFName:
 class PDFIndirect:
     id = None
     def __init__(self,id):
-        if not type(id) == int:
+        if type(id) == PDFObject:
+            id = id.id
+        elif not type(id) == int:
             raise Exception("PDFIndirect id must be integer")
         self.id = id
 
@@ -500,6 +502,8 @@ class PDFObject:
                 self.value = PDFIndirect(value)
             elif type(value) == PDFIndirect:
                 self.value = value
+            elif type(value) == PDFObject:
+                self.value = value.id
             else:
                 raise Exception("PDFIndirect must be PDFIndirect")
         else:
@@ -653,9 +657,9 @@ def emit_table_as_pdf(path,table_id,tp):
     pages = pdf.new_object({
         PDFName("Type"): PDFName("Pages"),
         PDFName("Count"): 1,
-        PDFName("Kids"): [ PDFIndirect(page1.id) ]
+        PDFName("Kids"): [ PDFIndirect(page1) ]
     })
-    root.value[PDFName("Pages")] = PDFIndirect(pages.id)
+    root.value[PDFName("Pages")] = PDFIndirect(pages)
     #
     f = open(path,"w",encoding="UTF-8")
     pdf.write_file(f)
