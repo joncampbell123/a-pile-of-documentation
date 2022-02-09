@@ -709,6 +709,11 @@ class TTFFileTable:
 
 class TTFInfoForPDF:
     italicAngle = None
+    unitsPerEm = None
+    xMin = None
+    yMin = None
+    xMax = None
+    yMax = None
 
 class TTFFile:
     tables = None
@@ -740,6 +745,18 @@ class TTFFile:
             # FWORD: 16-bit signed int (h)
             # ULONG: 32-bit unsigned long (L)
             [FormatType,r.italicAngle,underlinePosition,underlineThickness,isFixedPitch] = struct.unpack(">LLhhL",post.data[0:16])
+            del post
+        #
+        head = self.lookup("head")
+        if not head == None:
+            # FIXED: 32-bit fixed pt (L)
+            # FWORD: 16-bit signed int (h)
+            # USHORT: 16-bit unsigned int (H)
+            # ULONG: 32-bit unsigned long (L)
+            [tableversion,fontRevision,checkSumAdjustment,magicNumber,flags,r.unitsPerEm] = struct.unpack(">LLLLHH",head.data[0:20])
+            # skip the two created/modified timestamps, each 8 bytes long
+            [r.xMin,r.yMin,r.xMax,r.yMax] = struct.unpack(">hhhh",head.data[36:36+8])
+            del head
         #
         return r
 
@@ -824,6 +841,10 @@ class PDFGenHL:
                 ttf = TTFFile(f.read())
                 f.close()
                 pdfinfo = ttf.get_info_for_pdf()
+                if not pdfinfo.italicAngle == None:
+                    fdo[PDFName("ItalicAngle")] = pdfinfo.italicAngle
+                if not pdfinfo.xMin == None:
+                    fdo[PDFName("FontBBox")] = [ pdfinfo.xMin, pdfinfo.yMin, pdfinfo.xMax, pdfinfo.yMax ]
             #
             fontdict[PDFName("FontDescriptor")] = PDFIndirect(self.pdf.new_object(fdo))
         return self.pdf.new_object(fontdict)
