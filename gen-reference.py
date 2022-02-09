@@ -826,7 +826,11 @@ def emit_table_as_pdf(path,table_id,tp):
     pdf = PDFGen()
     pdfhl = PDFGenHL(pdf)
     #
-    font13 = pdfhl.add_font({ PDFName("Subtype"): PDFName("TrueType"), PDFName("Name"): PDFName("F13"), PDFName("BaseFont"): PDFName("sans-serif") })
+    font13 = pdfhl.add_font({
+        PDFName("Subtype"): PDFName("TrueType"),
+        PDFName("Name"): PDFName("F13"),
+        PDFName("BaseFont"): PDFName("sans-serif")
+    })
     #
     page1 = pdfhl.new_page()
     pdfhl.add_page_font_ref(page1,font13)
