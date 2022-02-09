@@ -880,6 +880,8 @@ class PDFGenHL:
                     flags = flags | (1 << 0)
                 #
                 fdo[PDFName("Flags")] = flags
+                # I don't know how to get this from the TTF so just guess
+                fdo[PDFName("StemV")] = 52
             #
             fontdict[PDFName("FontDescriptor")] = PDFIndirect(self.pdf.new_object(fdo))
         return self.pdf.new_object(fontdict)
