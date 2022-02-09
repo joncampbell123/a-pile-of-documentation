@@ -708,6 +708,7 @@ class TTFFileTable:
         return "{ tag="+self.tag.decode()+" chk="+hex(self.checksum)+" offset="+str(self.offset)+" size="+str(self.length)+" }"
 
 class TTFInfoForPDF:
+    isFixedPitch = None
     fontWeight = None
     italicAngle = None
     unitsPerEm = None
@@ -745,7 +746,7 @@ class TTFFile:
             # FIXED: 32-bit fixed pt (L)
             # FWORD: 16-bit signed int (h)
             # ULONG: 32-bit unsigned long (L)
-            [FormatType,r.italicAngle,underlinePosition,underlineThickness,isFixedPitch] = struct.unpack(">LLhhL",post.data[0:16])
+            [FormatType,r.italicAngle,underlinePosition,underlineThickness,r.isFixedPitch] = struct.unpack(">LLhhL",post.data[0:16])
             del post
         #
         head = self.lookup("head")
@@ -853,6 +854,21 @@ class PDFGenHL:
                     fdo[PDFName("FontWeight")] = pdfinfo.fontWeight
                 if not pdfinfo.xMin == None:
                     fdo[PDFName("FontBBox")] = [ pdfinfo.xMin, pdfinfo.yMin, pdfinfo.xMax, pdfinfo.yMax ]
+                #
+                # CAREFUL! Adobe documents LSB as bit 1 and MSB as bit 32
+                #
+                # bit 0: FixedPitch
+                # bit 1: Serif
+                # bit 2: Symbolic
+                # bit 3: Script
+                # bit 5: Nonsymbolic
+                # bit 6: Italic
+                # bit 16: AllCap
+                flags = 0
+                if pdfinfo.isFixedPitch:
+                    flags = flags | (1 << 0)
+                #
+                fdo[PDFName("Flags")] = flags
             #
             fontdict[PDFName("FontDescriptor")] = PDFIndirect(self.pdf.new_object(fdo))
         return self.pdf.new_object(fontdict)
