@@ -418,6 +418,12 @@ class PDFName:
         self.name = name
     def __str__(self):
         return self.name
+    def __eq__(self,other):
+        if other == None:
+            return False
+        return self.name.__eq__(other.name)
+    def __hash__(self):
+        return self.name.__hash__()
 
 class PDFIndirect:
     id = None
@@ -731,6 +737,29 @@ class PDFGenHL:
             return
         page_content = self.pdf.new_stream_object(data)
         pageobj.setkey(PDFName("Contents"), PDFIndirect(page_content))
+    def add_page_font_ref(self,pageobj,info):
+        if not PDFName("Resources") in pageobj.value:
+            res_obj = self.pdf.new_object({})
+            pageobj.setkey(PDFName("Resources"), res_obj)
+        else:
+            res_obj = pageobj.value[PDFName("Resources")]
+        #
+        fontname = info.value.get(PDFName("Name"))
+        if fontname == None:
+            raise Exception("Font without a name")
+        #
+        if not PDFName("Font") in res_obj.value:
+            font_obj = self.pdf.new_object({})
+            res_obj.setkey(PDFName("Font"), font_obj)
+        else:
+            font_obj = res_obj.value[PDFName("Font")]
+        #
+        if not PDFName(fontname) in font_obj.value:
+            font_obj.setkey(PDFName(fontname), PDFIndirect(info))
+        else:
+            raise Exception("Font already added")
+    def add_font(self,fontdict):
+        return self.pdf.new_object(fontdict)
 
 class PDFPageContentWriter:
     wd = None
@@ -770,7 +799,10 @@ def emit_table_as_pdf(path,table_id,tp):
     pdf = PDFGen()
     pdfhl = PDFGenHL(pdf)
     #
+    font13 = pdfhl.add_font({ PDFName("Type"): PDFName("Font"), PDFName("Subtype"): PDFName("TrueType"), PDFName("Name"): PDFName("F13"), PDFName("BaseFont"): PDFName("Times New Roman") })
+    #
     page1 = pdfhl.new_page()
+    pdfhl.add_page_font_ref(page1,font13)
     page1cmd = PDFPageContentWriter()
     page1cmd.begin_text()
     page1cmd.set_text_font(13,12)
