@@ -800,7 +800,19 @@ class PDFPageContentWriter:
             raise Exception("Not in text")
         self.wd += " T*".encode()
     def color(self,r,g,b):
-        self.wd += (str(r)+" "+str(g)+" "+str(b)+" rg").encode()
+        self.wd += (" "+str(r)+" "+str(g)+" "+str(b)+" rg").encode()
+    def stroke_color(self,r,g,b):
+        self.wd += (" "+str(r)+" "+str(g)+" "+str(b)+" RG").encode()
+    def linewidth(self,l):
+        self.wd += (" "+str(l)+" w").encode()
+    def moveto(self,x,y):
+        self.wd += (" "+str(x)+" "+str(y)+" m").encode()
+    def lineto(self,x,y):
+        self.wd += (" "+str(x)+" "+str(y)+" l").encode()
+    def close_subpath(self):
+        self.wd += (" h").encode()
+    def stroke(self):
+        self.wd += (" S").encode()
     def finish(self):
         if self.intxt == True:
             self.end_text()
@@ -826,6 +838,14 @@ def emit_table_as_pdf(path,table_id,tp):
     page1cmd.color(1.0,0,0)
     page1cmd.text("1234ABCD")
     page1cmd.end_text()
+    page1cmd.linewidth(2.0)
+    page1cmd.stroke_color(0,0.5,0)
+    page1cmd.moveto(50,50)
+    page1cmd.lineto(100,50)
+    page1cmd.lineto(100,100)
+    page1cmd.lineto(50,100)
+    page1cmd.close_subpath()
+    page1cmd.stroke()
     page1content = pdfhl.make_page_content_stream(page1,data=page1cmd.data())
     page2 = pdfhl.new_page()
     page1o = pdfhl.get_page(1)
