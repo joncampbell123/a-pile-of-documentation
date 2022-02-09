@@ -398,13 +398,14 @@ class PDFName:
 class PDFIndirect:
     id = None
     def __init__(self,id):
-        if type(id) == PDFObject:
+        if type(id) == PDFObject or type(id) == PDFStream:
             id = id.id
         elif not type(id) == int:
             raise Exception("PDFIndirect id must be integer")
         self.id = id
 
 class PDFStream:
+    id = None
     data = None
     def __init__(self,data):
         self.data = data
@@ -524,6 +525,12 @@ class PDFGen:
         self.pdfver = [ 1, 4 ]
         self.objects = [ None ] # object 0 is always NULL because most PDFs seem to count from 1
     #
+    def new_stream_object(self,value=None):
+        id = len(self.objects)
+        obj = PDFStream(value)
+        self.objects.append(obj)
+        obj.id = id
+        return obj
     def new_object(self,value=None,*,vtype=None):
         id = len(self.objects)
         obj = PDFObject(value,vtype=vtype)
@@ -599,10 +606,10 @@ class PDFGen:
             for key in obj.value:
                 objval = obj.value[key]
                 r = r + self.serialize(key) + " " + self.serialize(objval) + "\n"
-            r = r + " >>"
+            r = r + ">>"
             return r
         elif obj.type == PDFStream:
-            return "" # TODO
+            raise Exception("PDFStream serialize directly")
         elif obj.type == None:
             return "null"
         elif obj.type == PDFIndirect:
@@ -619,8 +626,8 @@ class PDFGen:
             raise Exception("PDFGen root node out of range")
 
         f.seek(0)
-        f.write("%PDF-"+str(self.pdfver[0])+"."+str(self.pdfver[1])+"\n")
-        f.write("\xf0\xf1\xf2\xf3\xf4\xf5\n\n") # non-ASCII chars to convince other programs this is not text
+        f.write(("%PDF-"+str(self.pdfver[0])+"."+str(self.pdfver[1])+"\n").encode())
+        f.write(bytes([0xF0,0xF1,0xF2,0xF3,0xF4,0xF5,0xF6,0xF7])+"\n\n".encode()) # non-ASCII chars to convince other programs this is not text
         for objid in range(len(self.objects)):
             obj = self.objects[objid]
             if not obj == None:
@@ -633,42 +640,50 @@ class PDFGen:
                 else:
                     raise Exception("objid count error")
                 continue
-            elif not type(obj) == PDFObject:
-                raise Exception("PDF object list contains not a PDF object, instead is type "+str(type(obj)))
             #
             if len(objofs) == objid:
                 objofs.append(f.tell())
             else:
                 raise Exception("objid count error")
             #
-            f.write(str(objid)+" 0 obj\n")
-            f.write(self.serialize(obj))
-            f.write("\n")
-            f.write("endobj\n\n")
+            f.write((str(objid)+" 0 obj\n").encode())
+            if type(obj) == PDFObject:
+                f.write(self.serialize(obj).encode())
+            elif type(obj) == PDFStream:
+                f.write(self.serialize(PDFObject({ PDFName("Length"): len(obj.data) })).encode())
+                f.write("stream\n".encode())
+                f.write(obj.data)
+                f.write("\n".encode())
+                f.write("endstream\n".encode())
+            else:
+                raise Exception("unsupported object")
+            #
+            f.write("\n".encode())
+            f.write("endobj\n\n".encode())
         #
         xrefofs = f.tell()
-        f.write("xref\n")
-        f.write("0 "+str(len(self.objects))+"\n")
+        f.write("xref\n".encode())
+        f.write(("0 "+str(len(self.objects))+"\n").encode())
         for objid in range(len(self.objects)):
             ofs = objofs[objid]
             if not ofs == None:
                 s = str(ofs)[0:10]
                 if len(s) < 10:
                     s = ("0"*(10-len(s)))+s
-                f.write(s+" 00000 n\n")
+                f.write((s+" 00000 n\n").encode())
             else:
-                f.write("0000000000 65536 f\n")
-        f.write("\n")
+                f.write(("0000000000 65536 f\n").encode())
+        f.write("\n".encode())
         #
-        f.write("trailer\n")
-        f.write("<<\n")
-        f.write("  /Size "+str(len(self.objects))+"\n")
-        f.write("  /Root "+str(self.root_id)+" 0 R\n")
-        f.write(">>\n")
+        f.write("trailer\n".encode())
+        f.write("<<\n".encode())
+        f.write(("  /Size "+str(len(self.objects))+"\n").encode())
+        f.write(("  /Root "+str(self.root_id)+" 0 R\n").encode())
+        f.write(">>\n".encode())
         #
-        f.write("startxref\n")
-        f.write(str(xrefofs)+"\n")
-        f.write("%%EOF\n")
+        f.write("startxref\n".encode())
+        f.write((str(xrefofs)+"\n").encode())
+        f.write("%%EOF\n".encode())
 
 def emit_table_as_pdf(path,table_id,tp):
     pdf = PDFGen()
@@ -681,15 +696,16 @@ def emit_table_as_pdf(path,table_id,tp):
     page1 = pdf.new_object({
         PDFName("Type"): PDFName("Page")
     })
+    page2 = pdf.new_stream_object(bytes([0x30,0x31,0x32,0x33]))
     pages = pdf.new_object({
         PDFName("Type"): PDFName("Pages"),
-        PDFName("Count"): 1,
-        PDFName("Kids"): [ PDFIndirect(page1) ]
+        PDFName("Count"): 2,
+        PDFName("Kids"): [ PDFIndirect(page1), PDFIndirect(page2) ]
     })
     root.setkey(PDFName("Pages"), PDFIndirect(pages))
     page1.setkey(PDFName("Data"), bytes([1,2,3,4,0xA0,0xA1,0xA2,0xA3]))
     #
-    f = open(path,"w",encoding="UTF-8")
+    f = open(path,"wb")
     pdf.write_file(f)
     f.close()
 
