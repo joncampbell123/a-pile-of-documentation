@@ -412,6 +412,7 @@ class PDFStream:
 
 class PDFObject:
     id = None
+    index = None
     value = None
     type = None # boolean, integer, real, text string, hex string, name, array, dict, stream, null, indirect
     def __init__(self,value=None,*,vtype=None):
@@ -685,26 +686,51 @@ class PDFGen:
         f.write((str(xrefofs)+"\n").encode())
         f.write("%%EOF\n".encode())
 
+class PDFGenHL:
+    pdf = None
+    root_node = None
+    pages_node = None
+    pages = None
+    def __init__(self,pdf):
+        self.pdf = pdf
+        self.pages = [ None ] # count from 1, fill slot 0, array of PDFIndirect
+        #
+        self.root_node = self.pdf.new_object({
+            PDFName("Type"): PDFName("Catalog"),
+            PDFName("Lang"): "en-US"
+        })
+        self.pdf.set_root_object(self.root_node)
+        #
+        self.pages_node = self.pdf.new_object({
+            PDFName("Type"): PDFName("Pages")
+        })
+        self.root_node.setkey(PDFName("Pages"), PDFIndirect(self.pages_node))
+    def finish(self):
+        self.pages_node.setkey(PDFName("Count"), len(self.pages) - 1) # slot 0 does not count
+        self.pages_node.setkey(PDFName("Kids"), self.pages[1:])
+    def new_page(self):
+        pagedir = self.pdf.new_object({
+            PDFName("Type"): PDFName("Page")
+        })
+        pagedir.index = len(self.pages)
+        pageindir = PDFIndirect(pagedir)
+        self.pages.append(pageindir)
+        return pagedir
+    def get_page(self,page):
+        po = self.pages[page]
+        if po == None:
+            return None
+        return self.pdf.objects[po.id]
+
 def emit_table_as_pdf(path,table_id,tp):
     pdf = PDFGen()
+    pdfhl = PDFGenHL(pdf)
     #
-    root = pdf.new_object({
-        PDFName("Type"): PDFName("Catalog"),
-        PDFName("Lang"): "en-US"
-    })
-    pdf.set_root_object(root)
-    page1 = pdf.new_object({
-        PDFName("Type"): PDFName("Page")
-    })
-    page2 = pdf.new_stream_object(bytes([0x30,0x31,0x32,0x33]))
-    pages = pdf.new_object({
-        PDFName("Type"): PDFName("Pages"),
-        PDFName("Count"): 2,
-        PDFName("Kids"): [ PDFIndirect(page1), PDFIndirect(page2) ]
-    })
-    root.setkey(PDFName("Pages"), PDFIndirect(pages))
-    page1.setkey(PDFName("Data"), bytes([1,2,3,4,0xA0,0xA1,0xA2,0xA3]))
+    page1 = pdfhl.new_page()
+    page2 = pdfhl.new_page()
+    page1o = pdfhl.get_page(1)
     #
+    pdfhl.finish()
     f = open(path,"wb")
     pdf.write_file(f)
     f.close()
