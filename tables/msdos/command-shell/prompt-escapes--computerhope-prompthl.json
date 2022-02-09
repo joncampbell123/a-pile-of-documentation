@@ -1,7 +1,8 @@
 {
 	"id": "msdos-command-shell-prompt-escapes",
 	"source": {
-		"website": "computerhope-prompthl"
+		"website": "computerhope-prompthl",
+		"url": "https://www.computerhope.com/prompthl.htm"
 	},
 	"table": {
 		"$a": { "value": [ "Ampersand ( & )", "$a", "&" ] },

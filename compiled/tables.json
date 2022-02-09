@@ -2098,7 +2098,6 @@
 			"title": "Keyboard scan code/character code combinations returned in AH/AL by INT 16h functions 00h/01h (standard) and functions 01h/11h (extended)"
 		},
 		"computerhope-prompthl": {
-			"url": "https://www.computerhope.com/prompthl.htm",
 			"type": "website",
 			"title": "MS-DOS and Windows command line prompt command"
 		}

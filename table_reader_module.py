@@ -40,6 +40,11 @@ class Table:
             citation["type"] = book.type
         if not book.url == None:
             citation["url"] = book.url
+        # Making a source file PER WEBSITE URL is absurd, allow the table to provide the URL
+        if "url" in src:
+            citation["url"] = src["url"]
+            del src["url"]
+        #
         src["citation"] = citation
         #
         searchobj = None
