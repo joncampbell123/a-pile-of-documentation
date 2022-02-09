@@ -852,7 +852,8 @@ class PDFGenHL:
             #
             if not ttffile == None:
                 f = open(ttffile,"rb")
-                ttf = TTFFile(f.read())
+                ttfdata = f.read()
+                ttf = TTFFile(ttfdata)
                 f.close()
                 pdfinfo = ttf.get_info_for_pdf()
                 if not pdfinfo.italicAngle == None:
@@ -882,6 +883,9 @@ class PDFGenHL:
                 fdo[PDFName("Flags")] = flags
                 # I don't know how to get this from the TTF so just guess
                 fdo[PDFName("StemV")] = 52
+                # finally, make a stream_object for the TTF file and point to it from the font descriptor
+                fontstream = self.pdf.new_stream_object(ttfdata)
+                fdo[PDFName("FontFile2")] = PDFIndirect(fontstream)
             #
             fontdict[PDFName("FontDescriptor")] = PDFIndirect(self.pdf.new_object(fdo))
         return self.pdf.new_object(fontdict)
@@ -953,7 +957,7 @@ def emit_table_as_pdf(path,table_id,tp):
     font13 = pdfhl.add_font({
         PDFName("Subtype"): PDFName("TrueType"),
         PDFName("Name"): PDFName("F13"),
-        PDFName("BaseFont"): PDFName("sans-serif")
+        PDFName("BaseFont"): PDFName("ABCDEE+Ubuntu")
     },
     desc={
     },
