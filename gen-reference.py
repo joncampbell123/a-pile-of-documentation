@@ -698,6 +698,7 @@ class TTFFileTable:
     offset = None
     length = None
     checksum = None
+    data = None
     def __init__(self,tag,checksum,offset,length):
         self.tag = tag
         self.checksum = checksum
@@ -705,6 +706,9 @@ class TTFFileTable:
         self.length = length
     def __str__(self):
         return "{ tag="+self.tag.decode()+" chk="+hex(self.checksum)+" offset="+str(self.offset)+" size="+str(self.length)+" }"
+
+class TTFInfoForPDF:
+    italicAngle = None
 
 class TTFFile:
     tables = None
@@ -718,12 +722,26 @@ class TTFFile:
             tag = data[ofs:ofs+4]
             [checkSum,offset,length] = struct.unpack(">LLL",data[ofs+4:ofs+16])
             #
-            self.tables.append(TTFFileTable(tag,checkSum,offset,length))
+            te = TTFFileTable(tag,checkSum,offset,length)
+            te.data = data[offset:offset+length]
+            #
+            self.tables.append(te)
     def lookup(self,id):
         for ti in self.tables:
             if ti.tag.decode().strip() == id:
                 return ti
         return None
+    def get_info_for_pdf(self):
+        r = TTFInfoForPDF()
+        #
+        post = self.lookup("post")
+        if not post == None:
+            # FIXED: 32-bit fixed pt (L)
+            # FWORD: 16-bit signed int (h)
+            # ULONG: 32-bit unsigned long (L)
+            [FormatType,r.italicAngle,underlinePosition,underlineThickness,isFixedPitch] = struct.unpack(">LLhhL",post.data[0:16])
+        #
+        return r
 
 class PDFGenHL:
     pdf = None
@@ -805,6 +823,7 @@ class PDFGenHL:
                 f = open(ttffile,"rb")
                 ttf = TTFFile(f.read())
                 f.close()
+                pdfinfo = ttf.get_info_for_pdf()
             #
             fontdict[PDFName("FontDescriptor")] = PDFIndirect(self.pdf.new_object(fdo))
         return self.pdf.new_object(fontdict)
