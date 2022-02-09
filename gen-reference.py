@@ -726,12 +726,19 @@ class PDFGenHL:
         if po == None:
             return None
         return self.pdf.objects[po.id]
+    def make_page_content_stream(self,pageobj,*,data=bytes()):
+        if PDFName("Contents") in pageobj.value:
+            return
+        page_content = self.pdf.new_stream_object(data)
+        pageobj.setkey(PDFName("Contents"), PDFIndirect(page_content))
 
 def emit_table_as_pdf(path,table_id,tp):
     pdf = PDFGen()
     pdfhl = PDFGenHL(pdf)
     #
     page1 = pdfhl.new_page()
+    page1cmd = "BT /F13 12 Tf 288 720 Td (ABC) Tj ET"
+    page1content = pdfhl.make_page_content_stream(page1,data=page1cmd.encode())
     page2 = pdfhl.new_page()
     page1o = pdfhl.get_page(1)
     #
