@@ -873,6 +873,28 @@ def emit_table_as_pdf(path,table_id,tp):
     del page1cmd
     #
     page2 = pdfhl.new_page()
+    #
+    page2cmd = PDFPageContentWriter()
+    page2cmd.begin_text()
+    page2cmd.text_leading(12)
+    page2cmd.set_text_font(13,12)
+    page2cmd.text_move_to(288,270)
+    page2cmd.fill_color(0,0,0.5)
+    page2cmd.text("Page 2")
+    page2cmd.end_text()
+    page2cmd.linewidth(4.0)
+    page2cmd.stroke_color(0,0.5,0)
+    page2cmd.fill_color(0.5,0,0)
+    page2cmd.moveto(250,50)
+    page2cmd.lineto(300,50)
+    page2cmd.lineto(300,100)
+    page2cmd.lineto(250,100)
+    page2cmd.close_subpath()
+    page2cmd.stroke_and_fill()
+    #
+    page2content = pdfhl.make_page_content_stream(page2,data=page2cmd.data())
+    del page2cmd
+    #
     page1o = pdfhl.get_page(1)
     #
     pdfhl.finish()
