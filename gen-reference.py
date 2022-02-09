@@ -517,8 +517,10 @@ class PDFObject:
 class PDFGen:
     pdfver = None
     objects = None
+    root_id = None
     #
     def __init__(self,optobj=None):
+        self.root_id = None
         self.pdfver = [ 1, 4 ]
         self.objects = [ None ] # object 0 is always NULL because most PDFs seem to count from 1
     #
@@ -528,6 +530,13 @@ class PDFGen:
         self.objects.append(obj)
         obj.id = id
         return obj
+    def set_root_object(self,obj):
+        if type(obj) == int:
+            self.root_id = obj
+        elif type(obj) == PDFObject:
+            self.root_id = obj.id
+        else:
+            raise Exception("Set root node given invalid object")
     #
     def pdf_str_escape(self,v):
         r = ""
@@ -604,6 +613,11 @@ class PDFGen:
     def write_file(self,f):
         objofs = [ ]
 
+        if self.root_id == None:
+            raise Exception("PDFGen root node not specified")
+        if self.root_id < 0 or self.root_id >= len(self.objects):
+            raise Exception("PDFGen root node out of range")
+
         f.seek(0)
         f.write("%PDF-"+str(self.pdfver[0])+"."+str(self.pdfver[1])+"\n")
         f.write("\xf0\xf1\xf2\xf3\xf4\xf5\n\n") # non-ASCII chars to convince other programs this is not text
@@ -649,7 +663,7 @@ class PDFGen:
         f.write("trailer\n")
         f.write("<<\n")
         f.write("  /Size "+str(len(self.objects))+"\n")
-        f.write("  /Root 1 0 R\n") # TODO: Allow caller to set root node
+        f.write("  /Root "+str(self.root_id)+" 0 R\n")
         f.write(">>\n")
         #
         f.write("startxref\n")
@@ -663,6 +677,7 @@ def emit_table_as_pdf(path,table_id,tp):
         PDFName("Type"): PDFName("Catalog"),
         PDFName("Lang"): "en-US"
     })
+    pdf.set_root_object(root)
     page1 = pdf.new_object({
         PDFName("Type"): PDFName("Page")
     })
