@@ -799,6 +799,8 @@ class PDFPageContentWriter:
         if not self.intxt == True:
             raise Exception("Not in text")
         self.wd += " T*".encode()
+    def color(self,r,g,b):
+        self.wd += (str(r)+" "+str(g)+" "+str(b)+" rg").encode()
     def finish(self):
         if self.intxt == True:
             self.end_text()
@@ -816,9 +818,12 @@ def emit_table_as_pdf(path,table_id,tp):
     page1cmd.text_leading(12)
     page1cmd.set_text_font(13,12)
     page1cmd.text_move_to(288,270)
+    page1cmd.color(0,0,0.5)
     page1cmd.text("Hello World. ")
+    page1cmd.color(0,0,1.0)
     page1cmd.text("This is a PDF")
     page1cmd.text_next_line()
+    page1cmd.color(1.0,0,0)
     page1cmd.text("1234ABCD")
     page1cmd.end_text()
     page1content = pdfhl.make_page_content_stream(page1,data=page1cmd.data())
