@@ -791,6 +791,14 @@ class PDFPageContentWriter:
         if not self.intxt == True:
             raise Exception("Not in text")
         self.wd += (" ("+pdf_str_escape(text)+") Tj").encode()
+    def text_leading(self,l):
+        if not self.intxt == True:
+            raise Exception("Not in text")
+        self.wd += (str(l)+" TL").encode()
+    def text_next_line(self):
+        if not self.intxt == True:
+            raise Exception("Not in text")
+        self.wd += " T*".encode()
     def finish(self):
         if self.intxt == True:
             self.end_text()
@@ -805,10 +813,13 @@ def emit_table_as_pdf(path,table_id,tp):
     pdfhl.add_page_font_ref(page1,font13)
     page1cmd = PDFPageContentWriter()
     page1cmd.begin_text()
+    page1cmd.text_leading(12)
     page1cmd.set_text_font(13,12)
     page1cmd.text_move_to(288,270)
     page1cmd.text("Hello World. ")
     page1cmd.text("This is a PDF")
+    page1cmd.text_next_line()
+    page1cmd.text("1234ABCD")
     page1cmd.end_text()
     page1content = pdfhl.make_page_content_stream(page1,data=page1cmd.data())
     page2 = pdfhl.new_page()
