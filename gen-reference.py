@@ -564,7 +564,14 @@ class PDFGen:
         elif obj.type == str:
             return "("+self.pdf_str_escape(obj.value)+")"
         elif obj.type == bytes:
-            return "" # TODO
+            r = "<"
+            for c in obj.value:
+                h = hex(c)[2:].upper() # strip off 0x, also Adobe says it can be upper or lower case, I choose upper
+                if len(h) < 2:
+                    h = '0'+h
+                r = r + h
+            r = r + ">"
+            return r
         elif obj.type == PDFName:
             return "/" + str(obj.value.name)
         elif obj.type == list:
@@ -660,6 +667,7 @@ def emit_table_as_pdf(path,table_id,tp):
         PDFName("Kids"): [ PDFIndirect(page1) ]
     })
     root.value[PDFName("Pages")] = PDFIndirect(pages)
+    page1.value[PDFName("Data")] = bytes([1,2,3,4,0xA0,0xA1,0xA2,0xA3])
     #
     f = open(path,"w",encoding="UTF-8")
     pdf.write_file(f)
