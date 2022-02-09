@@ -438,7 +438,9 @@ class PDFIndirect:
 class PDFStream:
     id = None
     data = None
+    header = None
     def __init__(self,data):
+        self.header = PDFObject({})
         self.data = data
 
 class PDFObject:
@@ -658,7 +660,9 @@ class PDFGen:
             if type(obj) == PDFObject:
                 f.write(self.serialize(obj).encode())
             elif type(obj) == PDFStream:
-                f.write(self.serialize(PDFObject({ PDFName("Length"): len(obj.data) })).encode())
+                obj.header.value[PDFName("Length")] = len(obj.data)
+                f.write(self.serialize(obj.header).encode())
+                f.write("\n".encode())
                 f.write("stream\n".encode())
                 f.write(obj.data)
                 f.write("\n".encode())
@@ -885,6 +889,9 @@ class PDFGenHL:
                 fdo[PDFName("StemV")] = 52
                 # finally, make a stream_object for the TTF file and point to it from the font descriptor
                 fontstream = self.pdf.new_stream_object(ttfdata)
+                # PDF stream objects always list their length as /Length
+                # Except Font TTF streams, which require the same size specified as /Length1 (facepalm)
+                fontstream.header.value[PDFName("Length1")] = len(ttfdata)
                 fdo[PDFName("FontFile2")] = PDFIndirect(fontstream)
             #
             fontdict[PDFName("FontDescriptor")] = PDFIndirect(self.pdf.new_object(fdo))
