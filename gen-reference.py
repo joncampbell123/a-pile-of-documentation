@@ -387,6 +387,30 @@ def emit_table_as_html(path,table_id,tp):
     f.write("</html>")
     f.close()
 
+def pdf_str_escape(v):
+    r = ""
+    for c in v:
+        if c == '\n':
+            r = r + "\\n"
+        elif c == '\r':
+            r = r + "\\r"
+        elif c == '\t':
+            r = r + "\\t"
+        elif c == '\b':
+            r = r + "\\b"
+        elif c == '\f':
+            r = r + "\\f"
+        elif c == '(':
+            r = r + "\\("
+        elif c == ')':
+            r = r + "\\)"
+        elif c == '\\':
+            r = r + "\\\\"
+        else:
+            r = r + c
+    #
+    return r;
+
 # the world's simplest PDF generator class
 class PDFName:
     name = None
@@ -546,30 +570,6 @@ class PDFGen:
         else:
             raise Exception("Set root node given invalid object")
     #
-    def pdf_str_escape(self,v):
-        r = ""
-        for c in v:
-            if c == '\n':
-                r = r + "\\n"
-            elif c == '\r':
-                r = r + "\\r"
-            elif c == '\t':
-                r = r + "\\t"
-            elif c == '\b':
-                r = r + "\\b"
-            elif c == '\f':
-                r = r + "\\f"
-            elif c == '(':
-                r = r + "\\("
-            elif c == ')':
-                r = r + "\\)"
-            elif c == '\\':
-                r = r + "\\\\"
-            else:
-                r = r + c
-        #
-        return r
-    #
     def serialize(self,obj):
         if not type(obj) == PDFObject:
             obj = PDFObject(obj)
@@ -584,7 +584,7 @@ class PDFGen:
         elif obj.type == float:
             return str(obj.value)
         elif obj.type == str:
-            return "("+self.pdf_str_escape(obj.value)+")"
+            return "("+pdf_str_escape(obj.value)+")"
         elif obj.type == bytes:
             r = "<"
             for c in obj.value:
@@ -732,13 +732,52 @@ class PDFGenHL:
         page_content = self.pdf.new_stream_object(data)
         pageobj.setkey(PDFName("Contents"), PDFIndirect(page_content))
 
+class PDFPageContentWriter:
+    wd = None
+    intxt = None
+    def data(self):
+        return self.wd
+    def __init__(self):
+        self.wd = bytes()
+        self.intxt = False
+    def begin_text(self):
+        if self.intxt == True:
+            raise Exception("Already in text")
+        self.intxt = True
+        self.wd += " BT".encode()
+    def end_text(self):
+        if not self.intxt == True:
+            raise Exception("Not in text, cannot end")
+        self.intxt = False
+        self.wd += " ET".encode()
+    def set_text_font(self,font_id,size):
+        if not self.intxt == True:
+            raise Exception("Not in text")
+        self.wd += (" /F"+str(font_id)+" "+str(size)+" Tf").encode()
+    def text_move_to(self,x,y):
+        if not self.intxt == True:
+            raise Exception("Not in text")
+        self.wd += (" "+str(x)+" "+str(y)+" Td").encode()
+    def text(self,text):
+        if not self.intxt == True:
+            raise Exception("Not in text")
+        self.wd += (" ("+pdf_str_escape(text)+") Tj").encode()
+    def finish(self):
+        if self.intxt == True:
+            self.end_text()
+
 def emit_table_as_pdf(path,table_id,tp):
     pdf = PDFGen()
     pdfhl = PDFGenHL(pdf)
     #
     page1 = pdfhl.new_page()
-    page1cmd = "BT /F13 12 Tf 288 720 Td (ABC) Tj ET"
-    page1content = pdfhl.make_page_content_stream(page1,data=page1cmd.encode())
+    page1cmd = PDFPageContentWriter()
+    page1cmd.begin_text()
+    page1cmd.set_text_font(13,12)
+    page1cmd.text_move_to(288,270)
+    page1cmd.text("Hello World")
+    page1cmd.end_text()
+    page1content = pdfhl.make_page_content_stream(page1,data=page1cmd.data())
     page2 = pdfhl.new_page()
     page1o = pdfhl.get_page(1)
     #
