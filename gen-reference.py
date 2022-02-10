@@ -615,6 +615,8 @@ class PDFGen:
             r = ""
             for key in obj.value:
                 objval = obj.value[key]
+                if not type(key) == PDFName:
+                    raise Exception("dict keys must be PDFName not "+type(key))
                 if type(key) == PDFName and (type(objval) == PDFName or type(objval) == str or type(objval) == bytes or type(objval) == list or type(objval) == PDFObject):
                     r = r + self.serialize(key) + self.serialize(objval)
                 else:
