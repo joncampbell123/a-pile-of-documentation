@@ -490,10 +490,12 @@ class EmitPDF:
         # page number
         ps.begin_text()
         ps.set_text_font(self.font1.italic,10)
+        ptxt = "p. "+str(self.currentPage.index)
+        pw = pdfhl.fontwidth(self.font1.italic,10,ptxt) # get text width to right-justify
         ps.fill_color(0,0,0)
         p = self.coordxlate(self.pageNumberRegion.xy)
-        ps.text_move_to(p.x*self.currentDPI,p.y*self.currentDPI)
-        ps.text("p. "+str(self.currentPage.index))
+        ps.text_move_to((p.x+self.pageNumberRegion.wh.x-pw)*self.currentDPI,p.y*self.currentDPI) # right justify
+        ps.text(ptxt)
         ps.end_text()
         #
         return page
