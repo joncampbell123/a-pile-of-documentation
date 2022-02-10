@@ -676,15 +676,16 @@ class PDFGen:
         xrefofs = f.tell()
         f.write("xref\n".encode())
         f.write(("0 "+str(len(self.objects))+"\n").encode())
+        # NTS: Each xref entry must be 20 bytes each
         for objid in range(len(self.objects)):
             ofs = objofs[objid]
             if not ofs == None:
                 s = str(ofs)[0:10]
                 if len(s) < 10:
                     s = ("0"*(10-len(s)))+s
-                f.write((s+" 00000 n\n").encode())
+                f.write((s+" 00000 n \n").encode())
             else:
-                f.write(("0000000000 65536 f\n").encode())
+                f.write(("0000000000 65536 f \n").encode())
         f.write("\n".encode())
         #
         f.write("trailer\n".encode())
