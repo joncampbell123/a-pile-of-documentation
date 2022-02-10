@@ -579,9 +579,6 @@ def emit_table_as_pdf(path,table_id,tp):
     page2cmd.stroke_and_fill()
     #
     emitpdf.end_page(pdfhl)
-    #
-    page1o = pdfhl.get_page(1)
-    #
     pdfhl.finish()
     f = open(path,"wb")
     pdf.write_file(f)
