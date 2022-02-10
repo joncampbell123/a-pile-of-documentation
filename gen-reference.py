@@ -826,7 +826,7 @@ class PDFGenHL:
         pageobj.setkey(PDFName("Contents"), PDFIndirect(page_content))
     def add_page_font_ref(self,pageobj,info):
         if not PDFName("Resources") in pageobj.value:
-            res_obj = self.pdf.new_object({})
+            res_obj = PDFObject({})
             pageobj.setkey(PDFName("Resources"), res_obj)
         else:
             res_obj = pageobj.value[PDFName("Resources")]
@@ -836,7 +836,7 @@ class PDFGenHL:
             raise Exception("Font without a name")
         #
         if not PDFName("Font") in res_obj.value:
-            font_obj = self.pdf.new_object({})
+            font_obj = PDFObject({})
             res_obj.setkey(PDFName("Font"), font_obj)
         else:
             font_obj = res_obj.value[PDFName("Font")]
