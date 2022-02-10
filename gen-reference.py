@@ -419,6 +419,7 @@ class EmitPDF:
     pageTitleRegion = None
     pageNumberRegion = None
     #
+    currentTitle = None
     currentPage = None
     pagestream = None
     pageHeight = None
@@ -435,8 +436,8 @@ class EmitPDF:
         ur = XY(8 - 0.25,0.45)
         self.pageTitleRegion = RectRegion(ll,ur-ll)
         #
-        ll = XY(0.25,0.475)
-        ur = XY(8 - 0.25,0.475)
+        ll = XY(0.25,0.3)
+        ur = XY(8 - 0.25,0.3)
         self.pageTitleLine = RectRegion(ll,ur-ll)
         #
         ll = XY(8 - 0.5,11 - 0.25)
@@ -465,10 +466,33 @@ class EmitPDF:
         pdfhl.add_page_font_ref(page,self.font1.bold)
         pdfhl.add_page_font_ref(page,self.font1.italic)
         #
-        self.pagestream = pdf_module.PDFPageContentWriter()
+        ps = self.pagestream = pdf_module.PDFPageContentWriter()
         #
         self.pageHeight = pdfhl.page_size[1]
         self.currentPos = self.contentRegion.xy
+        # title
+        ps.begin_text()
+        ps.set_text_font(self.font1.italic,10)
+        ps.fill_color(0,0,0)
+        p = self.coordxlate(self.pageTitleRegion.xy)
+        ps.text_move_to(p.x*pdfhl.page_dpi,p.y*pdfhl.page_dpi)
+        ps.text(self.currentTitle)
+        ps.end_text()
+        #
+        p = self.coordxlate(self.pageTitleLine.xy)
+        ps.stroke_color(0,0,0)
+        ps.linewidth(0.5)
+        ps.moveto(p.x*pdfhl.page_dpi,p.y*pdfhl.page_dpi)
+        ps.lineto((p.x+self.pageTitleLine.wh.x)*pdfhl.page_dpi,p.y*pdfhl.page_dpi) # FIXME: "wh" is an XY object
+        ps.stroke()
+        # page number
+        ps.begin_text()
+        ps.set_text_font(self.font1.italic,10)
+        ps.fill_color(0,0,0)
+        p = self.coordxlate(self.pageNumberRegion.xy)
+        ps.text_move_to(p.x*pdfhl.page_dpi,p.y*pdfhl.page_dpi)
+        ps.text("p. "+str(self.currentPage.index))
+        ps.end_text()
         #
         return page
     def coordxlate(self,xy):
@@ -476,6 +500,8 @@ class EmitPDF:
         return XY(xy.x,self.pageHeight-xy.y)
     def ps(self):
         return self.pagestream
+    def set_title(self,title):
+        self.currentTitle = title
 
 def emit_table_as_pdf(path,table_id,tp):
     emitpdf = EmitPDF()
@@ -513,6 +539,7 @@ def emit_table_as_pdf(path,table_id,tp):
     },
     ttffile="ttf/Ubuntu-RI.ttf")
     # -------------- END FONTS
+    emitpdf.set_title(tp.display.header)
     page1 = emitpdf.new_page(pdfhl)
     page1cmd = emitpdf.ps()
     page1cmd.begin_text()
