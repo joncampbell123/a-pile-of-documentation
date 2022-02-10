@@ -724,6 +724,8 @@ class TTFInfoForPDF:
     fontWeight = None
     italicAngle = None
     unitsPerEm = None
+    firstChar = None
+    lastChar = None
     xMin = None
     yMin = None
     xMax = None
@@ -775,6 +777,7 @@ class TTFFile:
         os2 = self.lookup("OS/2")
         if not os2 == None:
             [version,xAvgCharWidth,r.fontWeight] = struct.unpack(">HhH",os2.data[0:6])
+            [r.firstChar,r.lastChar] = struct.unpack(">HH",os2.data[64:64+4])
             del os2
         #
         hhea = self.lookup("hhea")
@@ -880,6 +883,10 @@ class PDFGenHL:
                     fdo[PDFName("Ascent")] = pdfinfo.Ascent
                 if not pdfinfo.Descent == None:
                     fdo[PDFName("Descent")] = pdfinfo.Descent
+                if not pdfinfo.firstChar == None:
+                    fdo[PDFName("FirstChar")] = pdfinfo.firstChar
+                if not pdfinfo.lastChar == None:
+                    fdo[PDFName("LastChar")] = pdfinfo.lastChar
                 #
                 # CAREFUL! Adobe documents LSB as bit 1 and MSB as bit 32
                 #
