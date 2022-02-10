@@ -484,6 +484,19 @@ class PDFGenHL:
                 fdo[PDFName("FontFile2")] = PDFIndirect(fontstream)
         #
         return fontpdfobj
+    def fontwidth(self,font,size,text):
+        sz = 0
+        fc = font.value.get(PDFName("FirstChar"))
+        if fc == None:
+            fc = 0
+        fw = font.value.get(PDFName("Widths"))
+        if not fw == None:
+            for c in text:
+                ci = ord(c) - fc
+                if ci >= 0 and ci < len(fw):
+                    sz = sz + (fw[ci] * size) / 1000.0
+        #
+        return sz / self.page_dpi
 
 class PDFPageContentWriter:
     wd = None
