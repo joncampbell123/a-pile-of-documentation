@@ -884,9 +884,9 @@ class PDFGenHL:
                 if not pdfinfo.Descent == None:
                     fdo[PDFName("Descent")] = pdfinfo.Descent
                 if not pdfinfo.firstChar == None:
-                    fdo[PDFName("FirstChar")] = pdfinfo.firstChar
+                    fontpdfobj.value[PDFName("FirstChar")] = pdfinfo.firstChar
                 if not pdfinfo.lastChar == None:
-                    fdo[PDFName("LastChar")] = pdfinfo.lastChar
+                    fontpdfobj.value[PDFName("LastChar")] = pdfinfo.lastChar
                 #
                 # CAREFUL! Adobe documents LSB as bit 1 and MSB as bit 32
                 #
