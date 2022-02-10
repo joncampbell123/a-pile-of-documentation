@@ -976,22 +976,18 @@ def emit_table_as_pdf(path,table_id,tp):
     pdf = PDFGen()
     pdfhl = PDFGenHL(pdf)
     #
-    font13 = pdfhl.add_font({
+    font1 = pdfhl.add_font({
         PDFName("Subtype"): PDFName("TrueType"),
-        PDFName("Name"): PDFName("F13"),
-        PDFName("BaseFont"): PDFName("ABCDEE+Ubuntu"),
-        PDFName("Encoding"): PDFName("WinAnsiEncoding")
-    },
-    desc={
-    },
-    ttffile="ttf/Ubuntu-R.ttf")
+        PDFName("Name"): PDFName("F1"),
+        PDFName("BaseFont"): PDFName("sans-serif")
+    })
     #
     page1 = pdfhl.new_page()
-    pdfhl.add_page_font_ref(page1,font13)
+    pdfhl.add_page_font_ref(page1,font1)
     page1cmd = PDFPageContentWriter()
     page1cmd.begin_text()
     page1cmd.text_leading(12)
-    page1cmd.set_text_font(13,12)
+    page1cmd.set_text_font(1,12)
     page1cmd.text_move_to(288,270)
     page1cmd.fill_color(0,0,0.5)
     page1cmd.text("Hello World. ")
@@ -1036,7 +1032,7 @@ def emit_table_as_pdf(path,table_id,tp):
     page2cmd = PDFPageContentWriter()
     page2cmd.begin_text()
     page2cmd.text_leading(12)
-    page2cmd.set_text_font(13,12)
+    page2cmd.set_text_font(1,12)
     page2cmd.text_move_to(288,270)
     page2cmd.fill_color(0,0,0.5)
     page2cmd.text("Page 2")
