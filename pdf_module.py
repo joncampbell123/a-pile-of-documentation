@@ -11,6 +11,8 @@ import pdf_module
 import html_module
 import common_json_help_module
 
+import freetype # some things are super complicated and are better left to the professionals (pip3 install freetype-py)
+
 def pdf_str_escape(v):
     r = ""
     for c in v:
@@ -454,6 +456,22 @@ class PDFGenHL:
                 fdo[PDFName("Flags")] = flags
                 # I don't know how to get this from the TTF so just guess
                 fdo[PDFName("StemV")] = 52
+                # now the complicated part: reading glyph widths, and mapping chars to glyphs, to build the Width table.
+                # Not only does PDF expect /Widths but it will also help the PDF export know how to lay out text properly.
+                ft = freetype.Face(ttffile)
+                char2glyph = ft.get_chars() # pair (uchar,glyph)
+                ft.set_char_size(72)
+                widths = [ ]
+                while len(widths) < (pdfinfo.lastChar + 1 - pdfinfo.firstChar):
+                    widths.append(0)
+                for [char,glyphidx] in char2glyph:
+                    if char >= pdfinfo.firstChar and char <= pdfinfo.lastChar:
+                        widx = char - pdfinfo.firstChar
+                        ft.load_glyph(glyphidx)
+                        widths[widx] = int(ft.glyph.linearHoriAdvance / 65.536)
+                #
+                fontdict[PDFName("Widths")] = widths
+                del ft
             #
             fontdict[PDFName("FontDescriptor")] = PDFIndirect(self.pdf.new_object(fdo))
             #
