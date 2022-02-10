@@ -693,10 +693,11 @@ class PDFGen:
         f.write("\n".encode())
         #
         f.write("trailer\n".encode())
-        f.write("<<\n".encode())
-        f.write(("  /Size "+str(len(self.objects))+"\n").encode())
-        f.write(("  /Root "+str(self.root_id)+" 0 R\n").encode())
-        f.write(">>\n".encode())
+        f.write(self.serialize({
+            PDFName("Size"): len(self.objects),
+            PDFName("Root"): PDFIndirect(self.root_id)
+        }).encode())
+        f.write("\n".encode())
         #
         f.write("startxref\n".encode())
         f.write((str(xrefofs)+"\n").encode())
