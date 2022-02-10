@@ -911,6 +911,13 @@ class PDFPageContentWriter:
     def __init__(self):
         self.wd = bytes()
         self.intxt = False
+    def rstrip(self):
+        i = len(self.wd) - 1
+        while i >= 0 and self.wd[i:i+1] == b' ':
+            i = i - 1
+        i = i + 1
+        if not len(self.wd) == i:
+            self.wd = self.wd[0:i]
     def begin_text(self):
         if self.intxt == True:
             raise Exception("Already in text")
@@ -924,6 +931,7 @@ class PDFPageContentWriter:
     def set_text_font(self,font_id,size):
         if not self.intxt == True:
             raise Exception("Not in text")
+        self.rstrip()
         self.wd += ("/F"+str(font_id)+" "+str(size)+" Tf ").encode()
     def text_move_to(self,x,y):
         if not self.intxt == True:
@@ -932,6 +940,7 @@ class PDFPageContentWriter:
     def text(self,text):
         if not self.intxt == True:
             raise Exception("Not in text")
+        self.rstrip()
         self.wd += ("("+pdf_str_escape(text)+") Tj ").encode()
     def text_leading(self,l):
         if not self.intxt == True:
