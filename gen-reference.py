@@ -403,7 +403,12 @@ class RectRegion:
     wh = None
     def __init__(self,xy=XY(),wh=WH()):
         self.xy = xy
-        self.wh = wh
+        if type(wh) == WH:
+            self.wh = wh
+        elif type(wh) == XY:
+            self.wh = WH(wh.x,wh.y)
+        else:
+            raise Exception("RectRegion wh param invalid")
     def __str__(self):
         return "[xy="+str(self.xy)+",wh="+str(self.wh)+"]"
 
@@ -485,7 +490,7 @@ class EmitPDF:
         ps.stroke_color(0,0,0)
         ps.linewidth(0.5)
         ps.moveto(p.x*self.currentDPI,p.y*self.currentDPI)
-        ps.lineto((p.x+self.pageTitleLine.wh.x)*self.currentDPI,p.y*self.currentDPI) # FIXME: "wh" is an XY object
+        ps.lineto((p.x+self.pageTitleLine.wh.w)*self.currentDPI,p.y*self.currentDPI)
         ps.stroke()
         # page number
         ps.begin_text()
@@ -494,7 +499,7 @@ class EmitPDF:
         pw = pdfhl.fontwidth(self.font1.italic,10,ptxt) # get text width to right-justify
         ps.fill_color(0,0,0)
         p = self.coordxlate(self.pageNumberRegion.xy)
-        ps.text_move_to((p.x+self.pageNumberRegion.wh.x-pw)*self.currentDPI,p.y*self.currentDPI) # right justify
+        ps.text_move_to((p.x+self.pageNumberRegion.wh.w-pw)*self.currentDPI,p.y*self.currentDPI) # right justify
         ps.text(ptxt)
         ps.end_text()
         #
@@ -568,7 +573,7 @@ def emit_table_as_pdf(path,table_id,tp):
     ps.stroke_color(0,0,0)
     ps.linewidth(0.5)
     ps.moveto(p.x*emitpdf.currentDPI,p.y*emitpdf.currentDPI)
-    lt = emitpdf.contentRegion.wh.x
+    lt = emitpdf.contentRegion.wh.w
     l = pdfhl.fontwidth(emitpdf.font1.bold,16,tp.display.header)
     if l > lt:
         l = lt
