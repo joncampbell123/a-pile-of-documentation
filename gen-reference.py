@@ -668,11 +668,12 @@ class PDFGen:
                 f.write(self.serialize(obj).encode())
             elif type(obj) == PDFStream:
                 if self.zlib_compress_streams == True:
-                    obj.header.value[PDFName("Filter")] = PDFName("FlateDecode")
                     cmp = zlib.compressobj(level=9,method=zlib.DEFLATED,wbits=15,memLevel=9)
                     z = cmp.compress(obj.data)
                     z += cmp.flush(zlib.Z_FINISH)
-                    obj.data = z
+                    if len(obj.data) > len(z):
+                        obj.header.value[PDFName("Filter")] = PDFName("FlateDecode")
+                        obj.data = z
                     del cmp
                 #
                 obj.header.value[PDFName("Length")] = len(obj.data)
