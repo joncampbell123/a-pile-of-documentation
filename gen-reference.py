@@ -637,7 +637,7 @@ class PDFGen:
 
         f.seek(0)
         f.write(("%PDF-"+str(self.pdfver[0])+"."+str(self.pdfver[1])+"\n").encode())
-        f.write(bytes([0xF0,0xF1,0xF2,0xF3,0xF4,0xF5,0xF6,0xF7])+"\n\n".encode()) # non-ASCII chars to convince other programs this is not text
+        f.write("%".encode()+bytes([0xC2,0xB5,0xC2,0xB6])+"\n\n".encode()) # non-ASCII chars to convince other programs this is not text
         for objid in range(len(self.objects)):
             obj = self.objects[objid]
             if not obj == None:
@@ -685,7 +685,7 @@ class PDFGen:
                     s = ("0"*(10-len(s)))+s
                 f.write((s+" 00000 n \n").encode())
             else:
-                f.write(("0000000000 65536 f \n").encode())
+                f.write(("0000000000 00000 f \n").encode())
         f.write("\n".encode())
         #
         f.write("trailer\n".encode())
