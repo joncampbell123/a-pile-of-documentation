@@ -424,6 +424,7 @@ class EmitPDF:
     pagestream = None
     pageHeight = None
     currentPos = None
+    currentDPI = None
     #
     def __init__(self):
         self.font1 = EmitPDF.Font()
@@ -468,6 +469,7 @@ class EmitPDF:
         #
         ps = self.pagestream = pdf_module.PDFPageContentWriter()
         #
+        self.currentDPI = pdfhl.page_dpi
         self.pageHeight = pdfhl.page_size[1]
         self.currentPos = self.contentRegion.xy
         # title
@@ -475,22 +477,22 @@ class EmitPDF:
         ps.set_text_font(self.font1.italic,10)
         ps.fill_color(0,0,0)
         p = self.coordxlate(self.pageTitleRegion.xy)
-        ps.text_move_to(p.x*pdfhl.page_dpi,p.y*pdfhl.page_dpi)
+        ps.text_move_to(p.x*self.currentDPI,p.y*self.currentDPI)
         ps.text(self.currentTitle)
         ps.end_text()
         #
         p = self.coordxlate(self.pageTitleLine.xy)
         ps.stroke_color(0,0,0)
         ps.linewidth(0.5)
-        ps.moveto(p.x*pdfhl.page_dpi,p.y*pdfhl.page_dpi)
-        ps.lineto((p.x+self.pageTitleLine.wh.x)*pdfhl.page_dpi,p.y*pdfhl.page_dpi) # FIXME: "wh" is an XY object
+        ps.moveto(p.x*self.currentDPI,p.y*self.currentDPI)
+        ps.lineto((p.x+self.pageTitleLine.wh.x)*self.currentDPI,p.y*self.currentDPI) # FIXME: "wh" is an XY object
         ps.stroke()
         # page number
         ps.begin_text()
         ps.set_text_font(self.font1.italic,10)
         ps.fill_color(0,0,0)
         p = self.coordxlate(self.pageNumberRegion.xy)
-        ps.text_move_to(p.x*pdfhl.page_dpi,p.y*pdfhl.page_dpi)
+        ps.text_move_to(p.x*self.currentDPI,p.y*self.currentDPI)
         ps.text("p. "+str(self.currentPage.index))
         ps.end_text()
         #
@@ -500,8 +502,15 @@ class EmitPDF:
         return XY(xy.x,self.pageHeight-xy.y)
     def ps(self):
         return self.pagestream
+    def dpi(self):
+        return self.currentDPI
     def set_title(self,title):
         self.currentTitle = title
+    def content_y_end(self):
+        return self.contentRegion.xy.y + self.contentRegion.wh.y
+    def newline(self,*,x=0,y=0):
+        self.currentPos.x = self.contentRegion.xy.x + x
+        self.currentPos.y = self.currentPos.y + y
 
 def emit_table_as_pdf(path,table_id,tp):
     emitpdf = EmitPDF()
@@ -541,69 +550,24 @@ def emit_table_as_pdf(path,table_id,tp):
     # -------------- END FONTS
     emitpdf.set_title(tp.display.header)
     page1 = emitpdf.new_page(pdfhl)
-    page1cmd = emitpdf.ps()
-    page1cmd.begin_text()
-    page1cmd.text_leading(12)
-    page1cmd.set_text_font(emitpdf.font1.reg,12)
-    page1cmd.text_move_to(288,270)
-    page1cmd.fill_color(0,0,0.5)
-    page1cmd.text("Hello World. ")
-    page1cmd.set_text_font(emitpdf.font1.bold,12)
-    page1cmd.fill_color(0,0,1.0)
-    page1cmd.text("This is a PDF")
-    page1cmd.text_next_line()
-    page1cmd.set_text_font(emitpdf.font1.italic,12)
-    page1cmd.fill_color(1.0,0,0)
-    page1cmd.text("1234ABCD")
-    page1cmd.end_text()
-    page1cmd.linewidth(2.0)
-    page1cmd.stroke_color(0,0.5,0)
-    page1cmd.moveto(50,50)
-    page1cmd.lineto(100,50)
-    page1cmd.lineto(100,100)
-    page1cmd.lineto(50,100)
-    page1cmd.close_subpath()
-    page1cmd.stroke()
+    ps = emitpdf.ps()
+    # header
+    emitpdf.newline(y=0.25)
+    ps.begin_text()
+    ps.set_text_font(emitpdf.font1.bold,16)
+    ps.fill_color(0,0,0)
+    p = emitpdf.coordxlate(emitpdf.currentPos)
+    ps.text_move_to(p.x*emitpdf.currentDPI,p.y*emitpdf.currentDPI)
+    ps.text(tp.display.header)
+    ps.end_text()
+    emitpdf.newline(y=4/emitpdf.currentDPI)
     #
-    page1cmd.stroke_color(0,0.5,0)
-    page1cmd.fill_color(0.5,0,0)
-    page1cmd.moveto(150,50)
-    page1cmd.lineto(200,50)
-    page1cmd.lineto(200,100)
-    page1cmd.lineto(150,100)
-    page1cmd.close_subpath()
-    page1cmd.fill()
-    #
-    page1cmd.stroke_color(0,0.5,0)
-    page1cmd.fill_color(0.5,0,0)
-    page1cmd.moveto(250,50)
-    page1cmd.lineto(300,50)
-    page1cmd.lineto(300,100)
-    page1cmd.lineto(250,100)
-    page1cmd.close_subpath()
-    page1cmd.stroke_and_fill()
-    #
-    emitpdf.end_page(pdfhl)
-    #
-    page2 = emitpdf.new_page(pdfhl)
-    #
-    page2cmd = emitpdf.ps()
-    page2cmd.begin_text()
-    page2cmd.text_leading(12)
-    page2cmd.set_text_font(emitpdf.font1.reg,12)
-    page2cmd.text_move_to(288,270)
-    page2cmd.fill_color(0,0,0.5)
-    page2cmd.text("Page 2")
-    page2cmd.end_text()
-    page2cmd.linewidth(4.0)
-    page2cmd.stroke_color(0,0.5,0)
-    page2cmd.fill_color(0.5,0,0)
-    page2cmd.moveto(250,50)
-    page2cmd.lineto(300,50)
-    page2cmd.lineto(300,100)
-    page2cmd.lineto(250,100)
-    page2cmd.close_subpath()
-    page2cmd.stroke_and_fill()
+    p = emitpdf.coordxlate(emitpdf.currentPos)
+    ps.stroke_color(0,0,0)
+    ps.linewidth(0.5)
+    ps.moveto(p.x*emitpdf.currentDPI,p.y*emitpdf.currentDPI)
+    ps.lineto((p.x+emitpdf.contentRegion.wh.x)*emitpdf.currentDPI,p.y*emitpdf.currentDPI) # FIXME: "wh" is an XY object
+    ps.stroke()
     #
     emitpdf.end_page(pdfhl)
     pdfhl.finish()
