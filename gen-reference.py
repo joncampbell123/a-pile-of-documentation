@@ -1012,8 +1012,30 @@ def emit_table_as_pdf(path,table_id,tp):
     },
     ttffile="ttf/Ubuntu-R.ttf")
     #
+    font1b = pdfhl.add_font({
+        PDFName("Subtype"): PDFName("TrueType"),
+        PDFName("Name"): PDFName("F2"),
+        PDFName("Encoding"): PDFName("WinAnsiEncoding"),
+        PDFName("BaseFont"): PDFName("ABCDEE+Ubuntu")
+    },
+    desc={
+    },
+    ttffile="ttf/Ubuntu-B.ttf")
+    #
+    font1i = pdfhl.add_font({
+        PDFName("Subtype"): PDFName("TrueType"),
+        PDFName("Name"): PDFName("F3"),
+        PDFName("Encoding"): PDFName("WinAnsiEncoding"),
+        PDFName("BaseFont"): PDFName("ABCDEE+Ubuntu")
+    },
+    desc={
+    },
+    ttffile="ttf/Ubuntu-RI.ttf")
+    #
     page1 = pdfhl.new_page()
     pdfhl.add_page_font_ref(page1,font1)
+    pdfhl.add_page_font_ref(page1,font1b)
+    pdfhl.add_page_font_ref(page1,font1i)
     page1cmd = PDFPageContentWriter()
     page1cmd.begin_text()
     page1cmd.text_leading(12)
@@ -1021,9 +1043,11 @@ def emit_table_as_pdf(path,table_id,tp):
     page1cmd.text_move_to(288,270)
     page1cmd.fill_color(0,0,0.5)
     page1cmd.text("Hello World. ")
+    page1cmd.set_text_font(2,12)
     page1cmd.fill_color(0,0,1.0)
     page1cmd.text("This is a PDF")
     page1cmd.text_next_line()
+    page1cmd.set_text_font(3,12)
     page1cmd.fill_color(1.0,0,0)
     page1cmd.text("1234ABCD")
     page1cmd.end_text()
@@ -1059,6 +1083,8 @@ def emit_table_as_pdf(path,table_id,tp):
     #
     page2 = pdfhl.new_page()
     pdfhl.add_page_font_ref(page2,font1)
+    pdfhl.add_page_font_ref(page2,font1b)
+    pdfhl.add_page_font_ref(page2,font1i)
     #
     page2cmd = PDFPageContentWriter()
     page2cmd.begin_text()
