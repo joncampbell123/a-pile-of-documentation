@@ -460,7 +460,7 @@ class PDFGenHL:
                 # Not only does PDF expect /Widths but it will also help the PDF export know how to lay out text properly.
                 ft = freetype.Face(ttffile)
                 char2glyph = ft.get_chars() # pair (uchar,glyph)
-                ft.set_char_size(72)
+                ft.set_char_size(1) # NTS: Not sure why this makes proper spacing with linearHoriAdvance?
                 widths = [ ]
                 while len(widths) < (pdfinfo.lastChar + 1 - pdfinfo.firstChar):
                     widths.append(0)
