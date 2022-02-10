@@ -374,11 +374,31 @@ def emit_table_as_html(path,table_id,tp):
     f.write("</html>")
     f.close()
 
+class EmitPDF:
+    class Font:
+        reg = None
+        bold = None
+        italic = None
+    #
+    font1 = None
+    def __init__(self):
+        self.font1 = EmitPDF.Font()
+    def new_page(self,pdfhl):
+        page = pdfhl.new_page()
+        #
+        pdfhl.add_page_font_ref(page,self.font1.reg)
+        pdfhl.add_page_font_ref(page,self.font1.bold)
+        pdfhl.add_page_font_ref(page,self.font1.italic)
+        #
+        return page
+
 def emit_table_as_pdf(path,table_id,tp):
+    emitpdf = EmitPDF()
+    #
     pdf = pdf_module.PDFGen()
     pdfhl = pdf_module.PDFGenHL(pdf)
-    #
-    font1 = pdfhl.add_font({
+    # -- font 1: regular
+    emitpdf.font1.reg = pdfhl.add_font({
         pdf_module.PDFName("Subtype"): pdf_module.PDFName("TrueType"),
         pdf_module.PDFName("Name"): pdf_module.PDFName("F1"),
         pdf_module.PDFName("Encoding"): pdf_module.PDFName("WinAnsiEncoding"),
@@ -387,8 +407,8 @@ def emit_table_as_pdf(path,table_id,tp):
     desc={
     },
     ttffile="ttf/Ubuntu-R.ttf")
-    #
-    font1b = pdfhl.add_font({
+    # -- font 1: bold
+    emitpdf.font1.bold = pdfhl.add_font({
         pdf_module.PDFName("Subtype"): pdf_module.PDFName("TrueType"),
         pdf_module.PDFName("Name"): pdf_module.PDFName("F2"),
         pdf_module.PDFName("Encoding"): pdf_module.PDFName("WinAnsiEncoding"),
@@ -397,8 +417,8 @@ def emit_table_as_pdf(path,table_id,tp):
     desc={
     },
     ttffile="ttf/Ubuntu-B.ttf")
-    #
-    font1i = pdfhl.add_font({
+    # -- font 1: italic
+    emitpdf.font1.italic = pdfhl.add_font({
         pdf_module.PDFName("Subtype"): pdf_module.PDFName("TrueType"),
         pdf_module.PDFName("Name"): pdf_module.PDFName("F3"),
         pdf_module.PDFName("Encoding"): pdf_module.PDFName("WinAnsiEncoding"),
@@ -407,11 +427,8 @@ def emit_table_as_pdf(path,table_id,tp):
     desc={
     },
     ttffile="ttf/Ubuntu-RI.ttf")
-    #
-    page1 = pdfhl.new_page()
-    pdfhl.add_page_font_ref(page1,font1)
-    pdfhl.add_page_font_ref(page1,font1b)
-    pdfhl.add_page_font_ref(page1,font1i)
+    # -------------- END FONTS
+    page1 = emitpdf.new_page(pdfhl)
     page1cmd = pdf_module.PDFPageContentWriter()
     page1cmd.begin_text()
     page1cmd.text_leading(12)
@@ -457,10 +474,7 @@ def emit_table_as_pdf(path,table_id,tp):
     page1content = pdfhl.make_page_content_stream(page1,data=page1cmd.data())
     del page1cmd
     #
-    page2 = pdfhl.new_page()
-    pdfhl.add_page_font_ref(page2,font1)
-    pdfhl.add_page_font_ref(page2,font1b)
-    pdfhl.add_page_font_ref(page2,font1i)
+    page2 = emitpdf.new_page(pdfhl)
     #
     page2cmd = pdf_module.PDFPageContentWriter()
     page2cmd.begin_text()
