@@ -813,6 +813,7 @@ class PDFGenHL:
     def new_page(self):
         pagedir = self.pdf.new_object({
             PDFName("Type"): PDFName("Page"),
+            PDFName("Parent"): PDFIndirect(self.pages_node),
             PDFName("MediaBox"): [ 0, 0, self.page_size[0]*self.page_dpi, self.page_size[1]*self.page_dpi ]
         })
         pagedir.index = len(self.pages)
@@ -833,6 +834,7 @@ class PDFGenHL:
         if not PDFName("Resources") in pageobj.value:
             res_obj = PDFObject({})
             pageobj.setkey(PDFName("Resources"), res_obj)
+            res_obj.setkey(PDFName("ProcSet"), [ PDFName("PDF"), PDFName("Text"), PDFName("ImageB"), PDFName("ImageC"), PDFName("ImageI") ])
         else:
             res_obj = pageobj.value[PDFName("Resources")]
         #
@@ -979,6 +981,7 @@ def emit_table_as_pdf(path,table_id,tp):
     font1 = pdfhl.add_font({
         PDFName("Subtype"): PDFName("TrueType"),
         PDFName("Name"): PDFName("F1"),
+        PDFName("Encoding"): PDFName("WinAnsiEncoding"),
         PDFName("BaseFont"): PDFName("ABCDEE+Ubuntu")
     },
     desc={
