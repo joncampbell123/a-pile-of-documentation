@@ -979,8 +979,11 @@ def emit_table_as_pdf(path,table_id,tp):
     font1 = pdfhl.add_font({
         PDFName("Subtype"): PDFName("TrueType"),
         PDFName("Name"): PDFName("F1"),
-        PDFName("BaseFont"): PDFName("sans-serif")
-    })
+        PDFName("BaseFont"): PDFName("ABCDEE+Ubuntu")
+    },
+    desc={
+    },
+    ttffile="ttf/Ubuntu-R.ttf")
     #
     page1 = pdfhl.new_page()
     pdfhl.add_page_font_ref(page1,font1)
