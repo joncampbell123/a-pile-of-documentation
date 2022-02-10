@@ -374,6 +374,39 @@ def emit_table_as_html(path,table_id,tp):
     f.write("</html>")
     f.close()
 
+class XY:
+    x = None
+    y = None
+    def __init__(self,x=0,y=0):
+        self.x = x
+        self.y = y
+    def __str__(self):
+        return "["+str(self.x)+","+str(self.y)+"]"
+    def __sub__(self,other):
+        return XY(self.x-other.x,self.y-other.y)
+    def __add__(self,other):
+        return XY(self.x+other.x,self.y+other.y)
+class WH:
+    w = None
+    h = None
+    def __init__(self,w=0,h=0):
+        self.w = w
+        self.h = h
+    def __str__(self):
+        return "["+str(self.w)+"x"+str(self.h)+"]"
+    def __sub__(self,other):
+        return XY(self.w-other.w,self.h-other.h)
+    def __add__(self,other):
+        return XY(self.w+other.w,self.h+other.h)
+class RectRegion:
+    xy = None
+    wh = None
+    def __init__(self,xy=XY(),wh=WH()):
+        self.xy = xy
+        self.wh = wh
+    def __str__(self):
+        return "[xy="+str(self.xy)+",wh="+str(self.wh)+"]"
+
 class EmitPDF:
     class Font:
         reg = None
@@ -381,8 +414,32 @@ class EmitPDF:
         italic = None
     #
     font1 = None
+    contentRegion = None
+    pageTitleLine = None
+    pageTitleRegion = None
+    pageNumberRegion = None
+    #
+    pageHeight = None
+    currentPos = None
+    #
     def __init__(self):
         self.font1 = EmitPDF.Font()
+        #
+        ll = XY(0.25,0.5)
+        ur = XY(8 - 0.25,11 - 0.5)
+        self.contentRegion = RectRegion(ll,ur-ll)
+        #
+        ll = XY(0.25,0.25)
+        ur = XY(8 - 0.25,0.45)
+        self.pageTitleRegion = RectRegion(ll,ur-ll)
+        #
+        ll = XY(0.25,0.475)
+        ur = XY(8 - 0.25,0.475)
+        self.pageTitleLine = RectRegion(ll,ur-ll)
+        #
+        ll = XY(8 - 0.5,11 - 0.25)
+        ur = XY(8 - 0.25,11 - 0.05)
+        self.pageNumberRegion = RectRegion(ll,ur-ll)
     def new_page(self,pdfhl):
         page = pdfhl.new_page()
         #
@@ -390,7 +447,13 @@ class EmitPDF:
         pdfhl.add_page_font_ref(page,self.font1.bold)
         pdfhl.add_page_font_ref(page,self.font1.italic)
         #
+        self.pageHeight = pdfhl.page_size[1]
+        self.currentPos = self.contentRegion.xy
+        #
         return page
+    def coordxlate(self,xy):
+        # PDF coordinate system is bottom-up, we think top down
+        return XY(xy.x,self.pageHeight-xy.y)
 
 def emit_table_as_pdf(path,table_id,tp):
     emitpdf = EmitPDF()
