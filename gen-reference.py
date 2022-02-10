@@ -1046,6 +1046,7 @@ def emit_table_as_pdf(path,table_id,tp):
     del page1cmd
     #
     page2 = pdfhl.new_page()
+    pdfhl.add_page_font_ref(page2,font1)
     #
     page2cmd = PDFPageContentWriter()
     page2cmd.begin_text()
