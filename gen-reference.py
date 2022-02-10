@@ -862,6 +862,8 @@ class PDFGenHL:
             if PDFName("BaseFont") in fontdict:
                 fdo[PDFName("FontName")] = fontdict[PDFName("BaseFont")]
             #
+            fontpdfobj = self.pdf.new_object(fontdict)
+            #
             if not ttffile == None:
                 f = open(ttffile,"rb")
                 ttfdata = f.read()
@@ -895,15 +897,18 @@ class PDFGenHL:
                 fdo[PDFName("Flags")] = flags
                 # I don't know how to get this from the TTF so just guess
                 fdo[PDFName("StemV")] = 52
+            #
+            fontdict[PDFName("FontDescriptor")] = PDFIndirect(self.pdf.new_object(fdo))
+            #
+            if not ttffile == None:
                 # finally, make a stream_object for the TTF file and point to it from the font descriptor
                 fontstream = self.pdf.new_stream_object(ttfdata)
                 # PDF stream objects always list their length as /Length
                 # Except Font TTF streams, which require the same size specified as /Length1 (facepalm)
                 fontstream.header.value[PDFName("Length1")] = len(ttfdata)
                 fdo[PDFName("FontFile2")] = PDFIndirect(fontstream)
-            #
-            fontdict[PDFName("FontDescriptor")] = PDFIndirect(self.pdf.new_object(fdo))
-        return self.pdf.new_object(fontdict)
+        #
+        return fontpdfobj
 
 class PDFPageContentWriter:
     wd = None
