@@ -595,29 +595,31 @@ class PDFGen:
         elif obj.type == str:
             return "("+pdf_str_escape(obj.value)+")"
         elif obj.type == bytes:
-            r = "<"
+            r = ""
             for c in obj.value:
                 h = hex(c)[2:].upper() # strip off 0x, also Adobe says it can be upper or lower case, I choose upper
                 if len(h) < 2:
                     h = '0'+h
                 r = r + h
-            r = r + ">"
-            return r
+            return "<"+r+">"
         elif obj.type == PDFName:
             return "/" + str(obj.value.name)
         elif obj.type == list:
-            r = "["
+            r = ""
             for ent in obj.value:
-                r = r + " " + self.serialize(ent)
-            r = r + " ]"
-            return r
+                if not r == "":
+                    r = r + " "
+                r = r + self.serialize(ent)
+            return "["+r+"]"
         elif obj.type == dict:
-            r = "<<\n"
+            r = ""
             for key in obj.value:
                 objval = obj.value[key]
-                r = r + self.serialize(key) + " " + self.serialize(objval) + "\n"
-            r = r + ">>"
-            return r
+                if type(key) == PDFName and (type(objval) == PDFName or type(objval) == str or type(objval) == bytes or type(objval) == list or type(objval) == PDFObject):
+                    r = r + self.serialize(key) + self.serialize(objval)
+                else:
+                    r = r + self.serialize(key) + " " + self.serialize(objval)
+            return "<<"+r+">>"
         elif obj.type == PDFStream:
             raise Exception("PDFStream serialize directly")
         elif obj.type == None:
