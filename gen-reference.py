@@ -419,6 +419,8 @@ class EmitPDF:
     pageTitleRegion = None
     pageNumberRegion = None
     #
+    currentPage = None
+    pagestream = None
     pageHeight = None
     currentPos = None
     #
@@ -440,12 +442,30 @@ class EmitPDF:
         ll = XY(8 - 0.5,11 - 0.25)
         ur = XY(8 - 0.25,11 - 0.05)
         self.pageNumberRegion = RectRegion(ll,ur-ll)
+        #
+        self.currentPage = None
+        self.pagestream = None
+    def end_page(self,pdfhl):
+        if not self.pagestream == None and not self.currentPage == None:
+            pdfhl.make_page_content_stream(self.currentPage,data=self.pagestream.data())
+        #
+        if not self.pagestream == None:
+            del self.pagestream
+        self.pagestream = None
+        #
+        if not self.currentPage == None:
+            del self.currentPage
+        self.currentPage = None
     def new_page(self,pdfhl):
-        page = pdfhl.new_page()
+        self.end_page(pdfhl)
+        #
+        self.currentPage = page = pdfhl.new_page()
         #
         pdfhl.add_page_font_ref(page,self.font1.reg)
         pdfhl.add_page_font_ref(page,self.font1.bold)
         pdfhl.add_page_font_ref(page,self.font1.italic)
+        #
+        self.pagestream = pdf_module.PDFPageContentWriter()
         #
         self.pageHeight = pdfhl.page_size[1]
         self.currentPos = self.contentRegion.xy
@@ -454,6 +474,8 @@ class EmitPDF:
     def coordxlate(self,xy):
         # PDF coordinate system is bottom-up, we think top down
         return XY(xy.x,self.pageHeight-xy.y)
+    def ps(self):
+        return self.pagestream
 
 def emit_table_as_pdf(path,table_id,tp):
     emitpdf = EmitPDF()
@@ -492,7 +514,7 @@ def emit_table_as_pdf(path,table_id,tp):
     ttffile="ttf/Ubuntu-RI.ttf")
     # -------------- END FONTS
     page1 = emitpdf.new_page(pdfhl)
-    page1cmd = pdf_module.PDFPageContentWriter()
+    page1cmd = emitpdf.ps()
     page1cmd.begin_text()
     page1cmd.text_leading(12)
     page1cmd.set_text_font(1,12)
@@ -534,12 +556,11 @@ def emit_table_as_pdf(path,table_id,tp):
     page1cmd.close_subpath()
     page1cmd.stroke_and_fill()
     #
-    page1content = pdfhl.make_page_content_stream(page1,data=page1cmd.data())
-    del page1cmd
+    emitpdf.end_page(pdfhl)
     #
     page2 = emitpdf.new_page(pdfhl)
     #
-    page2cmd = pdf_module.PDFPageContentWriter()
+    page2cmd = emitpdf.ps()
     page2cmd.begin_text()
     page2cmd.text_leading(12)
     page2cmd.set_text_font(1,12)
@@ -557,8 +578,7 @@ def emit_table_as_pdf(path,table_id,tp):
     page2cmd.close_subpath()
     page2cmd.stroke_and_fill()
     #
-    page2content = pdfhl.make_page_content_stream(page2,data=page2cmd.data())
-    del page2cmd
+    emitpdf.end_page(pdfhl)
     #
     page1o = pdfhl.get_page(1)
     #
