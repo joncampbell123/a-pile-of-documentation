@@ -7,6 +7,7 @@ import zlib
 import struct
 import pathlib
 
+import html_module
 import common_json_help_module
 import table_presentation_module
 
@@ -191,24 +192,6 @@ def emit_table_as_text(path,table_id,tp):
     #
     f.close()
 
-def html_escape(e):
-    r = ""
-    for c in e:
-        if c == '&':
-            r = r + "&amp;"
-        elif c == '<':
-            r = r + "&lt;"
-        elif c == '>':
-            r = r + "&gt;"
-        elif c == '"':
-            r = r + "&quot;"
-        elif c == '\'':
-            r = r + "&apos;"
-        else:
-            r = r + c
-    #
-    return r
-
 def emit_table_as_html(path,table_id,tp):
     #
     title = tp.display.header
@@ -219,14 +202,14 @@ def emit_table_as_html(path,table_id,tp):
     #
     f.write("<head>")
     f.write("<meta charset=\"utf-8\">")
-    f.write("<title>"+html_escape(title)+"</title>")
+    f.write("<title>"+html_module.html_escape(title)+"</title>")
     f.write("</head>")
     #
     f.write("<body>");
-    f.write("<h2><span style=\"border-bottom: double;\">"+html_escape(title)+"</span></h2>")
+    f.write("<h2><span style=\"border-bottom: double;\">"+html_module.html_escape(title)+"</span></h2>")
     #
     if not tp.description == None:
-        f.write("<p>"+html_escape(tp.description)+"</p>")
+        f.write("<p>"+html_module.html_escape(tp.description)+"</p>")
     #
     if not tp.display.disptable == None:
         desci = 0
@@ -235,8 +218,8 @@ def emit_table_as_html(path,table_id,tp):
                 if desci == 0:
                     f.write("<table>")
                 f.write("<tr style=\"font-size: 0.9em;\">")
-                f.write("<td style=\"font-weight: 700; padding-right: 1em; white-space: pre; text-align: left;\">"+html_escape(tp.display.colhdr[ci])+":</td>")
-                f.write("<td style=\"text-align: left;\">"+html_escape(tp.display.coldesc[ci])+"</td>")
+                f.write("<td style=\"font-weight: 700; padding-right: 1em; white-space: pre; text-align: left;\">"+html_module.html_escape(tp.display.colhdr[ci])+":</td>")
+                f.write("<td style=\"text-align: left;\">"+html_module.html_escape(tp.display.coldesc[ci])+"</td>")
                 f.write("</tr>")
                 desci = desci + 1
         if desci > 0:
@@ -258,7 +241,7 @@ def emit_table_as_html(path,table_id,tp):
             style = style + " padding: 0.2em; padding-right: 1em;"
             style = style + " border-bottom: 1px solid black; font-size: 0.9em; text-align: left;"
             #
-            f.write("<th style=\""+style.strip()+"\">"+html_escape(x)+"</th>")
+            f.write("<th style=\""+style.strip()+"\">"+html_module.html_escape(x)+"</th>")
         f.write("</tr>")
         #
         if len(tp.display.disptable) > 0:
@@ -287,7 +270,7 @@ def emit_table_as_html(path,table_id,tp):
                             f.write(" border-bottom: 1px solid black;")
                         f.write("\">")
                         #
-                        f.write(html_escape(val))
+                        f.write(html_module.html_escape(val))
                         #
                         if coli == len(columns)-1 and show_sources == True:
                             sia = row.get("source index")
@@ -348,11 +331,11 @@ def emit_table_as_html(path,table_id,tp):
                             x = x + ", "
                         x = x + str(year)
                     if not x == "":
-                        f.write(html_escape(x)+"<br>")
+                        f.write(html_module.html_escape(x)+"<br>")
                     #
                     url = citation.get("url")
                     if not url == None:
-                        f.write("URL: <a href=\""+url+"\" target=\"_blank\">"+html_escape(url)+"</a><br>")
+                        f.write("URL: <a href=\""+url+"\" target=\"_blank\">"+html_module.html_escape(url)+"</a><br>")
                 if not where == None:
                     x = ""
                     for whi in where:
@@ -370,7 +353,7 @@ def emit_table_as_html(path,table_id,tp):
                                 x = x + " => "
                             x = x + y
                     if not x == "":
-                        f.write(html_escape(x)+"<br>")
+                        f.write(html_module.html_escape(x)+"<br>")
             f.write("</td>")
             #
             f.write("</tr>")
@@ -381,7 +364,7 @@ def emit_table_as_html(path,table_id,tp):
         f.write("<p><span style=\"border-bottom: solid; border-bottom-width: thin;\">Notes</span></p>")
         f.write("<ul style=\"font-size: 0.8em;\">")
         for note in tp.notes:
-            f.write("<li>"+html_escape(note)+"</li>")
+            f.write("<li>"+html_module.html_escape(note)+"</li>")
         f.write("</ul>")
     #
     f.write("</body>");
