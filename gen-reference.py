@@ -3,6 +3,7 @@
 import os
 import glob
 import json
+import zlib
 import struct
 import pathlib
 
@@ -553,11 +554,13 @@ class PDFGen:
     pdfver = None
     objects = None
     root_id = None
+    zlib_compress_streams = None
     #
     def __init__(self,optobj=None):
         self.root_id = None
         self.pdfver = [ 1, 4 ]
         self.objects = [ None ] # object 0 is always NULL because most PDFs seem to count from 1
+        self.zlib_compress_streams = True
     #
     def new_stream_object(self,value=None):
         id = len(self.objects)
@@ -664,6 +667,14 @@ class PDFGen:
             if type(obj) == PDFObject:
                 f.write(self.serialize(obj).encode())
             elif type(obj) == PDFStream:
+                if self.zlib_compress_streams == True:
+                    obj.header.value[PDFName("Filter")] = PDFName("FlateDecode")
+                    cmp = zlib.compressobj(level=9,method=zlib.DEFLATED,wbits=15,memLevel=9)
+                    z = cmp.compress(obj.data)
+                    z += cmp.flush(zlib.Z_FINISH)
+                    obj.data = z
+                    del cmp
+                #
                 obj.header.value[PDFName("Length")] = len(obj.data)
                 f.write(self.serialize(obj.header).encode())
                 f.write("\n".encode())
