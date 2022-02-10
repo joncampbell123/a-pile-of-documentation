@@ -915,50 +915,50 @@ class PDFPageContentWriter:
         if self.intxt == True:
             raise Exception("Already in text")
         self.intxt = True
-        self.wd += " BT".encode()
+        self.wd += "BT ".encode()
     def end_text(self):
         if not self.intxt == True:
             raise Exception("Not in text, cannot end")
         self.intxt = False
-        self.wd += " ET".encode()
+        self.wd += "ET ".encode()
     def set_text_font(self,font_id,size):
         if not self.intxt == True:
             raise Exception("Not in text")
-        self.wd += (" /F"+str(font_id)+" "+str(size)+" Tf").encode()
+        self.wd += ("/F"+str(font_id)+" "+str(size)+" Tf ").encode()
     def text_move_to(self,x,y):
         if not self.intxt == True:
             raise Exception("Not in text")
-        self.wd += (" "+str(x)+" "+str(y)+" Td").encode()
+        self.wd += (str(x)+" "+str(y)+" Td ").encode()
     def text(self,text):
         if not self.intxt == True:
             raise Exception("Not in text")
-        self.wd += (" ("+pdf_str_escape(text)+") Tj").encode()
+        self.wd += ("("+pdf_str_escape(text)+") Tj ").encode()
     def text_leading(self,l):
         if not self.intxt == True:
             raise Exception("Not in text")
-        self.wd += (str(l)+" TL").encode()
+        self.wd += (str(l)+" TL ").encode()
     def text_next_line(self):
         if not self.intxt == True:
             raise Exception("Not in text")
-        self.wd += " T*".encode()
+        self.wd += "T* ".encode()
     def fill_color(self,r,g,b):
-        self.wd += (" "+str(r)+" "+str(g)+" "+str(b)+" rg").encode()
+        self.wd += (str(r)+" "+str(g)+" "+str(b)+" rg ").encode()
     def stroke_color(self,r,g,b):
-        self.wd += (" "+str(r)+" "+str(g)+" "+str(b)+" RG").encode()
+        self.wd += (str(r)+" "+str(g)+" "+str(b)+" RG ").encode()
     def linewidth(self,l):
-        self.wd += (" "+str(l)+" w").encode()
+        self.wd += (str(l)+" w ").encode()
     def moveto(self,x,y):
-        self.wd += (" "+str(x)+" "+str(y)+" m").encode()
+        self.wd += (str(x)+" "+str(y)+" m ").encode()
     def lineto(self,x,y):
-        self.wd += (" "+str(x)+" "+str(y)+" l").encode()
+        self.wd += (str(x)+" "+str(y)+" l ").encode()
     def close_subpath(self):
-        self.wd += (" h").encode()
+        self.wd += ("h ").encode()
     def stroke(self):
-        self.wd += (" S").encode()
+        self.wd += ("S ").encode()
     def fill(self):
-        self.wd += (" f").encode()
+        self.wd += ("f ").encode()
     def stroke_and_fill(self):
-        self.wd += (" B").encode()
+        self.wd += ("B ").encode()
     def finish(self):
         if self.intxt == True:
             self.end_text()
