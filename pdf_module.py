@@ -1,4 +1,7 @@
 
+# TODO: Someday, figure out the bloody fucking magic ritual incantations that one has to do to get PDF files to carry Unicode text,
+#       because I've tried everything and nothing works. We're stuck in plain ASCII for now. >:( --J.C.
+
 import os
 import glob
 import json
