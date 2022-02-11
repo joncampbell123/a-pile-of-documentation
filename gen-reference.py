@@ -546,20 +546,27 @@ class EmitPDF:
         tp = self.coordxlate(self.currentPos)
         tp = XY(tp.x*self.currentDPI,tp.y*self.currentDPI)
         self.pagestream.text_move_to(tp.x,tp.y)
+        self.layoutStarted = True
+        self.layoutWritten = 0
     def layout_text_end(self):
         if self.pagestream.intxt:
             self.pagestream.end_text()
+        self.layoutStarted = False
     def layout_text(self,text,*,overflow="wrap"):
         stop_xy = self.content_end()
         elements = self.split_text(text)
+        #
+        if self.layoutWritten == 0:
+            self.pagestream.text_leading(self.pagestream.currentFontSize)
+            self.layoutWritten = 1
+        #
         for elem in elements:
             ew = self.pagestream.text_width(elem)
             fx = self.currentPos.x + ew
             if fx > stop_xy.x or elem == "\n":
                 if overflow == "stop":
                     break
-                if self.pagestream.intxt:
-                    self.pagestream.end_text()
+                self.pagestream.text_next_line()
                 self.newline(y=(self.pagestream.currentFontSize/self.currentDPI))
             #
             if not elem == "\n":
