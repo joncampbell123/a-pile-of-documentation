@@ -562,7 +562,7 @@ class EmitPDF:
         if not xy == None:
             if not type(xy) == XY:
                 raise Exception("move_to() without XY object");
-            self.currentPos = xy
+            self.currentPos = XY(xy.x,xy.y)
         if not x == None:
             self.currentPos.x = x
         if not y == None:
@@ -638,13 +638,13 @@ def emit_table_as_pdf(path,table_id,tp):
     ps = emitpdf.ps()
     # header
     emitpdf.newline(y=0.25)
-    ps.begin_text()
+    #
+    emitpdf.layout_text_begin()
     ps.set_text_font(emitpdf.font1.bold,16)
     ps.fill_color(0,0,0)
-    p = emitpdf.coordxlate(emitpdf.currentPos)
-    ps.text_move_to(p.x,p.y)
-    ps.text(tp.display.header)
-    ps.end_text()
+    emitpdf.layout_text(tp.display.header,overflow="stop")
+    emitpdf.layout_text_end()
+    #
     emitpdf.newline(y=4/emitpdf.currentDPI)
     #
     p = emitpdf.coordxlate(emitpdf.currentPos)
