@@ -577,7 +577,7 @@ def emit_table_as_pdf(path,table_id,tp):
     l = pdfhl.fontwidth(emitpdf.font1.bold,16,tp.display.header)
     if l > lt:
         l = lt
-    ps.lineto((p.x+l)*emitpdf.currentDPI,p.y*emitpdf.currentDPI) # FIXME: "wh" is an XY object
+    ps.lineto((p.x+l)*emitpdf.currentDPI,p.y*emitpdf.currentDPI)
     ps.stroke()
     #
     emitpdf.end_page(pdfhl)
