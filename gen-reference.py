@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import os
+import re
 import glob
 import json
 import zlib
@@ -478,13 +479,12 @@ class EmitPDF:
         self.pageHeight = pdfhl.page_size[1]
         self.currentPos = self.contentRegion.xy
         # title
-        ps.begin_text()
+        self.currentPos = self.pageTitleRegion.xy
+        self.layout_text_begin()
         ps.set_text_font(self.font1.italic,10)
         ps.fill_color(0,0,0)
-        p = self.coordxlate(self.pageTitleRegion.xy)
-        ps.text_move_to(p.x*self.currentDPI,p.y*self.currentDPI)
-        ps.text(self.currentTitle)
-        ps.end_text()
+        self.layout_text(self.currentTitle,overflow="stop")
+        self.layout_text_end()
         #
         p = self.coordxlate(self.pageTitleLine.xy)
         ps.stroke_color(0,0,0)
@@ -503,6 +503,8 @@ class EmitPDF:
         ps.text(ptxt)
         ps.end_text()
         #
+        self.currentPos = self.contentRegion.xy
+        #
         return page
     def coordxlate(self,xy):
         # PDF coordinate system is bottom-up, we think top down
@@ -513,11 +515,61 @@ class EmitPDF:
         return self.currentDPI
     def set_title(self,title):
         self.currentTitle = title
-    def content_y_end(self):
-        return self.contentRegion.xy.y + self.contentRegion.wh.y
+    def content_end(self):
+        return XY(self.contentRegion.xy.x + self.contentRegion.wh.w,self.contentRegion.xy.y + self.contentRegion.wh.h)
     def newline(self,*,x=0,y=0):
         self.currentPos.x = self.contentRegion.xy.x + x
         self.currentPos.y = self.currentPos.y + y
+    def tchr_classify(self,c):
+        if c == '\n' or c == '\t' or c == ' ':
+            return "w"
+        return "c"
+    def split_text(self,text):
+        e = [ ]
+        w = ""
+        cls = None
+        for c in text:
+            ncls = self.tchr_classify(c)
+            if not cls == ncls or c == '\n':
+                cls = ncls
+                if not w == "":
+                    e.append(w)
+                    w = ""
+            #
+            w = w + c
+        if not w == "":
+            e.append(w)
+        return e
+    def layout_text_begin(self):
+        if not self.pagestream.intxt:
+            self.pagestream.begin_text()
+        tp = self.coordxlate(self.currentPos)
+        tp = XY(tp.x*self.currentDPI,tp.y*self.currentDPI)
+        self.pagestream.text_move_to(tp.x,tp.y)
+    def layout_text_end(self):
+        if self.pagestream.intxt:
+            self.pagestream.end_text()
+    def layout_text(self,text,*,overflow="wrap"):
+        stop_xy = self.content_end()
+        elements = self.split_text(text)
+        for elem in elements:
+            ew = self.pagestream.text_width(elem)
+            fx = self.currentPos.x + ew
+            if fx > stop_xy.x or elem == "\n":
+                if overflow == "stop":
+                    break
+                if self.pagestream.intxt:
+                    self.pagestream.end_text()
+                self.newline(y=(self.pagestream.currentFontSize/self.currentDPI))
+            #
+            if not elem == "\n":
+                if not self.pagestream.intxt:
+                    tp = self.coordxlate(self.currentPos)
+                    tp = XY(tp.x*self.currentDPI,tp.y*self.currentDPI)
+                    self.pagestream.begin_text()
+                    self.pagestream.text_move_to(tp.x,tp.y)
+                self.pagestream.text(elem)
+                self.currentPos.x = self.currentPos.x + ew
 
 def emit_table_as_pdf(path,table_id,tp):
     emitpdf = EmitPDF()
