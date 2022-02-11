@@ -487,10 +487,11 @@ class EmitPDF:
         self.layout_text_end()
         #
         p = self.coordxlate(self.pageTitleLine.xy)
+        p2 = self.coordxlate(self.pageTitleLine.xy+XY(self.pageTitleLine.wh.w,0))
         ps.stroke_color(0,0,0)
         ps.linewidth(0.5)
-        ps.moveto(p.x*self.currentDPI,p.y*self.currentDPI)
-        ps.lineto((p.x+self.pageTitleLine.wh.w)*self.currentDPI,p.y*self.currentDPI)
+        ps.moveto(p.x,p.y)
+        ps.lineto(p2.x,p2.y)
         ps.stroke()
         # page number
         ps.begin_text()
@@ -499,16 +500,19 @@ class EmitPDF:
         pw = ps.text_width(ptxt) # get text width to right-justify
         ps.fill_color(0,0,0)
         p = self.coordxlate(self.pageNumberRegion.xy)
-        ps.text_move_to((p.x+self.pageNumberRegion.wh.w-pw)*self.currentDPI,p.y*self.currentDPI) # right justify
+        ps.text_move_to(p.x+self.pageNumberRegion.wh.w-pw,p.y) # right justify
         ps.text(ptxt)
         ps.end_text()
         #
         self.move_to(self.contentRegion.xy)
         #
         return page
-    def coordxlate(self,xy):
+    def coordxlateunscaled(self,xy):
         # PDF coordinate system is bottom-up, we think top down
         return XY(xy.x,self.pageHeight-xy.y)
+    def coordxlate(self,xy):
+        tx = self.coordxlateunscaled(xy)
+        return XY(tx.x*self.currentDPI,tx.y*self.currentDPI)
     def ps(self):
         return self.pagestream
     def dpi(self):
@@ -544,7 +548,6 @@ class EmitPDF:
         if not self.pagestream.intxt:
             self.pagestream.begin_text()
         tp = self.coordxlate(self.currentPos)
-        tp = XY(tp.x*self.currentDPI,tp.y*self.currentDPI)
         self.pagestream.text_move_to(tp.x,tp.y)
         self.layoutStarted = True
         self.layoutWritten = 0
@@ -589,7 +592,6 @@ class EmitPDF:
             if not elem == "\n":
                 if not self.pagestream.intxt:
                     tp = self.coordxlate(self.currentPos)
-                    tp = XY(tp.x*self.currentDPI,tp.y*self.currentDPI)
                     self.pagestream.begin_text()
                     self.pagestream.text_move_to(tp.x,tp.y)
                 self.layoutLineTextBuf = self.layoutLineTextBuf + elem
@@ -640,7 +642,7 @@ def emit_table_as_pdf(path,table_id,tp):
     ps.set_text_font(emitpdf.font1.bold,16)
     ps.fill_color(0,0,0)
     p = emitpdf.coordxlate(emitpdf.currentPos)
-    ps.text_move_to(p.x*emitpdf.currentDPI,p.y*emitpdf.currentDPI)
+    ps.text_move_to(p.x,p.y)
     ps.text(tp.display.header)
     ps.end_text()
     emitpdf.newline(y=4/emitpdf.currentDPI)
@@ -648,12 +650,13 @@ def emit_table_as_pdf(path,table_id,tp):
     p = emitpdf.coordxlate(emitpdf.currentPos)
     ps.stroke_color(0,0,0)
     ps.linewidth(0.5)
-    ps.moveto(p.x*emitpdf.currentDPI,p.y*emitpdf.currentDPI)
+    ps.moveto(p.x,p.y)
     lt = emitpdf.contentRegion.wh.w
     l = ps.text_width(tp.display.header)
     if l > lt:
         l = lt
-    ps.lineto((p.x+l)*emitpdf.currentDPI,p.y*emitpdf.currentDPI)
+    p2 = emitpdf.coordxlate(emitpdf.currentPos+XY(l,0))
+    ps.lineto(p2.x,p2.y)
     ps.stroke()
     #
     emitpdf.end_page(pdfhl)
