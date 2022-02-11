@@ -431,6 +431,7 @@ class EmitPDF:
     pageHeight = None
     currentPos = None
     currentDPI = None
+    pdfhl = None
     #
     def __init__(self):
         self.font1 = EmitPDF.Font()
@@ -453,9 +454,13 @@ class EmitPDF:
         #
         self.currentPage = None
         self.pagestream = None
-    def end_page(self,pdfhl):
+        #
+        self.pdfhl = None
+    def setpdfhl(self,pdfhl):
+        self.pdfhl = pdfhl
+    def end_page(self):
         if not self.pagestream == None and not self.currentPage == None:
-            pdfhl.make_page_content_stream(self.currentPage,data=self.pagestream.data())
+            self.pdfhl.make_page_content_stream(self.currentPage,data=self.pagestream.data())
         #
         if not self.pagestream == None:
             del self.pagestream
@@ -464,19 +469,19 @@ class EmitPDF:
         if not self.currentPage == None:
             del self.currentPage
         self.currentPage = None
-    def new_page(self,pdfhl):
-        self.end_page(pdfhl)
+    def new_page(self):
+        self.end_page()
         #
-        self.currentPage = page = pdfhl.new_page()
+        self.currentPage = page = self.pdfhl.new_page()
         #
-        pdfhl.add_page_font_ref(page,self.font1.reg)
-        pdfhl.add_page_font_ref(page,self.font1.bold)
-        pdfhl.add_page_font_ref(page,self.font1.italic)
+        self.pdfhl.add_page_font_ref(page,self.font1.reg)
+        self.pdfhl.add_page_font_ref(page,self.font1.bold)
+        self.pdfhl.add_page_font_ref(page,self.font1.italic)
         #
-        ps = self.pagestream = pdf_module.PDFPageContentWriter(pdfhl)
+        ps = self.pagestream = pdf_module.PDFPageContentWriter(self.pdfhl)
         #
-        self.currentDPI = pdfhl.page_dpi
-        self.pageHeight = pdfhl.page_size[1]
+        self.currentDPI = self.pdfhl.page_dpi
+        self.pageHeight = self.pdfhl.page_size[1]
         self.move_to(self.contentRegion.xy)
         # title
         self.move_to(self.pageTitleRegion.xy)
@@ -581,7 +586,7 @@ class EmitPDF:
             ew = self.pagestream.text_width(elem)
             fx = self.currentPos.x + ew
             if fx > stop_xy.x or elem == "\n":
-                if overflow == "stop":
+                if overflow == "stop" and not elem == "\n":
                     break
                 #
                 if len(self.layoutLineTextBuf) > 0:
@@ -613,6 +618,7 @@ def emit_table_as_pdf(path,table_id,tp):
     #
     pdf = pdf_module.PDFGen()
     pdfhl = pdf_module.PDFGenHL(pdf)
+    emitpdf.setpdfhl(pdfhl)
     # -- font 1: regular
     emitpdf.font1.reg = pdfhl.add_font({
         pdf_module.PDFName("Subtype"): pdf_module.PDFName("TrueType"),
@@ -645,7 +651,7 @@ def emit_table_as_pdf(path,table_id,tp):
     ttffile="ttf/Ubuntu-RI.ttf")
     # -------------- END FONTS
     emitpdf.set_title(tp.display.header)
-    page1 = emitpdf.new_page(pdfhl)
+    page1 = emitpdf.new_page()
     ps = emitpdf.ps()
     # header
     emitpdf.newline(y=0.25)
@@ -655,9 +661,8 @@ def emit_table_as_pdf(path,table_id,tp):
     ps.fill_color(0,0,0)
     emitpdf.layout_text(tp.display.header,overflow="stop")
     emitpdf.layout_text_end()
-    hdrlinew = emitpdf.layoutMaxEnd.x - emitpdf.layoutStartedAt.x
-    #
     emitpdf.newline(y=4/emitpdf.currentDPI)
+    hdrlinew = emitpdf.layoutMaxEnd.x - emitpdf.layoutStartedAt.x
     #
     p = emitpdf.coordxlate(emitpdf.currentPos)
     ps.stroke_color(0,0,0)
@@ -671,7 +676,14 @@ def emit_table_as_pdf(path,table_id,tp):
     ps.lineto(p2.x,p2.y)
     ps.stroke()
     #
-    emitpdf.end_page(pdfhl)
+    if not tp.description == None:
+        emitpdf.newline(y=10/emitpdf.currentDPI)
+        emitpdf.layout_text_begin()
+        ps.set_text_font(emitpdf.font1.reg,10)
+        emitpdf.layout_text(tp.description)
+        emitpdf.layout_text_end()
+    #
+    emitpdf.end_page()
     pdfhl.finish()
     f = open(path,"wb")
     pdf.write_file(f)
