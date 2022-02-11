@@ -548,9 +548,12 @@ class EmitPDF:
         self.pagestream.text_move_to(tp.x,tp.y)
         self.layoutStarted = True
         self.layoutWritten = 0
+        self.layoutLineTextBuf = ""
     def layout_text_end(self):
-        if self.pagestream.intxt:
-            self.pagestream.end_text()
+        if len(self.layoutLineTextBuf) > 0:
+            self.pagestream.text(self.layoutLineTextBuf)
+            self.layoutLineTextBuf = ""
+        self.pagestream.end_text()
         self.layoutStarted = False
     def layout_text(self,text,*,overflow="wrap"):
         stop_xy = self.content_end()
@@ -566,6 +569,11 @@ class EmitPDF:
             if fx > stop_xy.x or elem == "\n":
                 if overflow == "stop":
                     break
+                #
+                if len(self.layoutLineTextBuf) > 0:
+                    self.pagestream.text(self.layoutLineTextBuf)
+                    self.layoutLineTextBuf = ""
+                #
                 self.pagestream.text_next_line()
                 self.newline(y=(self.pagestream.currentFontSize/self.currentDPI))
             #
@@ -575,7 +583,7 @@ class EmitPDF:
                     tp = XY(tp.x*self.currentDPI,tp.y*self.currentDPI)
                     self.pagestream.begin_text()
                     self.pagestream.text_move_to(tp.x,tp.y)
-                self.pagestream.text(elem)
+                self.layoutLineTextBuf = self.layoutLineTextBuf + elem
                 self.currentPos.x = self.currentPos.x + ew
 
 def emit_table_as_pdf(path,table_id,tp):
