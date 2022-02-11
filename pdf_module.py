@@ -504,11 +504,15 @@ class PDFGenHL:
 class PDFPageContentWriter:
     wd = None
     intxt = None
+    pdfhl = None
+    currentFont = None
     def data(self):
         return self.wd
-    def __init__(self):
+    def __init__(self,pdfhl):
         self.wd = bytes()
         self.intxt = False
+        self.pdfhl = pdfhl
+        self.currentFont = None
     def rstrip(self):
         i = len(self.wd) - 1
         while i >= 0 and self.wd[i:i+1] == b' ':
@@ -529,6 +533,7 @@ class PDFPageContentWriter:
     def set_text_font(self,font_id,size):
         if not self.intxt == True:
             raise Exception("Not in text")
+        self.currentFont = font_id
         if type(font_id) == PDFObject:
             if PDFName("Name") in font_id.value:
                 font_id = font_id.value[PDFName("Name")]

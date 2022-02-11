@@ -472,7 +472,7 @@ class EmitPDF:
         pdfhl.add_page_font_ref(page,self.font1.bold)
         pdfhl.add_page_font_ref(page,self.font1.italic)
         #
-        ps = self.pagestream = pdf_module.PDFPageContentWriter()
+        ps = self.pagestream = pdf_module.PDFPageContentWriter(pdfhl)
         #
         self.currentDPI = pdfhl.page_dpi
         self.pageHeight = pdfhl.page_size[1]
