@@ -496,7 +496,7 @@ class EmitPDF:
         ps.begin_text()
         ps.set_text_font(self.font1.italic,10)
         ptxt = "p. "+str(self.currentPage.index)
-        pw = pdfhl.fontwidth(self.font1.italic,10,ptxt) # get text width to right-justify
+        pw = ps.text_width(ptxt) # get text width to right-justify
         ps.fill_color(0,0,0)
         p = self.coordxlate(self.pageNumberRegion.xy)
         ps.text_move_to((p.x+self.pageNumberRegion.wh.w-pw)*self.currentDPI,p.y*self.currentDPI) # right justify
@@ -574,7 +574,7 @@ def emit_table_as_pdf(path,table_id,tp):
     ps.linewidth(0.5)
     ps.moveto(p.x*emitpdf.currentDPI,p.y*emitpdf.currentDPI)
     lt = emitpdf.contentRegion.wh.w
-    l = pdfhl.fontwidth(emitpdf.font1.bold,16,tp.display.header)
+    l = ps.text_width(tp.display.header)
     if l > lt:
         l = lt
     ps.lineto((p.x+l)*emitpdf.currentDPI,p.y*emitpdf.currentDPI)

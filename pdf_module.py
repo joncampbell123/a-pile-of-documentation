@@ -506,6 +506,7 @@ class PDFPageContentWriter:
     intxt = None
     pdfhl = None
     currentFont = None
+    currentFontSize = None
     def data(self):
         return self.wd
     def __init__(self,pdfhl):
@@ -513,6 +514,7 @@ class PDFPageContentWriter:
         self.intxt = False
         self.pdfhl = pdfhl
         self.currentFont = None
+        self.currentFontSize = None
     def rstrip(self):
         i = len(self.wd) - 1
         while i >= 0 and self.wd[i:i+1] == b' ':
@@ -530,10 +532,15 @@ class PDFPageContentWriter:
             raise Exception("Not in text, cannot end")
         self.intxt = False
         self.wd += "ET ".encode()
+    def text_width(self,text):
+        if self.currentFont == None or self.currentFontSize == None:
+            raise Exception("No current font")
+        return self.pdfhl.fontwidth(self.currentFont,self.currentFontSize,text)
     def set_text_font(self,font_id,size):
         if not self.intxt == True:
             raise Exception("Not in text")
         self.currentFont = font_id
+        self.currentFontSize = size
         if not type(font_id) == PDFObject:
             raise Exception("set_text_font must specify font object")
         if not PDFName("Name") in font_id.value:
