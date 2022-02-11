@@ -534,20 +534,20 @@ class PDFPageContentWriter:
         if not self.intxt == True:
             raise Exception("Not in text")
         self.currentFont = font_id
-        if type(font_id) == PDFObject:
-            if PDFName("Name") in font_id.value:
-                font_id = font_id.value[PDFName("Name")]
-                if type(font_id) == PDFName:
-                    font_id = font_id.name
-                    if type(font_id) == str:
-                        if font_id[0] == 'F':
-                            font_id = font_id[1:]
-                    else:
-                        raise Exception("PDFObject as font id with value that is PDFName not a str")
-                else:
-                    raise Exception("PDFObject as font id with value that is not PDFName")
-            else:
-                raise Exception("PDFObject as font id with no Name")
+        if not type(font_id) == PDFObject:
+            raise Exception("set_text_font must specify font object")
+        if not PDFName("Name") in font_id.value:
+            raise Exception("PDFObject as font id with no Name")
+        font_id = font_id.value[PDFName("Name")]
+        if not type(font_id) == PDFName:
+            raise Exception("PDFObject as font id with value that is not PDFName")
+        font_id = font_id.name
+        if not type(font_id) == str:
+            raise Exception("PDFObject as font id with value that is PDFName not a str")
+        #
+        if font_id[0] == 'F':
+            font_id = font_id[1:]
+        #
         self.rstrip()
         self.wd += ("/F"+str(font_id)+" "+str(size)+" Tf ").encode()
     def text_move_to(self,x,y):
