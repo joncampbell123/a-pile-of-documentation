@@ -552,6 +552,8 @@ class EmitPDF:
         self.layoutStarted = True
         self.layoutWritten = 0
         self.layoutLineTextBuf = ""
+        self.layoutStartedAt = XY(self.currentPos.x,self.currentPos.y)
+        self.layoutMaxEnd = XY(self.currentPos.x,self.currentPos.y)
     def layout_text_end(self):
         if len(self.layoutLineTextBuf) > 0:
             self.pagestream.text(self.layoutLineTextBuf)
@@ -586,8 +588,14 @@ class EmitPDF:
                     self.pagestream.text(self.layoutLineTextBuf)
                     self.layoutLineTextBuf = ""
                 #
+                if self.layoutMaxEnd.x < self.currentPos.x:
+                    self.layoutMaxEnd.x = self.currentPos.x
+                #
                 self.pagestream.text_next_line()
                 self.newline(y=(self.pagestream.currentFontSize/self.currentDPI))
+                #
+                if self.layoutMaxEnd.y < self.currentPos.y:
+                    self.layoutMaxEnd.y = self.currentPos.y
             #
             if not elem == "\n":
                 if not self.pagestream.intxt:
@@ -596,6 +604,9 @@ class EmitPDF:
                     self.pagestream.text_move_to(tp.x,tp.y)
                 self.layoutLineTextBuf = self.layoutLineTextBuf + elem
                 self.currentPos.x = self.currentPos.x + ew
+                #
+                if self.layoutMaxEnd.x < self.currentPos.x:
+                    self.layoutMaxEnd.x = self.currentPos.x
 
 def emit_table_as_pdf(path,table_id,tp):
     emitpdf = EmitPDF()
@@ -644,6 +655,7 @@ def emit_table_as_pdf(path,table_id,tp):
     ps.fill_color(0,0,0)
     emitpdf.layout_text(tp.display.header,overflow="stop")
     emitpdf.layout_text_end()
+    hdrlinew = emitpdf.layoutMaxEnd.x - emitpdf.layoutStartedAt.x
     #
     emitpdf.newline(y=4/emitpdf.currentDPI)
     #
@@ -652,7 +664,7 @@ def emit_table_as_pdf(path,table_id,tp):
     ps.linewidth(0.5)
     ps.moveto(p.x,p.y)
     lt = emitpdf.contentRegion.wh.w
-    l = ps.text_width(tp.display.header)
+    l = hdrlinew
     if l > lt:
         l = lt
     p2 = emitpdf.coordxlate(emitpdf.currentPos+XY(l,0))
