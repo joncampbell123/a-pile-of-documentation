@@ -477,9 +477,9 @@ class EmitPDF:
         #
         self.currentDPI = pdfhl.page_dpi
         self.pageHeight = pdfhl.page_size[1]
-        self.currentPos = self.contentRegion.xy
+        self.move_to(self.contentRegion.xy)
         # title
-        self.currentPos = self.pageTitleRegion.xy
+        self.move_to(self.pageTitleRegion.xy)
         self.layout_text_begin()
         ps.set_text_font(self.font1.italic,10)
         ps.fill_color(0,0,0)
@@ -503,7 +503,7 @@ class EmitPDF:
         ps.text(ptxt)
         ps.end_text()
         #
-        self.currentPos = self.contentRegion.xy
+        self.move_to(self.contentRegion.xy)
         #
         return page
     def coordxlate(self,xy):
@@ -555,6 +555,15 @@ class EmitPDF:
             self.layoutLineTextBuf = ""
         self.pagestream.end_text()
         self.layoutStarted = False
+    def move_to(self,xy=None,*,x=None,y=None):
+        if not xy == None:
+            if not type(xy) == XY:
+                raise Exception("move_to() without XY object");
+            self.currentPos = xy
+        if not x == None:
+            self.currentPos.x = x
+        if not y == None:
+            self.currentPos.y = y
     def layout_text(self,text,*,overflow="wrap"):
         stop_xy = self.content_end()
         elements = self.split_text(text)
