@@ -421,7 +421,6 @@ class EmitPDF:
     #
     font1 = None
     contentRegion = None
-    pageTitleLine = None
     pageTitleRegion = None
     pageNumberRegion = None
     #
@@ -482,8 +481,8 @@ class EmitPDF:
         #
         self.currentDPI = self.pdfhl.page_dpi
         self.pageHeight = self.pdfhl.page_size[1]
-        self.move_to(self.contentRegion.xy)
         # title
+        vadj = XY(0,10/self.currentDPI) # remember that text is rendered from a baseline, not from the top
         self.move_to(self.pageTitleRegion.xy)
         self.layout_text_begin()
         ps.set_text_font(self.font1.italic,10)
@@ -491,14 +490,15 @@ class EmitPDF:
         self.layout_text(self.currentTitle,overflow="stop")
         self.layout_text_end()
         #
-        p = self.coordxlate(self.pageTitleLine.xy)
-        p2 = self.coordxlate(self.pageTitleLine.xy+XY(self.pageTitleLine.wh.w,0))
+        p = self.coordxlate(self.pageTitleLine.xy + vadj)
+        p2 = self.coordxlate(self.pageTitleLine.xy + vadj + XY(self.pageTitleLine.wh.w,0))
         ps.stroke_color(0,0,0)
         ps.linewidth(0.5)
         ps.moveto(p.x,p.y)
         ps.lineto(p2.x,p2.y)
         ps.stroke()
         # page number
+        vadj = XY(0,10/self.currentDPI) # remember that text is rendered from a baseline, not from the top
         ps.begin_text()
         ps.set_text_font(self.font1.italic,10)
         ptxt = "p. "+str(self.currentPage.index)
@@ -552,13 +552,12 @@ class EmitPDF:
     def layout_text_begin(self):
         if not self.pagestream.intxt:
             self.pagestream.begin_text()
-        tp = self.coordxlate(self.currentPos)
-        self.pagestream.text_move_to(tp.x,tp.y)
         self.layoutStarted = True
         self.layoutWritten = 0
         self.layoutLineTextBuf = ""
         self.layoutStartedAt = XY(self.currentPos.x,self.currentPos.y)
         self.layoutMaxEnd = XY(self.currentPos.x,self.currentPos.y)
+        self.layoutVadj = XY(0,0)
     def layout_text_end(self):
         if len(self.layoutLineTextBuf) > 0:
             self.pagestream.text(self.layoutLineTextBuf)
@@ -580,7 +579,11 @@ class EmitPDF:
         #
         if self.layoutWritten == 0:
             self.pagestream.text_leading(self.pagestream.currentFontSize)
+            self.layoutVadj = XY(0,self.pagestream.currentFontSize/self.currentDPI)
             self.layoutWritten = 1
+            #
+            tp = self.coordxlate(self.currentPos+self.layoutVadj)
+            self.pagestream.text_move_to(tp.x,tp.y)
         #
         for elem in elements:
             ew = self.pagestream.text_width(elem)
@@ -654,14 +657,16 @@ def emit_table_as_pdf(path,table_id,tp):
     page1 = emitpdf.new_page()
     ps = emitpdf.ps()
     # header
-    emitpdf.newline(y=0.25)
+    emitpdf.newline(y=16/emitpdf.currentDPI)
     #
+    vadj = XY(0,16/emitpdf.currentDPI) # remember that text is rendered from a baseline, not from the top
     emitpdf.layout_text_begin()
     ps.set_text_font(emitpdf.font1.bold,16)
     ps.fill_color(0,0,0)
     emitpdf.layout_text(tp.display.header,overflow="stop")
     emitpdf.layout_text_end()
-    emitpdf.newline(y=4/emitpdf.currentDPI)
+    emitpdf.newline(y=emitpdf.layoutVadj.y)
+    emitpdf.newline(y=16/emitpdf.currentDPI/5) # 1/5th the font size
     hdrlinew = emitpdf.layoutMaxEnd.x - emitpdf.layoutStartedAt.x
     #
     p = emitpdf.coordxlate(emitpdf.currentPos)
@@ -677,7 +682,6 @@ def emit_table_as_pdf(path,table_id,tp):
     ps.stroke()
     #
     if not tp.description == None:
-        emitpdf.newline(y=10/emitpdf.currentDPI)
         emitpdf.layout_text_begin()
         ps.set_text_font(emitpdf.font1.reg,10)
         emitpdf.layout_text(tp.description)
