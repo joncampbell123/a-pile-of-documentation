@@ -585,7 +585,20 @@ class EmitPDF:
             self.currentPos.x = x
         if not y == None:
             self.currentPos.y = y
-    def layout_text(self,text,*,overflow="wrap"):
+    def layout_span_page(self):
+        savedFont = self.pagestream.currentFont
+        savedFontSize = self.pagestream.currentFontSize
+        self.end_page()
+        self.new_page()
+        if not savedFont == None and not savedFontSize == None:
+            self.layout_text_begin()
+            self.pagestream.set_text_font(savedFont,savedFontSize)
+            self.pagestream.text_leading(self.pagestream.currentFontSize)
+            self.pagestream.fill_color(0,0,0)
+            #
+            tp = self.coordxlate(self.currentPos+self.layoutVadj)
+            self.pagestream.text_move_to(tp.x,tp.y)
+    def layout_text(self,text,*,overflow="wrap",pagespan=False):
         stop_xy = self.content_end()
         elements = self.split_text(text)
         #
@@ -596,6 +609,10 @@ class EmitPDF:
             #
             tp = self.coordxlate(self.currentPos+self.layoutVadj)
             self.pagestream.text_move_to(tp.x,tp.y)
+            #
+            if pagespan == True:
+                if (self.currentPos+self.layoutVadj).y > (self.contentRegion.xy.y+self.contentRegion.wh.h):
+                    self.layout_span_page()
         #
         for elem in elements:
             ew = self.pagestream.text_width(elem)
@@ -618,6 +635,10 @@ class EmitPDF:
                     self.layoutMaxEnd.y = self.currentPos.y
             #
             if not elem == "\n":
+                if pagespan == True:
+                    if (self.currentPos+self.layoutVadj).y > (self.contentRegion.xy.y+self.contentRegion.wh.h):
+                        self.layout_span_page()
+                #
                 if not self.pagestream.intxt:
                     tp = self.coordxlate(self.currentPos)
                     self.pagestream.begin_text()
@@ -697,7 +718,7 @@ def emit_table_as_pdf(path,table_id,tp):
         emitpdf.layout_text_begin()
         ps.set_text_font(emitpdf.font1.reg,10)
         emitpdf.layout_text("\n")
-        emitpdf.layout_text(tp.description)
+        emitpdf.layout_text(tp.description+"\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v",pagespan=True)
         emitpdf.layout_text_end()
     #
     emitpdf.end_page()
