@@ -422,7 +422,7 @@ def emit_table_as_html(path,table_id,tp):
     #
     if not tp.notes == None and len(tp.notes) > 0:
         f.write("<p><span style=\"border-bottom: solid; border-bottom-width: thin;\">Notes</span></p>")
-        f.write("<ul style=\"font-size: 0.8em;\">")
+        f.write("<ul style=\"white-space: pre; font-size: 0.8em;\">")
         for note in tp.notes:
             f.write("<li>"+html_module.html_escape(note)+"</li>")
         f.write("</ul>")
