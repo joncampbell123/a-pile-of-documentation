@@ -941,6 +941,7 @@ def emit_table_as_pdf(path,table_id,tp):
                 emitpdf.layout_text_begin()
                 ps.set_text_font(emitpdf.font1.reg,fontSize)
                 for line in colv:
+                    emitpdf.currentPos.x = tx
                     emitpdf.layout_text(line)
                     emitpdf.layout_text_flush()
                     ps.text_next_line()
