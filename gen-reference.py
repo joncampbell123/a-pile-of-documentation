@@ -66,7 +66,8 @@ def emit_table_as_text(path,table_id,tp):
             x = ""
             if not tp.display.colhdr[ci] == None:
                 x = tp.display.colhdr[ci]
-            x = (x + (" "*tp.display.colsiz[ci]))[0:tp.display.colsiz[ci]]
+            if not ci == len(tp.display.colsiz)-1:
+                x = (x + (" "*tp.display.colsiz[ci]))[0:tp.display.colsiz[ci]]
             f.write(x)
         f.write("\n")
         #

@@ -7,7 +7,7 @@ Extended character codes returned by the IBM BIOS in the keyboard buffer, throug
  - Character code: Character code returned by the BIOS
  - Key combination: Key combination that generates the character code
 
-Character code | Key combination          
+Character code | Key combination
 ===============|==========================
 0x01           | Alt+Esc
 0x03           | Ctrl+2                    [*0]

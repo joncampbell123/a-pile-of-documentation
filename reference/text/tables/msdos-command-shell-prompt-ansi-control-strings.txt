@@ -4,7 +4,7 @@ Prompt ANSI Control Strings
 
 ANSI control strings supported by MS-DOS
 
-String   | ANSI parameters                                   | Function                                                                                                
+String   | ANSI parameters                                   | Function
 =========|===================================================|=========================================================================================================
 ESC [ 6n |                                                   | Console driver outputs cursor position report sequence
 ---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------

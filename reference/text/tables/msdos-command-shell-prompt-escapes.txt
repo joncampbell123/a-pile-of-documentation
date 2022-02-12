@@ -4,7 +4,7 @@ $PROMPT escape codes
 
 Special escape codes in the $PROMPT environment variable interpreted by COMMAND.COM
 
-Character sequence | Displays as                                                           | Example          | Example displays as                     
+Character sequence | Displays as                                                           | Example          | Example displays as
 ===================|=======================================================================|==================|=========================================
 $$                 | Dollar sign ( $ )                                                     | Time is $$$g     | Time is $>
 -------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
