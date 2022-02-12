@@ -729,10 +729,11 @@ def emit_table_as_pdf(path,table_id,tp):
     ps.lineto(p2.x,p2.y)
     ps.stroke()
     #
+    emitpdf.newline(y=10/emitpdf.currentDPI)
+    #
     if not tp.description == None:
         emitpdf.layout_text_begin()
         ps.set_text_font(emitpdf.font1.reg,10)
-        emitpdf.layout_text("\n")
         emitpdf.layout_text(tp.description,pagespan=True)
         emitpdf.layout_text("\n\n")
         emitpdf.layout_text_end()
@@ -758,6 +759,55 @@ def emit_table_as_pdf(path,table_id,tp):
         if desci > 0:
             emitpdf.newline(y=10/emitpdf.currentDPI)
         #
+    #
+    if not tp.notes == None and len(tp.notes) > 0:
+        emitpdf.layout_text_begin()
+        ps.set_text_font(emitpdf.font1.reg,10)
+        emitpdf.layout_text("Notes\n",pagespan=True)
+        emitpdf.layout_text_end()
+        emitpdf.newline(y=10/emitpdf.currentDPI/5) # 1/5th the font size
+        hdrlinew = emitpdf.layoutMaxEnd.x - emitpdf.layoutStartedAt.x
+        #
+        p = emitpdf.coordxlate(emitpdf.currentPos)
+        ps.stroke_color(0,0,0)
+        ps.linewidth(0.5)
+        ps.moveto(p.x,p.y)
+        lt = emitpdf.contentRegion.wh.w
+        l = hdrlinew
+        if l > lt:
+            l = lt
+        p2 = emitpdf.coordxlate(emitpdf.currentPos+XY(l,0))
+        ps.lineto(p2.x,p2.y)
+        ps.stroke()
+        #
+        emitpdf.newline(y=5/emitpdf.currentDPI)
+        for note in tp.notes:
+            emitpdf.currentPos.x = emitpdf.currentPos.x + 0.1
+            ps.fill_color(0.25,0.25,0.25)
+            cx = 0.0
+            cy = (8/emitpdf.currentDPI)*0.5*(5.0/4.0)
+            cw = (8/emitpdf.currentDPI)*0.4
+            ch = (8/emitpdf.currentDPI)*0.4
+            #
+            p = emitpdf.coordxlate(XY(emitpdf.currentPos.x+cx-(cw/2.0),emitpdf.currentPos.y+cy-(cw/2.0)))
+            ps.moveto(p.x,p.y)
+            p = emitpdf.coordxlate(XY(emitpdf.currentPos.x+cx+(cw/2.0),emitpdf.currentPos.y+cy-(cw/2.0)))
+            ps.lineto(p.x,p.y)
+            p = emitpdf.coordxlate(XY(emitpdf.currentPos.x+cx+(cw/2.0),emitpdf.currentPos.y+cy+(cw/2.0)))
+            ps.lineto(p.x,p.y)
+            p = emitpdf.coordxlate(XY(emitpdf.currentPos.x+cx-(cw/2.0),emitpdf.currentPos.y+cy+(cw/2.0)))
+            ps.lineto(p.x,p.y)
+            #
+            ps.close_subpath()
+            ps.fill()
+            #
+            emitpdf.currentPos.x = emitpdf.currentPos.x + 0.1
+            emitpdf.layout_text_begin()
+            ps.set_text_font(emitpdf.font1.reg,8)
+            emitpdf.layout_text(note+"\n",pagespan=True)
+            emitpdf.layout_text_end()
+        #
+        emitpdf.newline(y=5/emitpdf.currentDPI)
     #
     emitpdf.end_page()
     pdfhl.finish()
