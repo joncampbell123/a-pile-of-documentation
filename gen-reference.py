@@ -854,6 +854,19 @@ def emit_table_as_pdf(path,table_id,tp):
                 ps.close_subpath()
                 ps.fill()
                 #
+                ps.stroke_color(0,0,0)
+                ps.linewidth(0.5)
+                p = emitpdf.coordxlate(emitpdf.currentPos)
+                ps.moveto(p.x,p.y)
+                p = emitpdf.coordxlate(XY(emitpdf.currentPos.x+hx,emitpdf.currentPos.y))
+                ps.lineto(p.x,p.y)
+                ps.stroke()
+                p = emitpdf.coordxlate(emitpdf.currentPos+XY(0,rowh))
+                ps.moveto(p.x,p.y)
+                p = emitpdf.coordxlate(XY(emitpdf.currentPos.x+hx,emitpdf.currentPos.y+rowh))
+                ps.lineto(p.x,p.y)
+                ps.stroke()
+                #
                 for coli in range(len(columns)):
                     val = tp.display.colhdr[coli]
                     if val == None:
@@ -912,6 +925,14 @@ def emit_table_as_pdf(path,table_id,tp):
             #
             emitpdf.currentPos.x = coltop.x
             emitpdf.currentPos.y = coltop.y + (maxlines * rowh)
+            #
+            ps.stroke_color(0,0,0)
+            ps.linewidth(0.5)
+            p = emitpdf.coordxlate(emitpdf.currentPos+XY(hcolw*drawcol,0))
+            ps.moveto(p.x,p.y)
+            p = emitpdf.coordxlate(XY(emitpdf.currentPos.x+(hcolw*drawcol)+hx,emitpdf.currentPos.y))
+            ps.lineto(p.x,p.y)
+            ps.stroke()
             #
             drawrowcount = drawrowcount + 1
             rowidx = rowidx + 1
