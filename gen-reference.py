@@ -15,6 +15,28 @@ import html_module
 import common_json_help_module
 import table_presentation_module
 
+def text_tchr_classify(c):
+    if c == '\n' or c == '\t' or c == ' ':
+        return "w"
+    return "c"
+
+def text_split_text(text):
+    e = [ ]
+    w = ""
+    cls = None
+    for c in text:
+        ncls = text_tchr_classify(c)
+        if not cls == ncls or c == '\n':
+            cls = ncls
+            if not w == "":
+                e.append(w)
+                w = ""
+        #
+        w = w + c
+    if not w == "":
+        e.append(w)
+    return e
+
 def emit_table_as_text(path,table_id,tp):
     #
     f = open(path,"w",encoding="UTF-8")
@@ -190,8 +212,40 @@ def emit_table_as_text(path,table_id,tp):
     if not tp.notes == None and len(tp.notes) > 0:
         f.write("Notes\n")
         f.write("-----\n")
+        yline = 0
         for note in tp.notes:
-            f.write(" * "+note+"\n")
+            # If the previous note was multiple line, add an additional line
+            if yline > 0:
+                f.write("\n")
+            #
+            words = text_split_text(note)
+            count = 0
+            xstart = 3
+            xend = 132
+            yline = 0
+            x = xstart
+            for word in words:
+                if len(word) == 0:
+                    continue
+                # collapse spaces
+                if word[0] == ' ' or word[0] == "\t":
+                    word = " "
+                # print and count it
+                if word == "\n" or (x+len(word)) > xend:
+                    yline = yline + 1
+                    f.write("\n")
+                    x = xstart
+                if not word == "\n":
+                    if x == xstart:
+                        if yline == 0:
+                            f.write(" * ")
+                        else:
+                            f.write("   ")
+                    f.write(word)
+                    x = x + len(word)
+            #
+            if x > xstart:
+                f.write("\n")
         f.write("\n")
     #
     f.close()
