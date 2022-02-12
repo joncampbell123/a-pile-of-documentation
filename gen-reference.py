@@ -957,6 +957,26 @@ def emit_table_as_pdf(path,table_id,tp):
             drawrowcount = drawrowcount + 1
             rowidx = rowidx + 1
         #
+        if drawrowcount > 0:
+            for coli in range(len(columns)):
+                x = tablepos.x+(hcolw*drawcol) + dpiposx[coli]
+                ps.stroke_color(0,0,0)
+                ps.linewidth(0.5)
+                p = emitpdf.coordxlate(XY(x,drawrowtop))
+                ps.moveto(p.x,p.y)
+                p = emitpdf.coordxlate(XY(x,emitpdf.currentPos.y))
+                ps.lineto(p.x,p.y)
+                ps.stroke()
+            #
+            x = tablepos.x+(hcolw*drawcol)+hx
+            ps.stroke_color(0,0,0)
+            ps.linewidth(0.5)
+            p = emitpdf.coordxlate(XY(x,drawrowtop))
+            ps.moveto(p.x,p.y)
+            p = emitpdf.coordxlate(XY(x,emitpdf.currentPos.y))
+            ps.lineto(p.x,p.y)
+            ps.stroke()
+        #
         emitpdf.newline(y=(8+2)/emitpdf.currentDPI)
     #
     if not tp.sources == None:
