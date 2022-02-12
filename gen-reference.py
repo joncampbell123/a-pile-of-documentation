@@ -613,6 +613,10 @@ class EmitPDF:
             #
             tp = self.coordxlate(self.currentPos+self.layoutVadj)
             self.pagestream.text_move_to(tp.x,tp.y)
+    def layout_text_flush(self):
+        if len(self.layoutLineTextBuf) > 0:
+            self.pagestream.text(self.layoutLineTextBuf)
+            self.layoutLineTextBuf = ""
     def layout_text(self,text,*,overflow="wrap",pagespan=False):
         stop_xy = self.content_end()
         elements = self.split_text(text)
@@ -730,7 +734,32 @@ def emit_table_as_pdf(path,table_id,tp):
         ps.set_text_font(emitpdf.font1.reg,10)
         emitpdf.layout_text("\n")
         emitpdf.layout_text(tp.description,pagespan=True)
+        emitpdf.layout_text("\n")
         emitpdf.layout_text_end()
+    #
+    if not tp.display.disptable == None:
+        emitpdf.newline(y=10/emitpdf.currentDPI)
+        #
+        desci = 0
+        for ci in range(len(tp.display.colsiz)):
+            if not tp.display.colhdr[ci] == None and not tp.display.coldesc[ci] == None:
+                emitpdf.layout_text_begin()
+                #
+                ps.set_text_font(emitpdf.font1.bold,8)
+                emitpdf.layout_text(tp.display.colhdr[ci],pagespan=True)
+                emitpdf.layout_text_flush()
+                #
+                ps.set_text_font(emitpdf.font1.reg,8)
+                emitpdf.layout_text(": "+tp.display.coldesc[ci],pagespan=True)
+                emitpdf.layout_text("\n",pagespan=True)
+                #
+                emitpdf.layout_text_end()
+                emitpdf.newline(y=2/emitpdf.currentDPI)
+                #
+                desci = desci + 1
+        if desci > 0:
+            emitpdf.newline(y=10/emitpdf.currentDPI)
+        #
     #
     emitpdf.end_page()
     pdfhl.finish()
