@@ -943,7 +943,6 @@ def emit_table_as_pdf(path,table_id,tp):
                 for line in colv:
                     emitpdf.layout_text(line)
                     emitpdf.layout_text_flush()
-                    emitpdf.newline(x=(tx-emitpdf.contentRegion.xy.x),y=rowh)
                     ps.text_next_line()
                 emitpdf.layout_text_end()
                 #
@@ -962,7 +961,9 @@ def emit_table_as_pdf(path,table_id,tp):
                         ps.fill_color(0,0,0)
             #
             emitpdf.currentPos.x = coltop.x
-            emitpdf.currentPos.y = coltop.y + (maxlines * rowh)
+            emitpdf.currentPos.y = coltop.y + rowh
+            if maxlines > 1:
+                emitpdf.currentPos.y = emitpdf.currentPos.y + ((maxlines - 1) * (fontSize/emitpdf.currentDPI))
             #
             ps.stroke_color(0,0,0)
             ps.linewidth(0.5)
