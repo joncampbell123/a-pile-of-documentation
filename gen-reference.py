@@ -436,7 +436,7 @@ class EmitPDF:
         self.font1 = EmitPDF.Font()
         #
         ll = XY(0.25,0.5)
-        ur = XY(8 - 0.25,11 - 0.5)
+        ur = XY(8 - 0.25,11 - 0.25)
         self.contentRegion = RectRegion(ll,ur-ll)
         #
         ll = XY(0.25,0.25)
@@ -481,6 +481,20 @@ class EmitPDF:
         #
         self.currentDPI = self.pdfhl.page_dpi
         self.pageHeight = self.pdfhl.page_size[1]
+        # DEBUG: Draw a dark red box around the content region-----------------------------
+        if False:
+            ps.stroke_color(0.5,0,0)
+            p = self.coordxlate(XY(self.contentRegion.xy.x,self.contentRegion.xy.y))
+            ps.moveto(p.x,p.y)
+            p = self.coordxlate(XY(self.contentRegion.xy.x+self.contentRegion.wh.w,self.contentRegion.xy.y))
+            ps.lineto(p.x,p.y)
+            p = self.coordxlate(XY(self.contentRegion.xy.x+self.contentRegion.wh.w,self.contentRegion.xy.y+self.contentRegion.wh.h))
+            ps.lineto(p.x,p.y)
+            p = self.coordxlate(XY(self.contentRegion.xy.x,self.contentRegion.xy.y+self.contentRegion.wh.h))
+            ps.lineto(p.x,p.y)
+            ps.close_subpath()
+            ps.stroke()
+        # END DEBUG------------------------------------------------------------------------
         # title
         self.move_to(self.pageTitleRegion.xy)
         self.layout_text_begin()
@@ -595,6 +609,7 @@ class EmitPDF:
             self.pagestream.set_text_font(savedFont,savedFontSize)
             self.pagestream.text_leading(self.pagestream.currentFontSize)
             self.pagestream.fill_color(0,0,0)
+            self.layoutVadj = XY(0,self.pagestream.currentFontSize/self.currentDPI)
             #
             tp = self.coordxlate(self.currentPos+self.layoutVadj)
             self.pagestream.text_move_to(tp.x,tp.y)
@@ -639,10 +654,6 @@ class EmitPDF:
                     if (self.currentPos+self.layoutVadj).y > (self.contentRegion.xy.y+self.contentRegion.wh.h):
                         self.layout_span_page()
                 #
-                if not self.pagestream.intxt:
-                    tp = self.coordxlate(self.currentPos)
-                    self.pagestream.begin_text()
-                    self.pagestream.text_move_to(tp.x,tp.y)
                 self.layoutLineTextBuf = self.layoutLineTextBuf + elem
                 self.currentPos.x = self.currentPos.x + ew
                 #
@@ -717,8 +728,8 @@ def emit_table_as_pdf(path,table_id,tp):
     if not tp.description == None:
         emitpdf.layout_text_begin()
         ps.set_text_font(emitpdf.font1.reg,10)
-        emitpdf.layout_text("\n")
-        emitpdf.layout_text(tp.description+"\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v",pagespan=True)
+        #emitpdf.layout_text("\n")
+        emitpdf.layout_text(tp.description+"\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v\nuiqweqwe\nwqeqwewew\neeooww\n132132\n231231v",pagespan=True)
         emitpdf.layout_text_end()
     #
     emitpdf.end_page()
