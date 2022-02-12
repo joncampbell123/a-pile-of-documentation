@@ -433,6 +433,37 @@
 						"source index": 0,
 						"original key": "ESC [= h"
 					}
+				],
+				"ESC [ j": [
+					{
+						"value": [
+							"1: row (1-based)\n2: column (2-based)",
+							"Moves to row, column"
+						],
+						"source index": 0,
+						"original key": "ESC [ j"
+					}
+				],
+				"ESC [ K": [
+					{
+						"value": [
+							"",
+							"Clears line from cursor to end of line"
+						],
+						"source index": 0,
+						"original key": "ESC [ K"
+					}
+				],
+				"ESC [= l": [
+					{
+						"value": [
+							"1: display mode",
+							"Resets display mode according to display mode code. Note that the code is ESC [= followed by the number, then l.\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = disable wrap at end of line"
+						],
+						"notes": "PC programmer's sourcebook (1988) incorrectly lists 7 as wrap at end of line",
+						"source index": 0,
+						"original key": "ESC [= l"
+					}
 				]
 			},
 			"sources": [
