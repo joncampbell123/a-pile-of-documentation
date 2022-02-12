@@ -464,6 +464,16 @@
 						"source index": 0,
 						"original key": "ESC [= l"
 					}
+				],
+				"ESC [ m": [
+					{
+						"value": [
+							"Any number of parameters is valid, including none",
+							"If no number given, acts as if zero.\nEach number changes an attribute that will be used to print text after the escape.\n0 clears all attributes to default.\nSee table \"MS-DOS Prompt ANSI Display Attribute Strings\" for more information."
+						],
+						"source index": 0,
+						"original key": "ESC [ m"
+					}
 				]
 			},
 			"sources": [
