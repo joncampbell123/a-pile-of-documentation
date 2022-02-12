@@ -1,5 +1,6 @@
 
 import os
+import re
 import glob
 import json
 import pathlib
@@ -9,6 +10,14 @@ def dict_sorted_uint_func(a):
 
 def dict_sorted_text_func(a):
     return a.lower()
+
+def dict_sorted_mixed_func(a):
+    ca = a.split(" ")
+    for i in range(len(ca)):
+        ca[i] = ca[i].lower()
+        if re.match(r"^[0-9]+$",ca[i]) or re.match(r"^0x",ca[i]):
+            ca[i] = int(ca[i],0)
+    return ca
 
 class TablePresentation:
     name = None
@@ -58,6 +67,8 @@ class TablePresentation:
                 sortFunc = dict_sorted_uint_func
             if self.key_column["type"][0:6] == "string":
                 sortFunc = dict_sorted_text_func
+            if self.key_column["type"][0:5] == "mixed":
+                sortFunc = dict_sorted_mixed_func
         #
         self.display.disptable = [ ]
         for rowkey in sorted(self.table,key=sortFunc):

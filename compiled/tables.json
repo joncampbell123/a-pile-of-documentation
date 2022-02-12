@@ -349,7 +349,7 @@
 			],
 			"table format type": "key=value",
 			"key column": {
-				"type": "string",
+				"type": "mixed",
 				"title": "Escape with code"
 			}
 		},

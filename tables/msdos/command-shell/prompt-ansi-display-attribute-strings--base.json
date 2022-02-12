@@ -8,7 +8,7 @@
 	"table format": {
 		"type": "key=value",
 		"key": {
-			"type": "string",
+			"type": "mixed",
 			"title": "Escape with code"
 		},
 		"value": [

@@ -8,6 +8,10 @@ Escape with code | Sets attribute to               | MDA | CDA | EDA | VDA
 =================|=================================|=====|=====|=====|====
 ESC [ 0 m        | Normal text                     | X   | X   | X   | X
 ESC [ 1 m        | Bright text (intensity bit set) | X   | X   | X   | X
+ESC [ 4 m        | Underscored text                | X   |     |     | 
+ESC [ 5 m        | Blinking text                   | X   |     |     | 
+ESC [ 7 m        | Reversed text                   | X   | X   | X   | X
+ESC [ 8 m        | Canceled (invisible) text       | X   |     |     | 
 ESC [ 30 m       | Black text                      |     | X   | X   | X
 ESC [ 31 m       | Red text                        |     | X   | X   | X
 ESC [ 32 m       | Green text                      |     | X   | X   | X
@@ -16,7 +20,6 @@ ESC [ 34 m       | Blue text                       |     | X   | X   | X
 ESC [ 35 m       | Magenta text                    |     | X   | X   | X
 ESC [ 36 m       | Cyan text                       |     | X   | X   | X
 ESC [ 37 m       | White text                      |     | X   | X   | X
-ESC [ 4 m        | Underscored text                | X   |     |     | 
 ESC [ 40 m       | Black background                |     | X   | X   | X
 ESC [ 41 m       | Red background                  |     | X   | X   | X
 ESC [ 42 m       | Green background                |     | X   | X   | X
@@ -25,9 +28,6 @@ ESC [ 44 m       | Blue background                 |     | X   | X   | X
 ESC [ 45 m       | Magenta background              |     | X   | X   | X
 ESC [ 46 m       | Cyan background                 |     | X   | X   | X
 ESC [ 47 m       | White background                |     | X   | X   | X
-ESC [ 5 m        | Blinking text                   | X   |     |     | 
-ESC [ 7 m        | Reversed text                   | X   | X   | X   | X
-ESC [ 8 m        | Canceled (invisible) text       | X   |     |     | 
 
 Sources
 =======
