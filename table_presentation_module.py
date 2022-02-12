@@ -15,7 +15,7 @@ def dict_sorted_mixed_func(a):
     ca = a.split(" ")
     for i in range(len(ca)):
         ca[i] = ca[i].lower()
-        if re.match(r"^[0-9]+$",ca[i]) or re.match(r"^0x",ca[i]):
+        if re.match(r"^[0-9]+$",ca[i]) or re.match(r"^0x[0-9a-f]+$",ca[i]):
             ca[i] = int(ca[i],0)
     return ca
 
