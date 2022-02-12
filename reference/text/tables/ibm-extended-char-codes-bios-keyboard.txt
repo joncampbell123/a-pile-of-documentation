@@ -10,8 +10,8 @@ Extended character codes returned by the IBM BIOS in the keyboard buffer, throug
 Character code | Key combination
 ===============|==========================
 0x01           | Alt+Esc
-0x03           | Ctrl+2                    [*0]
-0x03           | Null character (none)     [*1]
+0x03           | Null character (none)     [*0]
+0x03           | Ctrl+2                    [*1]
 0x0E           | Alt+Backspace
 0x0F           | Shift Tab
 0x10           | Alt+Q
@@ -157,11 +157,11 @@ Character code | Key combination
 
 Sources
 =======
-  [*0] Keyboard scan code/character code combinations returned in AH/AL by INT 16h functions 00h/01h (standard) and functions 01h/11h (extended)
-       URL: https://sites.google.com/site/pcdosretro/scancodes
-
-  [*1] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
        Part 1, Miscellaneous Information => Section 1, General Information => 1.23, IBM Extended Character Codes
+
+  [*1] Keyboard scan code/character code combinations returned in AH/AL by INT 16h functions 00h/01h (standard) and functions 01h/11h (extended)
+       URL: https://sites.google.com/site/pcdosretro/scancodes
 
 Notes
 -----

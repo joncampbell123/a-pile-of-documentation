@@ -993,32 +993,16 @@
 		},
 		"ibm-extended-char-codes-bios-keyboard": {
 			"table": {
-				"0x1": [
-					{
-						"value": "Alt+Esc",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x01"
-					}
-				],
 				"0x3": [
 					{
-						"value": "Ctrl+2",
+						"value": "Null character (none)",
 						"source index": 0,
 						"original key": "0x03"
 					},
 					{
-						"value": "Null character (none)",
+						"value": "Ctrl+2",
 						"source index": 1,
 						"original key": "0x03"
-					}
-				],
-				"0xe": [
-					{
-						"value": "Alt+Backspace",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x0E"
 					}
 				],
 				"0xf": [
@@ -1153,30 +1137,6 @@
 						"original key": "0x19"
 					}
 				],
-				"0x1a": [
-					{
-						"value": "Alt+[",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x1A"
-					}
-				],
-				"0x1b": [
-					{
-						"value": "Alt+]",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x1B"
-					}
-				],
-				"0x1c": [
-					{
-						"value": "Alt+Enter",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x1C"
-					}
-				],
 				"0x1e": [
 					{
 						"value": "Alt+A",
@@ -1285,38 +1245,6 @@
 						"original key": "0x26"
 					}
 				],
-				"0x27": [
-					{
-						"value": "Alt+;",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x27"
-					}
-				],
-				"0x28": [
-					{
-						"value": "Alt+'",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x28"
-					}
-				],
-				"0x29": [
-					{
-						"value": "Alt+`",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x29"
-					}
-				],
-				"0x2b": [
-					{
-						"value": "Alt+\\",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x2B"
-					}
-				],
 				"0x2c": [
 					{
 						"value": "Alt+Z",
@@ -1399,38 +1327,6 @@
 						"value": "Alt+M",
 						"source index": 1,
 						"original key": "0x32"
-					}
-				],
-				"0x33": [
-					{
-						"value": "Alt+,",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x33"
-					}
-				],
-				"0x34": [
-					{
-						"value": "Alt+.",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x34"
-					}
-				],
-				"0x35": [
-					{
-						"value": "Alt+/",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x35"
-					}
-				],
-				"0x37": [
-					{
-						"value": "Alt+*",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x37"
 					}
 				],
 				"0x3b": [
@@ -1589,14 +1485,6 @@
 						"original key": "0x49"
 					}
 				],
-				"0x4a": [
-					{
-						"value": "Alt+-",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x4A"
-					}
-				],
 				"0x4b": [
 					{
 						"value": "Left arrow",
@@ -1609,14 +1497,6 @@
 						"original key": "0x4B"
 					}
 				],
-				"0x4c": [
-					{
-						"value": "Center Key 5",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x4C"
-					}
-				],
 				"0x4d": [
 					{
 						"value": "Right arrow",
@@ -1627,14 +1507,6 @@
 						"value": "Right arrow",
 						"source index": 1,
 						"original key": "0x4D"
-					}
-				],
-				"0x4e": [
-					{
-						"value": "Alt++",
-						"extended": true,
-						"source index": 0,
-						"original key": "0x4E"
 					}
 				],
 				"0x4f": [
@@ -2285,11 +2157,139 @@
 						"original key": "0x84"
 					}
 				],
+				"0x1": [
+					{
+						"value": "Alt+Esc",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x01"
+					}
+				],
+				"0xe": [
+					{
+						"value": "Alt+Backspace",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x0E"
+					}
+				],
+				"0x1a": [
+					{
+						"value": "Alt+[",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x1A"
+					}
+				],
+				"0x1b": [
+					{
+						"value": "Alt+]",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x1B"
+					}
+				],
+				"0x1c": [
+					{
+						"value": "Alt+Enter",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x1C"
+					}
+				],
+				"0x27": [
+					{
+						"value": "Alt+;",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x27"
+					}
+				],
+				"0x28": [
+					{
+						"value": "Alt+'",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x28"
+					}
+				],
+				"0x29": [
+					{
+						"value": "Alt+`",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x29"
+					}
+				],
+				"0x2b": [
+					{
+						"value": "Alt+\\",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x2B"
+					}
+				],
+				"0x33": [
+					{
+						"value": "Alt+,",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x33"
+					}
+				],
+				"0x34": [
+					{
+						"value": "Alt+.",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x34"
+					}
+				],
+				"0x35": [
+					{
+						"value": "Alt+/",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x35"
+					}
+				],
+				"0x37": [
+					{
+						"value": "Alt+*",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x37"
+					}
+				],
+				"0x4a": [
+					{
+						"value": "Alt+-",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x4A"
+					}
+				],
+				"0x4c": [
+					{
+						"value": "Center Key 5",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x4C"
+					}
+				],
+				"0x4e": [
+					{
+						"value": "Alt++",
+						"extended": true,
+						"source index": 1,
+						"original key": "0x4E"
+					}
+				],
 				"0x85": [
 					{
 						"value": "Function key 11",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x85"
 					}
 				],
@@ -2297,7 +2297,7 @@
 					{
 						"value": "Function key 12",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x86"
 					}
 				],
@@ -2305,7 +2305,7 @@
 					{
 						"value": "Shift+F11",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x87"
 					}
 				],
@@ -2313,7 +2313,7 @@
 					{
 						"value": "Shift+F12",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x88"
 					}
 				],
@@ -2321,7 +2321,7 @@
 					{
 						"value": "Ctrl+F11",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x89"
 					}
 				],
@@ -2329,7 +2329,7 @@
 					{
 						"value": "Ctrl+F12",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x8A"
 					}
 				],
@@ -2337,7 +2337,7 @@
 					{
 						"value": "Alt+F11",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x8B"
 					}
 				],
@@ -2345,7 +2345,7 @@
 					{
 						"value": "Alt+F12",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x8C"
 					}
 				],
@@ -2353,7 +2353,7 @@
 					{
 						"value": "Ctrl+Up arrow",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x8D"
 					}
 				],
@@ -2361,7 +2361,7 @@
 					{
 						"value": "Ctrl+-",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x8E"
 					}
 				],
@@ -2369,7 +2369,7 @@
 					{
 						"value": "Ctrl+Center Key 5",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x8F"
 					}
 				],
@@ -2377,7 +2377,7 @@
 					{
 						"value": "Ctrl++",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x90"
 					}
 				],
@@ -2385,7 +2385,7 @@
 					{
 						"value": "Ctrl+Down arrow",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x91"
 					}
 				],
@@ -2393,7 +2393,7 @@
 					{
 						"value": "Ctrl+Ins",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x92"
 					}
 				],
@@ -2401,7 +2401,7 @@
 					{
 						"value": "Ctrl+Del",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x93"
 					}
 				],
@@ -2409,7 +2409,7 @@
 					{
 						"value": "Ctrl+Tab",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x94"
 					}
 				],
@@ -2417,7 +2417,7 @@
 					{
 						"value": "Ctrl+/ (101-key)",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x95"
 					}
 				],
@@ -2425,7 +2425,7 @@
 					{
 						"value": "Ctrl+*",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x96"
 					}
 				],
@@ -2433,7 +2433,7 @@
 					{
 						"value": "Alt+Home (101-key)",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x97"
 					}
 				],
@@ -2441,7 +2441,7 @@
 					{
 						"value": "Alt+Up arrow (101-key)",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x98"
 					}
 				],
@@ -2449,7 +2449,7 @@
 					{
 						"value": "Alt+Page up (101-key)",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x99"
 					}
 				],
@@ -2457,7 +2457,7 @@
 					{
 						"value": "Alt+Left arrow (101-key)",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x9B"
 					}
 				],
@@ -2465,7 +2465,7 @@
 					{
 						"value": "Alt+Right arrow (101-key)",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x9D"
 					}
 				],
@@ -2473,7 +2473,7 @@
 					{
 						"value": "Alt+End (101-key)",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0x9F"
 					}
 				],
@@ -2481,7 +2481,7 @@
 					{
 						"value": "Alt+Down arrow (101-key)",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0xA0"
 					}
 				],
@@ -2489,7 +2489,7 @@
 					{
 						"value": "Alt+Page down (101-key)",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0xA1"
 					}
 				],
@@ -2497,7 +2497,7 @@
 					{
 						"value": "Alt+Insert (101-key)",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0xA2"
 					}
 				],
@@ -2505,7 +2505,7 @@
 					{
 						"value": "Alt+Delete (101-key)",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0xA3"
 					}
 				],
@@ -2513,7 +2513,7 @@
 					{
 						"value": "Alt+/ (101-key)",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0xA4"
 					}
 				],
@@ -2521,7 +2521,7 @@
 					{
 						"value": "Alt+Tab",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0xA5"
 					}
 				],
@@ -2529,24 +2529,15 @@
 					{
 						"value": "Alt+Enter (101-key)",
 						"extended": true,
-						"source index": 0,
+						"source index": 1,
 						"original key": "0xA6"
 					}
 				]
 			},
 			"sources": [
 				{
-					"website": "sites-google-pcdosretro-scancodes",
-					"source index": 0,
-					"citation": {
-						"title": "Keyboard scan code/character code combinations returned in AH/AL by INT 16h functions 00h/01h (standard) and functions 01h/11h (extended)",
-						"type": "website",
-						"url": "https://sites.google.com/site/pcdosretro/scancodes"
-					}
-				},
-				{
 					"book": "programmer-pc-sourcebook-ms-press-1988",
-					"source index": 1,
+					"source index": 0,
 					"citation": {
 						"title": "The Programmer's PC Sourcebook",
 						"author": "Thom Hogan",
@@ -2572,6 +2563,15 @@
 							"page": "29"
 						}
 					]
+				},
+				{
+					"website": "sites-google-pcdosretro-scancodes",
+					"source index": 1,
+					"citation": {
+						"title": "Keyboard scan code/character code combinations returned in AH/AL by INT 16h functions 00h/01h (standard) and functions 01h/11h (extended)",
+						"type": "website",
+						"url": "https://sites.google.com/site/pcdosretro/scancodes"
+					}
 				}
 			],
 			"description": "Extended character codes returned by the IBM BIOS in the keyboard buffer, through INT 16h, and at the MS-DOS console driver as 00h <code>",

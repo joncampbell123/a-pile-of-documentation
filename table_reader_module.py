@@ -244,11 +244,20 @@ def load_tables():
     for path in g:
         table_id = None
         json = common_json_help_module.load_json(path)
+        #
+        file_table_id = None
+        file_path = pathlib.Path(path)
+        if len(file_path.parts) > 0:
+            name = file_path.parts[len(file_path.parts)-1]
+            file_table_id = name.split("--")[0]
+        #
         if "base definition" in json:
             if json["base definition"] == True:
                 continue
         if "id" in json:
             table_id = json["id"]
+        if not table_id == file_table_id:
+            raise Exception("Table ID must match base of filename, file="+path+" id="+str(table_id))
         #
         if table_id in tables_by_id:
             table = tables_by_id[table_id]
