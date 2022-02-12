@@ -33,9 +33,9 @@
 						"value": [
 							"Underscored text",
 							"X",
-							"X",
-							"X",
-							"X"
+							"",
+							"",
+							""
 						],
 						"source index": 0,
 						"original key": "ESC [ 4 m"
@@ -46,9 +46,9 @@
 						"value": [
 							"Blinking text",
 							"X",
-							"X",
-							"X",
-							"X"
+							"",
+							"",
+							""
 						],
 						"source index": 0,
 						"original key": "ESC [ 5 m"
@@ -72,9 +72,9 @@
 						"value": [
 							"Canceled (invisible) text",
 							"X",
-							"X",
-							"X",
-							"X"
+							"",
+							"",
+							""
 						],
 						"source index": 0,
 						"original key": "ESC [ 8 m"
@@ -84,7 +84,7 @@
 					{
 						"value": [
 							"Black text",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
@@ -97,7 +97,7 @@
 					{
 						"value": [
 							"Red text",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
@@ -110,7 +110,7 @@
 					{
 						"value": [
 							"Green text",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
@@ -123,7 +123,7 @@
 					{
 						"value": [
 							"Yellow text",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
@@ -136,7 +136,7 @@
 					{
 						"value": [
 							"Blue text",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
@@ -149,7 +149,7 @@
 					{
 						"value": [
 							"Magenta text",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
@@ -162,7 +162,7 @@
 					{
 						"value": [
 							"Cyan text",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
@@ -175,7 +175,7 @@
 					{
 						"value": [
 							"White text",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
@@ -188,7 +188,7 @@
 					{
 						"value": [
 							"Black background",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
@@ -201,7 +201,7 @@
 					{
 						"value": [
 							"Red background",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
@@ -214,7 +214,7 @@
 					{
 						"value": [
 							"Green background",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
@@ -227,7 +227,7 @@
 					{
 						"value": [
 							"Yellow background",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
@@ -240,7 +240,7 @@
 					{
 						"value": [
 							"Blue background",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
@@ -253,7 +253,7 @@
 					{
 						"value": [
 							"Magenta background",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
@@ -266,7 +266,7 @@
 					{
 						"value": [
 							"Cyan background",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
@@ -279,7 +279,7 @@
 					{
 						"value": [
 							"White background",
-							"X",
+							"",
 							"X",
 							"X",
 							"X"
