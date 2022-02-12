@@ -801,7 +801,7 @@ def emit_table_as_pdf(path,table_id,tp):
             hcols = 1
             hcolw = 0
             hxpad = 0.05
-            hipad = 0.2
+            hipad = 0.4
             hx = 0
             for ci in range(len(tp.display.colsiz)):
                 dpiposx[ci] = hx
@@ -927,6 +927,10 @@ def emit_table_as_pdf(path,table_id,tp):
                 pdf.currentPos = XY(tablepos.x,tablepos.y)
                 continue
             #
+            show_sources = False
+            if row.get("same key") == True:
+                show_sources = True
+            #
             coltop = XY(emitpdf.currentPos.x,emitpdf.currentPos.y)
             for coli in range(len(columns)):
                 colv = colvals[coli]
@@ -942,6 +946,20 @@ def emit_table_as_pdf(path,table_id,tp):
                     emitpdf.newline(x=(tx-emitpdf.contentRegion.xy.x),y=rowh)
                     ps.text_next_line()
                 emitpdf.layout_text_end()
+                #
+                if show_sources == True and coli == len(columns)-1:
+                    sia = row.get("source index")
+                    if not sia == None and len(sia) > 0:
+                        ps.fill_color(0,0,0.75)
+                        emitpdf.currentPos.x = coltop.x + dpiposx[coli] + hxpad + pdfhl.fontwidth(emitpdf.font1.reg,fontSize,colvals[coli][0])
+                        emitpdf.currentPos.y = coltop.y
+                        emitpdf.layout_text_begin()
+                        ps.set_text_font(emitpdf.font1.italic,5)
+                        for si in sia:
+                            refmark = " [*"+str(si)+"]"
+                            emitpdf.layout_text(refmark)
+                        emitpdf.layout_text_end()
+                        ps.fill_color(0,0,0)
             #
             emitpdf.currentPos.x = coltop.x
             emitpdf.currentPos.y = coltop.y + (maxlines * rowh)
