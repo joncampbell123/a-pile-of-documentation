@@ -13,6 +13,18 @@
 		"ESC [ j": { "value": [ "1: row (1-based)\n2: column (2-based)", "Moves to row, column" ] },
 		"ESC [ K": { "value": [ "", "Clears line from cursor to end of line" ] },
 		"ESC [= l": { "value": [ "1: display mode", "Resets display mode according to display mode code.\nNote that the code is ESC [= followed by the number, then l.\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = disable wrap at end of line" ], "notes": "PC programmer's sourcebook (1988) incorrectly lists 7 as wrap at end of line" },
-		"ESC [ m": { "value": [ "Any number of parameters is valid, including none", "If no number given, acts as if zero.\nEach number changes an attribute that will be used to print text after the escape.\n0 clears all attributes to default.\nSee table \"MS-DOS Prompt ANSI Display Attribute Strings\" for more information." ] }
+		"ESC [ m": { "value": [ "Any number of parameters is valid, including none", "If no number given, acts as if zero.\nEach number changes an attribute that will be used to print text after the escape.\n0 clears all attributes to default.\nSee table \"MS-DOS Prompt ANSI Display Attribute Strings\" for more information." ] },
+		"ESC [ p": { "value": [ "1: key to remap\n2: key to remap to", "Reassigns first key (1) to second key (2), or remap key (1)" ] },
+		"ESC [ s": { "value": [ "", "Save current cursor position" ] },
+		"ESC [ u": { "value": [ "", "Restore current cursor position" ] },
+		"ESC [ A": { "value": [ "1: row count", "Moves cursor up by the number of rows indicated. If not specified, 1 is assumed" ] },
+		"ESC [ B": { "value": [ "1: row count", "Moves cursor down by the number of rows indicated. If not specified, 1 is assumed" ] },
+		"ESC [ C": { "value": [ "1: column count", "Moves cursor right by the number of columns indicated. If not specified, 1 is assumed" ] },
+		"ESC [ D": { "value": [ "1: column count", "Moves cusror left by the number of columns indicated. If not specified, 1 is assumed" ] },
+		"ESC [ H": { "value": [ "1: row\n2:column", "Moves cursor to row (1) and column (2) position. H by itself positions the cursor to home (1,1) position" ] },
+		"ESC [ J": { "value": [ "1: Erasure mode", "Erasure. MS-DOS only supports 2J to clear the screen according to PC Programmer's Sourcebook (1988)" ] },
+		"ESC [ K": { "value": [ "", "Erase from cursor to end of line, including cursor position" ] },
+		"ESC [ R": { "value": [ "", "Report cursor position through standard input" ] },
+		"ESC [ 6n": { "value": [ "", "Console driver outputs cursor position report sequence" ] }
 	}
 }

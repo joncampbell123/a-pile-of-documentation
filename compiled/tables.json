@@ -448,7 +448,7 @@
 					{
 						"value": [
 							"",
-							"Clears line from cursor to end of line"
+							"Erase from cursor to end of line, including cursor position"
 						],
 						"source index": 0,
 						"original key": "ESC [ K"
@@ -473,6 +473,116 @@
 						],
 						"source index": 0,
 						"original key": "ESC [ m"
+					}
+				],
+				"ESC [ p": [
+					{
+						"value": [
+							"1: key to remap\n2: key to remap to",
+							"Reassigns first key (1) to second key (2), or remap key (1)"
+						],
+						"source index": 0,
+						"original key": "ESC [ p"
+					}
+				],
+				"ESC [ s": [
+					{
+						"value": [
+							"",
+							"Save current cursor position"
+						],
+						"source index": 0,
+						"original key": "ESC [ s"
+					}
+				],
+				"ESC [ u": [
+					{
+						"value": [
+							"",
+							"Restore current cursor position"
+						],
+						"source index": 0,
+						"original key": "ESC [ u"
+					}
+				],
+				"ESC [ A": [
+					{
+						"value": [
+							"1: row count",
+							"Moves cursor up by the number of rows indicated. If not specified, 1 is assumed"
+						],
+						"source index": 0,
+						"original key": "ESC [ A"
+					}
+				],
+				"ESC [ B": [
+					{
+						"value": [
+							"1: row count",
+							"Moves cursor down by the number of rows indicated. If not specified, 1 is assumed"
+						],
+						"source index": 0,
+						"original key": "ESC [ B"
+					}
+				],
+				"ESC [ C": [
+					{
+						"value": [
+							"1: column count",
+							"Moves cursor right by the number of columns indicated. If not specified, 1 is assumed"
+						],
+						"source index": 0,
+						"original key": "ESC [ C"
+					}
+				],
+				"ESC [ D": [
+					{
+						"value": [
+							"1: column count",
+							"Moves cusror left by the number of columns indicated. If not specified, 1 is assumed"
+						],
+						"source index": 0,
+						"original key": "ESC [ D"
+					}
+				],
+				"ESC [ H": [
+					{
+						"value": [
+							"1: row\n2:column",
+							"Moves cursor to row (1) and column (2) position. H by itself positions the cursor to home (1,1) position"
+						],
+						"source index": 0,
+						"original key": "ESC [ H"
+					}
+				],
+				"ESC [ J": [
+					{
+						"value": [
+							"1: Erasure mode",
+							"Erasure. MS-DOS only supports 2J to clear the screen according to PC Programmer's Sourcebook (1988)"
+						],
+						"source index": 0,
+						"original key": "ESC [ J"
+					}
+				],
+				"ESC [ R": [
+					{
+						"value": [
+							"",
+							"Report cursor position through standard input"
+						],
+						"source index": 0,
+						"original key": "ESC [ R"
+					}
+				],
+				"ESC [ 6n": [
+					{
+						"value": [
+							"",
+							"Console driver outputs cursor position report sequence"
+						],
+						"source index": 0,
+						"original key": "ESC [ 6n"
 					}
 				]
 			},
