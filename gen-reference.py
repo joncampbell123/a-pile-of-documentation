@@ -5,6 +5,7 @@ import re
 import glob
 import json
 import zlib
+import math
 import struct
 import pathlib
 
@@ -759,8 +760,166 @@ def emit_table_as_pdf(path,table_id,tp):
         if desci > 0:
             emitpdf.newline(y=10/emitpdf.currentDPI)
         #
+        fontSize = 10
+        while True:
+            dpiwidths = [ ]
+            dpiposx = [ ]
+            dpitexx = [ ]
+            dpiposw = [ ]
+            dpitexw = [ ]
+            for ci in range(len(tp.display.colsiz)):
+                x = ""
+                if not tp.display.colhdr[ci] == None:
+                    x = tp.display.colhdr[ci]
+                lines = x.split('\n')
+                mw = 0
+                for line in lines:
+                    lw = pdfhl.fontwidth(emitpdf.font1.reg,fontSize,line)
+                    if mw < lw:
+                        mw = lw
+                dpiwidths.append(mw)
+                dpiposx.append(None)
+                dpitexx.append(None)
+                dpiposw.append(None)
+                dpitexw.append(None)
+            #
+            for rowidx in range(len(tp.display.disptable)):
+                row = tp.display.disptable[rowidx]
+                columns = row.get("columns")
+                if not columns == None:
+                    for coli in range(len(columns)):
+                        col = columns[coli]
+                        val = col.get("value")
+                        if val == None:
+                            val = ""
+                        lines = val.split('\n')
+                        for line in lines:
+                            lw = pdfhl.fontwidth(emitpdf.font1.reg,fontSize,line)
+                            if dpiwidths[coli] < lw:
+                                dpiwidths[coli] = lw
+            # decide where to layout the tables
+            hcols = 1
+            hcolw = 0
+            hxpad = 0.05
+            hipad = 0.2
+            hx = 0
+            for ci in range(len(tp.display.colsiz)):
+                dpiposx[ci] = hx
+                dpitexx[ci] = hxpad + hx
+                dpiposw[ci] = hxpad + dpiwidths[ci] + hxpad
+                dpitexw[ci] = dpiwidths[ci]
+                hx = dpiposx[ci] + dpiposw[ci]
+            #
+            maxw = emitpdf.contentRegion.wh.w
+            if hx > maxw:
+                fontSize = fontSize - 1
+                if fontSize <= 4:
+                    raise Exception("Cannot fit tables")
+                continue
+            else:
+                hcols = math.floor(maxw / (hx + hipad))
+                if hcols < 1:
+                    hcols = 1
+                hcolw = hx + hipad
+                hcoltw = (hx + hipad) * hcols
+                break
+        # determine table pos, make new page to ensure enough room
+        tablepos = XY(emitpdf.contentRegion.xy.x,emitpdf.currentPos.y)
+        if (tablepos.y+((fontSize*6)/emitpdf.currentDPI)) > (emitpdf.contentRegion.xy.y+emitpdf.contentRegion.wh.h):
+            page1 = emitpdf.new_page()
+            ps = emitpdf.ps()
+            tablepos = XY(emitpdf.contentRegion.xy.x,emitpdf.currentPos.y)
+        # draw table row by row
+        drawcol = 0
+        drawrowtop = 0
+        drawrowcount = 0
+        rowh = ((5.0/4.0)*fontSize)/emitpdf.currentDPI
+        rowidx = 0
+        while rowidx < len(tp.display.disptable):
+            row = tp.display.disptable[rowidx]
+            columns = row.get("columns")
+            #
+            if drawrowcount == 0:
+                emitpdf.move_to(XY(tablepos.x+(hcolw*drawcol),tablepos.y))
+                drawrowtop = emitpdf.currentPos.y
+                ps.fill_color(0.8,0.8,0.8)
+                p = emitpdf.coordxlate(emitpdf.currentPos)
+                ps.moveto(p.x,p.y)
+                p = emitpdf.coordxlate(XY(emitpdf.currentPos.x+hx,emitpdf.currentPos.y))
+                ps.lineto(p.x,p.y)
+                p = emitpdf.coordxlate(XY(emitpdf.currentPos.x+hx,emitpdf.currentPos.y+rowh))
+                ps.lineto(p.x,p.y)
+                p = emitpdf.coordxlate(XY(emitpdf.currentPos.x,emitpdf.currentPos.y+rowh))
+                ps.lineto(p.x,p.y)
+                ps.close_subpath()
+                ps.fill()
+                #
+                for coli in range(len(columns)):
+                    val = tp.display.colhdr[coli]
+                    if val == None:
+                        val = ""
+                    # 
+                    ps.fill_color(0,0,0)
+                    emitpdf.currentPos.x = tablepos.x+(hcolw*drawcol) + dpiposx[coli] + hxpad
+                    emitpdf.layout_text_begin()
+                    ps.set_text_font(emitpdf.font1.reg,fontSize)
+                    emitpdf.layout_text(val)
+                    emitpdf.layout_text_end()
+                #
+                emitpdf.newline(y=rowh)
+            #
+            maxlines = 1
+            colvals = [ ]
+            for coli in range(len(columns)):
+                col = columns[coli]
+                val = col.get("value")
+                if val == None:
+                    val = ""
+                #
+                vallines = val.split('\n')
+                if maxlines < len(vallines):
+                    maxlines = len(vallines)
+                #
+                colvals.append(vallines)
+            #
+            if (emitpdf.currentPos.y+((rowh*maxlines)/emitpdf.currentDPI)) > (emitpdf.contentRegion.xy.y+emitpdf.contentRegion.wh.h):
+                drawrowcount = 0
+                drawcol = drawcol + 1
+                if drawcol >= hcols:
+                    drawcol = 0
+                    page1 = emitpdf.new_page()
+                    ps = emitpdf.ps()
+                    tablepos = XY(emitpdf.contentRegion.xy.x,emitpdf.currentPos.y)
+                #
+                pdf.currentPos = XY(tablepos.x,tablepos.y)
+                continue
+            #
+            coltop = XY(emitpdf.currentPos.x,emitpdf.currentPos.y)
+            for coli in range(len(columns)):
+                colv = colvals[coli]
+                #
+                ps.fill_color(0,0,0)
+                tx = emitpdf.currentPos.x = tablepos.x+(hcolw*drawcol) + dpiposx[coli] + hxpad
+                emitpdf.currentPos.y = coltop.y
+                emitpdf.layout_text_begin()
+                ps.set_text_font(emitpdf.font1.reg,fontSize)
+                for line in colv:
+                    emitpdf.layout_text(line)
+                    emitpdf.layout_text_flush()
+                    emitpdf.newline(x=(tx-emitpdf.contentRegion.xy.x),y=rowh)
+                    ps.text_next_line()
+                emitpdf.layout_text_end()
+            #
+            emitpdf.currentPos.x = coltop.x
+            emitpdf.currentPos.y = coltop.y + (maxlines * rowh)
+            #
+            drawrowcount = drawrowcount + 1
+            rowidx = rowidx + 1
+        #
+        emitpdf.newline(y=(8+2)/emitpdf.currentDPI)
     #
     if not tp.sources == None:
+        ps.fill_color(0,0,0)
         emitpdf.layout_text_begin()
         ps.set_text_font(emitpdf.font1.reg,10)
         emitpdf.layout_text("Sources\n",pagespan=True)
