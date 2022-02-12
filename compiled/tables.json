@@ -336,15 +336,15 @@
 				},
 				{
 					"type": "string",
-					"title": "CDA"
+					"title": "CGA"
 				},
 				{
 					"type": "string",
-					"title": "EDA"
+					"title": "EGA"
 				},
 				{
 					"type": "string",
-					"title": "VDA"
+					"title": "VGA"
 				}
 			],
 			"table format type": "key=value",

@@ -4,7 +4,7 @@ Prompt ANSI Display Attribute Strings
 
 ANSI display attribute strings supported by MS-DOS
 
-Escape with code | Sets attribute to               | MDA | CDA | EDA | VDA
+Escape with code | Sets attribute to               | MDA | CGA | EGA | VGA
 =================|=================================|=====|=====|=====|====
 ESC [ 0 m        | Normal text                     | X   | X   | X   | X
 ESC [ 1 m        | Bright text (intensity bit set) | X   | X   | X   | X
