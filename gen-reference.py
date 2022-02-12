@@ -734,12 +734,10 @@ def emit_table_as_pdf(path,table_id,tp):
         ps.set_text_font(emitpdf.font1.reg,10)
         emitpdf.layout_text("\n")
         emitpdf.layout_text(tp.description,pagespan=True)
-        emitpdf.layout_text("\n")
+        emitpdf.layout_text("\n\n")
         emitpdf.layout_text_end()
     #
     if not tp.display.disptable == None:
-        emitpdf.newline(y=10/emitpdf.currentDPI)
-        #
         desci = 0
         for ci in range(len(tp.display.colsiz)):
             if not tp.display.colhdr[ci] == None and not tp.display.coldesc[ci] == None:
