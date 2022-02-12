@@ -1,0 +1,57 @@
+
+Prompt ANSI Control Strings
+===========================
+
+ANSI control strings supported by MS-DOS
+
+String   | ANSI parameters                                   | Function                                                                                                        
+=========|===================================================|=================================================================================================================
+ESC [ f  | 1: row (1-based)                                  | Moves to row, column
+         | 2: column (2-based)                               | 
+---------+---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------
+ESC [ j  | 1: row (1-based)                                  | Moves to row, column
+         | 2: column (2-based)                               | 
+---------+---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------
+ESC [ K  |                                                   | Clears line from cursor to end of line
+---------+---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------
+ESC [ m  | Any number of parameters is valid, including none | If no number given, acts as if zero.
+         |                                                   | Each number changes an attribute that will be used to print text after the escape.
+         |                                                   | 0 clears all attributes to default.
+         |                                                   | See table "MS-DOS Prompt ANSI Display Attribute Strings" for more information.
+---------+---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------
+ESC [= h | 1: display mode                                   | Sets display mode according to display mode code. Note that the code is ESC [= followed by the number, then h.
+         |                                                   | 
+         |                                                   | 0 = 40x25 monochrome text
+         |                                                   | 1 = 40x25 color text
+         |                                                   | 2 = 80x25 monochrome text
+         |                                                   | 3 = 80x25 color text
+         |                                                   | 4 = 320x200 color graphics
+         |                                                   | 5 = 320x200 monochrome graphics
+         |                                                   | 6 = 640x200 monochrome graphics
+         |                                                   | 7 = wrap at end of line
+---------+---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------
+ESC [= l | 1: display mode                                   | Resets display mode according to display mode code. Note that the code is ESC [= followed by the number, then l.
+         |                                                   | 
+         |                                                   | 0 = 40x25 monochrome text
+         |                                                   | 1 = 40x25 color text
+         |                                                   | 2 = 80x25 monochrome text
+         |                                                   | 3 = 80x25 color text
+         |                                                   | 4 = 320x200 color graphics
+         |                                                   | 5 = 320x200 monochrome graphics
+         |                                                   | 6 = 640x200 monochrome graphics
+         |                                                   | 7 = disable wrap at end of line
+---------+---------------------------------------------------+-----------------------------------------------------------------------------------------------------------------
+
+Sources
+=======
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.18, Prompt ANSI Control Strings
+
+Notes
+-----
+ * ANSI control strings are portrayed where possible as escape code separated from parameters. ANSI escapes are usually ESC [ 
+   <paramaters> <code>. <parameters> can be nothing, one number, or multiple numbers separated by semicolons. The ANSI escape for 
+   bright yellow text for example would be written ESC [ 1;33m meaning 'm' to set attributes, 1 for bright, 33 for yellow. MS-DOS 
+   generally confirms to the ANSI standard in this way. If specific parameters set the function such as ESC [ 6n then the parameter 
+   is considered part of the escape but also listed as a param as well.
+
