@@ -38,6 +38,16 @@
 							"title": "Prompt Special Characters",
 							"page": "48",
 							"source": "IBM DOS 3.3 Reference, page 7-177"
+						},
+						"2.18": {
+							"title": "Prompt ANSI Control Strings",
+							"page": "48",
+							"source": "IBM DOS 3.3 Technical Reference, pages 3-1 to 3-20"
+						},
+						"2.19": {
+							"title": "Prompt ANSI Display Attribute Strings",
+							"page": "49",
+							"source": "IBM DOS 3.3 Technical Reference, pages 3-15"
 						}
 					}
 				},

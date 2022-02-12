@@ -412,6 +412,81 @@
 				"title": "Character sequence"
 			}
 		},
+		"msdos-command-shell-prompt-ansi-control-strings": {
+			"table": {
+				"ESC [ f": [
+					{
+						"value": [
+							"1: row (1-based)\n2: column (2-based)",
+							"Moves to row, column"
+						],
+						"source index": 0,
+						"original key": "ESC [ f"
+					}
+				],
+				"ESC [= h": [
+					{
+						"value": [
+							"1: display mode",
+							"Sets display mode according to display mode code. Note that the code is ESC [= followed by the number, then h.\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = wrap at end of line"
+						],
+						"source index": 0,
+						"original key": "ESC [= h"
+					}
+				]
+			},
+			"sources": [
+				{
+					"book": "programmer-pc-sourcebook-ms-press-1988",
+					"source index": 0,
+					"citation": {
+						"title": "The Programmer's PC Sourcebook",
+						"author": "Thom Hogan",
+						"publisher": "Microsoft Press",
+						"year": 1988,
+						"type": "book"
+					},
+					"where": [
+						{
+							"path": "Part 2",
+							"type": "part",
+							"title": "Software"
+						},
+						{
+							"path": "Section 2",
+							"type": "section",
+							"title": "DOS Commands, Utilities, and Summaries"
+						},
+						{
+							"path": "2.18",
+							"type": "subsection",
+							"title": "Prompt ANSI Control Strings",
+							"page": "48"
+						}
+					]
+				}
+			],
+			"description": "ANSI control strings supported by MS-DOS",
+			"notes": [
+				"ANSI control strings are portrayed as possible as escape code separated from parameters. ANSI escapes are usually ESC [ <paramaters> <code>\n<parameters> can be nothing, one number, or multiple numbers separated by semicolons.\nThe ANSI escape for bright yellow text for example would be written ESC [ 1;33m meaning 'm' to set attributes, 1 for bright, 33 for yellow. MS-DOS generally confirms to the ANSI standard in this way.\nIf specific parameters set the function such as ESC [ 6n then the parameter is considered part of the escape but also listed as a param as well."
+			],
+			"name": "Prompt ANSI Control Strings",
+			"columns": [
+				{
+					"type": "string",
+					"title": "ANSI parameters"
+				},
+				{
+					"type": "string",
+					"title": "Function"
+				}
+			],
+			"table format type": "key=value",
+			"key column": {
+				"type": "string",
+				"title": "String"
+			}
+		},
 		"ibm-extended-char-codes-bios-keyboard": {
 			"table": {
 				"0x1": [
@@ -2088,6 +2163,26 @@
 							"type": "sections"
 						},
 						"name lookup": "2.17"
+					},
+					{
+						"title": "Prompt ANSI Control Strings",
+						"page": "48",
+						"source": "IBM DOS 3.3 Technical Reference, pages 3-1 to 3-20",
+						"parent lookup": {
+							"name": "Section 2",
+							"type": "sections"
+						},
+						"name lookup": "2.18"
+					},
+					{
+						"title": "Prompt ANSI Display Attribute Strings",
+						"page": "49",
+						"source": "IBM DOS 3.3 Technical Reference, pages 3-15",
+						"parent lookup": {
+							"name": "Section 2",
+							"type": "sections"
+						},
+						"name lookup": "2.19"
 					}
 				]
 			}

@@ -1,0 +1,14 @@
+{
+	"id": "msdos-command-shell-prompt-ansi-control-strings",
+	"source": {
+		"book": "programmer-pc-sourcebook-ms-press-1988",
+		"subsection": "2.18"
+	},
+	"table": {
+		"ESC [ f": { "value": [ "1: row (1-based)\n2: column (2-based)", "Moves to row, column" ] },
+		"ESC [= h": { "value": [
+			"1: display mode",
+			"Sets display mode according to display mode code. Note that the code is ESC [= followed by the number, then h.\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = wrap at end of line"
+		] }
+	}
+}
