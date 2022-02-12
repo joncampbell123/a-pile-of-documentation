@@ -1,6 +1,7 @@
 {
 	"type": "book",
 	"title": "The Programmer's PC Sourcebook",
+	"id": "programmer-pc-sourcebook-ms-press-1988",
 	"author": "Thom Hogan",
 	"publisher": "Microsoft Press",
 	"copyright": {

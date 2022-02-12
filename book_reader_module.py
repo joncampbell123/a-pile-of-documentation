@@ -69,6 +69,8 @@ class Book:
                 self.id = self.id[:-5]
         if self.id == None:
             raise Exception("Book with unknown id given path "+str(file_path))
+        if not self.id == json.get("id"):
+            raise Exception("Book id does not match file "+str(file_path))
         self.url = json.get("url")
         self.type = json.get("type")
         self.title = json.get("title")
