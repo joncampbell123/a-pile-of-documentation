@@ -447,8 +447,8 @@ class EmitPDF:
         ur = XY(8 - 0.25,0)
         self.pageTitleLine = RectRegion(ll,ur-ll)
         #
-        ll = XY(8 - 0.5,11 - 0.25)
-        ur = XY(8 - 0.25,11 - 0.05)
+        ll = XY(8 - 0.5,11 - (10/72) - 0.10)
+        ur = XY(8 - 0.10,11 - 0.05)
         self.pageNumberRegion = RectRegion(ll,ur-ll)
         #
         self.currentPage = None
@@ -498,6 +498,17 @@ class EmitPDF:
         ps.moveto(p.x,p.y)
         ps.lineto(p2.x,p2.y)
         ps.stroke()
+        # page number (top)
+        vadj = XY(0,10/self.currentDPI) # remember that text is rendered from a baseline, not from the top
+        ps.begin_text()
+        ps.set_text_font(self.font1.italic,10)
+        ptxt = str(self.currentPage.index)
+        pw = ps.text_width(ptxt) # get text width to right-justify
+        ps.fill_color(0,0,0)
+        p = self.coordxlate(XY(self.pageTitleRegion.xy.x+self.pageTitleRegion.wh.w-pw,self.pageTitleRegion.xy.y)+vadj)
+        ps.text_move_to(p.x,p.y) # right justify
+        ps.text(ptxt)
+        ps.end_text()
         # page number (bottom)
         vadj = XY(0,10/self.currentDPI) # remember that text is rendered from a baseline, not from the top
         ps.begin_text()
@@ -505,7 +516,7 @@ class EmitPDF:
         ptxt = str(self.currentPage.index)
         pw = ps.text_width(ptxt) # get text width to right-justify
         ps.fill_color(0,0,0)
-        p = self.coordxlate(XY(self.pageNumberRegion.xy.x+self.pageNumberRegion.wh.w-pw,self.pageNumberRegion.xy.y))
+        p = self.coordxlate(XY(self.pageNumberRegion.xy.x+self.pageNumberRegion.wh.w-pw,self.pageNumberRegion.xy.y)+vadj)
         ps.text_move_to(p.x,p.y) # right justify
         ps.text(ptxt)
         ps.end_text()
