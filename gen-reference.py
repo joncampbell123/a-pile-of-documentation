@@ -236,6 +236,8 @@ def emit_table_as_text(path,table_id,tp):
                     f.write("\n")
                     x = xstart
                 if not word == "\n":
+                    if x == xstart and (word[0] == " " or word[0] == "\t"):
+                        continue
                     if x == xstart:
                         if yline == 0:
                             f.write(" * ")

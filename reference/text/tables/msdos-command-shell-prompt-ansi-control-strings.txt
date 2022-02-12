@@ -57,5 +57,5 @@ Notes
    The ANSI escape for bright yellow text for example would be written ESC [ 1;33m meaning 'm' to set attributes, 1 for bright, 33 
    for yellow. MS-DOS generally confirms to the ANSI standard in this way.
    If specific parameters set the function such as ESC [ 6n then the parameter is considered part of the escape but also listed as a
-    param as well.
+   param as well.
 
