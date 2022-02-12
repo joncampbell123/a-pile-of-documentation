@@ -442,9 +442,9 @@ class EmitPDF:
         ll = XY(0.25,0.25)
         ur = XY(8 - 0.25,0.45)
         self.pageTitleRegion = RectRegion(ll,ur-ll)
-        #
-        ll = XY(0.25,0.3)
-        ur = XY(8 - 0.25,0.3)
+        # y coord is ignored
+        ll = XY(0.25,0)
+        ur = XY(8 - 0.25,0)
         self.pageTitleLine = RectRegion(ll,ur-ll)
         #
         ll = XY(8 - 0.5,11 - 0.25)
@@ -482,13 +482,14 @@ class EmitPDF:
         self.currentDPI = self.pdfhl.page_dpi
         self.pageHeight = self.pdfhl.page_size[1]
         # title
-        vadj = XY(0,10/self.currentDPI) # remember that text is rendered from a baseline, not from the top
         self.move_to(self.pageTitleRegion.xy)
         self.layout_text_begin()
         ps.set_text_font(self.font1.italic,10)
         ps.fill_color(0,0,0)
         self.layout_text(self.currentTitle,overflow="stop")
+        self.newline(y=(self.layoutVadj.y*5)/4) # from baseline to below text
         self.layout_text_end()
+        vadj = XY(0,self.currentPos.y)
         #
         p = self.coordxlate(self.pageTitleLine.xy + vadj)
         p2 = self.coordxlate(self.pageTitleLine.xy + vadj + XY(self.pageTitleLine.wh.w,0))
@@ -684,6 +685,7 @@ def emit_table_as_pdf(path,table_id,tp):
     if not tp.description == None:
         emitpdf.layout_text_begin()
         ps.set_text_font(emitpdf.font1.reg,10)
+        emitpdf.layout_text("\n")
         emitpdf.layout_text(tp.description)
         emitpdf.layout_text_end()
     #
