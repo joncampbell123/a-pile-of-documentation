@@ -468,7 +468,7 @@
 			],
 			"description": "ANSI control strings supported by MS-DOS",
 			"notes": [
-				"ANSI control strings are portrayed as possible as escape code separated from parameters. ANSI escapes are usually ESC [ <paramaters> <code>\n<parameters> can be nothing, one number, or multiple numbers separated by semicolons.\nThe ANSI escape for bright yellow text for example would be written ESC [ 1;33m meaning 'm' to set attributes, 1 for bright, 33 for yellow. MS-DOS generally confirms to the ANSI standard in this way.\nIf specific parameters set the function such as ESC [ 6n then the parameter is considered part of the escape but also listed as a param as well."
+				"ANSI control strings are portrayed where possible as escape code separated from parameters. ANSI escapes are usually ESC [ <paramaters> <code>\n<parameters> can be nothing, one number, or multiple numbers separated by semicolons.\nThe ANSI escape for bright yellow text for example would be written ESC [ 1;33m meaning 'm' to set attributes, 1 for bright, 33 for yellow. MS-DOS generally confirms to the ANSI standard in this way.\nIf specific parameters set the function such as ESC [ 6n then the parameter is considered part of the escape but also listed as a param as well."
 			],
 			"name": "Prompt ANSI Control Strings",
 			"columns": [
