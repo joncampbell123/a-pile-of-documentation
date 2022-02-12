@@ -1,5 +1,358 @@
 {
 	"tables": {
+		"msdos-command-shell-prompt-ansi-display-attribute-strings": {
+			"table": {
+				"ESC [ 0 m": [
+					{
+						"value": [
+							"Normal text",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 0 m"
+					}
+				],
+				"ESC [ 1 m": [
+					{
+						"value": [
+							"Bright text (intensity bit set)",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 1 m"
+					}
+				],
+				"ESC [ 4 m": [
+					{
+						"value": [
+							"Underscored text",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 4 m"
+					}
+				],
+				"ESC [ 5 m": [
+					{
+						"value": [
+							"Blinking text",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 5 m"
+					}
+				],
+				"ESC [ 7 m": [
+					{
+						"value": [
+							"Reversed text",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 7 m"
+					}
+				],
+				"ESC [ 8 m": [
+					{
+						"value": [
+							"Canceled (invisible) text",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 8 m"
+					}
+				],
+				"ESC [ 30 m": [
+					{
+						"value": [
+							"Black text",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 30 m"
+					}
+				],
+				"ESC [ 31 m": [
+					{
+						"value": [
+							"Red text",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 31 m"
+					}
+				],
+				"ESC [ 32 m": [
+					{
+						"value": [
+							"Green text",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 32 m"
+					}
+				],
+				"ESC [ 33 m": [
+					{
+						"value": [
+							"Yellow text",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 33 m"
+					}
+				],
+				"ESC [ 34 m": [
+					{
+						"value": [
+							"Blue text",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 34 m"
+					}
+				],
+				"ESC [ 35 m": [
+					{
+						"value": [
+							"Magenta text",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 35 m"
+					}
+				],
+				"ESC [ 36 m": [
+					{
+						"value": [
+							"Cyan text",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 36 m"
+					}
+				],
+				"ESC [ 37 m": [
+					{
+						"value": [
+							"White text",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 37 m"
+					}
+				],
+				"ESC [ 40 m": [
+					{
+						"value": [
+							"Black background",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 40 m"
+					}
+				],
+				"ESC [ 41 m": [
+					{
+						"value": [
+							"Red background",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 41 m"
+					}
+				],
+				"ESC [ 42 m": [
+					{
+						"value": [
+							"Green background",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 42 m"
+					}
+				],
+				"ESC [ 43 m": [
+					{
+						"value": [
+							"Yellow background",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 43 m"
+					}
+				],
+				"ESC [ 44 m": [
+					{
+						"value": [
+							"Blue background",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 44 m"
+					}
+				],
+				"ESC [ 45 m": [
+					{
+						"value": [
+							"Magenta background",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 45 m"
+					}
+				],
+				"ESC [ 46 m": [
+					{
+						"value": [
+							"Cyan background",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 46 m"
+					}
+				],
+				"ESC [ 47 m": [
+					{
+						"value": [
+							"White background",
+							"X",
+							"X",
+							"X",
+							"X"
+						],
+						"source index": 0,
+						"original key": "ESC [ 47 m"
+					}
+				]
+			},
+			"sources": [
+				{
+					"book": "programmer-pc-sourcebook-ms-press-1988",
+					"source index": 0,
+					"citation": {
+						"title": "The Programmer's PC Sourcebook",
+						"author": "Thom Hogan",
+						"publisher": "Microsoft Press",
+						"year": 1988,
+						"type": "book"
+					},
+					"where": [
+						{
+							"path": "Part 2",
+							"type": "part",
+							"title": "Software"
+						},
+						{
+							"path": "Section 2",
+							"type": "section",
+							"title": "DOS Commands, Utilities, and Summaries"
+						},
+						{
+							"path": "2.19",
+							"type": "subsection",
+							"title": "Prompt ANSI Display Attribute Strings",
+							"page": "49"
+						}
+					]
+				}
+			],
+			"description": "ANSI display attribute strings supported by MS-DOS",
+			"notes": [
+				"The codes here reflect the numeric values given in ANSI.SYS escape sequence ESC [ m. Multiple codes can be combined, separated a by semicolon, into one ESC [ m code."
+			],
+			"name": "Prompt ANSI Display Attribute Strings",
+			"columns": [
+				{
+					"type": "string",
+					"title": "Sets attribute to"
+				},
+				{
+					"type": "string",
+					"title": "MDA"
+				},
+				{
+					"type": "string",
+					"title": "CDA"
+				},
+				{
+					"type": "string",
+					"title": "EDA"
+				},
+				{
+					"type": "string",
+					"title": "VDA"
+				}
+			],
+			"table format type": "key=value",
+			"key column": {
+				"type": "string",
+				"title": "Escape with code"
+			}
+		},
 		"msdos-command-shell-prompt-escapes": {
 			"table": {
 				"$a": [

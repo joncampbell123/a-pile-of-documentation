@@ -1,0 +1,37 @@
+{
+	"table": "Prompt ANSI Display Attribute Strings",
+	"id": "msdos-command-shell-prompt-ansi-display-attribute-strings",
+	"combinable": true,
+	"notes": "The codes here reflect the numeric values given in ANSI.SYS escape sequence ESC [ m. Multiple codes can be combined, separated a by semicolon, into one ESC [ m code.",
+	"description": "ANSI display attribute strings supported by MS-DOS",
+	"base definition": true,
+	"table format": {
+		"type": "key=value",
+		"key": {
+			"type": "string",
+			"title": "Escape with code"
+		},
+		"value": [
+			{
+				"type": "string",
+				"title": "Sets attribute to"
+			},
+			{
+				"type": "string",
+				"title": "MDA"
+			},
+			{
+				"type": "string",
+				"title": "CDA"
+			},
+			{
+				"type": "string",
+				"title": "EDA"
+			},
+			{
+				"type": "string",
+				"title": "VDA"
+			}
+		]
+	}
+}

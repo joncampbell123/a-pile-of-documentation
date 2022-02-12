@@ -1,0 +1,31 @@
+{
+	"id": "msdos-command-shell-prompt-ansi-display-attribute-strings",
+	"source": {
+		"book": "programmer-pc-sourcebook-ms-press-1988",
+		"subsection": "2.19"
+	},
+	"table": {
+		"ESC [ 0 m": { "value": [ "Normal text", "X", "X", "X", "X" ] },
+		"ESC [ 1 m": { "value": [ "Bright text (intensity bit set)", "X", "X", "X", "X" ] },
+		"ESC [ 4 m": { "value": [ "Underscored text", "X", "X", "X", "X" ] },
+		"ESC [ 5 m": { "value": [ "Blinking text", "X", "X", "X", "X" ] },
+		"ESC [ 7 m": { "value": [ "Reversed text", "X", "X", "X", "X" ] },
+		"ESC [ 8 m": { "value": [ "Canceled (invisible) text", "X", "X", "X", "X" ] },
+		"ESC [ 30 m": { "value": [ "Black text", "X", "X", "X", "X" ] },
+		"ESC [ 31 m": { "value": [ "Red text", "X", "X", "X", "X" ] },
+		"ESC [ 32 m": { "value": [ "Green text", "X", "X", "X", "X" ] },
+		"ESC [ 33 m": { "value": [ "Yellow text", "X", "X", "X", "X" ] },
+		"ESC [ 34 m": { "value": [ "Blue text", "X", "X", "X", "X" ] },
+		"ESC [ 35 m": { "value": [ "Magenta text", "X", "X", "X", "X" ] },
+		"ESC [ 36 m": { "value": [ "Cyan text", "X", "X", "X", "X" ] },
+		"ESC [ 37 m": { "value": [ "White text", "X", "X", "X", "X" ] },
+		"ESC [ 40 m": { "value": [ "Black background", "X", "X", "X", "X" ] },
+		"ESC [ 41 m": { "value": [ "Red background", "X", "X", "X", "X" ] },
+		"ESC [ 42 m": { "value": [ "Green background", "X", "X", "X", "X" ] },
+		"ESC [ 43 m": { "value": [ "Yellow background", "X", "X", "X", "X" ] },
+		"ESC [ 44 m": { "value": [ "Blue background", "X", "X", "X", "X" ] },
+		"ESC [ 45 m": { "value": [ "Magenta background", "X", "X", "X", "X" ] },
+		"ESC [ 46 m": { "value": [ "Cyan background", "X", "X", "X", "X" ] },
+		"ESC [ 47 m": { "value": [ "White background", "X", "X", "X", "X" ] }
+	}
+}
