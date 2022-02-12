@@ -498,15 +498,15 @@ class EmitPDF:
         ps.moveto(p.x,p.y)
         ps.lineto(p2.x,p2.y)
         ps.stroke()
-        # page number
+        # page number (bottom)
         vadj = XY(0,10/self.currentDPI) # remember that text is rendered from a baseline, not from the top
         ps.begin_text()
         ps.set_text_font(self.font1.italic,10)
-        ptxt = "p. "+str(self.currentPage.index)
+        ptxt = str(self.currentPage.index)
         pw = ps.text_width(ptxt) # get text width to right-justify
         ps.fill_color(0,0,0)
-        p = self.coordxlate(self.pageNumberRegion.xy)
-        ps.text_move_to(p.x+self.pageNumberRegion.wh.w-pw,p.y) # right justify
+        p = self.coordxlate(XY(self.pageNumberRegion.xy.x+self.pageNumberRegion.wh.w-pw,self.pageNumberRegion.xy.y))
+        ps.text_move_to(p.x,p.y) # right justify
         ps.text(ptxt)
         ps.end_text()
         #
