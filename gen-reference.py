@@ -760,6 +760,141 @@ def emit_table_as_pdf(path,table_id,tp):
             emitpdf.newline(y=10/emitpdf.currentDPI)
         #
     #
+    if not tp.sources == None:
+        emitpdf.layout_text_begin()
+        ps.set_text_font(emitpdf.font1.reg,10)
+        emitpdf.layout_text("Sources\n",pagespan=True)
+        emitpdf.layout_text_end()
+        emitpdf.newline(y=10/emitpdf.currentDPI/5) # 1/5th the font size
+        hdrlinew = emitpdf.layoutMaxEnd.x - emitpdf.layoutStartedAt.x
+        #
+        p = emitpdf.coordxlate(emitpdf.currentPos)
+        ps.stroke_color(0,0,0)
+        ps.linewidth(0.5)
+        ps.moveto(p.x,p.y)
+        lt = emitpdf.contentRegion.wh.w
+        l = hdrlinew
+        if l > lt:
+            l = lt
+        p2 = emitpdf.coordxlate(emitpdf.currentPos+XY(l,0))
+        ps.lineto(p2.x,p2.y)
+        ps.stroke()
+        #
+        emitpdf.newline(y=5/emitpdf.currentDPI)
+        #
+        for sii in range(len(tp.sources)):
+            sobj = tp.sources[sii]
+            if not int(sobj.get("source index")) == sii:
+                raise Exception("source index is wrong")
+            #
+            emitpdf.currentPos.x = emitpdf.currentPos.x + 0.1
+            nPos = emitpdf.currentPos.x + 0.3
+            emitpdf.layout_text_begin()
+            #
+            refmark = "[*"+str(sii)+"]"
+            ps.set_text_font(emitpdf.font1.italic,8)
+            ps.fill_color(0,0,0.75)
+            emitpdf.layout_text(refmark,pagespan=True)
+            emitpdf.layout_text_end()
+            ps.fill_color(0,0,0)
+            #
+            if "book" in sobj:
+                book = sobj["book"]
+            elif "website" in sobj:
+                book = sobj["website"]
+            else:
+                book = None
+
+            emit = False
+            if not book == None:
+                where = sobj.get("where")
+                citation = sobj.get("citation")
+                if not citation == None:
+                    x = ""
+                    title = citation.get("title")
+                    if not title == None:
+                        if not x == "":
+                            x = x + ", "
+                        x = x + title
+                    author = citation.get("author")
+                    if not author == None:
+                        if not x == "":
+                            x = x + ", "
+                        x = x + author
+                    publisher = citation.get("publisher")
+                    if not publisher == None:
+                        if not x == "":
+                            x = x + ", "
+                        x = x + publisher
+                    year = citation.get("year")
+                    if not year == None:
+                        if not x == "":
+                            x = x + ", "
+                        x = x + str(year)
+                    if not x == "":
+                        #
+                        if emit == False:
+                            emit = True
+                        else:
+                            emitpdf.newline(y=4/emitpdf.currentDPI)
+                        #
+                        emitpdf.currentPos.x = nPos
+                        emitpdf.layout_text_begin()
+                        ps.set_text_font(emitpdf.font1.reg,8)
+                        ps.fill_color(0,0,0)
+                        emitpdf.layout_text(x+"\n",pagespan=True)
+                        emitpdf.layout_text_end()
+                        emit = True
+                    #
+                    url = citation.get("url")
+                    if not url == None: # TODO: I know PDF allows this... how do you make it clickable so that it loads the web address?
+                        #
+                        if emit == False:
+                            emit = True
+                        else:
+                            emitpdf.newline(y=4/emitpdf.currentDPI)
+                        #
+                        emitpdf.currentPos.x = nPos
+                        emitpdf.layout_text_begin()
+                        ps.set_text_font(emitpdf.font1.reg,8)
+                        ps.fill_color(0,0,0)
+                        emitpdf.layout_text("URL: ",pagespan=True)
+                        emitpdf.layout_text(url+"\n",pagespan=True)
+                        emitpdf.layout_text_end()
+                if not where == None:
+                    x = ""
+                    for whi in where:
+                        y = ""
+                        if "path" in whi:
+                            if not y == "":
+                                y = y + ", "
+                            y = y + whi["path"]
+                        if "title" in whi:
+                            if not y == "":
+                                y = y + ", "
+                            y = y + whi["title"]
+                        if not y == "":
+                            if not x == "":
+                                x = x + " => "
+                            x = x + y
+                    if not x == "":
+                        #
+                        if emit == False:
+                            emit = True
+                        else:
+                            emitpdf.newline(y=4/emitpdf.currentDPI)
+                        #
+                        emitpdf.currentPos.x = nPos
+                        emitpdf.layout_text_begin()
+                        ps.set_text_font(emitpdf.font1.italic,8)
+                        ps.fill_color(0,0,0)
+                        emitpdf.layout_text(x+"\n",pagespan=True)
+                        emitpdf.layout_text_end()
+            #
+            emitpdf.newline(y=(8+2)/emitpdf.currentDPI)
+        #
+        emitpdf.newline(y=10/emitpdf.currentDPI)
+    #
     if not tp.notes == None and len(tp.notes) > 0:
         emitpdf.layout_text_begin()
         ps.set_text_font(emitpdf.font1.reg,10)
