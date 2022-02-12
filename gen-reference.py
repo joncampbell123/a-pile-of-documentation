@@ -893,7 +893,7 @@ def emit_table_as_pdf(path,table_id,tp):
             #
             emitpdf.newline(y=(8+2)/emitpdf.currentDPI)
         #
-        emitpdf.newline(y=10/emitpdf.currentDPI)
+        emitpdf.newline(y=2/emitpdf.currentDPI)
     #
     if not tp.notes == None and len(tp.notes) > 0:
         emitpdf.layout_text_begin()
