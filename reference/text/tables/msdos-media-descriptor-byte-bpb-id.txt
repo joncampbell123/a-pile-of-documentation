@@ -17,11 +17,11 @@ ID   | Tracks/side | Sectors/track | Sides | Bytes/sector | Format
 0xFC | 40          | 9             | 1     | 512          | 5.25 inch floppy disk                  [*0]
 0xFD | 40          | 9             | 2     | 512          | 5.25 inch floppy disk                  [*0]
 0xFD | 77          | 26            | 2     | 128          | 8 inch floppy disk                     [*0]
-0xFE | 40          | 8             | 1     | 512          | 5.25 inch floppy disk                  [*0] [*1]
-0xFE | 77          | 26            | 1     | 128          | 8 inch floppy disk                     [*0] [*1]
+0xFE | 40          | 8             | 1     | 512          | 5.25 inch floppy disk
+0xFE | 77          | 26            | 1     | 128          | 8 inch floppy disk
 0xFE | 77          | 8             | 2     | 1024         | 8 inch floppy disk                     [*1]
 0xFF | -           | -             | -     | -            | Hard disk (Sanyo 55x DS-DOS 2.11 only) [*1]
-0xFF | 40          | 8             | 2     | 512          | 5.25 inch floppy disk                  [*0] [*1]
+0xFF | 40          | 8             | 2     | 512          | 5.25 inch floppy disk
 
 Sources
 =======

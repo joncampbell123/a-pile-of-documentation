@@ -110,10 +110,6 @@ class TablePresentation:
             #
             nr = [ ]
             pcols = None
-            samekey = False
-            #
-            if len(self.sources) > 1:
-                samekey = True
             #
             for row in rowbuild:
                 if pcols == None:
@@ -124,11 +120,13 @@ class TablePresentation:
                     nr.append(row)
                 #
                 pcols = row
+            #
             rowbuild = nr
             #
-            if samekey == True:
+            if len(self.sources) > 1:
                 for row in rowbuild:
-                    row["same key"] = True
+                    if not len(self.sources) == len(row["source index"]):
+                        row["same key"] = True
             #
             self.display.disptable.extend(rowbuild)
         #
