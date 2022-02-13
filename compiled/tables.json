@@ -480,6 +480,19 @@
 						"source index": 1,
 						"original key": "0xED"
 					}
+				],
+				"0xe5": [
+					{
+						"value": [
+							"77",
+							"26",
+							"1",
+							"128",
+							"8 inch (DR-DOS only)"
+						],
+						"source index": 1,
+						"original key": "0xE5"
+					}
 				]
 			},
 			"sources": [

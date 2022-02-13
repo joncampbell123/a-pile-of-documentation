@@ -49,6 +49,7 @@
 		],
 		"0xEF": { "value": [ "-", "-", "-", "-", "Custom non-standard floppy and superfloppy formats.\nLike 0xF0 but not recognized by unaware systems by design.\nFAT ID does not have to match this value (DR-DOS)" ] },
 		"0xEE": { "value": [ "-", "-", "-", "-", "Custom non-standard partitions with nonstandard\nBIOS Parameter Block or special media access.\nLike 0xF8 but not recognized by unaware systems by design.\nFAT ID does not have to match this value (DR-DOS)" ] },
-		"0xED": { "value": [ "80", "9", "2", "512", "5.25 inch (Tandy 2000 only)" ] }
+		"0xED": { "value": [ "80", "9", "2", "512", "5.25 inch (Tandy 2000 only)" ] },
+		"0xE5": { "value": [ "77", "26", "1", "128", "8 inch (DR-DOS only)" ] }
 	}
 }
