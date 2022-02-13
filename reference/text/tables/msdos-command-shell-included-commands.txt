@@ -54,3 +54,8 @@ Sources
   [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
        Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.47, Included Command Files Summary
 
+Notes
+-----
+ * PC Programmer's Sourcebook (1988): Commands listed (before MS-DOS 4.0) are from the IBM PC-DOS versions. MS-DOS versions may 
+   differ slightly
+

@@ -4,6 +4,9 @@
 		"book": "programmer-pc-sourcebook-ms-press-1988",
 		"subsection": "2.47"
 	},
+	"notes": [
+		"PC Programmer's Sourcebook (1988): Commands listed (before MS-DOS 4.0) are from the IBM PC-DOS versions. MS-DOS versions may differ slightly"
+	],
 	"table": {
 		"APPEND":   { "value": [ "3.3", "-",   "", ""] },
 		"ASSIGN":   { "value": [ "2.0", "-",   "", ""] },
