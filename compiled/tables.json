@@ -9,7 +9,7 @@
 							"8",
 							"2",
 							"512",
-							"5.25 inch floppy disk"
+							"5.25 inch floppy disk (320KB)"
 						],
 						"source index": 0,
 						"original key": "0xFF"
@@ -20,7 +20,7 @@
 							"8",
 							"2",
 							"512",
-							"5.25 inch floppy disk"
+							"5.25 inch floppy disk (320KB)"
 						],
 						"source index": 1,
 						"original key": "0xFF"
@@ -44,7 +44,7 @@
 							"8",
 							"1",
 							"512",
-							"5.25 inch floppy disk"
+							"5.25 inch floppy disk (160KB)"
 						],
 						"source index": 0,
 						"original key": "0xFE"
@@ -55,7 +55,7 @@
 							"26",
 							"1",
 							"128",
-							"8 inch floppy disk"
+							"8 inch floppy disk (250KB)"
 						],
 						"source index": 0,
 						"original key": "0xFE"
@@ -66,7 +66,7 @@
 							"8",
 							"1",
 							"512",
-							"5.25 inch floppy disk"
+							"5.25 inch floppy disk (160KB)"
 						],
 						"source index": 1,
 						"original key": "0xFE"
@@ -77,7 +77,7 @@
 							"26",
 							"1",
 							"128",
-							"8 inch floppy disk"
+							"8 inch floppy disk (250KB)"
 						],
 						"source index": 1,
 						"original key": "0xFE"
@@ -88,7 +88,7 @@
 							"8",
 							"2",
 							"1024",
-							"8 inch floppy disk"
+							"8 inch floppy disk (1.2MB)"
 						],
 						"source index": 1,
 						"original key": "0xFE"
@@ -101,7 +101,7 @@
 							"9",
 							"2",
 							"512",
-							"5.25 inch floppy disk"
+							"5.25 inch floppy disk (360KB)"
 						],
 						"source index": 0,
 						"original key": "0xFD"
@@ -112,7 +112,7 @@
 							"26",
 							"2",
 							"128",
-							"8 inch floppy disk"
+							"8 inch floppy disk (500KB)"
 						],
 						"source index": 0,
 						"original key": "0xFD"
@@ -123,7 +123,7 @@
 							"9",
 							"2",
 							"512",
-							"5.25 inch floppy disk"
+							"5.25 inch floppy disk (360KB)"
 						],
 						"source index": 1,
 						"original key": "0xFD"
@@ -134,7 +134,7 @@
 							"26",
 							"2",
 							"128",
-							"8 inch floppy disk"
+							"8 inch floppy disk (500KB)"
 						],
 						"source index": 1,
 						"original key": "0xFD"
@@ -147,7 +147,7 @@
 							"9",
 							"1",
 							"512",
-							"5.25 inch floppy disk"
+							"5.25 inch floppy disk (180KB)"
 						],
 						"source index": 0,
 						"original key": "0xFC"
@@ -158,7 +158,7 @@
 							"9",
 							"1",
 							"512",
-							"5.25 inch floppy disk"
+							"5.25 inch floppy disk (180KB)"
 						],
 						"source index": 1,
 						"original key": "0xFC"
@@ -171,7 +171,7 @@
 							"8",
 							"2",
 							"512",
-							"5.25 inch floppy disk"
+							"5.25 inch floppy disk (640KB)"
 						],
 						"source index": 0,
 						"original key": "0xFB"
@@ -182,7 +182,7 @@
 							"8",
 							"2",
 							"512",
-							"3.5 inch floppy disk"
+							"3.5 inch floppy disk (640KB)"
 						],
 						"source index": 0,
 						"original key": "0xFB"
@@ -193,7 +193,7 @@
 							"8",
 							"2",
 							"512",
-							"3.5 inch floppy disk"
+							"3.5 inch floppy disk (640KB)"
 						],
 						"source index": 1,
 						"original key": "0xFB"
@@ -204,7 +204,7 @@
 							"8",
 							"2",
 							"512",
-							"5.25 inch floppy disk"
+							"5.25 inch floppy disk (640KB)"
 						],
 						"source index": 1,
 						"original key": "0xFB"
@@ -217,7 +217,7 @@
 							"8",
 							"1",
 							"512",
-							"5.25 inch floppy disk"
+							"5.25 inch floppy disk (320KB)"
 						],
 						"source index": 0,
 						"original key": "0xFA"
@@ -228,7 +228,7 @@
 							"8",
 							"1",
 							"512",
-							"3.5 inch floppy disk"
+							"3.5 inch floppy disk (320KB)"
 						],
 						"source index": 0,
 						"original key": "0xFA"
@@ -239,7 +239,7 @@
 							"8",
 							"1",
 							"512",
-							"3.5 inch floppy disk"
+							"3.5 inch floppy disk (320KB)"
 						],
 						"source index": 1,
 						"original key": "0xFA"
@@ -250,7 +250,7 @@
 							"8",
 							"1",
 							"512",
-							"5.25 inch floppy disk"
+							"5.25 inch floppy disk (320KB)"
 						],
 						"source index": 1,
 						"original key": "0xFA"
@@ -263,7 +263,7 @@
 							"9",
 							"2",
 							"512",
-							"3.5 inch floppy disk"
+							"3.5 inch floppy disk (720KB)"
 						],
 						"source index": 0,
 						"original key": "0xF9"
@@ -274,7 +274,7 @@
 							"15",
 							"2",
 							"512",
-							"5.25 inch floppy disk"
+							"5.25 inch floppy disk (1.2MB)"
 						],
 						"source index": 0,
 						"original key": "0xF9"
@@ -285,7 +285,7 @@
 							"9",
 							"2",
 							"512",
-							"3.5 inch floppy disk"
+							"3.5 inch floppy disk (720KB)"
 						],
 						"source index": 1,
 						"original key": "0xF9"
@@ -296,7 +296,7 @@
 							"18",
 							"2",
 							"512",
-							"3.5 inch floppy disk (DOS 3.2 only)"
+							"3.5 inch floppy disk (DOS 3.2 only) (1.44MB)"
 						],
 						"source index": 1,
 						"original key": "0xF9"
@@ -307,7 +307,7 @@
 							"15",
 							"2",
 							"512",
-							"5.25 inch floppy disk"
+							"5.25 inch floppy disk (1.2MB)"
 						],
 						"source index": 1,
 						"original key": "0xF9"
@@ -342,7 +342,7 @@
 							"9",
 							"1",
 							"512",
-							"3.5 inch floppy disk (MS-DOS 3.1 and MSX-DOS)"
+							"3.5 inch floppy disk (MS-DOS 3.1 and MSX-DOS) (360KB)"
 						],
 						"source index": 1,
 						"original key": "0xF8"
@@ -353,7 +353,7 @@
 							"9",
 							"2",
 							"512",
-							"5.25 inch floppy disk (Sanyo 55x DS-DOS 2.11 only)"
+							"5.25 inch floppy disk (Sanyo 55x DS-DOS 2.11 only) (720KB)"
 						],
 						"source index": 1,
 						"original key": "0xF8"
@@ -377,7 +377,7 @@
 							"18",
 							"2",
 							"512",
-							"3.5 inch floppy disk"
+							"3.5 inch floppy disk (1.44MB)"
 						],
 						"source index": 0,
 						"original key": "0xF0"
@@ -388,7 +388,7 @@
 							"18",
 							"2",
 							"512",
-							"3.5 inch floppy disk"
+							"3.5 inch floppy disk (1.44MB)"
 						],
 						"source index": 1,
 						"original key": "0xF0"
@@ -399,7 +399,7 @@
 							"36",
 							"2",
 							"512",
-							"3.5 inch floppy disk"
+							"3.5 inch floppy disk (2.88MB)"
 						],
 						"source index": 1,
 						"original key": "0xF0"
@@ -475,7 +475,7 @@
 							"9",
 							"2",
 							"512",
-							"5.25 inch (Tandy 2000 only)"
+							"5.25 inch (Tandy 2000 only) (720KB)"
 						],
 						"source index": 1,
 						"original key": "0xED"
@@ -488,7 +488,7 @@
 							"26",
 							"1",
 							"128",
-							"8 inch (DR-DOS only)"
+							"8 inch (DR-DOS only) (250KB)"
 						],
 						"source index": 1,
 						"original key": "0xE5"
