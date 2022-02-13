@@ -2888,6 +2888,18 @@
 						"source index": 0,
 						"original key": "ASSIGN"
 					}
+				],
+				"ATTRIB": [
+					{
+						"value": [
+							"[(+|-)params] [d:][path]filespec[/params]",
+							"Modifies file attributes",
+							"ATTRIB -r myfile.doc /s",
+							""
+						],
+						"source index": 0,
+						"original key": "ATTRIB"
+					}
 				]
 			},
 			"sources": [

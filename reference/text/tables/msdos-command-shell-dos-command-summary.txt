@@ -4,10 +4,11 @@ DOS Command Summary
 
 Commands included with MS-DOS
 
-Command | Syntax               | Function                                    | Example           | Notes
-========|======================|=============================================|===================|======
-APPEND  | d:path[,[d:]path...] | Locates files outside the current directory | APPEND c:\dbfiles | 
-ASSIGN  | [x[=] y [...]]       | Routes disk I/O to another drive            | ASSIGN a=c b=c    | 
+Command | Syntax                                    | Function                                    | Example                 | Notes
+========|===========================================|=============================================|=========================|======
+APPEND  | d:path[,[d:]path...]                      | Locates files outside the current directory | APPEND c:\dbfiles       | 
+ASSIGN  | [x[=] y [...]]                            | Routes disk I/O to another drive            | ASSIGN a=c b=c          | 
+ATTRIB  | [(+|-)params] [d:][path]filespec[/params] | Modifies file attributes                    | ATTRIB -r myfile.doc /s | 
 
 Sources
 =======
