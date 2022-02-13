@@ -41,6 +41,11 @@
 			{ "value": [ "-", "-", "2", "-", "Single sided (Altos MS-DOS 2.11 only)" ] }
 		],
 		"0xF5": { "value": [ "-", "-", "-", "-", "Fixed disk (Altos MS-DOS 2.11 only)" ] },
-		"0xF4": { "value": [ "-", "-", "-", "-", "Double density (Altos MS-DOS 2.11 only)" ] }
+		"0xF4": { "value": [ "-", "-", "-", "-", "Double density (Altos MS-DOS 2.11 only)" ] },
+		"0xF0": [
+			{ "value": [ "80", "18", "2", "512", "3.5 inch floppy disk" ] },
+			{ "value": [ "80", "36", "2", "512", "3.5 inch floppy disk" ] },
+			{ "value": [ "-", "-", "-", "-", "Custom floppy and superfloppy formats.\ngeometry is defined in the BIOS Parameter Block" ] }
+		]
 	}
 }

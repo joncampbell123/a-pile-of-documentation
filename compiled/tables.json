@@ -381,6 +381,39 @@
 						],
 						"source index": 0,
 						"original key": "0xF0"
+					},
+					{
+						"value": [
+							"80",
+							"18",
+							"2",
+							"512",
+							"3.5 inch floppy disk"
+						],
+						"source index": 1,
+						"original key": "0xF0"
+					},
+					{
+						"value": [
+							"80",
+							"36",
+							"2",
+							"512",
+							"3.5 inch floppy disk"
+						],
+						"source index": 1,
+						"original key": "0xF0"
+					},
+					{
+						"value": [
+							"-",
+							"-",
+							"-",
+							"-",
+							"Custom floppy and superfloppy formats.\ngeometry is defined in the BIOS Parameter Block"
+						],
+						"source index": 1,
+						"original key": "0xF0"
 					}
 				],
 				"0xf5": [
