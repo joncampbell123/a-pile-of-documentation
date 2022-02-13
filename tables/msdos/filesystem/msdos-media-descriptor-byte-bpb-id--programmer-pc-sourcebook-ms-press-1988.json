@@ -1,0 +1,10 @@
+{
+	"id": "msdos-media-descriptor-byte-bpb-id",
+	"source": {
+		"book": "programmer-pc-sourcebook-ms-press-1988",
+		"subsection": "2.37"
+	},
+	"table": {
+		"0xFF": { "value": [ "40", "8", "2", "512", "5.25 inch floppy disk" ] }
+	}
+}

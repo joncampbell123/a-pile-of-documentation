@@ -78,6 +78,232 @@
 				"title": "ID"
 			}
 		},
+		"msdos-command-shell-prompt-ansi-control-strings": {
+			"table": {
+				"ESC [ f": [
+					{
+						"value": [
+							"1: row (1-based)\n2: column (2-based)",
+							"Moves to row, column"
+						],
+						"source index": 0,
+						"original key": "ESC [ f"
+					}
+				],
+				"ESC [= h": [
+					{
+						"value": [
+							"1: display mode",
+							"Sets display mode according to display mode code.\nNote that the code is ESC [= followed by the number, then h.\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = wrap at end of line"
+						],
+						"source index": 0,
+						"original key": "ESC [= h"
+					}
+				],
+				"ESC [ j": [
+					{
+						"value": [
+							"1: row (1-based)\n2: column (2-based)",
+							"Moves to row, column"
+						],
+						"source index": 0,
+						"original key": "ESC [ j"
+					}
+				],
+				"ESC [ K": [
+					{
+						"value": [
+							"",
+							"Erase from cursor to end of line, including cursor position"
+						],
+						"source index": 0,
+						"original key": "ESC [ K"
+					}
+				],
+				"ESC [= l": [
+					{
+						"value": [
+							"1: display mode",
+							"Resets display mode according to display mode code.\nNote that the code is ESC [= followed by the number, then l.\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = disable wrap at end of line"
+						],
+						"notes": "PC programmer's sourcebook (1988) incorrectly lists 7 as wrap at end of line",
+						"source index": 0,
+						"original key": "ESC [= l"
+					}
+				],
+				"ESC [ m": [
+					{
+						"value": [
+							"Any number of parameters is valid, including none",
+							"If no number given, acts as if zero.\nEach number changes an attribute that will be used to print text after the escape.\n0 clears all attributes to default.\nSee table \"MS-DOS Prompt ANSI Display Attribute Strings\" for more information."
+						],
+						"source index": 0,
+						"original key": "ESC [ m"
+					}
+				],
+				"ESC [ p": [
+					{
+						"value": [
+							"1: key to remap\n2: key to remap to",
+							"Reassigns first key (1) to second key (2), or remap key (1)"
+						],
+						"source index": 0,
+						"original key": "ESC [ p"
+					}
+				],
+				"ESC [ s": [
+					{
+						"value": [
+							"",
+							"Save current cursor position"
+						],
+						"source index": 0,
+						"original key": "ESC [ s"
+					}
+				],
+				"ESC [ u": [
+					{
+						"value": [
+							"",
+							"Restore current cursor position"
+						],
+						"source index": 0,
+						"original key": "ESC [ u"
+					}
+				],
+				"ESC [ A": [
+					{
+						"value": [
+							"1: row count",
+							"Moves cursor up by the number of rows indicated. If not specified, 1 is assumed"
+						],
+						"source index": 0,
+						"original key": "ESC [ A"
+					}
+				],
+				"ESC [ B": [
+					{
+						"value": [
+							"1: row count",
+							"Moves cursor down by the number of rows indicated. If not specified, 1 is assumed"
+						],
+						"source index": 0,
+						"original key": "ESC [ B"
+					}
+				],
+				"ESC [ C": [
+					{
+						"value": [
+							"1: column count",
+							"Moves cursor right by the number of columns indicated. If not specified, 1 is assumed"
+						],
+						"source index": 0,
+						"original key": "ESC [ C"
+					}
+				],
+				"ESC [ D": [
+					{
+						"value": [
+							"1: column count",
+							"Moves cusror left by the number of columns indicated. If not specified, 1 is assumed"
+						],
+						"source index": 0,
+						"original key": "ESC [ D"
+					}
+				],
+				"ESC [ H": [
+					{
+						"value": [
+							"1: row\n2:column",
+							"Moves cursor to row (1) and column (2) position. H by itself positions the cursor to home (1,1) position"
+						],
+						"source index": 0,
+						"original key": "ESC [ H"
+					}
+				],
+				"ESC [ J": [
+					{
+						"value": [
+							"1: Erasure mode",
+							"Erasure. MS-DOS only supports 2J to clear the screen according to PC Programmer's Sourcebook (1988)"
+						],
+						"source index": 0,
+						"original key": "ESC [ J"
+					}
+				],
+				"ESC [ R": [
+					{
+						"value": [
+							"",
+							"Report cursor position through standard input"
+						],
+						"source index": 0,
+						"original key": "ESC [ R"
+					}
+				],
+				"ESC [ 6n": [
+					{
+						"value": [
+							"",
+							"Console driver outputs cursor position report sequence"
+						],
+						"source index": 0,
+						"original key": "ESC [ 6n"
+					}
+				]
+			},
+			"sources": [
+				{
+					"book": "programmer-pc-sourcebook-ms-press-1988",
+					"source index": 0,
+					"citation": {
+						"title": "The Programmer's PC Sourcebook",
+						"author": "Thom Hogan",
+						"publisher": "Microsoft Press",
+						"year": 1988,
+						"type": "book"
+					},
+					"where": [
+						{
+							"path": "Part 2",
+							"type": "part",
+							"title": "Software"
+						},
+						{
+							"path": "Section 2",
+							"type": "section",
+							"title": "DOS Commands, Utilities, and Summaries"
+						},
+						{
+							"path": "2.18",
+							"type": "subsection",
+							"title": "Prompt ANSI Control Strings",
+							"page": "48"
+						}
+					]
+				}
+			],
+			"description": "ANSI control strings supported by MS-DOS",
+			"notes": [
+				"ANSI control strings are portrayed where possible as escape code separated from parameters.\nANSI escapes are usually ESC [ <paramaters> <code>.\n<parameters> can be nothing, one number, or multiple numbers separated by semicolons.\nThe ANSI escape for bright yellow text for example would be written ESC [ 1;33m meaning 'm' to set attributes, 1 for bright, 33 for yellow. MS-DOS generally confirms to the ANSI standard in this way.\nIf specific parameters set the function such as ESC [ 6n then the parameter is considered part of the escape but also listed as a param as well."
+			],
+			"name": "Prompt ANSI Control Strings",
+			"columns": [
+				{
+					"type": "string",
+					"title": "ANSI parameters"
+				},
+				{
+					"type": "string",
+					"title": "Function"
+				}
+			],
+			"table format type": "key=value",
+			"key column": {
+				"type": "string",
+				"title": "String"
+			}
+		},
 		"msdos-command-shell-prompt-ansi-display-attribute-strings": {
 			"table": {
 				"ESC [ 0 m": [
@@ -841,232 +1067,6 @@
 			"key column": {
 				"type": "string",
 				"title": "Character sequence"
-			}
-		},
-		"msdos-command-shell-prompt-ansi-control-strings": {
-			"table": {
-				"ESC [ f": [
-					{
-						"value": [
-							"1: row (1-based)\n2: column (2-based)",
-							"Moves to row, column"
-						],
-						"source index": 0,
-						"original key": "ESC [ f"
-					}
-				],
-				"ESC [= h": [
-					{
-						"value": [
-							"1: display mode",
-							"Sets display mode according to display mode code.\nNote that the code is ESC [= followed by the number, then h.\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = wrap at end of line"
-						],
-						"source index": 0,
-						"original key": "ESC [= h"
-					}
-				],
-				"ESC [ j": [
-					{
-						"value": [
-							"1: row (1-based)\n2: column (2-based)",
-							"Moves to row, column"
-						],
-						"source index": 0,
-						"original key": "ESC [ j"
-					}
-				],
-				"ESC [ K": [
-					{
-						"value": [
-							"",
-							"Erase from cursor to end of line, including cursor position"
-						],
-						"source index": 0,
-						"original key": "ESC [ K"
-					}
-				],
-				"ESC [= l": [
-					{
-						"value": [
-							"1: display mode",
-							"Resets display mode according to display mode code.\nNote that the code is ESC [= followed by the number, then l.\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = disable wrap at end of line"
-						],
-						"notes": "PC programmer's sourcebook (1988) incorrectly lists 7 as wrap at end of line",
-						"source index": 0,
-						"original key": "ESC [= l"
-					}
-				],
-				"ESC [ m": [
-					{
-						"value": [
-							"Any number of parameters is valid, including none",
-							"If no number given, acts as if zero.\nEach number changes an attribute that will be used to print text after the escape.\n0 clears all attributes to default.\nSee table \"MS-DOS Prompt ANSI Display Attribute Strings\" for more information."
-						],
-						"source index": 0,
-						"original key": "ESC [ m"
-					}
-				],
-				"ESC [ p": [
-					{
-						"value": [
-							"1: key to remap\n2: key to remap to",
-							"Reassigns first key (1) to second key (2), or remap key (1)"
-						],
-						"source index": 0,
-						"original key": "ESC [ p"
-					}
-				],
-				"ESC [ s": [
-					{
-						"value": [
-							"",
-							"Save current cursor position"
-						],
-						"source index": 0,
-						"original key": "ESC [ s"
-					}
-				],
-				"ESC [ u": [
-					{
-						"value": [
-							"",
-							"Restore current cursor position"
-						],
-						"source index": 0,
-						"original key": "ESC [ u"
-					}
-				],
-				"ESC [ A": [
-					{
-						"value": [
-							"1: row count",
-							"Moves cursor up by the number of rows indicated. If not specified, 1 is assumed"
-						],
-						"source index": 0,
-						"original key": "ESC [ A"
-					}
-				],
-				"ESC [ B": [
-					{
-						"value": [
-							"1: row count",
-							"Moves cursor down by the number of rows indicated. If not specified, 1 is assumed"
-						],
-						"source index": 0,
-						"original key": "ESC [ B"
-					}
-				],
-				"ESC [ C": [
-					{
-						"value": [
-							"1: column count",
-							"Moves cursor right by the number of columns indicated. If not specified, 1 is assumed"
-						],
-						"source index": 0,
-						"original key": "ESC [ C"
-					}
-				],
-				"ESC [ D": [
-					{
-						"value": [
-							"1: column count",
-							"Moves cusror left by the number of columns indicated. If not specified, 1 is assumed"
-						],
-						"source index": 0,
-						"original key": "ESC [ D"
-					}
-				],
-				"ESC [ H": [
-					{
-						"value": [
-							"1: row\n2:column",
-							"Moves cursor to row (1) and column (2) position. H by itself positions the cursor to home (1,1) position"
-						],
-						"source index": 0,
-						"original key": "ESC [ H"
-					}
-				],
-				"ESC [ J": [
-					{
-						"value": [
-							"1: Erasure mode",
-							"Erasure. MS-DOS only supports 2J to clear the screen according to PC Programmer's Sourcebook (1988)"
-						],
-						"source index": 0,
-						"original key": "ESC [ J"
-					}
-				],
-				"ESC [ R": [
-					{
-						"value": [
-							"",
-							"Report cursor position through standard input"
-						],
-						"source index": 0,
-						"original key": "ESC [ R"
-					}
-				],
-				"ESC [ 6n": [
-					{
-						"value": [
-							"",
-							"Console driver outputs cursor position report sequence"
-						],
-						"source index": 0,
-						"original key": "ESC [ 6n"
-					}
-				]
-			},
-			"sources": [
-				{
-					"book": "programmer-pc-sourcebook-ms-press-1988",
-					"source index": 0,
-					"citation": {
-						"title": "The Programmer's PC Sourcebook",
-						"author": "Thom Hogan",
-						"publisher": "Microsoft Press",
-						"year": 1988,
-						"type": "book"
-					},
-					"where": [
-						{
-							"path": "Part 2",
-							"type": "part",
-							"title": "Software"
-						},
-						{
-							"path": "Section 2",
-							"type": "section",
-							"title": "DOS Commands, Utilities, and Summaries"
-						},
-						{
-							"path": "2.18",
-							"type": "subsection",
-							"title": "Prompt ANSI Control Strings",
-							"page": "48"
-						}
-					]
-				}
-			],
-			"description": "ANSI control strings supported by MS-DOS",
-			"notes": [
-				"ANSI control strings are portrayed where possible as escape code separated from parameters.\nANSI escapes are usually ESC [ <paramaters> <code>.\n<parameters> can be nothing, one number, or multiple numbers separated by semicolons.\nThe ANSI escape for bright yellow text for example would be written ESC [ 1;33m meaning 'm' to set attributes, 1 for bright, 33 for yellow. MS-DOS generally confirms to the ANSI standard in this way.\nIf specific parameters set the function such as ESC [ 6n then the parameter is considered part of the escape but also listed as a param as well."
-			],
-			"name": "Prompt ANSI Control Strings",
-			"columns": [
-				{
-					"type": "string",
-					"title": "ANSI parameters"
-				},
-				{
-					"type": "string",
-					"title": "Function"
-				}
-			],
-			"table format type": "key=value",
-			"key column": {
-				"type": "string",
-				"title": "String"
 			}
 		},
 		"ibm-extended-char-codes-bios-keyboard": {

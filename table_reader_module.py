@@ -232,11 +232,37 @@ def load_tables_base():
     g = glob.glob("tables/**/*--base.json",recursive=True)
     for path in g:
         json = common_json_help_module.load_json(path)
+        #
+        file_table_id = None
+        file_path = pathlib.Path(path)
+        if len(file_path.parts) > 0:
+            name = file_path.parts[len(file_path.parts)-1]
+            #
+            if name[-5:] == ".json":
+                name = name[:-5]
+            #
+            name_parts = name.split("--")
+            #
+            if len(name_parts) > 0:
+                file_table_id = name_parts[0]
+            else:
+                file_table_id = None
+        #
         if "table" in json:
             table = Table(json)
             if not table.id == None:
                 if table.id in tables_by_id:
                     raise Exception("Table "+table.id+" already defined")
+                if not table.id == file_table_id:
+                    fp = file_path.parts[0:len(file_path.parts)-1]
+                    fa = ""
+                    for f in fp:
+                        if not fa == "":
+                            fa = fa + "/"
+                        fa = fa + f
+                    print("File name "+path+" is wrong")
+                    print("Suggest renaming to: "+fa+"/"+str(table.id)+"--base.json")
+                    raise Exception("Table ID must match base of filename, file="+path+" id="+str(table.id))
                 tables_by_id[table.id] = table
 
 def load_tables():
