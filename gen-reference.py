@@ -337,7 +337,7 @@ def emit_table_as_html(path,table_id,tp):
                             sia = row.get("source index")
                             if not sia == None:
                                 for si in sia:
-                                    f.write(" <a style=\"text-decoration: none;\" href=\"#"+table_id+"_source_"+str(si)+"\"><sup style=\"color: rgb(0,0,192);\"><i>[*"+str(si)+"]</i></sup></a>")
+                                    f.write(" <a style=\"text-decoration: none;\" href=\"#"+table_id+"_source_"+str(si)+"\"><span style=\"font-size: 0.6em; color: rgb(0,0,192); position: relative; top: -0.5em;\"><i>[*"+str(si)+"]</i></span></a>")
                         #
                         f.write("</td>")
                     #
@@ -1008,7 +1008,7 @@ def emit_table_as_pdf(path,table_id,tp):
                     sia = row.get("source index")
                     if not sia == None and len(sia) > 0:
                         ps.fill_color(0,0,0.75)
-                        emitpdf.currentPos.x = coltop.x + dpiposx[coli] + hxpad + pdfhl.fontwidth(emitpdf.font1.reg,fontSize,colvals[coli][0])
+                        emitpdf.currentPos.x = coltop.x+(hcolw*drawcol) + dpiposx[coli] + hxpad + pdfhl.fontwidth(emitpdf.font1.reg,fontSize,colvals[coli][0])
                         emitpdf.currentPos.y = coltop.y
                         emitpdf.layout_text_begin()
                         ps.set_text_font(emitpdf.font1.italic,5)

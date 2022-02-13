@@ -19,6 +19,18 @@ def dict_sorted_mixed_func(a):
             ca[i] = int(ca[i],0)
     return ca
 
+def rowbuild_sort(a):
+    r = [ ]
+    for co in a["columns"]:
+        v = ""
+        if "value" in co:
+            v = co["value"]
+        r.append(v)
+    #
+    r.append(a["source index"])
+    #
+    return r
+
 class TablePresentation:
     name = None
     notes = None
@@ -81,7 +93,6 @@ class TablePresentation:
                     break
             #
             rowbuild = [ ]
-            samekey = False
             for row in rowent:
                 newrowcols = [ { "value": key } ]
                 #
@@ -93,21 +104,27 @@ class TablePresentation:
                     col = self.columns[coli]
                     newrowcols.append({ "value": value[coli] })
                 #
-                if len(rowbuild) > 0 and rowbuild[len(rowbuild)-1]["columns"] == newrowcols:
-                    rowbuild[len(rowbuild)-1]["source index"].append(row.get("source index"))
+                rowbuild.append( { "columns": newrowcols, "source index": [ row.get("source index") ] } )
+            #
+            rowbuild = sorted(rowbuild,key=rowbuild_sort)
+            #
+            nr = [ ]
+            pcols = None
+            samekey = False
+            #
+            if len(self.sources) > 1:
+                samekey = True
+            #
+            for row in rowbuild:
+                if pcols == None:
+                    nr.append(row)
+                elif pcols["columns"] == row["columns"]:
+                    pcols["source index"].extend(row["source index"])
                 else:
-                    if len(rowbuild) > 0:
-                        if not rowbuild[len(rowbuild)-1]["columns"][0] == newrowcols[0]:
-                            raise Exception("Impossible: In this loop the first column is always the same")
-                        #
-                        psi = rowbuild[len(rowbuild)-1]["source index"]
-                        if not psi == None and len(psi) > 0:
-                            psi = psi[len(psi)-1]
-                            csi = row.get("source index")
-                            if not psi == csi:
-                                samekey = True
-                    #
-                    rowbuild.append( { "columns": newrowcols, "source index": [ row.get("source index") ] } )
+                    nr.append(row)
+                #
+                pcols = row
+            rowbuild = nr
             #
             if samekey == True:
                 for row in rowbuild:

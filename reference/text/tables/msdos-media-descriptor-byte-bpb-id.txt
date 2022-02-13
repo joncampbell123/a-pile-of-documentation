@@ -6,24 +6,22 @@ This is the 8-bit value used in the MS-DOS filesystem and kernel that was used t
 
 ID   | Tracks/side | Sectors/track | Sides | Bytes/sector | Format
 =====|=============|===============|=======|==============|=======================================
-0xF0 | 80          | 18            | 2     | 512          | 3.5 inch floppy disk
-0xF8 | -           | -             | -     | -            | Fixed disk
-0xF9 | 80          | 9             | 2     | 512          | 3.5 inch floppy disk
-0xF9 | 80          | 15            | 2     | 512          | 5.25 inch floppy disk
-0xFA | 80          | 8             | 1     | 512          | 5.25 inch floppy disk
-0xFA | 80          | 8             | 1     | 512          | 3.5 inch floppy disk
-0xFB | 80          | 8             | 2     | 512          | 5.25 inch floppy disk
-0xFB | 80          | 8             | 2     | 512          | 3.5 inch floppy disk
-0xFC | 40          | 9             | 1     | 512          | 5.25 inch floppy disk
-0xFD | 40          | 9             | 2     | 512          | 5.25 inch floppy disk
-0xFD | 77          | 26            | 2     | 128          | 8 inch floppy disk
-0xFE | 40          | 8             | 1     | 512          | 5.25 inch floppy disk                  [*0]
-0xFE | 77          | 26            | 1     | 128          | 8 inch floppy disk                     [*0]
-0xFE | 40          | 8             | 1     | 512          | 5.25 inch floppy disk                  [*1]
-0xFE | 77          | 26            | 1     | 128          | 8 inch floppy disk                     [*1]
+0xF0 | 80          | 18            | 2     | 512          | 3.5 inch floppy disk                   [*0]
+0xF8 | -           | -             | -     | -            | Fixed disk                             [*0]
+0xF9 | 80          | 15            | 2     | 512          | 5.25 inch floppy disk                  [*0]
+0xF9 | 80          | 9             | 2     | 512          | 3.5 inch floppy disk                   [*0]
+0xFA | 80          | 8             | 1     | 512          | 3.5 inch floppy disk                   [*0]
+0xFA | 80          | 8             | 1     | 512          | 5.25 inch floppy disk                  [*0]
+0xFB | 80          | 8             | 2     | 512          | 3.5 inch floppy disk                   [*0]
+0xFB | 80          | 8             | 2     | 512          | 5.25 inch floppy disk                  [*0]
+0xFC | 40          | 9             | 1     | 512          | 5.25 inch floppy disk                  [*0]
+0xFD | 40          | 9             | 2     | 512          | 5.25 inch floppy disk                  [*0]
+0xFD | 77          | 26            | 2     | 128          | 8 inch floppy disk                     [*0]
+0xFE | 40          | 8             | 1     | 512          | 5.25 inch floppy disk                  [*0] [*1]
+0xFE | 77          | 26            | 1     | 128          | 8 inch floppy disk                     [*0] [*1]
 0xFE | 77          | 8             | 2     | 1024         | 8 inch floppy disk                     [*1]
-0xFF | 40          | 8             | 2     | 512          | 5.25 inch floppy disk
-0xFF | -           | -             | -     | -            | Hard disk (Sanyo 55x DS-DOS 2.11 only)
+0xFF | -           | -             | -     | -            | Hard disk (Sanyo 55x DS-DOS 2.11 only) [*1]
+0xFF | 40          | 8             | 2     | 512          | 5.25 inch floppy disk                  [*0] [*1]
 
 Sources
 =======
