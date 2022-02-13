@@ -64,6 +64,11 @@
 							"title": "Hard Disk Format Summary",
 							"page": "61",
 							"source": "IBM PC/XT Technical Reference, pages 1-151 to 1-152"
+						},
+						"2.44": {
+							"title": "COM Verses EXE File Differences",
+							"page": "62",
+							"source": "Advanced MS-DOS (Microsoft Press), Ray Duncan"
 						}
 					}
 				},

@@ -1,5 +1,70 @@
 {
 	"tables": {
+		"msdos-com-vs-exe-file-differences": {
+			"table": {
+				"Maximum program size": [
+					{
+						"value": [
+							"65278",
+							"No limit"
+						],
+						"source index": 0,
+						"original key": "Maximum program size"
+					}
+				]
+			},
+			"sources": [
+				{
+					"book": "programmer-pc-sourcebook-ms-press-1988",
+					"source index": 0,
+					"citation": {
+						"title": "The Programmer's PC Sourcebook",
+						"author": "Thom Hogan",
+						"publisher": "Microsoft Press",
+						"year": 1988,
+						"type": "book"
+					},
+					"where": [
+						{
+							"path": "Part 2",
+							"type": "part",
+							"title": "Software"
+						},
+						{
+							"path": "Section 2",
+							"type": "section",
+							"title": "DOS Commands, Utilities, and Summaries"
+						},
+						{
+							"path": "2.44",
+							"type": "subsection",
+							"title": "COM Verses EXE File Differences",
+							"page": "62"
+						}
+					]
+				}
+			],
+			"description": null,
+			"notes": [
+				"The 65278 COM program size limit is based on:\n65536 - 256 byte Program Segment Prefix - 2 byte stack"
+			],
+			"name": "COM vs EXE file differences",
+			"columns": [
+				{
+					"type": "string",
+					"title": "COM Programs"
+				},
+				{
+					"type": "strings",
+					"title": "EXE Programs"
+				}
+			],
+			"table format type": "key=value",
+			"key column": {
+				"type": "mixed",
+				"title": "Item"
+			}
+		},
 		"msdos-media-descriptor-byte-bpb-id": {
 			"table": {
 				"0xff": [
@@ -3866,6 +3931,16 @@
 							"type": "sections"
 						},
 						"name lookup": "2.41"
+					},
+					{
+						"title": "COM Verses EXE File Differences",
+						"page": "62",
+						"source": "Advanced MS-DOS (Microsoft Press), Ray Duncan",
+						"parent lookup": {
+							"name": "Section 2",
+							"type": "sections"
+						},
+						"name lookup": "2.44"
 					}
 				]
 			}

@@ -1,0 +1,18 @@
+
+COM vs EXE file differences
+===========================
+
+Item                 | COM Programs | EXE Programs
+=====================|==============|=============
+Maximum program size | 65278        | No limit
+
+Sources
+=======
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.44, COM Verses EXE File Differences
+
+Notes
+-----
+ * The 65278 COM program size limit is based on:
+   65536 - 256 byte Program Segment Prefix - 2 byte stack
+

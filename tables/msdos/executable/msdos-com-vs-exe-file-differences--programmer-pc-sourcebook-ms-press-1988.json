@@ -1,0 +1,13 @@
+{
+	"id": "msdos-com-vs-exe-file-differences",
+	"source": {
+		"book": "programmer-pc-sourcebook-ms-press-1988",
+		"subsection": "2.44"
+	},
+	"notes": [
+		"The 65278 COM program size limit is based on:\n65536 - 256 byte Program Segment Prefix - 2 byte stack"
+	],
+	"table": {
+		"Maximum program size": { "value": [ "65278", "No limit" ] }
+	}
+}
