@@ -176,10 +176,17 @@ class Table:
                         table_key = self.filter_key_value_by_type(key)
                         if not table_key in self.table:
                             self.table[table_key] = [ ]
-                        if not source_idx == None:
-                            s_table[key]["source index"] = source_idx
-                        s_table[key]["original key"] = key_str
-                        self.table[table_key].append(s_table[key])
+                        if type(s_table[key]) == list:
+                            todo = s_table[key]
+                        else:
+                            todo = [ s_table[key] ]
+                        #
+                        for tid in todo:
+                            if not source_idx == None:
+                                tid["source index"] = source_idx
+                            #
+                            tid["original key"] = key_str
+                            self.table[table_key].append(tid)
     def __init__(self,json):
         self.table = { }
         self.notes = [ ]

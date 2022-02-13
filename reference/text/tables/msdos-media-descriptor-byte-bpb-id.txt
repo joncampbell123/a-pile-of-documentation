@@ -7,28 +7,19 @@ This is the 8-bit value used in the MS-DOS filesystem and kernel that was used t
 ID   | Tracks/side | Sectors/track | Sides | Format
 =====|=============|===============|=======|======================
 0xF0 | 80          | 18            | 2     | 3.5 inch floppy disk
------+-------------+---------------+-------+----------------------
 0xF8 | -           | -             | -     | Fixed disk
------+-------------+---------------+-------+----------------------
-0xF9 | 80          | 9             | 2     | 3.5 inch floppy disk
-     | 80          | 15            | 2     | 5.25 inch floppy disk
------+-------------+---------------+-------+----------------------
-0xFA | 80          | 8             | 1     | 5.25 inch floppy disk
-     | 80          | 8             | 1     | 3.5 inch floppy disk
------+-------------+---------------+-------+----------------------
-0xFB | 80          | 8             | 2     | 5.25 inch floppy disk
-     | 80          | 8             | 2     | 3.5 inch floppy disk
------+-------------+---------------+-------+----------------------
+0xF9 | 80          | 9             | 2     | 3.5 inch floppy disk  [*0]
+0xF9 | 80          | 15            | 2     | 5.25 inch floppy disk [*0]
+0xFA | 80          | 8             | 1     | 5.25 inch floppy disk [*0]
+0xFA | 80          | 8             | 1     | 3.5 inch floppy disk  [*0]
+0xFB | 80          | 8             | 2     | 5.25 inch floppy disk [*0]
+0xFB | 80          | 8             | 2     | 3.5 inch floppy disk  [*0]
 0xFC | 40          | 9             | 1     | 5.25 inch floppy disk
------+-------------+---------------+-------+----------------------
-0xFD | 40          | 9             | 2     | 5.25 inch floppy disk
-     | 77          | 26            | 2     | 8 inch floppy disk
------+-------------+---------------+-------+----------------------
-0xFE | 40          | 8             | 1     | 5.25 inch floppy disk
-     | 77          | 2, 6, or 8    | 1     | 8 inch floppy disk
------+-------------+---------------+-------+----------------------
+0xFD | 40          | 9             | 2     | 5.25 inch floppy disk [*0]
+0xFD | 77          | 26            | 2     | 8 inch floppy disk    [*0]
+0xFE | 40          | 8             | 1     | 5.25 inch floppy disk [*0]
+0xFE | 77          | 2, 6, or 8    | 1     | 8 inch floppy disk    [*0]
 0xFF | 40          | 8             | 2     | 5.25 inch floppy disk
------+-------------+---------------+-------+----------------------
 
 Sources
 =======
