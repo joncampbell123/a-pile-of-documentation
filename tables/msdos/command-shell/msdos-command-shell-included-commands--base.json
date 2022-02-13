@@ -22,10 +22,6 @@
 			{
 				"type": "string",
 				"title": "Specific versions"
-			},
-			{
-				"type": "string",
-				"title": "Description"
 			}
 		]
 	}
