@@ -23,6 +23,7 @@
 		"DEL": { "value": [ "[d:][path]filespec", "Deletes specified file or files", "DEL *.bak", "" ] },
 		"DIR": { "value": [ "[d:][path][filespec][/parms]", "Lists directory entries", "DIR c:/w", "" ] },
 		"DISKCOMP": { "value": [ "[d: [d:]][/parms]", "Compares contents of two disks", "DISKCOMP a: b:", "" ] },
-		"DISKCOPY": { "value": [ "[d: [d:]][/parms]", "Copies a disk", "DISKCOPY a: b:", "" ] }
+		"DISKCOPY": { "value": [ "[d: [d:]][/parms]", "Copies a disk", "DISKCOPY a: b:", "" ] },
+		"ERASE": { "value": [ "[d:][path]filespec", "Deletes specified file or files", "ERASE *.bak", "" ] }
 	}
 }

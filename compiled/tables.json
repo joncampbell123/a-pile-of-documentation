@@ -3092,6 +3092,18 @@
 						"source index": 0,
 						"original key": "DISKCOPY"
 					}
+				],
+				"ERASE": [
+					{
+						"value": [
+							"[d:][path]filespec",
+							"Deletes specified file or files",
+							"ERASE *.bak",
+							""
+						],
+						"source index": 0,
+						"original key": "ERASE"
+					}
 				]
 			},
 			"sources": [
