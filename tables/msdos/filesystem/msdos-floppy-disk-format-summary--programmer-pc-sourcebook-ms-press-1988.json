@@ -1,0 +1,17 @@
+{
+	"id": "msdos-floppy-disk-format-summary",
+	"source": {
+		"book": "programmer-pc-sourcebook-ms-press-1988",
+		"subsection": "2.40"
+	},
+	"notes": [
+		"Total usable sectors and total usable clusters will change if bad sectors are found during formatting",
+		"FAT disk ID bytes are unreliable. Use disk parameter block to determine media type"
+	],
+	"table": {
+		"160KB": { "value": [ "5.25", "0xFE", "1", "40", "8", "512", "1", "1", "1", "2", "4", "64", "320", "313", "313", "1" ] },
+		"320KB": { "value": [ "5.25", "0xFF", "2", "40", "8", "512", "2", "1", "1", "2", "7", "112", "640", "630", "315", "1.1" ] },
+		"180KB": { "value": [ "5.25", "0xFC", "1", "40", "9", "512", "1", "1", "2", "2", "4", "64", "360", "351", "351", "2" ] },
+		"360KB": { "value": [ "5.25", "0xFD", "2", "40", "9", "512", "2", "1", "2", "2", "7", "112", "720", "708", "354", "2" ] }
+	}
+}

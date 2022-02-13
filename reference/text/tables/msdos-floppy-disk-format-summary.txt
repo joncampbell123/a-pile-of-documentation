@@ -1,0 +1,45 @@
+
+Floppy Disk Format Summary
+==========================
+
+ - Disk: Disk size, 3.5 inch or 5.25 in, etc
+ - ID: Media ID byte
+ - H: Heads, or more appropriately, sides
+ - T: Tracks per side
+ - S: Sectors per track
+ - B/S: Bytes per sector
+ - Cluster: Sectors per cluster
+ - Reserved: Reserved sector count
+ - FAT Size: Sectors per FAT
+ - FATs: Number of FAT tables
+ - Rootdir: Number of root directory sectors
+ - Rootmax: Maxmimum root directories allowed given root directory size
+ - Sectors: Total sectors
+ - Usable: Usable sectors
+ - Clusters: Usable clusters
+ - DOS: Minimum DOS version
+
+Format | Disk | ID   | H | T  | S | B/S | Cluster | Reserved | FAT Size | FATs | Rootdir | Rootmax | Sectors | Usable | Clusters | DOS
+=======|======|======|===|====|===|=====|=========|==========|==========|======|=========|=========|=========|========|==========|====
+160KB  | 5.25 | 0xFE | 1 | 40 | 8 | 512 | 1       | 1        | 1        | 2    | 4       | 64      | 320     | 313    | 313      | 1
+180KB  | 5.25 | 0xFC | 1 | 40 | 9 | 512 | 1       | 1        | 2        | 2    | 4       | 64      | 360     | 351    | 351      | 2
+320KB  | 5.25 | 0xFF | 2 | 40 | 8 | 512 | 2       | 1        | 1        | 2    | 7       | 112     | 640     | 630    | 315      | 1.1
+360KB  | 5.25 | 0xFD | 2 | 40 | 9 | 512 | 2       | 1        | 2        | 2    | 7       | 112     | 720     | 708    | 354      | 2
+
+Sources
+=======
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.40, Floppy Disk Format Summary
+
+Notes
+-----
+ * A summary of MS-DOS disk formats
+ * Despite the title, borrowed from the PC Programmer's Sourcebook, this table has been rearranged to provide more general 
+   information
+
+ * Filesystem details, like reserved sectors, sectors/FAT, root directory sectors, etc. can vary according to the BIOS Parameter 
+   Block. They are not fixed, except for older DOS versions
+
+ * Total usable sectors and total usable clusters will change if bad sectors are found during formatting
+ * FAT disk ID bytes are unreliable. Use disk parameter block to determine media type
+

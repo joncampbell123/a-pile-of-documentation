@@ -570,6 +570,233 @@
 				"title": "ID"
 			}
 		},
+		"msdos-floppy-disk-format-summary": {
+			"table": {
+				"160KB": [
+					{
+						"value": [
+							"5.25",
+							"0xFE",
+							"1",
+							"40",
+							"8",
+							"512",
+							"1",
+							"1",
+							"1",
+							"2",
+							"4",
+							"64",
+							"320",
+							"313",
+							"313",
+							"1"
+						],
+						"source index": 0,
+						"original key": "160KB"
+					}
+				],
+				"320KB": [
+					{
+						"value": [
+							"5.25",
+							"0xFF",
+							"2",
+							"40",
+							"8",
+							"512",
+							"2",
+							"1",
+							"1",
+							"2",
+							"7",
+							"112",
+							"640",
+							"630",
+							"315",
+							"1.1"
+						],
+						"source index": 0,
+						"original key": "320KB"
+					}
+				],
+				"180KB": [
+					{
+						"value": [
+							"5.25",
+							"0xFC",
+							"1",
+							"40",
+							"9",
+							"512",
+							"1",
+							"1",
+							"2",
+							"2",
+							"4",
+							"64",
+							"360",
+							"351",
+							"351",
+							"2"
+						],
+						"source index": 0,
+						"original key": "180KB"
+					}
+				],
+				"360KB": [
+					{
+						"value": [
+							"5.25",
+							"0xFD",
+							"2",
+							"40",
+							"9",
+							"512",
+							"2",
+							"1",
+							"2",
+							"2",
+							"7",
+							"112",
+							"720",
+							"708",
+							"354",
+							"2"
+						],
+						"source index": 0,
+						"original key": "360KB"
+					}
+				]
+			},
+			"sources": [
+				{
+					"book": "programmer-pc-sourcebook-ms-press-1988",
+					"source index": 0,
+					"citation": {
+						"title": "The Programmer's PC Sourcebook",
+						"author": "Thom Hogan",
+						"publisher": "Microsoft Press",
+						"year": 1988,
+						"type": "book"
+					},
+					"where": [
+						{
+							"path": "Part 2",
+							"type": "part",
+							"title": "Software"
+						},
+						{
+							"path": "Section 2",
+							"type": "section",
+							"title": "DOS Commands, Utilities, and Summaries"
+						},
+						{
+							"path": "2.40",
+							"type": "subsection",
+							"title": "Floppy Disk Format Summary",
+							"page": "61"
+						}
+					]
+				}
+			],
+			"description": null,
+			"notes": [
+				"A summary of MS-DOS disk formats",
+				"Despite the title, borrowed from the PC Programmer's Sourcebook, this table has been rearranged to provide more general information",
+				"Filesystem details, like reserved sectors, sectors/FAT, root directory sectors, etc. can vary according to the BIOS Parameter Block. They are not fixed, except for older DOS versions",
+				"Total usable sectors and total usable clusters will change if bad sectors are found during formatting",
+				"FAT disk ID bytes are unreliable. Use disk parameter block to determine media type"
+			],
+			"name": "Floppy Disk Format Summary",
+			"columns": [
+				{
+					"type": "string",
+					"title": "Disk",
+					"description": "Disk size, 3.5 inch or 5.25 in, etc"
+				},
+				{
+					"type": "uint_t",
+					"title": "ID",
+					"description": "Media ID byte"
+				},
+				{
+					"type": "uint_t",
+					"title": "H",
+					"description": "Heads, or more appropriately, sides"
+				},
+				{
+					"type": "uint_t",
+					"title": "T",
+					"description": "Tracks per side"
+				},
+				{
+					"type": "uint_t",
+					"title": "S",
+					"description": "Sectors per track"
+				},
+				{
+					"type": "uint_t",
+					"title": "B/S",
+					"description": "Bytes per sector"
+				},
+				{
+					"type": "uint_t",
+					"title": "Cluster",
+					"description": "Sectors per cluster"
+				},
+				{
+					"type": "uint_t",
+					"title": "Reserved",
+					"description": "Reserved sector count"
+				},
+				{
+					"type": "uint_t",
+					"title": "FAT Size",
+					"description": "Sectors per FAT"
+				},
+				{
+					"type": "uint_t",
+					"title": "FATs",
+					"description": "Number of FAT tables"
+				},
+				{
+					"type": "uint_t",
+					"title": "Rootdir",
+					"description": "Number of root directory sectors"
+				},
+				{
+					"type": "uint_t",
+					"title": "Rootmax",
+					"description": "Maxmimum root directories allowed given root directory size"
+				},
+				{
+					"type": "uint_t",
+					"title": "Sectors",
+					"description": "Total sectors"
+				},
+				{
+					"type": "uint_t",
+					"title": "Usable",
+					"description": "Usable sectors"
+				},
+				{
+					"type": "uint_t",
+					"title": "Clusters",
+					"description": "Usable clusters"
+				},
+				{
+					"type": "string",
+					"title": "DOS",
+					"description": "Minimum DOS version"
+				}
+			],
+			"table format type": "key=value",
+			"key column": {
+				"type": "string",
+				"title": "Format"
+			}
+		},
 		"msdos-command-shell-prompt-ansi-control-strings": {
 			"table": {
 				"ESC [ f": [
@@ -3267,6 +3494,16 @@
 							"type": "sections"
 						},
 						"name lookup": "2.37"
+					},
+					{
+						"title": "Floppy Disk Format Summary",
+						"page": "61",
+						"source": "MS-DOS 3.2 Progammer's Reference, pages 3-9, 3-10",
+						"parent lookup": {
+							"name": "Section 2",
+							"type": "sections"
+						},
+						"name lookup": "2.40"
 					}
 				]
 			}

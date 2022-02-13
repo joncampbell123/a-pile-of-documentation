@@ -54,6 +54,11 @@
 							"title": "Disk ID Byte",
 							"page": "59",
 							"source": "IBM DOS 3.3 Technical Reference, pages 5-6"
+						},
+						"2.40": {
+							"title": "Floppy Disk Format Summary",
+							"page": "61",
+							"source": "MS-DOS 3.2 Progammer's Reference, pages 3-9, 3-10"
 						}
 					}
 				},
