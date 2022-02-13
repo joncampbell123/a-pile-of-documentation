@@ -454,6 +454,19 @@
 						"source index": 1,
 						"original key": "0xEF"
 					}
+				],
+				"0xee": [
+					{
+						"value": [
+							"-",
+							"-",
+							"-",
+							"-",
+							"Custom non-standard partitions with nonstandard\nBIOS Parameter Block or special media access.\nLike 0xF8 but not recognized by unaware systems by design.\nFAT ID does not have to match this value (DR-DOS)"
+						],
+						"source index": 1,
+						"original key": "0xEE"
+					}
 				]
 			},
 			"sources": [

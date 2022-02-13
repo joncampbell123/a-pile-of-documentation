@@ -6,6 +6,11 @@ This is the 8-bit value used in the MS-DOS filesystem and kernel that was used t
 
 ID   | Tracks/side | Sectors/track | Sides | Bytes/sector | Format
 =====|=============|===============|=======|==============|===========================================================
+0xEE | -           | -             | -     | -            | Custom non-standard partitions with nonstandard            [*1]
+     |             |               |       |              | BIOS Parameter Block or special media access.
+     |             |               |       |              | Like 0xF8 but not recognized by unaware systems by design.
+     |             |               |       |              | FAT ID does not have to match this value (DR-DOS)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
 0xEF | -           | -             | -     | -            | Custom non-standard floppy and superfloppy formats.        [*1]
      |             |               |       |              | Like 0xF0 but not recognized by unaware systems by design.
      |             |               |       |              | FAT ID does not have to match this value (DR-DOS)

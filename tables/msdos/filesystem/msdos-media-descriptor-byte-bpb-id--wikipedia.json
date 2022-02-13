@@ -47,6 +47,7 @@
 			{ "value": [ "80", "36", "2", "512", "3.5 inch floppy disk" ] },
 			{ "value": [ "-", "-", "-", "-", "Custom floppy and superfloppy formats.\ngeometry is defined in the BIOS Parameter Block" ] }
 		],
-		"0xEF": { "value": [ "-", "-", "-", "-", "Custom non-standard floppy and superfloppy formats.\nLike 0xF0 but not recognized by unaware systems by design.\nFAT ID does not have to match this value (DR-DOS)" ] }
+		"0xEF": { "value": [ "-", "-", "-", "-", "Custom non-standard floppy and superfloppy formats.\nLike 0xF0 but not recognized by unaware systems by design.\nFAT ID does not have to match this value (DR-DOS)" ] },
+		"0xEE": { "value": [ "-", "-", "-", "-", "Custom non-standard partitions with nonstandard\nBIOS Parameter Block or special media access.\nLike 0xF8 but not recognized by unaware systems by design.\nFAT ID does not have to match this value (DR-DOS)" ] }
 	}
 }
