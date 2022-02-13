@@ -39,6 +39,8 @@
 			{ "value": [ "80", "9", "1", "512", "3.5 inch floppy disk (MS-DOS 3.1 and MSX-DOS)" ] },
 			{ "value": [ "80", "9", "2", "512", "5.25 inch floppy disk (Sanyo 55x DS-DOS 2.11 only)" ] },
 			{ "value": [ "-", "-", "2", "-", "Single sided (Altos MS-DOS 2.11 only)" ] }
-		]
+		],
+		"0xF5": { "value": [ "-", "-", "-", "-", "Fixed disk (Altos MS-DOS 2.11 only)" ] },
+		"0xF4": { "value": [ "-", "-", "-", "-", "Double density (Altos MS-DOS 2.11 only)" ] }
 	}
 }

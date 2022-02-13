@@ -7,6 +7,8 @@ This is the 8-bit value used in the MS-DOS filesystem and kernel that was used t
 ID   | Tracks/side | Sectors/track | Sides | Bytes/sector | Format
 =====|=============|===============|=======|==============|===================================================
 0xF0 | 80          | 18            | 2     | 512          | 3.5 inch floppy disk                               [*0]
+0xF4 | -           | -             | -     | -            | Double density (Altos MS-DOS 2.11 only)            [*1]
+0xF5 | -           | -             | -     | -            | Fixed disk (Altos MS-DOS 2.11 only)                [*1]
 0xF8 | -           | -             | -     | -            | Fixed disk
 0xF8 | -           | -             | 2     | -            | Single sided (Altos MS-DOS 2.11 only)              [*1]
 0xF8 | 80          | 9             | 1     | 512          | 3.5 inch floppy disk (MS-DOS 3.1 and MSX-DOS)      [*1]

@@ -382,6 +382,32 @@
 						"source index": 0,
 						"original key": "0xF0"
 					}
+				],
+				"0xf5": [
+					{
+						"value": [
+							"-",
+							"-",
+							"-",
+							"-",
+							"Fixed disk (Altos MS-DOS 2.11 only)"
+						],
+						"source index": 1,
+						"original key": "0xF5"
+					}
+				],
+				"0xf4": [
+					{
+						"value": [
+							"-",
+							"-",
+							"-",
+							"-",
+							"Double density (Altos MS-DOS 2.11 only)"
+						],
+						"source index": 1,
+						"original key": "0xF4"
+					}
 				]
 			},
 			"sources": [
