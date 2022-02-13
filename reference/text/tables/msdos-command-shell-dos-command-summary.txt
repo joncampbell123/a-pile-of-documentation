@@ -1,0 +1,15 @@
+
+DOS Command Summary
+===================
+
+Commands included with MS-DOS
+
+Command | Syntax               | Function                                    | Example           | Notes
+========|======================|=============================================|===================|======
+APPEND  | d:path[,[d:]path...] | Locates files outside the current directory | APPEND c:\dbfiles | 
+
+Sources
+=======
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.01, DOS Command Summary
+

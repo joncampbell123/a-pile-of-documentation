@@ -1,0 +1,32 @@
+{
+	"table": "DOS Command Summary",
+	"id": "msdos-command-shell-dos-command-summary",
+	"combinable": true,
+	"description": "Commands included with MS-DOS",
+	"base definition": true,
+	"table format": {
+		"type": "key=value",
+		"key": {
+			"type": "string",
+			"title": "Command"
+		},
+		"value": [
+			{
+				"type": "string",
+				"title": "Syntax"
+			},
+			{
+				"type": "string",
+				"title": "Function"
+			},
+			{
+				"type": "string",
+				"title": "Example"
+			},
+			{
+				"type": "string",
+				"title": "Notes"
+			}
+		]
+	}
+}

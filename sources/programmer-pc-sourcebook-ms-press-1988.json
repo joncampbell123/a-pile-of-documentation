@@ -35,6 +35,11 @@
 				"Section 2": {
 					"title": "DOS Commands, Utilities, and Summaries",
 					"subsections": {
+						"2.01": {
+							"title": "DOS Command Summary",
+							"page": "40",
+							"source": "IBM DOS 3.3 Reference, section 7"
+						},
 						"2.17": {
 							"title": "Prompt Special Characters",
 							"page": "48",
