@@ -1,5 +1,83 @@
 {
 	"tables": {
+		"msdos-media-descriptor-byte-bpb-id": {
+			"table": {
+				"0xff": [
+					{
+						"value": [
+							"40",
+							"8",
+							"2",
+							"512",
+							"5.25 inch floppy disk"
+						],
+						"source index": 0,
+						"original key": "0xFF"
+					}
+				]
+			},
+			"sources": [
+				{
+					"book": "programmer-pc-sourcebook-ms-press-1988",
+					"source index": 0,
+					"citation": {
+						"title": "The Programmer's PC Sourcebook",
+						"author": "Thom Hogan",
+						"publisher": "Microsoft Press",
+						"year": 1988,
+						"type": "book"
+					},
+					"where": [
+						{
+							"path": "Part 2",
+							"type": "part",
+							"title": "Software"
+						},
+						{
+							"path": "Section 2",
+							"type": "section",
+							"title": "DOS Commands, Utilities, and Summaries"
+						},
+						{
+							"path": "2.37",
+							"type": "subsection",
+							"title": "Disk ID Byte",
+							"page": "59"
+						}
+					]
+				}
+			],
+			"description": "This is the 8-bit value used in the MS-DOS filesystem and kernel that was used to describe floppy disk formats",
+			"notes": [],
+			"name": "Media descriptor byte ID values",
+			"columns": [
+				{
+					"type": "uint_t",
+					"title": "Tracks/side"
+				},
+				{
+					"type": "uint_t",
+					"title": "Sectors/track"
+				},
+				{
+					"type": "uint_t",
+					"title": "Sides"
+				},
+				{
+					"type": "uint_t",
+					"title": "Bytes/sector"
+				},
+				{
+					"type": "string",
+					"title": "Format"
+				}
+			],
+			"table format type": "key=value",
+			"key column": {
+				"type": "uint8_t",
+				"title": "ID"
+			}
+		},
 		"msdos-command-shell-prompt-ansi-display-attribute-strings": {
 			"table": {
 				"ESC [ 0 m": [
@@ -2687,6 +2765,16 @@
 							"type": "sections"
 						},
 						"name lookup": "2.19"
+					},
+					{
+						"title": "Disk ID Byte",
+						"page": "59",
+						"source": "IBM DOS 3.3 Technical Reference, pages 5-6",
+						"parent lookup": {
+							"name": "Section 2",
+							"type": "sections"
+						},
+						"name lookup": "2.37"
 					}
 				]
 			}

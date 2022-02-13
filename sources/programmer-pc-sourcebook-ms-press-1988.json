@@ -49,6 +49,11 @@
 							"title": "Prompt ANSI Display Attribute Strings",
 							"page": "49",
 							"source": "IBM DOS 3.3 Technical Reference, pages 3-15"
+						},
+						"2.37": {
+							"title": "Disk ID Byte",
+							"page": "59",
+							"source": "IBM DOS 3.3 Technical Reference, pages 5-6"
 						}
 					}
 				},

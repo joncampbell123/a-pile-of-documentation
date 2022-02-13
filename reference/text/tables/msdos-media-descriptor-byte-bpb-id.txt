@@ -1,0 +1,15 @@
+
+Media descriptor byte ID values
+===============================
+
+This is the 8-bit value used in the MS-DOS filesystem and kernel that was used to describe floppy disk formats
+
+ID   | Tracks/side | Sectors/track | Sides | Bytes/sector | Format
+=====|=============|===============|=======|==============|======================
+0xFF | 40          | 8             | 2     | 512          | 5.25 inch floppy disk
+
+Sources
+=======
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.37, Disk ID Byte
+
