@@ -59,6 +59,39 @@
 						],
 						"source index": 0,
 						"original key": "0xFE"
+					},
+					{
+						"value": [
+							"40",
+							"8",
+							"1",
+							"512",
+							"5.25 inch floppy disk"
+						],
+						"source index": 1,
+						"original key": "0xFE"
+					},
+					{
+						"value": [
+							"77",
+							"26",
+							"1",
+							"128",
+							"8 inch floppy disk"
+						],
+						"source index": 1,
+						"original key": "0xFE"
+					},
+					{
+						"value": [
+							"77",
+							"8",
+							"2",
+							"1024",
+							"8 inch floppy disk"
+						],
+						"source index": 1,
+						"original key": "0xFE"
 					}
 				],
 				"0xfd": [

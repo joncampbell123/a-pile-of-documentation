@@ -8,6 +8,11 @@
 		"0xFF": [
 			{ "value": [ "40", "8", "2", "512", "5.25 inch floppy disk" ] },
 			{ "value": [ "-", "-", "-", "-", "Hard disk (Sanyo 55x DS-DOS 2.11 only)" ] }
+		],
+		"0xFE": [
+			{ "value": [ "40", "8", "1", "512", "5.25 inch floppy disk" ] },
+			{ "value": [ "77", "26", "1", "128", "8 inch floppy disk" ] },
+			{ "value": [ "77", "8", "2", "1024", "8 inch floppy disk" ] }
 		]
 	}
 }
