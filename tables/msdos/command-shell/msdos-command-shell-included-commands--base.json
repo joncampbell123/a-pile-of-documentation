@@ -13,11 +13,13 @@
 		"value": [
 			{
 				"type": "string",
-				"title": "Minimum version"
+				"title": "Min",
+				"description": "Minimum DOS version"
 			},
 			{
 				"type": "string",
-				"title": "Maximum version"
+				"title": "Max",
+				"description": "Maximum DOS version"
 			},
 			{
 				"type": "string",

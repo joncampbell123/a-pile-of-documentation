@@ -4,50 +4,53 @@ MS-DOS included command files
 
 Commands included with MS-DOS
 
-Command  | Minimum version | Maximum version | Specific versions
-=========|=================|=================|==================
-APPEND   | 3.3             | -               | 
-ASSIGN   | 2.0             | -               | 
-ATTRIB   | 3.0             | -               | 
-BACKUP   | 2.0             | -               | 
-BASIC    | 1.0             | 3.2             | 
-BASICA   | 1.0             | 3.3             | 
-CHCP     | 3.3             | -               | 
-CHKDSK   | 1.0             | -               | 
-COMP     | 1.0             | -               | 
-DEBUG    | 1.0             | -               | 
-DISKCOMP | 1.0             | -               | 
-DISKCOPY | 1.0             | -               | 
-EDLIN    | 1.0             | -               | 
-EXE2BIN  | 2.0             | -               | 
-FASTOPEN | 3.3             | -               | 
-FDISK    | 2.0             | -               | 
-FIND     | 2.0             | -               | 
-FORMAT   | 1.0             | -               | 
-GRAFTABL | 2.0             | -               | 
-GRAPHICS | 2.0             | -               | 
-JOIN     | 3.0             | -               | 
-KEYBFR   | 3.0             | -               | 
-KEYBGR   | 3.0             | -               | 
-KEYBIT   | 3.0             | -               | 
-KEYBSP   | 3.0             | -               | 
-KEYBUK   | 3.0             | -               | 
-LABEL    | 3.0             | -               | 
-LINK     | 1.0             | -               | 
-MODE     | 1.0             | -               | 
-MORE     | 2.0             | -               | 
-NLSFUNC  | 3.3             | -               | 
-PRINT    | 2.0             | -               | 
-RECOVER  | 2.0             | -               | 
-REPLACE  | 3.0             | -               | 
-RESTORE  | 2.0             | -               | 
-SELECT   | 3.2             | -               | 
-SHARE    | 3.1             | -               | 
-SORT     | 2.0             | -               | 
-SUBST    | 3.0             | -               | 
-SYS      | 1.0             | -               | 
-TREE     | 2.0             | -               | 
-XCOPY    | 3.1             | -               | 
+ - Min: Minimum DOS version
+ - Max: Maximum DOS version
+
+Command  | Min | Max | Specific versions
+=========|=====|=====|==================
+APPEND   | 3.3 | -   | 
+ASSIGN   | 2.0 | -   | 
+ATTRIB   | 3.0 | -   | 
+BACKUP   | 2.0 | -   | 
+BASIC    | 1.0 | 3.2 | 
+BASICA   | 1.0 | 3.3 | 
+CHCP     | 3.3 | -   | 
+CHKDSK   | 1.0 | -   | 
+COMP     | 1.0 | -   | 
+DEBUG    | 1.0 | -   | 
+DISKCOMP | 1.0 | -   | 
+DISKCOPY | 1.0 | -   | 
+EDLIN    | 1.0 | -   | 
+EXE2BIN  | 2.0 | -   | 
+FASTOPEN | 3.3 | -   | 
+FDISK    | 2.0 | -   | 
+FIND     | 2.0 | -   | 
+FORMAT   | 1.0 | -   | 
+GRAFTABL | 2.0 | -   | 
+GRAPHICS | 2.0 | -   | 
+JOIN     | 3.0 | -   | 
+KEYBFR   | 3.0 | -   | 
+KEYBGR   | 3.0 | -   | 
+KEYBIT   | 3.0 | -   | 
+KEYBSP   | 3.0 | -   | 
+KEYBUK   | 3.0 | -   | 
+LABEL    | 3.0 | -   | 
+LINK     | 1.0 | -   | 
+MODE     | 1.0 | -   | 
+MORE     | 2.0 | -   | 
+NLSFUNC  | 3.3 | -   | 
+PRINT    | 2.0 | -   | 
+RECOVER  | 2.0 | -   | 
+REPLACE  | 3.0 | -   | 
+RESTORE  | 2.0 | -   | 
+SELECT   | 3.2 | -   | 
+SHARE    | 3.1 | -   | 
+SORT     | 2.0 | -   | 
+SUBST    | 3.0 | -   | 
+SYS      | 1.0 | -   | 
+TREE     | 2.0 | -   | 
+XCOPY    | 3.1 | -   | 
 
 Sources
 =======
