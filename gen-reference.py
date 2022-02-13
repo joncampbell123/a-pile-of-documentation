@@ -437,8 +437,12 @@ class XY:
     x = None
     y = None
     def __init__(self,x=0,y=0):
-        self.x = x
-        self.y = y
+        if type(x) == XY:
+            self.x = x.x
+            self.y = x.y
+        else:
+            self.x = x
+            self.y = y
     def __str__(self):
         return "["+str(self.x)+","+str(self.y)+"]"
     def __sub__(self,other):
@@ -449,8 +453,12 @@ class WH:
     w = None
     h = None
     def __init__(self,w=0,h=0):
-        self.w = w
-        self.h = h
+        if type(w) == WH:
+            self.w = w.w
+            self.h = w.h
+        else:
+            self.w = w
+            self.h = h
     def __str__(self):
         return "["+str(self.w)+"x"+str(self.h)+"]"
     def __sub__(self,other):
@@ -460,14 +468,18 @@ class WH:
 class RectRegion:
     xy = None
     wh = None
-    def __init__(self,xy=XY(),wh=WH()):
-        self.xy = xy
-        if type(wh) == WH:
-            self.wh = wh
-        elif type(wh) == XY:
-            self.wh = WH(wh.x,wh.y)
+    def __init__(self,xy=None,wh=None):
+        if type(xy) == RectRegion:
+            self.xy = XY(xy.xy)
+            self.wh = WH(xy.wh)
         else:
-            raise Exception("RectRegion wh param invalid")
+            self.xy = XY(xy)
+            if type(wh) == WH:
+                self.wh = wh
+            elif type(wh) == XY:
+                self.wh = WH(wh.x,wh.y)
+            else:
+                raise Exception("RectRegion wh param invalid")
     def __str__(self):
         return "[xy="+str(self.xy)+",wh="+str(self.wh)+"]"
 
@@ -1228,7 +1240,7 @@ def emit_table_as_pdf(path,table_id,tp):
         for note in tp.notes:
             emitpdf.currentPos.x = lx
             #
-            nregion = RectRegion(XY(emitpdf.contentRegion.xy.x,emitpdf.contentRegion.xy.y),WH(emitpdf.contentRegion.wh.w,emitpdf.contentRegion.wh.h))
+            nregion = RectRegion(emitpdf.contentRegion)
             nregion.xy = nregion.xy + XY(lmargin,0)
             nregion.wh.w = nregion.wh.w - lmargin
             #
