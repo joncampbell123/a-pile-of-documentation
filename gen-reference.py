@@ -482,6 +482,8 @@ class EmitPDF:
     pageTitleRegion = None
     pageNumberRegion = None
     #
+    contentRegionStack = None
+    #
     currentTitle = None
     currentPage = None
     pagestream = None
@@ -496,6 +498,8 @@ class EmitPDF:
         ll = XY(0.25,0.5)
         ur = XY(8 - 0.25,11 - 0.25)
         self.contentRegion = RectRegion(ll,ur-ll)
+        #
+        self.contentRegionStack = [ ]
         #
         ll = XY(0.25,0.25)
         ur = XY(8 - 0.25,0.45)
@@ -513,6 +517,11 @@ class EmitPDF:
         self.pagestream = None
         #
         self.pdfhl = None
+    def pushcontentregion(self,region):
+        self.contentRegionStack.append(RectRegion(self.contentRegion.xy,self.contentRegion.wh))
+        self.contentRegion = region
+    def popcontentregion(self):
+        self.contentRegion = self.contentRegionStack.pop()
     def setpdfhl(self,pdfhl):
         self.pdfhl = pdfhl
     def end_page(self):
@@ -1213,8 +1222,17 @@ def emit_table_as_pdf(path,table_id,tp):
         ps.stroke()
         #
         emitpdf.newline(y=5/emitpdf.currentDPI)
+        lx = emitpdf.currentPos.x
+        lmargin = 0.2
+        lbulletx = 0.1
         for note in tp.notes:
-            emitpdf.currentPos.x = emitpdf.currentPos.x + 0.1
+            emitpdf.currentPos.x = lx
+            #
+            nregion = RectRegion(XY(emitpdf.contentRegion.xy.x,emitpdf.contentRegion.xy.y),WH(emitpdf.contentRegion.wh.w,emitpdf.contentRegion.wh.h))
+            nregion.xy = nregion.xy + XY(lmargin,0)
+            nregion.wh.w = nregion.wh.w - lmargin
+            #
+            emitpdf.currentPos.x = lx + lbulletx
             ps.fill_color(0.25,0.25,0.25)
             cx = 0.0
             cy = (8/emitpdf.currentDPI)*0.5*(5.0/4.0)
@@ -1233,11 +1251,16 @@ def emit_table_as_pdf(path,table_id,tp):
             ps.close_subpath()
             ps.fill()
             #
-            emitpdf.currentPos.x = emitpdf.currentPos.x + 0.1
+            emitpdf.currentPos.x = lx + lmargin
+            #
+            emitpdf.pushcontentregion(nregion)
             emitpdf.layout_text_begin()
             ps.set_text_font(emitpdf.font1.reg,8)
             emitpdf.layout_text(note+"\n",pagespan=True)
             emitpdf.layout_text_end()
+            emitpdf.popcontentregion()
+            #
+            emitpdf.currentPos.x = lx
         #
         emitpdf.newline(y=5/emitpdf.currentDPI)
     #
