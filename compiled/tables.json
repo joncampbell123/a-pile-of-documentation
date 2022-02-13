@@ -2892,13 +2892,133 @@
 				"ATTRIB": [
 					{
 						"value": [
-							"[(+|-)params] [d:][path]filespec[/params]",
+							"[(+|-)parms] [d:][path]filespec[/parms]",
 							"Modifies file attributes",
 							"ATTRIB -r myfile.doc /s",
 							""
 						],
 						"source index": 0,
 						"original key": "ATTRIB"
+					}
+				],
+				"BACKUP": [
+					{
+						"value": [
+							"d:[path][filespec] d:[/parms]",
+							"Backs up one disk to another",
+							"BACKUP c:*.* a: /S/F",
+							""
+						],
+						"source index": 0,
+						"original key": "BACKUP"
+					}
+				],
+				"BREAK": [
+					{
+						"value": [
+							"[ON|OFF]",
+							"Defines status of control break",
+							"BREAK ON",
+							""
+						],
+						"source index": 0,
+						"original key": "BREAK"
+					}
+				],
+				"CHCP": [
+					{
+						"value": [
+							"[number]",
+							"Selects code page DOS uses",
+							"CHCP 850",
+							"Must execute NLSFUNC first"
+						],
+						"source index": 0,
+						"original key": "CHCP"
+					}
+				],
+				"CHDIR": [
+					{
+						"value": [
+							"[d:][path]",
+							"Sets or displays current path",
+							"CD c:\\wp\\word\\data",
+							""
+						],
+						"source index": 0,
+						"original key": "CHDIR"
+					}
+				],
+				"CD": [
+					{
+						"value": [
+							"[d:][path]",
+							"Sets or displays current path",
+							"CD c:\\wp\\word\\data",
+							""
+						],
+						"source index": 0,
+						"original key": "CD"
+					}
+				],
+				"CHKDSK": [
+					{
+						"value": [
+							"[d:][path][filespec][/parms]",
+							"Analyzes disk and FAT",
+							"CHKDSK c:/F",
+							""
+						],
+						"source index": 0,
+						"original key": "CHKDSK"
+					}
+				],
+				"CLS": [
+					{
+						"value": [
+							"",
+							"Clears display screen",
+							"CLS",
+							""
+						],
+						"source index": 0,
+						"original key": "CLS"
+					}
+				],
+				"COMMAND": [
+					{
+						"value": [
+							"[d:][path][/parms",
+							"Starts a secondary command processor",
+							"COMMAND c:\\ut /p",
+							""
+						],
+						"source index": 0,
+						"original key": "COMMAND"
+					}
+				],
+				"COMP": [
+					{
+						"value": [
+							"[d:][path][filespec] [d:][path][filespec]",
+							"Compares contents of files",
+							"COMP *.BAT A*.BAT",
+							""
+						],
+						"source index": 0,
+						"original key": "COMP"
+					}
+				],
+				"COPY": [
+					{
+						"value": [
+							"[/parms] [d:][path]filespec[/parms]\n[d:][path][filespec][/parms]",
+							"Copies a file or set of files",
+							"COPY *.* c:",
+							""
+						],
+						"source index": 0,
+						"original key": "COPY"
 					}
 				]
 			},
