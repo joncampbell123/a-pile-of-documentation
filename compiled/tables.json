@@ -14,6 +14,110 @@
 						"source index": 0,
 						"original key": "0xFF"
 					}
+				],
+				"0xfe": [
+					{
+						"value": [
+							"40\n77",
+							"8\n2, 6, or 8",
+							"1\n1",
+							"512\n512",
+							"5.25 inch floppy disk\n8 inch floppy disk"
+						],
+						"source index": 0,
+						"original key": "0xFE"
+					}
+				],
+				"0xfd": [
+					{
+						"value": [
+							"40\n77",
+							"9\n26",
+							"2\n2",
+							"512\n512",
+							"5.25 inch floppy disk\n8 inch floppy disk"
+						],
+						"source index": 0,
+						"original key": "0xFD"
+					}
+				],
+				"0xfc": [
+					{
+						"value": [
+							"40",
+							"9",
+							"1",
+							"512",
+							"5.25 inch floppy disk"
+						],
+						"source index": 0,
+						"original key": "0xFC"
+					}
+				],
+				"0xfb": [
+					{
+						"value": [
+							"80\n80",
+							"8\n8",
+							"2\n2",
+							"512\n512",
+							"5.25 inch floppy disk\n3.5 inch floppy disk"
+						],
+						"source index": 0,
+						"original key": "0xFB"
+					}
+				],
+				"0xfa": [
+					{
+						"value": [
+							"80\n80",
+							"8\n8",
+							"1\n1",
+							"512\n512",
+							"5.25 inch floppy disk\n3.5 inch floppy disk"
+						],
+						"source index": 0,
+						"original key": "0xFA"
+					}
+				],
+				"0xf9": [
+					{
+						"value": [
+							"80\n80",
+							"9\n15",
+							"2\n2",
+							"512\n512",
+							"3.5 inch floppy disk\n5.25 inch floppy disk"
+						],
+						"source index": 0,
+						"original key": "0xF9"
+					}
+				],
+				"0xf8": [
+					{
+						"value": [
+							"-",
+							"-",
+							"-",
+							"-",
+							"Fixed disk"
+						],
+						"source index": 0,
+						"original key": "0xF8"
+					}
+				],
+				"0xf0": [
+					{
+						"value": [
+							"80",
+							"18",
+							"2",
+							"512",
+							"3.5 inch floppy disk"
+						],
+						"source index": 0,
+						"original key": "0xF0"
+					}
 				]
 			},
 			"sources": [

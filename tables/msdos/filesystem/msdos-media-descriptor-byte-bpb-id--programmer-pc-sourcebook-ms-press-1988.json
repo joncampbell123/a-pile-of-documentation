@@ -4,7 +4,18 @@
 		"book": "programmer-pc-sourcebook-ms-press-1988",
 		"subsection": "2.37"
 	},
+	"todo": [
+		"Come up with a way to specify multiple rows with the same key. Perhaps instead of an object, the direct value for the key can be an array of objects"
+	],
 	"table": {
-		"0xFF": { "value": [ "40", "8", "2", "512", "5.25 inch floppy disk" ] }
+		"0xFF": { "value": [ "40", "8", "2", "512", "5.25 inch floppy disk" ] },
+		"0xFE": { "value": [ "40\n77", "8\n2, 6, or 8", "1\n1", "512\n512", "5.25 inch floppy disk\n8 inch floppy disk" ] },
+		"0xFD": { "value": [ "40\n77", "9\n26", "2\n2", "512\n512", "5.25 inch floppy disk\n8 inch floppy disk" ] },
+		"0xFC": { "value": [ "40", "9", "1", "512", "5.25 inch floppy disk" ] },
+		"0xFB": { "value": [ "80\n80", "8\n8", "2\n2", "512\n512", "5.25 inch floppy disk\n3.5 inch floppy disk" ] },
+		"0xFA": { "value": [ "80\n80", "8\n8", "1\n1", "512\n512", "5.25 inch floppy disk\n3.5 inch floppy disk" ] },
+		"0xF9": { "value": [ "80\n80", "9\n15", "2\n2", "512\n512", "3.5 inch floppy disk\n5.25 inch floppy disk" ] },
+		"0xF8": { "value": [ "-", "-", "-", "-", "Fixed disk" ] },
+		"0xF0": { "value": [ "80", "18", "2", "512", "3.5 inch floppy disk" ] }
 	}
 }
