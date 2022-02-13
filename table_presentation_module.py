@@ -98,8 +98,13 @@ class TablePresentation:
                     samekey = False
                     if len(rowbuild) > 0:
                         if rowbuild[len(rowbuild)-1]["columns"][0] == newrowcols[0]:
-                            samekey = True
-                            rowbuild[len(rowbuild)-1]["same key"] = samekey
+                            psi = rowbuild[len(rowbuild)-1]["source index"]
+                            if not psi == None and len(psi) > 0:
+                                psi = psi[len(psi)-1]
+                                csi = row.get("source index")
+                                if not psi == csi:
+                                    samekey = True
+                                    rowbuild[len(rowbuild)-1]["same key"] = samekey
                     rowbuild.append( { "columns": newrowcols, "source index": [ row.get("source index") ], "same key": samekey } )
             #
             self.display.disptable.extend(rowbuild)
