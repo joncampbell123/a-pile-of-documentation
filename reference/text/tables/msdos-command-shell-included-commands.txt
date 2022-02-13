@@ -1,0 +1,20 @@
+
+MS-DOS included command files
+=============================
+
+Commands included with MS-DOS
+
+Command | Minimum version | Maximum version | Specific versions | Description
+========|=================|=================|===================|============
+APPEND  | 3.3             | -               |                   | 
+ASSIGN  | 2.0             | -               |                   | 
+ATTRIB  | 3.0             | -               |                   | 
+BACKUP  | 2.0             | -               |                   | 
+BASIC   | 1.0             | 3.2             |                   | 
+BASICA  | 1.0             | 3.3             |                   | 
+
+Sources
+=======
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.47, Included Command Files Summary
+

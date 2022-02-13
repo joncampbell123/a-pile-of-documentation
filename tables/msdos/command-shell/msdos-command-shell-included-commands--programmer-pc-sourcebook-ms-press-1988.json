@@ -1,0 +1,15 @@
+{
+	"id": "msdos-command-shell-included-commands",
+	"source": {
+		"book": "programmer-pc-sourcebook-ms-press-1988",
+		"subsection": "2.47"
+	},
+	"table": {
+		"APPEND": { "value": [ "3.3", "-", "", ""] },
+		"ASSIGN": { "value": [ "2.0", "-", "", ""] },
+		"ATTRIB": { "value": [ "3.0", "-", "", ""] },
+		"BACKUP": { "value": [ "2.0", "-", "", ""] },
+		"BASIC":  { "value": [ "1.0", "3.2", "", ""] },
+		"BASICA": { "value": [ "1.0", "3.3", "", ""] }
+	}
+}

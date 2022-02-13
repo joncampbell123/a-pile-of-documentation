@@ -1349,6 +1349,139 @@
 				"title": "Format"
 			}
 		},
+		"msdos-command-shell-included-commands": {
+			"table": {
+				"APPEND": [
+					{
+						"value": [
+							"3.3",
+							"-",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "APPEND"
+					}
+				],
+				"ASSIGN": [
+					{
+						"value": [
+							"2.0",
+							"-",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "ASSIGN"
+					}
+				],
+				"ATTRIB": [
+					{
+						"value": [
+							"3.0",
+							"-",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "ATTRIB"
+					}
+				],
+				"BACKUP": [
+					{
+						"value": [
+							"2.0",
+							"-",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "BACKUP"
+					}
+				],
+				"BASIC": [
+					{
+						"value": [
+							"1.0",
+							"3.2",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "BASIC"
+					}
+				],
+				"BASICA": [
+					{
+						"value": [
+							"1.0",
+							"3.3",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "BASICA"
+					}
+				]
+			},
+			"sources": [
+				{
+					"book": "programmer-pc-sourcebook-ms-press-1988",
+					"source index": 0,
+					"citation": {
+						"title": "The Programmer's PC Sourcebook",
+						"author": "Thom Hogan",
+						"publisher": "Microsoft Press",
+						"year": 1988,
+						"type": "book"
+					},
+					"where": [
+						{
+							"path": "Part 2",
+							"type": "part",
+							"title": "Software"
+						},
+						{
+							"path": "Section 2",
+							"type": "section",
+							"title": "DOS Commands, Utilities, and Summaries"
+						},
+						{
+							"path": "2.47",
+							"type": "subsection",
+							"title": "Included Command Files Summary",
+							"page": "64"
+						}
+					]
+				}
+			],
+			"description": "Commands included with MS-DOS",
+			"notes": [],
+			"name": "MS-DOS included command files",
+			"columns": [
+				{
+					"type": "string",
+					"title": "Minimum version"
+				},
+				{
+					"type": "string",
+					"title": "Maximum version"
+				},
+				{
+					"type": "string",
+					"title": "Specific versions"
+				},
+				{
+					"type": "string",
+					"title": "Description"
+				}
+			],
+			"table format type": "key=value",
+			"key column": {
+				"type": "string",
+				"title": "Command"
+			}
+		},
 		"msdos-command-shell-prompt-ansi-control-strings": {
 			"table": {
 				"ESC [ f": [
@@ -4076,6 +4209,15 @@
 							"type": "sections"
 						},
 						"name lookup": "2.44"
+					},
+					{
+						"title": "Included Command Files Summary",
+						"page": "64",
+						"parent lookup": {
+							"name": "Section 2",
+							"type": "sections"
+						},
+						"name lookup": "2.47"
 					}
 				]
 			}
