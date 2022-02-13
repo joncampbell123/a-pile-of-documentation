@@ -13,6 +13,28 @@
 						],
 						"source index": 0,
 						"original key": "0xFF"
+					},
+					{
+						"value": [
+							"40",
+							"8",
+							"2",
+							"512",
+							"5.25 inch floppy disk"
+						],
+						"source index": 1,
+						"original key": "0xFF"
+					},
+					{
+						"value": [
+							"-",
+							"-",
+							"-",
+							"-",
+							"Hard disk (Sanyo 55x DS-DOS 2.11 only)"
+						],
+						"source index": 1,
+						"original key": "0xFF"
 					}
 				],
 				"0xfe": [
@@ -204,6 +226,15 @@
 							"page": "59"
 						}
 					]
+				},
+				{
+					"website": "wikipedia",
+					"source index": 1,
+					"citation": {
+						"title": "Wikipedia, The Free Online Encylopedia",
+						"type": "website",
+						"url": "https://en.wikipedia.org/wiki/Design_of_the_FAT_file_system#BIOS_Parameter_Block"
+					}
 				}
 			],
 			"description": "This is the 8-bit value used in the MS-DOS filesystem and kernel that was used to describe floppy disk formats",
@@ -2946,6 +2977,11 @@
 			"url": "https://sites.google.com/site/pcdosretro/scancodes",
 			"type": "website",
 			"title": "Keyboard scan code/character code combinations returned in AH/AL by INT 16h functions 00h/01h (standard) and functions 01h/11h (extended)"
+		},
+		"wikipedia": {
+			"url": "https://en.wikipedia.org",
+			"type": "website",
+			"title": "Wikipedia, The Free Online Encylopedia"
 		},
 		"computerhope-com": {
 			"url": "https://www.computerhope.com",
