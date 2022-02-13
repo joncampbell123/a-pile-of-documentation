@@ -881,6 +881,172 @@
 				"title": "Format"
 			}
 		},
+		"msdos-hard-disk-format-summary": {
+			"table": {
+				"10 MB": [
+					{
+						"value": [
+							"5.25",
+							"0xF8",
+							"6:1",
+							"4",
+							"306",
+							"17",
+							"512",
+							"8",
+							"1",
+							"8",
+							"2",
+							"32",
+							"512",
+							"20808",
+							"20759",
+							"2595",
+							"2",
+							"XT"
+						],
+						"source index": 0,
+						"original key": "10 MB"
+					}
+				]
+			},
+			"sources": [
+				{
+					"book": "programmer-pc-sourcebook-ms-press-1988",
+					"source index": 0,
+					"citation": {
+						"title": "The Programmer's PC Sourcebook",
+						"author": "Thom Hogan",
+						"publisher": "Microsoft Press",
+						"year": 1988,
+						"type": "book"
+					},
+					"where": [
+						{
+							"path": "Part 2",
+							"type": "part",
+							"title": "Software"
+						},
+						{
+							"path": "Section 2",
+							"type": "section",
+							"title": "DOS Commands, Utilities, and Summaries"
+						},
+						{
+							"path": "2.41",
+							"type": "subsection",
+							"title": "Hard Disk Format Summary",
+							"page": "61"
+						}
+					]
+				}
+			],
+			"description": null,
+			"notes": [
+				"Despite the title, borrowed from the PC Programmer's Sourcebook, this table has been rearranged to provide more general information",
+				"Filesystem details, like reserved sectors, sectors/FAT, root directory sectors, etc. can vary according to the BIOS Parameter Block. They are not fixed, except for older DOS versions",
+				"Total usable sectors and total usable clusters will change if bad sectors are found during formatting",
+				"FAT disk ID bytes are unreliable. Use disk parameter block to determine media type"
+			],
+			"name": "Hard Disk Format Summary",
+			"columns": [
+				{
+					"type": "string",
+					"title": "Disk",
+					"description": "Disk size, 3.5 inch or 5.25 in, etc"
+				},
+				{
+					"type": "uint_t",
+					"title": "ID",
+					"description": "Media ID byte"
+				},
+				{
+					"type": "mixed",
+					"title": "ID",
+					"description": "Interleave"
+				},
+				{
+					"type": "uint_t",
+					"title": "H",
+					"description": "Heads, or more appropriately, sides"
+				},
+				{
+					"type": "uint_t",
+					"title": "T",
+					"description": "Tracks per side"
+				},
+				{
+					"type": "uint_t",
+					"title": "S",
+					"description": "Sectors per track"
+				},
+				{
+					"type": "uint_t",
+					"title": "B/S",
+					"description": "Bytes per sector"
+				},
+				{
+					"type": "uint_t",
+					"title": "S/C",
+					"description": "Sectors per cluster"
+				},
+				{
+					"type": "uint_t",
+					"title": "Res",
+					"description": "Reserved sector count"
+				},
+				{
+					"type": "uint_t",
+					"title": "SF",
+					"description": "Sectors per FAT"
+				},
+				{
+					"type": "uint_t",
+					"title": "FT",
+					"description": "Number of FAT tables"
+				},
+				{
+					"type": "uint_t",
+					"title": "Rs",
+					"description": "Number of root directory sectors"
+				},
+				{
+					"type": "uint_t",
+					"title": "Rm",
+					"description": "Maxmimum root directories allowed given root directory size"
+				},
+				{
+					"type": "uint_t",
+					"title": "TS",
+					"description": "Total sectors"
+				},
+				{
+					"type": "uint_t",
+					"title": "US",
+					"description": "Usable sectors"
+				},
+				{
+					"type": "uint_t",
+					"title": "UC",
+					"description": "Usable clusters"
+				},
+				{
+					"type": "string",
+					"title": "DOS",
+					"description": "Minimum DOS version"
+				},
+				{
+					"type": "string",
+					"title": "System",
+					"description": "Systems that commonly use this format"
+				}
+			],
+			"table format type": "key=value",
+			"key column": {
+				"type": "mixed",
+				"title": "Format"
+			}
+		},
 		"msdos-command-shell-prompt-ansi-control-strings": {
 			"table": {
 				"ESC [ f": [
@@ -3588,6 +3754,16 @@
 							"type": "sections"
 						},
 						"name lookup": "2.40"
+					},
+					{
+						"title": "Hard Disk Format Summary",
+						"page": "61",
+						"source": "IBM PC/XT Technical Reference, pages 1-151 to 1-152",
+						"parent lookup": {
+							"name": "Section 2",
+							"type": "sections"
+						},
+						"name lookup": "2.41"
 					}
 				]
 			}

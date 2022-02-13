@@ -1,0 +1,14 @@
+{
+	"id": "msdos-hard-disk-format-summary",
+	"source": {
+		"book": "programmer-pc-sourcebook-ms-press-1988",
+		"subsection": "2.41"
+	},
+	"notes": [
+		"Total usable sectors and total usable clusters will change if bad sectors are found during formatting",
+		"FAT disk ID bytes are unreliable. Use disk parameter block to determine media type"
+	],
+	"table": {
+		"10 MB": { "value": [ "5.25", "0xF8", "6:1", "4", "306", "17", "512", "8", "1", "8", "2", "32", "512", "20808", "20759", "2595", "2", "XT" ] }
+	}
+}

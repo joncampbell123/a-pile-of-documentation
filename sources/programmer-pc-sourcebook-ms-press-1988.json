@@ -59,6 +59,11 @@
 							"title": "Floppy Disk Format Summary",
 							"page": "61",
 							"source": "MS-DOS 3.2 Progammer's Reference, pages 3-9, 3-10"
+						},
+						"2.41": {
+							"title": "Hard Disk Format Summary",
+							"page": "61",
+							"source": "IBM PC/XT Technical Reference, pages 1-151 to 1-152"
 						}
 					}
 				},
