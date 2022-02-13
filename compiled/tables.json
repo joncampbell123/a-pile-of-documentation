@@ -208,7 +208,8 @@
 			],
 			"description": "This is the 8-bit value used in the MS-DOS filesystem and kernel that was used to describe floppy disk formats",
 			"notes": [
-				"Bytes per sector have been added for completeness, even though not listed in the 1988 Programmer PC Sourcebook.\nBytes/sector values were gathered from other sources.",
+				"The term \"Fixed disk\" usually refers to a hard drive or removable media, in which case the geometry must be read from the BIOS Parameter Block",
+				"Bytes per sector have been added for completeness, even though not listed in the 1988 Programmer PC Sourcebook",
 				"PC programmer's sourcebook (1988) incorrectly states 8-inch media id 0xFE has 2, 6, or 8 sectors per track"
 			],
 			"name": "Media descriptor byte ID values",

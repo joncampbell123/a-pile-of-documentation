@@ -3,6 +3,9 @@
 	"id": "msdos-media-descriptor-byte-bpb-id",
 	"combinable": true,
 	"description": "This is the 8-bit value used in the MS-DOS filesystem and kernel that was used to describe floppy disk formats",
+	"notes": [
+		"The term \"Fixed disk\" usually refers to a hard drive or removable media, in which case the geometry must be read from the BIOS Parameter Block"
+	],
 	"base definition": true,
 	"table format": {
 		"type": "key=value",

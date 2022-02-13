@@ -5,7 +5,7 @@
 		"subsection": "2.37"
 	},
 	"notes": [
-		"Bytes per sector have been added for completeness, even though not listed in the 1988 Programmer PC Sourcebook.\nBytes/sector values were gathered from other sources.",
+		"Bytes per sector have been added for completeness, even though not listed in the 1988 Programmer PC Sourcebook",
 		"PC programmer's sourcebook (1988) incorrectly states 8-inch media id 0xFE has 2, 6, or 8 sectors per track"
 	],
 	"table": {
