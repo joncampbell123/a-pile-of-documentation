@@ -3020,6 +3020,78 @@
 						"source index": 0,
 						"original key": "COPY"
 					}
+				],
+				"CTTY": [
+					{
+						"value": [
+							"devicename",
+							"Changes stdin and stdout to auxiliary console",
+							"CTTY COM1",
+							""
+						],
+						"source index": 0,
+						"original key": "CTTY"
+					}
+				],
+				"DATE": [
+					{
+						"value": [
+							"[date]",
+							"Enters, changes, or displays date",
+							"DATE 1-12-87",
+							""
+						],
+						"source index": 0,
+						"original key": "DATE"
+					}
+				],
+				"DEL": [
+					{
+						"value": [
+							"[d:][path]filespec",
+							"Deletes specified file or files",
+							"DEL *.bak",
+							""
+						],
+						"source index": 0,
+						"original key": "DEL"
+					}
+				],
+				"DIR": [
+					{
+						"value": [
+							"[d:][path][filespec][/parms]",
+							"Lists directory entries",
+							"DIR c:/w",
+							""
+						],
+						"source index": 0,
+						"original key": "DIR"
+					}
+				],
+				"DISKCOMP": [
+					{
+						"value": [
+							"[d: [d:]][/parms]",
+							"Compares contents of two disks",
+							"DISKCOMP a: b:",
+							""
+						],
+						"source index": 0,
+						"original key": "DISKCOMP"
+					}
+				],
+				"DISKCOPY": [
+					{
+						"value": [
+							"[d: [d:]][/parms]",
+							"Copies a disk",
+							"DISKCOPY a: b:",
+							""
+						],
+						"source index": 0,
+						"original key": "DISKCOPY"
+					}
 				]
 			},
 			"sources": [

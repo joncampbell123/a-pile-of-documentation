@@ -17,6 +17,12 @@
 		"CLS": { "value": [ "", "Clears display screen", "CLS", "" ] },
 		"COMMAND": { "value": [ "[d:][path][/parms", "Starts a secondary command processor", "COMMAND c:\\ut /p", "" ] },
 		"COMP": { "value": [ "[d:][path][filespec] [d:][path][filespec]", "Compares contents of files", "COMP *.BAT A*.BAT", "" ] },
-		"COPY": { "value": [ "[/parms] [d:][path]filespec[/parms]\n[d:][path][filespec][/parms]", "Copies a file or set of files", "COPY *.* c:", "" ] }
+		"COPY": { "value": [ "[/parms] [d:][path]filespec[/parms]\n[d:][path][filespec][/parms]", "Copies a file or set of files", "COPY *.* c:", "" ] },
+		"CTTY": { "value": [ "devicename", "Changes stdin and stdout to auxiliary console", "CTTY COM1", "" ] },
+		"DATE": { "value": [ "[date]", "Enters, changes, or displays date", "DATE 1-12-87", "" ] },
+		"DEL": { "value": [ "[d:][path]filespec", "Deletes specified file or files", "DEL *.bak", "" ] },
+		"DIR": { "value": [ "[d:][path][filespec][/parms]", "Lists directory entries", "DIR c:/w", "" ] },
+		"DISKCOMP": { "value": [ "[d: [d:]][/parms]", "Compares contents of two disks", "DISKCOMP a: b:", "" ] },
+		"DISKCOPY": { "value": [ "[d: [d:]][/parms]", "Copies a disk", "DISKCOPY a: b:", "" ] }
 	}
 }
