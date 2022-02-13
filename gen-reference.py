@@ -563,7 +563,7 @@ class EmitPDF:
         # DEBUG: Draw a dark red box around the content region-----------------------------
         if False:
             ps.stroke_color(0.5,0,0)
-            p = self.coordxlate(XY(self.contentRegion.xy.x,self.contentRegion.xy.y))
+            p = self.coordxlate(XY(self.contentRegion.xy))
             ps.moveto(p.x,p.y)
             p = self.coordxlate(XY(self.contentRegion.xy.x+self.contentRegion.wh.w,self.contentRegion.xy.y))
             ps.lineto(p.x,p.y)
@@ -660,8 +660,8 @@ class EmitPDF:
         self.layoutStarted = True
         self.layoutWritten = 0
         self.layoutLineTextBuf = ""
-        self.layoutStartedAt = XY(self.currentPos.x,self.currentPos.y)
-        self.layoutMaxEnd = XY(self.currentPos.x,self.currentPos.y)
+        self.layoutStartedAt = XY(self.currentPos)
+        self.layoutMaxEnd = XY(self.currentPos)
         self.layoutVadj = XY(0,0)
     def layout_text_end(self):
         if len(self.layoutLineTextBuf) > 0:
@@ -673,7 +673,7 @@ class EmitPDF:
         if not xy == None:
             if not type(xy) == XY:
                 raise Exception("move_to() without XY object");
-            self.currentPos = XY(xy.x,xy.y)
+            self.currentPos = XY(xy)
         if not x == None:
             self.currentPos.x = x
         if not y == None:
