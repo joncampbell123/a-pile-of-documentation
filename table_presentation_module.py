@@ -81,6 +81,7 @@ class TablePresentation:
                     break
             #
             rowbuild = [ ]
+            samekey = False
             for row in rowent:
                 newrowcols = [ { "value": key } ]
                 #
@@ -95,17 +96,22 @@ class TablePresentation:
                 if len(rowbuild) > 0 and rowbuild[len(rowbuild)-1]["columns"] == newrowcols:
                     rowbuild[len(rowbuild)-1]["source index"].append(row.get("source index"))
                 else:
-                    samekey = False
                     if len(rowbuild) > 0:
-                        if rowbuild[len(rowbuild)-1]["columns"][0] == newrowcols[0]:
-                            psi = rowbuild[len(rowbuild)-1]["source index"]
-                            if not psi == None and len(psi) > 0:
-                                psi = psi[len(psi)-1]
-                                csi = row.get("source index")
-                                if not psi == csi:
-                                    samekey = True
-                                    rowbuild[len(rowbuild)-1]["same key"] = samekey
-                    rowbuild.append( { "columns": newrowcols, "source index": [ row.get("source index") ], "same key": samekey } )
+                        if not rowbuild[len(rowbuild)-1]["columns"][0] == newrowcols[0]:
+                            raise Exception("Impossible: In this loop the first column is always the same")
+                        #
+                        psi = rowbuild[len(rowbuild)-1]["source index"]
+                        if not psi == None and len(psi) > 0:
+                            psi = psi[len(psi)-1]
+                            csi = row.get("source index")
+                            if not psi == csi:
+                                samekey = True
+                    #
+                    rowbuild.append( { "columns": newrowcols, "source index": [ row.get("source index") ] } )
+            #
+            if samekey == True:
+                for row in rowbuild:
+                    row["same key"] = True
             #
             self.display.disptable.extend(rowbuild)
         #
