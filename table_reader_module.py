@@ -246,10 +246,25 @@ def load_tables():
         json = common_json_help_module.load_json(path)
         #
         file_table_id = None
+        source_id = None
         file_path = pathlib.Path(path)
         if len(file_path.parts) > 0:
             name = file_path.parts[len(file_path.parts)-1]
-            file_table_id = name.split("--")[0]
+            #
+            if name[-5:] == ".json":
+                name = name[:-5]
+            #
+            name_parts = name.split("--")
+            #
+            if len(name_parts) > 0:
+                file_table_id = name_parts[0]
+            else:
+                file_table_id = None
+            #
+            if len(name_parts) > 1:
+                source_id = name_parts[1]
+            else:
+                source_id = None
         #
         if "base definition" in json:
             if json["base definition"] == True:
@@ -258,6 +273,25 @@ def load_tables():
             table_id = json["id"]
         if not table_id == file_table_id:
             raise Exception("Table ID must match base of filename, file="+path+" id="+str(table_id))
+        #
+        if "source" in json:
+            what = None
+            src = json["source"]
+            if "book" in src:
+                what = src["book"]
+            elif "website" in src:
+                what = src["website"]
+            #
+            if not what == source_id:
+                fp = file_path.parts[0:len(file_path.parts)-1]
+                fa = ""
+                for f in fp:
+                    if not fa == "":
+                        fa = fa + "/"
+                    fa = fa + f
+                print("File name "+path+" is wrong")
+                print("Suggest renaming to: "+fa+"/"+str(table_id)+"--"+str(what)+".json")
+                raise Exception("Source ID in table must match second segment of filename, file="+path+" table_id="+str(table_id)+" source_id="+str(what)+" filesourceid="+str(source_id))
         #
         if table_id in tables_by_id:
             table = tables_by_id[table_id]
