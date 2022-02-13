@@ -8,7 +8,6 @@
 							"40",
 							"8",
 							"2",
-							"512",
 							"5.25 inch floppy disk"
 						],
 						"source index": 0,
@@ -21,7 +20,6 @@
 							"40\n77",
 							"8\n2, 6, or 8",
 							"1\n1",
-							"512\n512",
 							"5.25 inch floppy disk\n8 inch floppy disk"
 						],
 						"source index": 0,
@@ -34,7 +32,6 @@
 							"40\n77",
 							"9\n26",
 							"2\n2",
-							"512\n512",
 							"5.25 inch floppy disk\n8 inch floppy disk"
 						],
 						"source index": 0,
@@ -47,7 +44,6 @@
 							"40",
 							"9",
 							"1",
-							"512",
 							"5.25 inch floppy disk"
 						],
 						"source index": 0,
@@ -60,7 +56,6 @@
 							"80\n80",
 							"8\n8",
 							"2\n2",
-							"512\n512",
 							"5.25 inch floppy disk\n3.5 inch floppy disk"
 						],
 						"source index": 0,
@@ -73,7 +68,6 @@
 							"80\n80",
 							"8\n8",
 							"1\n1",
-							"512\n512",
 							"5.25 inch floppy disk\n3.5 inch floppy disk"
 						],
 						"source index": 0,
@@ -86,7 +80,6 @@
 							"80\n80",
 							"9\n15",
 							"2\n2",
-							"512\n512",
 							"3.5 inch floppy disk\n5.25 inch floppy disk"
 						],
 						"source index": 0,
@@ -96,7 +89,6 @@
 				"0xf8": [
 					{
 						"value": [
-							"-",
 							"-",
 							"-",
 							"-",
@@ -112,7 +104,6 @@
 							"80",
 							"18",
 							"2",
-							"512",
 							"3.5 inch floppy disk"
 						],
 						"source index": 0,
@@ -166,10 +157,6 @@
 				{
 					"type": "uint_t",
 					"title": "Sides"
-				},
-				{
-					"type": "uint_t",
-					"title": "Bytes/sector"
 				},
 				{
 					"type": "string",
