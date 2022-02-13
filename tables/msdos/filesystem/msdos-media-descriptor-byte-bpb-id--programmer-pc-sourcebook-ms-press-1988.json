@@ -4,30 +4,33 @@
 		"book": "programmer-pc-sourcebook-ms-press-1988",
 		"subsection": "2.37"
 	},
+	"notes": [
+		"Bytes per sector have been added for completeness, even though not listed in the 1988 Programmer PC Sourcebook"
+	],
 	"table": {
-		"0xFF": { "value": [ "40", "8", "2", "5.25 inch floppy disk" ] },
+		"0xFF": { "value": [ "40", "8", "2", "512", "5.25 inch floppy disk" ] },
 		"0xFE": [
-			{ "value": [ "40", "8", "1", "5.25 inch floppy disk" ] },
-			{ "value": [ "77", "2, 6, or 8", "1", "8 inch floppy disk" ] }
+			{ "value": [ "40", "8", "1", "512", "5.25 inch floppy disk" ] },
+			{ "value": [ "77", "2, 6, or 8", "1", "512", "8 inch floppy disk" ] }
 		],
 		"0xFD": [
-			{ "value": [ "40", "9", "2", "5.25 inch floppy disk" ] },
-			{ "value": [ "77", "26", "2", "8 inch floppy disk" ] }
+			{ "value": [ "40", "9", "2", "512", "5.25 inch floppy disk" ] },
+			{ "value": [ "77", "26", "2", "512", "8 inch floppy disk" ] }
 		],
-		"0xFC": { "value": [ "40", "9", "1", "5.25 inch floppy disk" ] },
+		"0xFC": { "value": [ "40", "9", "1", "512", "5.25 inch floppy disk" ] },
 		"0xFB": [
-			{ "value": [ "80", "8", "2", "5.25 inch floppy disk" ] },
-			{ "value": [ "80", "8", "2", "3.5 inch floppy disk" ] }
+			{ "value": [ "80", "8", "2", "512", "5.25 inch floppy disk" ] },
+			{ "value": [ "80", "8", "2", "512", "3.5 inch floppy disk" ] }
 		],
 		"0xFA": [
-			{ "value": [ "80", "8", "1", "5.25 inch floppy disk" ] },
-			{ "value": [ "80", "8", "1", "3.5 inch floppy disk" ] }
+			{ "value": [ "80", "8", "1", "512", "5.25 inch floppy disk" ] },
+			{ "value": [ "80", "8", "1", "512", "3.5 inch floppy disk" ] }
 		],
 		"0xF9": [
-			{ "value": [ "80", "9", "2", "3.5 inch floppy disk" ] },
-			{ "value": [ "80", "15", "2", "5.25 inch floppy disk" ] }
+			{ "value": [ "80", "9", "2", "512", "3.5 inch floppy disk" ] },
+			{ "value": [ "80", "15", "2", "512", "5.25 inch floppy disk" ] }
 		],
-		"0xF8": { "value": [ "-", "-", "-", "Fixed disk" ] },
-		"0xF0": { "value": [ "80", "18", "2", "3.5 inch floppy disk" ] }
+		"0xF8": { "value": [ "-", "-", "-", "-", "Fixed disk" ] },
+		"0xF0": { "value": [ "80", "18", "2", "512", "3.5 inch floppy disk" ] }
 	}
 }

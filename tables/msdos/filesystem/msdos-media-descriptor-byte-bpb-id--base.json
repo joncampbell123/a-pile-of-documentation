@@ -24,6 +24,10 @@
 				"title": "Sides"
 			},
 			{
+				"type": "uint_t",
+				"title": "Bytes/sector"
+			},
+			{
 				"type": "string",
 				"title": "Format"
 			}

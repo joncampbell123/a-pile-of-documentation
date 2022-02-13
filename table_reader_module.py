@@ -162,6 +162,13 @@ class Table:
         return key
     def add_info(self,json):
         source_idx = None
+        if "notes" in json:
+            if isinstance(json["notes"], str):
+                self.notes.append(json["notes"])
+            elif isinstance(json["notes"], list):
+                self.notes.extend(json["notes"])
+            else:
+                raise Exception("Notes element is neither string nor array in "+self.id)
         if "source" in json:
             source_idx = len(self.sources)
             json["source"]["source index"] = source_idx

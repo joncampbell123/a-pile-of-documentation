@@ -8,6 +8,7 @@
 							"40",
 							"8",
 							"2",
+							"512",
 							"5.25 inch floppy disk"
 						],
 						"source index": 0,
@@ -20,6 +21,7 @@
 							"40",
 							"8",
 							"1",
+							"512",
 							"5.25 inch floppy disk"
 						],
 						"source index": 0,
@@ -30,6 +32,7 @@
 							"77",
 							"2, 6, or 8",
 							"1",
+							"512",
 							"8 inch floppy disk"
 						],
 						"source index": 0,
@@ -42,6 +45,7 @@
 							"40",
 							"9",
 							"2",
+							"512",
 							"5.25 inch floppy disk"
 						],
 						"source index": 0,
@@ -52,6 +56,7 @@
 							"77",
 							"26",
 							"2",
+							"512",
 							"8 inch floppy disk"
 						],
 						"source index": 0,
@@ -64,6 +69,7 @@
 							"40",
 							"9",
 							"1",
+							"512",
 							"5.25 inch floppy disk"
 						],
 						"source index": 0,
@@ -76,6 +82,7 @@
 							"80",
 							"8",
 							"2",
+							"512",
 							"5.25 inch floppy disk"
 						],
 						"source index": 0,
@@ -86,6 +93,7 @@
 							"80",
 							"8",
 							"2",
+							"512",
 							"3.5 inch floppy disk"
 						],
 						"source index": 0,
@@ -98,6 +106,7 @@
 							"80",
 							"8",
 							"1",
+							"512",
 							"5.25 inch floppy disk"
 						],
 						"source index": 0,
@@ -108,6 +117,7 @@
 							"80",
 							"8",
 							"1",
+							"512",
 							"3.5 inch floppy disk"
 						],
 						"source index": 0,
@@ -120,6 +130,7 @@
 							"80",
 							"9",
 							"2",
+							"512",
 							"3.5 inch floppy disk"
 						],
 						"source index": 0,
@@ -130,6 +141,7 @@
 							"80",
 							"15",
 							"2",
+							"512",
 							"5.25 inch floppy disk"
 						],
 						"source index": 0,
@@ -139,6 +151,7 @@
 				"0xf8": [
 					{
 						"value": [
+							"-",
 							"-",
 							"-",
 							"-",
@@ -154,6 +167,7 @@
 							"80",
 							"18",
 							"2",
+							"512",
 							"3.5 inch floppy disk"
 						],
 						"source index": 0,
@@ -193,7 +207,9 @@
 				}
 			],
 			"description": "This is the 8-bit value used in the MS-DOS filesystem and kernel that was used to describe floppy disk formats",
-			"notes": [],
+			"notes": [
+				"Bytes per sector have been added for completeness, even though not listed in the 1988 Programmer PC Sourcebook"
+			],
 			"name": "Media descriptor byte ID values",
 			"columns": [
 				{
@@ -207,6 +223,10 @@
 				{
 					"type": "uint_t",
 					"title": "Sides"
+				},
+				{
+					"type": "uint_t",
+					"title": "Bytes/sector"
 				},
 				{
 					"type": "string",
