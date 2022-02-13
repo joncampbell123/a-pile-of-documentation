@@ -53,7 +53,7 @@ Notes
    header instead. The initial value of SP in the book is defined as the size of the STACK segment.
 
  * PSP = Program Segment Prefix
- * NEAR CALLs in COM files is more of a limitation of assemblers in MS-DOS. If you are willing to lay out memory on your own, you 
+ * NEAR CALLs in COM files are more of a limitation of assemblers in MS-DOS. If you are willing to lay out memory on your own, you 
    can certainly have segments in a COM file, and FAR calls. However COM files do not have a relocation table, so any relocations 
    have to be manually done somehow to get the same function.
 
