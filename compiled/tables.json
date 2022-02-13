@@ -2876,6 +2876,18 @@
 						"source index": 0,
 						"original key": "APPEND"
 					}
+				],
+				"ASSIGN": [
+					{
+						"value": [
+							"[x[=] y [...]]",
+							"Routes disk I/O to another drive",
+							"ASSIGN a=c b=c",
+							""
+						],
+						"source index": 0,
+						"original key": "ASSIGN"
+					}
 				]
 			},
 			"sources": [
