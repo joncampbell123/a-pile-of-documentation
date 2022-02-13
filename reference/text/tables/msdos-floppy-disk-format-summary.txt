@@ -8,23 +8,24 @@ Floppy Disk Format Summary
  - T: Tracks per side
  - S: Sectors per track
  - B/S: Bytes per sector
- - Cluster: Sectors per cluster
- - Reserved: Reserved sector count
- - FAT Size: Sectors per FAT
- - FATs: Number of FAT tables
- - Rootdir: Number of root directory sectors
- - Rootmax: Maxmimum root directories allowed given root directory size
- - Sectors: Total sectors
- - Usable: Usable sectors
- - Clusters: Usable clusters
+ - S/C: Sectors per cluster
+ - Res: Reserved sector count
+ - SF: Sectors per FAT
+ - FT: Number of FAT tables
+ - Rs: Number of root directory sectors
+ - Rm: Maxmimum root directories allowed given root directory size
+ - TS: Total sectors
+ - US: Usable sectors
+ - UC: Usable clusters
  - DOS: Minimum DOS version
+ - System: Systems that commonly use this format
 
-Format | Disk | ID   | H | T  | S | B/S | Cluster | Reserved | FAT Size | FATs | Rootdir | Rootmax | Sectors | Usable | Clusters | DOS
-=======|======|======|===|====|===|=====|=========|==========|==========|======|=========|=========|=========|========|==========|====
-160KB  | 5.25 | 0xFE | 1 | 40 | 8 | 512 | 1       | 1        | 1        | 2    | 4       | 64      | 320     | 313    | 313      | 1
-180KB  | 5.25 | 0xFC | 1 | 40 | 9 | 512 | 1       | 1        | 2        | 2    | 4       | 64      | 360     | 351    | 351      | 2
-320KB  | 5.25 | 0xFF | 2 | 40 | 8 | 512 | 2       | 1        | 1        | 2    | 7       | 112     | 640     | 630    | 315      | 1.1
-360KB  | 5.25 | 0xFD | 2 | 40 | 9 | 512 | 2       | 1        | 2        | 2    | 7       | 112     | 720     | 708    | 354      | 2
+Format | Disk | ID   | H | T  | S | B/S | S/C | Res | SF | FT | Rs | Rm  | TS  | US  | UC  | DOS | System
+=======|======|======|===|====|===|=====|=====|=====|====|====|====|=====|=====|=====|=====|=====|=======
+160KB  | 5.25 | 0xFE | 1 | 40 | 8 | 512 | 1   | 1   | 1  | 2  | 4  | 64  | 320 | 313 | 313 | 1   | 
+180KB  | 5.25 | 0xFC | 1 | 40 | 9 | 512 | 1   | 1   | 2  | 2  | 4  | 64  | 360 | 351 | 351 | 2   | 
+320KB  | 5.25 | 0xFF | 2 | 40 | 8 | 512 | 2   | 1   | 1  | 2  | 7  | 112 | 640 | 630 | 315 | 1.1 | 
+360KB  | 5.25 | 0xFD | 2 | 40 | 9 | 512 | 2   | 1   | 2  | 2  | 7  | 112 | 720 | 708 | 354 | 2   | PC/XT
 
 Sources
 =======

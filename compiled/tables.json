@@ -590,7 +590,8 @@
 							"320",
 							"313",
 							"313",
-							"1"
+							"1",
+							""
 						],
 						"source index": 0,
 						"original key": "160KB"
@@ -614,7 +615,8 @@
 							"640",
 							"630",
 							"315",
-							"1.1"
+							"1.1",
+							""
 						],
 						"source index": 0,
 						"original key": "320KB"
@@ -638,7 +640,8 @@
 							"360",
 							"351",
 							"351",
-							"2"
+							"2",
+							""
 						],
 						"source index": 0,
 						"original key": "180KB"
@@ -662,7 +665,8 @@
 							"720",
 							"708",
 							"354",
-							"2"
+							"2",
+							"PC/XT"
 						],
 						"source index": 0,
 						"original key": "360KB"
@@ -742,53 +746,58 @@
 				},
 				{
 					"type": "uint_t",
-					"title": "Cluster",
+					"title": "S/C",
 					"description": "Sectors per cluster"
 				},
 				{
 					"type": "uint_t",
-					"title": "Reserved",
+					"title": "Res",
 					"description": "Reserved sector count"
 				},
 				{
 					"type": "uint_t",
-					"title": "FAT Size",
+					"title": "SF",
 					"description": "Sectors per FAT"
 				},
 				{
 					"type": "uint_t",
-					"title": "FATs",
+					"title": "FT",
 					"description": "Number of FAT tables"
 				},
 				{
 					"type": "uint_t",
-					"title": "Rootdir",
+					"title": "Rs",
 					"description": "Number of root directory sectors"
 				},
 				{
 					"type": "uint_t",
-					"title": "Rootmax",
+					"title": "Rm",
 					"description": "Maxmimum root directories allowed given root directory size"
 				},
 				{
 					"type": "uint_t",
-					"title": "Sectors",
+					"title": "TS",
 					"description": "Total sectors"
 				},
 				{
 					"type": "uint_t",
-					"title": "Usable",
+					"title": "US",
 					"description": "Usable sectors"
 				},
 				{
 					"type": "uint_t",
-					"title": "Clusters",
+					"title": "UC",
 					"description": "Usable clusters"
 				},
 				{
 					"type": "string",
 					"title": "DOS",
 					"description": "Minimum DOS version"
+				},
+				{
+					"type": "string",
+					"title": "System",
+					"description": "Systems that commonly use this format"
 				}
 			],
 			"table format type": "key=value",
