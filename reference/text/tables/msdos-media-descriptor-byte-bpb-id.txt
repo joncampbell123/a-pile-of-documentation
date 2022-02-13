@@ -6,6 +6,8 @@ This is the 8-bit value used in the MS-DOS filesystem and kernel that was used t
 
 ID   | Tracks/side | Sectors/track | Sides | Bytes/sector | Format
 =====|=============|===============|=======|==============|===========================================================
+0xED | 80          | 9             | 2     | 512          | 5.25 inch (Tandy 2000 only)                                [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
 0xEE | -           | -             | -     | -            | Custom non-standard partitions with nonstandard            [*1]
      |             |               |       |              | BIOS Parameter Block or special media access.
      |             |               |       |              | Like 0xF8 but not recognized by unaware systems by design.

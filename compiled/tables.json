@@ -467,6 +467,19 @@
 						"source index": 1,
 						"original key": "0xEE"
 					}
+				],
+				"0xed": [
+					{
+						"value": [
+							"80",
+							"9",
+							"2",
+							"512",
+							"5.25 inch (Tandy 2000 only)"
+						],
+						"source index": 1,
+						"original key": "0xED"
+					}
 				]
 			},
 			"sources": [
