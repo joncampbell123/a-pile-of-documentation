@@ -4,14 +4,50 @@ MS-DOS included command files
 
 Commands included with MS-DOS
 
-Command | Minimum version | Maximum version | Specific versions | Description
-========|=================|=================|===================|============
-APPEND  | 3.3             | -               |                   | 
-ASSIGN  | 2.0             | -               |                   | 
-ATTRIB  | 3.0             | -               |                   | 
-BACKUP  | 2.0             | -               |                   | 
-BASIC   | 1.0             | 3.2             |                   | 
-BASICA  | 1.0             | 3.3             |                   | 
+Command  | Minimum version | Maximum version | Specific versions | Description
+=========|=================|=================|===================|============
+APPEND   | 3.3             | -               |                   | 
+ASSIGN   | 2.0             | -               |                   | 
+ATTRIB   | 3.0             | -               |                   | 
+BACKUP   | 2.0             | -               |                   | 
+BASIC    | 1.0             | 3.2             |                   | 
+BASICA   | 1.0             | 3.3             |                   | 
+CHCP     |                 |                 |                   | 
+CHKDSK   |                 |                 |                   | 
+COMP     |                 |                 |                   | 
+DEBUG    |                 |                 |                   | 
+DISKCOMP |                 |                 |                   | 
+DISKCOPY |                 |                 |                   | 
+EDLIN    |                 |                 |                   | 
+EXE2BIN  |                 |                 |                   | 
+FASTOPEN |                 |                 |                   | 
+FDISK    |                 |                 |                   | 
+FIND     |                 |                 |                   | 
+FORMAT   |                 |                 |                   | 
+GRAFTABL |                 |                 |                   | 
+GRAPHICS |                 |                 |                   | 
+JOIN     |                 |                 |                   | 
+KEYBFR   |                 |                 |                   | 
+KEYBGR   |                 |                 |                   | 
+KEYBIT   |                 |                 |                   | 
+KEYBSP   |                 |                 |                   | 
+KEYBUK   |                 |                 |                   | 
+LABEL    |                 |                 |                   | 
+LINK     |                 |                 |                   | 
+MODE     |                 |                 |                   | 
+MORE     |                 |                 |                   | 
+NLSFUNC  |                 |                 |                   | 
+PRINT    |                 |                 |                   | 
+RECOVER  |                 |                 |                   | 
+REPLACE  |                 |                 |                   | 
+RESTORE  |                 |                 |                   | 
+SELECT   |                 |                 |                   | 
+SHARE    |                 |                 |                   | 
+SORT     |                 |                 |                   | 
+SUBST    |                 |                 |                   | 
+SYS      |                 |                 |                   | 
+TREE     |                 |                 |                   | 
+XCOPY    |                 |                 |                   | 
 
 Sources
 =======

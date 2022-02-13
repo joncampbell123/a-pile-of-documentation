@@ -1422,6 +1422,438 @@
 						"source index": 0,
 						"original key": "BASICA"
 					}
+				],
+				"CHCP": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "CHCP"
+					}
+				],
+				"CHKDSK": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "CHKDSK"
+					}
+				],
+				"COMP": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "COMP"
+					}
+				],
+				"DEBUG": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "DEBUG"
+					}
+				],
+				"DISKCOMP": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "DISKCOMP"
+					}
+				],
+				"DISKCOPY": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "DISKCOPY"
+					}
+				],
+				"EDLIN": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "EDLIN"
+					}
+				],
+				"EXE2BIN": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "EXE2BIN"
+					}
+				],
+				"FASTOPEN": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "FASTOPEN"
+					}
+				],
+				"FDISK": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "FDISK"
+					}
+				],
+				"FIND": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "FIND"
+					}
+				],
+				"FORMAT": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "FORMAT"
+					}
+				],
+				"GRAFTABL": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "GRAFTABL"
+					}
+				],
+				"GRAPHICS": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "GRAPHICS"
+					}
+				],
+				"JOIN": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "JOIN"
+					}
+				],
+				"KEYBUK": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "KEYBUK"
+					}
+				],
+				"KEYBGR": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "KEYBGR"
+					}
+				],
+				"KEYBFR": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "KEYBFR"
+					}
+				],
+				"KEYBIT": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "KEYBIT"
+					}
+				],
+				"KEYBSP": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "KEYBSP"
+					}
+				],
+				"LABEL": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "LABEL"
+					}
+				],
+				"LINK": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "LINK"
+					}
+				],
+				"MODE": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "MODE"
+					}
+				],
+				"MORE": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "MORE"
+					}
+				],
+				"NLSFUNC": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "NLSFUNC"
+					}
+				],
+				"PRINT": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "PRINT"
+					}
+				],
+				"RECOVER": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "RECOVER"
+					}
+				],
+				"REPLACE": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "REPLACE"
+					}
+				],
+				"RESTORE": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "RESTORE"
+					}
+				],
+				"SELECT": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "SELECT"
+					}
+				],
+				"SHARE": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "SHARE"
+					}
+				],
+				"SORT": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "SORT"
+					}
+				],
+				"SUBST": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "SUBST"
+					}
+				],
+				"SYS": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "SYS"
+					}
+				],
+				"TREE": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "TREE"
+					}
+				],
+				"XCOPY": [
+					{
+						"value": [
+							"",
+							"",
+							"",
+							""
+						],
+						"source index": 0,
+						"original key": "XCOPY"
+					}
 				]
 			},
 			"sources": [
