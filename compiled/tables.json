@@ -11,6 +11,136 @@
 						"source index": 0,
 						"original key": "Maximum program size"
 					}
+				],
+				"Segment use": [
+					{
+						"value": [
+							"One segment only",
+							"Multiple segments allowed"
+						],
+						"source index": 0,
+						"original key": "Segment use"
+					}
+				],
+				"Entry point": [
+					{
+						"value": [
+							"PSP:0x100",
+							"EXE header initial CS:IP values"
+						],
+						"source index": 0,
+						"original key": "Entry point"
+					}
+				],
+				"CS at entry": [
+					{
+						"value": [
+							"PSP",
+							"Segment containing module with entry point"
+						],
+						"source index": 0,
+						"original key": "CS at entry"
+					}
+				],
+				"IP at entry": [
+					{
+						"value": [
+							"0x100",
+							"Offset of entry point within it's segment"
+						],
+						"source index": 0,
+						"original key": "IP at entry"
+					}
+				],
+				"DS at entry": [
+					{
+						"value": [
+							"PSP",
+							"PSP"
+						],
+						"source index": 0,
+						"original key": "DS at entry"
+					}
+				],
+				"ES at entry": [
+					{
+						"value": [
+							"PSP",
+							"PSP"
+						],
+						"source index": 0,
+						"original key": "ES at entry"
+					}
+				],
+				"SS at entry": [
+					{
+						"value": [
+							"PSP",
+							"EXE header, initial SS segment value"
+						],
+						"source index": 0,
+						"original key": "SS at entry"
+					}
+				],
+				"SP at entry": [
+					{
+						"value": [
+							"0xFFFE, or top word of available memory, whichever is lower",
+							"EXE header, initial SP segment value"
+						],
+						"source index": 0,
+						"original key": "SP at entry"
+					}
+				],
+				"Stack at entry": [
+					{
+						"value": [
+							"Zero word on stack",
+							"Initialized or uninitialized data"
+						],
+						"source index": 0,
+						"original key": "Stack at entry"
+					}
+				],
+				"Stack size": [
+					{
+						"value": [
+							"65536 - (ProgramSize + 256)",
+							"Size of stack segment.\nIf assembly language programming, size of the STACK segment"
+						],
+						"source index": 0,
+						"original key": "Stack size"
+					}
+				],
+				"Memory allocation": [
+					{
+						"value": [
+							"All free memory is allocated to the program",
+							"All free memory, or the maximum allocation size specified in the EXE header\nwhichever is smaller."
+						],
+						"source index": 0,
+						"original key": "Memory allocation"
+					}
+				],
+				"Subroutine calls": [
+					{
+						"value": [
+							"NEAR CALLs only",
+							"NEAR or FAR CALLS allowed"
+						],
+						"source index": 0,
+						"original key": "Subroutine calls"
+					}
+				],
+				"Size of file": [
+					{
+						"value": [
+							"Exact size of program not including PSP",
+							"Size of program plus EXE header"
+						],
+						"source index": 0,
+						"original key": "Size of file"
+					}
 				]
 			},
 			"sources": [
@@ -46,7 +176,12 @@
 			],
 			"description": null,
 			"notes": [
-				"The 65278 COM program size limit is based on:\n65536 - 256 byte Program Segment Prefix - 2 byte stack"
+				"The 65278 COM program size limit is based on:\n65536 - 256 byte Program Segment Prefix - 2 byte stack",
+				"PC Programmer's Sourcebook (1988) incorrectly states the entry point is determined by END segment. It is actually determined by an initial CS:IP value in the EXE header",
+				"PC Programmer's Sourcebook (1988) refers to the initial SS segment at entry in terms of assembly language programming, in which the segment defined with the STACK attribute becomes the stack. This compilation refers to the initial value according to the EXE header instead. The initial value of SP in the book is defined as the size of the STACK segment.",
+				"PSP = Program Segment Prefix",
+				"NEAR CALLs in COM files is more of a limitation of assemblers in MS-DOS. If you are willing to lay out memory on your own, you can certainly have segments in a COM file, and FAR calls. However COM files do not have a relocation table, so any relocations have to be manually done somehow to get the same function.",
+				"The EXE header specifies how much to load, which can be less than the size of the EXE file. Additional data can be placed beyond that point which is then ignored by MS-DOS when loading the EXE file into memory. This is widely used to carry additional data with an executable file, including self-extracting PKZIP archives (ZIP archive appended to an EXE). The Windows executable file format exploits this to place a PE or NE header beyond the MS-DOS \"stub\", so that if a Windows program is ever run in MS-DOS mode, only the small stub is loaded into memory so it can remind you to run it from Windows."
 			],
 			"name": "COM vs EXE file differences",
 			"columns": [

@@ -2,9 +2,38 @@
 COM vs EXE file differences
 ===========================
 
-Item                 | COM Programs | EXE Programs
-=====================|==============|=============
-Maximum program size | 65278        | No limit
+Item                 | COM Programs                                                | EXE Programs
+=====================|=============================================================|============================================================================
+CS at entry          | PSP                                                         | Segment containing module with entry point
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+DS at entry          | PSP                                                         | PSP
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Entry point          | PSP:0x100                                                   | EXE header initial CS:IP values
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+ES at entry          | PSP                                                         | PSP
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+IP at entry          | 0x100                                                       | Offset of entry point within it's segment
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Maximum program size | 65278                                                       | No limit
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Memory allocation    | All free memory is allocated to the program                 | All free memory, or the maximum allocation size specified in the EXE header
+                     |                                                             | whichever is smaller.
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Segment use          | One segment only                                            | Multiple segments allowed
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Size of file         | Exact size of program not including PSP                     | Size of program plus EXE header
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+SP at entry          | 0xFFFE, or top word of available memory, whichever is lower | EXE header, initial SP segment value
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+SS at entry          | PSP                                                         | EXE header, initial SS segment value
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Stack at entry       | Zero word on stack                                          | Initialized or uninitialized data
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Stack size           | 65536 - (ProgramSize + 256)                                 | Size of stack segment.
+                     |                                                             | If assembly language programming, size of the STACK segment
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Subroutine calls     | NEAR CALLs only                                             | NEAR or FAR CALLS allowed
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
 
 Sources
 =======
@@ -15,4 +44,22 @@ Notes
 -----
  * The 65278 COM program size limit is based on:
    65536 - 256 byte Program Segment Prefix - 2 byte stack
+
+ * PC Programmer's Sourcebook (1988) incorrectly states the entry point is determined by END segment. It is actually determined by 
+   an initial CS:IP value in the EXE header
+
+ * PC Programmer's Sourcebook (1988) refers to the initial SS segment at entry in terms of assembly language programming, in which 
+   the segment defined with the STACK attribute becomes the stack. This compilation refers to the initial value according to the EXE
+   header instead. The initial value of SP in the book is defined as the size of the STACK segment.
+
+ * PSP = Program Segment Prefix
+ * NEAR CALLs in COM files is more of a limitation of assemblers in MS-DOS. If you are willing to lay out memory on your own, you 
+   can certainly have segments in a COM file, and FAR calls. However COM files do not have a relocation table, so any relocations 
+   have to be manually done somehow to get the same function.
+
+ * The EXE header specifies how much to load, which can be less than the size of the EXE file. Additional data can be placed beyond 
+   that point which is then ignored by MS-DOS when loading the EXE file into memory. This is widely used to carry additional data 
+   with an executable file, including self-extracting PKZIP archives (ZIP archive appended to an EXE). The Windows executable file 
+   format exploits this to place a PE or NE header beyond the MS-DOS "stub", so that if a Windows program is ever run in MS-DOS 
+   mode, only the small stub is loaded into memory so it can remind you to run it from Windows.
 
