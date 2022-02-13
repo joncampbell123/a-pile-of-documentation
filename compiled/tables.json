@@ -186,6 +186,28 @@
 						],
 						"source index": 0,
 						"original key": "0xFB"
+					},
+					{
+						"value": [
+							"80",
+							"8",
+							"2",
+							"512",
+							"3.5 inch floppy disk"
+						],
+						"source index": 1,
+						"original key": "0xFB"
+					},
+					{
+						"value": [
+							"80",
+							"8",
+							"2",
+							"512",
+							"5.25 inch floppy disk"
+						],
+						"source index": 1,
+						"original key": "0xFB"
 					}
 				],
 				"0xfa": [
@@ -209,6 +231,28 @@
 							"3.5 inch floppy disk"
 						],
 						"source index": 0,
+						"original key": "0xFA"
+					},
+					{
+						"value": [
+							"80",
+							"8",
+							"1",
+							"512",
+							"3.5 inch floppy disk"
+						],
+						"source index": 1,
+						"original key": "0xFA"
+					},
+					{
+						"value": [
+							"80",
+							"8",
+							"1",
+							"512",
+							"5.25 inch floppy disk"
+						],
+						"source index": 1,
 						"original key": "0xFA"
 					}
 				],
@@ -234,6 +278,39 @@
 						],
 						"source index": 0,
 						"original key": "0xF9"
+					},
+					{
+						"value": [
+							"80",
+							"9",
+							"2",
+							"512",
+							"3.5 inch floppy disk"
+						],
+						"source index": 1,
+						"original key": "0xF9"
+					},
+					{
+						"value": [
+							"80",
+							"18",
+							"2",
+							"512",
+							"3.5 inch floppy disk (DOS 3.2 only)"
+						],
+						"source index": 1,
+						"original key": "0xF9"
+					},
+					{
+						"value": [
+							"80",
+							"15",
+							"2",
+							"512",
+							"5.25 inch floppy disk"
+						],
+						"source index": 1,
+						"original key": "0xF9"
 					}
 				],
 				"0xf8": [
@@ -246,6 +323,50 @@
 							"Fixed disk"
 						],
 						"source index": 0,
+						"original key": "0xF8"
+					},
+					{
+						"value": [
+							"-",
+							"-",
+							"-",
+							"-",
+							"Fixed disk"
+						],
+						"source index": 1,
+						"original key": "0xF8"
+					},
+					{
+						"value": [
+							"80",
+							"9",
+							"1",
+							"512",
+							"3.5 inch floppy disk (MS-DOS 3.1 and MSX-DOS)"
+						],
+						"source index": 1,
+						"original key": "0xF8"
+					},
+					{
+						"value": [
+							"80",
+							"9",
+							"2",
+							"512",
+							"5.25 inch floppy disk (Sanyo 55x DS-DOS 2.11 only)"
+						],
+						"source index": 1,
+						"original key": "0xF8"
+					},
+					{
+						"value": [
+							"-",
+							"-",
+							"2",
+							"-",
+							"Single sided (Altos MS-DOS 2.11 only)"
+						],
+						"source index": 1,
 						"original key": "0xF8"
 					}
 				],
