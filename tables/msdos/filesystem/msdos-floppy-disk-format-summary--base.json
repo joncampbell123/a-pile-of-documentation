@@ -11,7 +11,7 @@
 	"table format": {
 		"type": "key=value",
 		"key": {
-			"type": "string",
+			"type": "mixed",
 			"title": "Format"
 		},
 		"value": [

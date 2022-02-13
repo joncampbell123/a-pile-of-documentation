@@ -572,7 +572,7 @@
 		},
 		"msdos-floppy-disk-format-summary": {
 			"table": {
-				"160KB": [
+				"160 KB": [
 					{
 						"value": [
 							"5.25",
@@ -594,10 +594,10 @@
 							""
 						],
 						"source index": 0,
-						"original key": "160KB"
+						"original key": "160 KB"
 					}
 				],
-				"320KB": [
+				"320 KB": [
 					{
 						"value": [
 							"5.25",
@@ -619,10 +619,10 @@
 							""
 						],
 						"source index": 0,
-						"original key": "320KB"
+						"original key": "320 KB"
 					}
 				],
-				"180KB": [
+				"180 KB": [
 					{
 						"value": [
 							"5.25",
@@ -644,10 +644,10 @@
 							""
 						],
 						"source index": 0,
-						"original key": "180KB"
+						"original key": "180 KB"
 					}
 				],
-				"360KB": [
+				"360 KB": [
 					{
 						"value": [
 							"5.25",
@@ -669,10 +669,10 @@
 							"PC/XT"
 						],
 						"source index": 0,
-						"original key": "360KB"
+						"original key": "360 KB"
 					}
 				],
-				"1200KB": [
+				"1200 KB": [
 					{
 						"value": [
 							"5.25",
@@ -694,10 +694,10 @@
 							"AT"
 						],
 						"source index": 0,
-						"original key": "1200KB"
+						"original key": "1200 KB"
 					}
 				],
-				"720KB": [
+				"720 KB": [
 					{
 						"value": [
 							"3.5",
@@ -719,10 +719,10 @@
 							"PC convertible"
 						],
 						"source index": 0,
-						"original key": "720KB"
+						"original key": "720 KB"
 					}
 				],
-				"1440KB": [
+				"1440 KB": [
 					{
 						"value": [
 							"3.5",
@@ -744,7 +744,7 @@
 							"PS/2"
 						],
 						"source index": 0,
-						"original key": "1440KB"
+						"original key": "1440 KB"
 					}
 				]
 			},
@@ -877,7 +877,7 @@
 			],
 			"table format type": "key=value",
 			"key column": {
-				"type": "string",
+				"type": "mixed",
 				"title": "Format"
 			}
 		},
