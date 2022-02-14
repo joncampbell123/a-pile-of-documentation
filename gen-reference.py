@@ -1288,7 +1288,8 @@ ftxt = open("reference/text/tables.txt","w",encoding="UTF-8")
 
 tables = tables_json.get("tables")
 if not tables == None:
-    for table_id in tables:
+    torder = sorted(tables.keys())
+    for table_id in torder:
         tp = table_presentation_module.TablePresentation(tables[table_id])
         emit_table_as_text(ftxt,table_id,tp)
         emit_table_as_html("reference/html/tables/"+table_id+".htm",table_id,tp)

@@ -1,3 +1,173 @@
+IBM Extended Character Codes, BIOS Keyboard Interface
+=====================================================
+
+Extended character codes returned by the IBM BIOS in the keyboard buffer, through INT 16h, and at the MS-DOS console driver as 00h <code>
+
+ - Character code: Character code returned by the BIOS
+ - Key combination: Key combination that generates the character code
+
+Character code | Key combination
+===============|==========================
+0x01           | Alt+Esc                   [*1]
+0x03           | Ctrl+2                    [*1]
+0x03           | Null character (none)     [*0]
+0x0E           | Alt+Backspace             [*1]
+0x0F           | Shift Tab
+0x10           | Alt+Q
+0x11           | Alt+W
+0x12           | Alt+E
+0x13           | Alt+R
+0x14           | Alt+T
+0x15           | Alt+Y
+0x16           | Alt+U
+0x17           | Alt+I
+0x18           | Alt+O
+0x19           | Alt+P
+0x1A           | Alt+[                     [*1]
+0x1B           | Alt+]                     [*1]
+0x1C           | Alt+Enter                 [*1]
+0x1E           | Alt+A
+0x1F           | Alt+S
+0x20           | Alt+D
+0x21           | Alt+F
+0x22           | Alt+G
+0x23           | Alt+H
+0x24           | Alt+J
+0x25           | Alt+K
+0x26           | Alt+L
+0x27           | Alt+;                     [*1]
+0x28           | Alt+'                     [*1]
+0x29           | Alt+`                     [*1]
+0x2B           | Alt+\                     [*1]
+0x2C           | Alt+Z
+0x2D           | Alt+X
+0x2E           | Alt+C
+0x2F           | Alt+V
+0x30           | Alt+B
+0x31           | Alt+N
+0x32           | Alt+M
+0x33           | Alt+,                     [*1]
+0x34           | Alt+.                     [*1]
+0x35           | Alt+/                     [*1]
+0x37           | Alt+*                     [*1]
+0x3B           | Function key 1
+0x3C           | Function key 2
+0x3D           | Function key 3
+0x3E           | Function key 4
+0x3F           | Function key 5
+0x40           | Function key 6
+0x41           | Function key 7
+0x42           | Function key 8
+0x43           | Function key 9
+0x44           | Function key 10
+0x47           | Home
+0x48           | Up arrow
+0x49           | Page Up
+0x4A           | Alt+-                     [*1]
+0x4B           | Left arrow
+0x4C           | Center Key 5              [*1]
+0x4D           | Right arrow
+0x4E           | Alt++                     [*1]
+0x4F           | End
+0x50           | Down arrow
+0x51           | Page Down
+0x52           | Insert
+0x53           | Delete
+0x54           | Shift+F1
+0x55           | Shift+F2
+0x56           | Shift+F3
+0x57           | Shift+F4
+0x58           | Shift+F5
+0x59           | Shift+F6
+0x5A           | Shift+F7
+0x5B           | Shift+F8
+0x5C           | Shift+F9
+0x5D           | Shift+F10
+0x5E           | Control+F1
+0x5F           | Control+F2
+0x60           | Control+F3
+0x61           | Control+F4
+0x62           | Control+F5
+0x63           | Control+F6
+0x64           | Control+F7
+0x65           | Control+F8
+0x66           | Control+F9
+0x67           | Control+F10
+0x68           | Alt+F1
+0x69           | Alt+F2
+0x6A           | Alt+F3
+0x6B           | Alt+F4
+0x6C           | Alt+F5
+0x6D           | Alt+F6
+0x6E           | Alt+F7
+0x6F           | Alt+F8
+0x70           | Alt+F9
+0x71           | Alt+F10
+0x72           | Control+PrtSc
+0x73           | Control+Left arrow
+0x74           | Control+Right arrow
+0x75           | Control+End
+0x76           | Control+PgDn
+0x77           | Control+Home
+0x78           | Alt + upper row 1
+0x79           | Alt + upper row 2
+0x7A           | Alt + upper row 3
+0x7B           | Alt + upper row 4
+0x7C           | Alt + upper row 5
+0x7D           | Alt + upper row 6
+0x7E           | Alt + upper row 7
+0x7F           | Alt + upper row 8
+0x80           | Alt + upper row 9
+0x81           | Alt + upper row 0
+0x82           | Alt+hyphen
+0x83           | Alt+equals
+0x84           | Control+PgUp
+0x85           | Function key 11           [*1]
+0x86           | Function key 12           [*1]
+0x87           | Shift+F11                 [*1]
+0x88           | Shift+F12                 [*1]
+0x89           | Ctrl+F11                  [*1]
+0x8A           | Ctrl+F12                  [*1]
+0x8B           | Alt+F11                   [*1]
+0x8C           | Alt+F12                   [*1]
+0x8D           | Ctrl+Up arrow             [*1]
+0x8E           | Ctrl+-                    [*1]
+0x8F           | Ctrl+Center Key 5         [*1]
+0x90           | Ctrl++                    [*1]
+0x91           | Ctrl+Down arrow           [*1]
+0x92           | Ctrl+Ins                  [*1]
+0x93           | Ctrl+Del                  [*1]
+0x94           | Ctrl+Tab                  [*1]
+0x95           | Ctrl+/ (101-key)          [*1]
+0x96           | Ctrl+*                    [*1]
+0x97           | Alt+Home (101-key)        [*1]
+0x98           | Alt+Up arrow (101-key)    [*1]
+0x99           | Alt+Page up (101-key)     [*1]
+0x9B           | Alt+Left arrow (101-key)  [*1]
+0x9D           | Alt+Right arrow (101-key) [*1]
+0x9F           | Alt+End (101-key)         [*1]
+0xA0           | Alt+Down arrow (101-key)  [*1]
+0xA1           | Alt+Page down (101-key)   [*1]
+0xA2           | Alt+Insert (101-key)      [*1]
+0xA3           | Alt+Delete (101-key)      [*1]
+0xA4           | Alt+/ (101-key)           [*1]
+0xA5           | Alt+Tab                   [*1]
+0xA6           | Alt+Enter (101-key)       [*1]
+
+Sources
+-------
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 1, Miscellaneous Information => Section 1, General Information => 1.23, IBM Extended Character Codes
+
+  [*1] Keyboard scan code/character code combinations returned in AH/AL by INT 16h functions 00h/01h (standard) and functions 01h/11h (extended)
+       URL: https://sites.google.com/site/pcdosretro/scancodes
+
+Notes
+-----
+ * Some codes match the scan code returned by the keyboard. See also "IBM keyboard scan code set 1"
+
+
+
 COM vs EXE file differences
 ===========================
 
@@ -64,189 +234,59 @@ Notes
 
 
 
-Media descriptor byte ID values
-===============================
+DOS Command Summary
+===================
 
-This is the 8-bit value used in the MS-DOS filesystem and kernel that was used to describe floppy disk formats
+Commands included with MS-DOS
 
-ID   | Tracks/side | Sectors/track | Sides | Bytes/sector | Format
-=====|=============|===============|=======|==============|===========================================================
-0xE5 | 77          | 26            | 1     | 128          | 8 inch (DR-DOS only) (250KB)                               [*1]
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xED | 80          | 9             | 2     | 512          | 5.25 inch (Tandy 2000 only) (720KB)                        [*1]
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xEE | -           | -             | -     | -            | Custom non-standard partitions with nonstandard            [*1]
-     |             |               |       |              | BIOS Parameter Block or special media access.
-     |             |               |       |              | Like 0xF8 but not recognized by unaware systems by design.
-     |             |               |       |              | FAT ID does not have to match this value (DR-DOS)
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xEF | -           | -             | -     | -            | Custom non-standard floppy and superfloppy formats.        [*1]
-     |             |               |       |              | Like 0xF0 but not recognized by unaware systems by design.
-     |             |               |       |              | FAT ID does not have to match this value (DR-DOS)
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xF0 | -           | -             | -     | -            | Custom floppy and superfloppy formats.                     [*1]
-     |             |               |       |              | geometry is defined in the BIOS Parameter Block
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xF0 | 80          | 18            | 2     | 512          | 3.5 inch floppy disk (1.44MB)
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xF0 | 80          | 36            | 2     | 512          | 3.5 inch floppy disk (2.88MB)                              [*1]
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xF4 | -           | -             | -     | -            | Double density (Altos MS-DOS 2.11 only)                    [*1]
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xF5 | -           | -             | -     | -            | Fixed disk (Altos MS-DOS 2.11 only)                        [*1]
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xF8 | -           | -             | -     | -            | Fixed disk
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xF8 | -           | -             | -     | -            | Single sided (Altos MS-DOS 2.11 only)                      [*1]
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xF8 | 80          | 9             | 1     | 512          | 3.5 inch floppy disk (MS-DOS 3.1 and MSX-DOS) (360KB)      [*1]
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xF8 | 80          | 9             | 2     | 512          | 5.25 inch floppy disk (Sanyo 55x DS-DOS 2.11 only) (720KB) [*1]
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xF9 | 80          | 15            | 2     | 512          | 5.25 inch floppy disk (1.2MB)
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xF9 | 80          | 18            | 2     | 512          | 3.5 inch floppy disk (DOS 3.2 only) (1.44MB)               [*1]
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xF9 | 80          | 9             | 2     | 512          | 3.5 inch floppy disk (720KB)
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xFA | 80          | 8             | 1     | 512          | 3.5 inch floppy disk (320KB)
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xFA | 80          | 8             | 1     | 512          | 5.25 inch floppy disk (320KB)
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xFB | 80          | 8             | 2     | 512          | 3.5 inch floppy disk (640KB)
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xFB | 80          | 8             | 2     | 512          | 5.25 inch floppy disk (640KB)
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xFC | 40          | 9             | 1     | 512          | 5.25 inch floppy disk (180KB)
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xFD | 40          | 9             | 2     | 512          | 5.25 inch floppy disk (360KB)
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xFD | 77          | 26            | 2     | 128          | 8 inch floppy disk (500KB)
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xFE | 40          | 8             | 1     | 512          | 5.25 inch floppy disk (160KB)
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xFE | 77          | 26            | 1     | 128          | 8 inch floppy disk (250KB)
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xFE | 77          | 8             | 2     | 1024         | 8 inch floppy disk (1.2MB)                                 [*1]
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xFF | -           | -             | -     | -            | Hard disk (Sanyo 55x DS-DOS 2.11 only)                     [*1]
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
-0xFF | 40          | 8             | 2     | 512          | 5.25 inch floppy disk (320KB)
------+-------------+---------------+-------+--------------+-----------------------------------------------------------
+Command  | Syntax                                    | Function                                      | Example                 | Notes
+=========|===========================================|===============================================|=========================|===========================
+APPEND   | d:path[,[d:]path...]                      | Locates files outside the current directory   | APPEND c:\dbfiles       | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+ASSIGN   | [x[=] y [...]]                            | Routes disk I/O to another drive              | ASSIGN a=c b=c          | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+ATTRIB   | [(+|-)parms] [d:][path]filespec[/parms]   | Modifies file attributes                      | ATTRIB -r myfile.doc /s | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+BACKUP   | d:[path][filespec] d:[/parms]             | Backs up one disk to another                  | BACKUP c:*.* a: /S/F    | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+BREAK    | [ON|OFF]                                  | Defines status of control break               | BREAK ON                | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+CD       | [d:][path]                                | Sets or displays current path                 | CD c:\wp\word\data      | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+CHCP     | [number]                                  | Selects code page DOS uses                    | CHCP 850                | Must execute NLSFUNC first
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+CHDIR    | [d:][path]                                | Sets or displays current path                 | CD c:\wp\word\data      | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+CHKDSK   | [d:][path][filespec][/parms]              | Analyzes disk and FAT                         | CHKDSK c:/F             | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+CLS      |                                           | Clears display screen                         | CLS                     | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+COMMAND  | [d:][path][/parms                         | Starts a secondary command processor          | COMMAND c:\ut /p        | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+COMP     | [d:][path][filespec] [d:][path][filespec] | Compares contents of files                    | COMP *.BAT A*.BAT       | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+COPY     | [/parms] [d:][path]filespec[/parms]       | Copies a file or set of files                 | COPY *.* c:             | 
+         | [d:][path][filespec][/parms]              |                                               |                         | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+CTTY     | devicename                                | Changes stdin and stdout to auxiliary console | CTTY COM1               | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+DATE     | [date]                                    | Enters, changes, or displays date             | DATE 1-12-87            | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+DEL      | [d:][path]filespec                        | Deletes specified file or files               | DEL *.bak               | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+DIR      | [d:][path][filespec][/parms]              | Lists directory entries                       | DIR c:/w                | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+DISKCOMP | [d: [d:]][/parms]                         | Compares contents of two disks                | DISKCOMP a: b:          | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+DISKCOPY | [d: [d:]][/parms]                         | Copies a disk                                 | DISKCOPY a: b:          | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+ERASE    | [d:][path]filespec                        | Deletes specified file or files               | ERASE *.bak             | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
 
 Sources
 -------
   [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
-       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.37, Disk ID Byte
-
-  [*1] Wikipedia, The Free Online Encylopedia
-       URL: https://en.wikipedia.org/wiki/Design_of_the_FAT_file_system#BIOS_Parameter_Block
-
-Notes
------
- * The term "Fixed disk" usually refers to a hard drive or removable media, in which case the geometry must be read from the BIOS 
-   Parameter Block
-
- * Bytes per sector have been added for completeness, even though not listed in the 1988 Programmer PC Sourcebook
- * PC programmer's sourcebook (1988) incorrectly states 8-inch media id 0xFE has 2, 6, or 8 sectors per track
-
-
-
-Floppy Disk Format Summary
-==========================
-
- - Disk: Disk size, 3.5 inch or 5.25 in, etc
- - ID: Media ID byte
- - H: Heads, or more appropriately, sides
- - T: Tracks per side
- - S: Sectors per track
- - B/S: Bytes per sector
- - S/C: Sectors per cluster
- - Res: Reserved sector count
- - SF: Sectors per FAT
- - FT: Number of FAT tables
- - Rs: Number of root directory sectors
- - Rm: Maxmimum root directories allowed given root directory size
- - TS: Total sectors
- - US: Usable sectors
- - UC: Usable clusters
- - DOS: Minimum DOS version
- - System: Systems that commonly use this format
-
-Format  | Disk | ID   | H | T  | S  | B/S | S/C | Res | SF | FT | Rs | Rm  | TS   | US   | UC   | DOS | System
-========|======|======|===|====|====|=====|=====|=====|====|====|====|=====|======|======|======|=====|===============
-160 KB  | 5.25 | 0xFE | 1 | 40 | 8  | 512 | 1   | 1   | 1  | 2  | 4  | 64  | 320  | 313  | 313  | 1   | 
-180 KB  | 5.25 | 0xFC | 1 | 40 | 9  | 512 | 1   | 1   | 2  | 2  | 4  | 64  | 360  | 351  | 351  | 2   | 
-320 KB  | 5.25 | 0xFF | 2 | 40 | 8  | 512 | 2   | 1   | 1  | 2  | 7  | 112 | 640  | 630  | 315  | 1.1 | 
-360 KB  | 5.25 | 0xFD | 2 | 40 | 9  | 512 | 2   | 1   | 2  | 2  | 7  | 112 | 720  | 708  | 354  | 2   | PC/XT
-720 KB  | 3.5  | 0xF9 | 2 | 80 | 9  | 512 | 2   | 1   | 3  | 2  | 7  | 112 | 1400 | 1426 | 713  | 3   | PC convertible
-1200 KB | 5.25 | 0xF9 | 2 | 80 | 15 | 512 | 1   | 1   | 7  | 2  | 14 | 224 | 2400 | 2371 | 2371 | 3   | AT
-1440 KB | 3.5  | 0xF0 | 2 | 80 | 18 | 512 | 1   | 1   | 9  | 2  | 14 | 224 | 2880 | 2847 | 2847 | 3.3 | PS/2
-
-Sources
--------
-  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
-       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.40, Floppy Disk Format Summary
-
-Notes
------
- * A summary of MS-DOS disk formats
- * Despite the title, borrowed from the PC Programmer's Sourcebook, this table has been rearranged to provide more general 
-   information
-
- * Filesystem details, like reserved sectors, sectors/FAT, root directory sectors, etc. can vary according to the BIOS Parameter 
-   Block. They are not fixed, except for older DOS versions
-
- * Total usable sectors and total usable clusters will change if bad sectors are found during formatting
- * FAT disk ID bytes are unreliable. Use disk parameter block to determine media type
-
-
-
-Hard Disk Format Summary
-========================
-
- - Disk: Disk size, 3.5 inch or 5.25 in, etc
- - ID: Media ID byte
- - ID: Interleave
- - H: Heads, or more appropriately, sides
- - T: Tracks per side
- - S: Sectors per track
- - B/S: Bytes per sector
- - S/C: Sectors per cluster
- - Res: Reserved sector count
- - SF: Sectors per FAT
- - FT: Number of FAT tables
- - Rs: Number of root directory sectors
- - Rm: Maxmimum root directories allowed given root directory size
- - TS: Total sectors
- - US: Usable sectors
- - UC: Usable clusters
- - DOS: Minimum DOS version
- - System: Systems that commonly use this format
-
-Format | Disk | ID   | ID  | H | T   | S  | B/S | S/C | Res | SF | FT | Rs | Rm  | TS    | US    | UC    | DOS | System
-=======|======|======|=====|===|=====|====|=====|=====|=====|====|====|====|=====|=======|=======|=======|=====|==============
-10 MB  | 5.25 | 0xF8 | 6:1 | 4 | 306 | 17 | 512 | 8   | 1   | 8  | 2  | 32 | 512 | 20808 | 20759 | 2595  | 2   | XT
-20 MB  | 3.5  | 0xF8 | 1:1 | - | -   | 17 | 512 | -   | -   | -  | -  | -  | -   | -     | -     | -     | 2   | PS/2 Model 50
-20 MB  | 5.25 | 0xF8 | 3:1 | 4 | 615 | 17 | 512 | 4   | 1   | 40 | 2  | 32 | 512 | 41820 | 41707 | 10427 | 2   | AT
-44 MB  | 3.5  | 0xF8 | 1:1 | - | -   | 17 | 512 | -   | -   | -  | -  | -  | -   | -     | -     | -     | 2   | PS/2 Model 60
-70 MB  | 3.5  | 0xF8 | 1:1 | - | -   | 17 | 512 | -   | -   | -  | -  | -  | -   | -     | -     | -     | 2   | PS/2 Model 80
-
-Sources
--------
-  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
-       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.41, Hard Disk Format Summary
-
-Notes
------
- * Despite the title, borrowed from the PC Programmer's Sourcebook, this table has been rearranged to provide more general 
-   information
-
- * Filesystem details, like reserved sectors, sectors/FAT, root directory sectors, etc. can vary according to the BIOS Parameter 
-   Block. They are not fixed, except for older DOS versions
-
- * Total usable sectors and total usable clusters will change if bad sectors are found during formatting
- * FAT disk ID bytes are unreliable. Use disk parameter block to determine media type
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.01, DOS Command Summary
 
 
 
@@ -504,229 +544,189 @@ Sources
 
 
 
-DOS Command Summary
-===================
+Floppy Disk Format Summary
+==========================
 
-Commands included with MS-DOS
+ - Disk: Disk size, 3.5 inch or 5.25 in, etc
+ - ID: Media ID byte
+ - H: Heads, or more appropriately, sides
+ - T: Tracks per side
+ - S: Sectors per track
+ - B/S: Bytes per sector
+ - S/C: Sectors per cluster
+ - Res: Reserved sector count
+ - SF: Sectors per FAT
+ - FT: Number of FAT tables
+ - Rs: Number of root directory sectors
+ - Rm: Maxmimum root directories allowed given root directory size
+ - TS: Total sectors
+ - US: Usable sectors
+ - UC: Usable clusters
+ - DOS: Minimum DOS version
+ - System: Systems that commonly use this format
 
-Command  | Syntax                                    | Function                                      | Example                 | Notes
-=========|===========================================|===============================================|=========================|===========================
-APPEND   | d:path[,[d:]path...]                      | Locates files outside the current directory   | APPEND c:\dbfiles       | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-ASSIGN   | [x[=] y [...]]                            | Routes disk I/O to another drive              | ASSIGN a=c b=c          | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-ATTRIB   | [(+|-)parms] [d:][path]filespec[/parms]   | Modifies file attributes                      | ATTRIB -r myfile.doc /s | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-BACKUP   | d:[path][filespec] d:[/parms]             | Backs up one disk to another                  | BACKUP c:*.* a: /S/F    | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-BREAK    | [ON|OFF]                                  | Defines status of control break               | BREAK ON                | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-CD       | [d:][path]                                | Sets or displays current path                 | CD c:\wp\word\data      | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-CHCP     | [number]                                  | Selects code page DOS uses                    | CHCP 850                | Must execute NLSFUNC first
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-CHDIR    | [d:][path]                                | Sets or displays current path                 | CD c:\wp\word\data      | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-CHKDSK   | [d:][path][filespec][/parms]              | Analyzes disk and FAT                         | CHKDSK c:/F             | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-CLS      |                                           | Clears display screen                         | CLS                     | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-COMMAND  | [d:][path][/parms                         | Starts a secondary command processor          | COMMAND c:\ut /p        | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-COMP     | [d:][path][filespec] [d:][path][filespec] | Compares contents of files                    | COMP *.BAT A*.BAT       | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-COPY     | [/parms] [d:][path]filespec[/parms]       | Copies a file or set of files                 | COPY *.* c:             | 
-         | [d:][path][filespec][/parms]              |                                               |                         | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-CTTY     | devicename                                | Changes stdin and stdout to auxiliary console | CTTY COM1               | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-DATE     | [date]                                    | Enters, changes, or displays date             | DATE 1-12-87            | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-DEL      | [d:][path]filespec                        | Deletes specified file or files               | DEL *.bak               | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-DIR      | [d:][path][filespec][/parms]              | Lists directory entries                       | DIR c:/w                | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-DISKCOMP | [d: [d:]][/parms]                         | Compares contents of two disks                | DISKCOMP a: b:          | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-DISKCOPY | [d: [d:]][/parms]                         | Copies a disk                                 | DISKCOPY a: b:          | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
-ERASE    | [d:][path]filespec                        | Deletes specified file or files               | ERASE *.bak             | 
----------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+Format  | Disk | ID   | H | T  | S  | B/S | S/C | Res | SF | FT | Rs | Rm  | TS   | US   | UC   | DOS | System
+========|======|======|===|====|====|=====|=====|=====|====|====|====|=====|======|======|======|=====|===============
+160 KB  | 5.25 | 0xFE | 1 | 40 | 8  | 512 | 1   | 1   | 1  | 2  | 4  | 64  | 320  | 313  | 313  | 1   | 
+180 KB  | 5.25 | 0xFC | 1 | 40 | 9  | 512 | 1   | 1   | 2  | 2  | 4  | 64  | 360  | 351  | 351  | 2   | 
+320 KB  | 5.25 | 0xFF | 2 | 40 | 8  | 512 | 2   | 1   | 1  | 2  | 7  | 112 | 640  | 630  | 315  | 1.1 | 
+360 KB  | 5.25 | 0xFD | 2 | 40 | 9  | 512 | 2   | 1   | 2  | 2  | 7  | 112 | 720  | 708  | 354  | 2   | PC/XT
+720 KB  | 3.5  | 0xF9 | 2 | 80 | 9  | 512 | 2   | 1   | 3  | 2  | 7  | 112 | 1400 | 1426 | 713  | 3   | PC convertible
+1200 KB | 5.25 | 0xF9 | 2 | 80 | 15 | 512 | 1   | 1   | 7  | 2  | 14 | 224 | 2400 | 2371 | 2371 | 3   | AT
+1440 KB | 3.5  | 0xF0 | 2 | 80 | 18 | 512 | 1   | 1   | 9  | 2  | 14 | 224 | 2880 | 2847 | 2847 | 3.3 | PS/2
 
 Sources
 -------
   [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
-       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.01, DOS Command Summary
-
-
-
-IBM Extended Character Codes, BIOS Keyboard Interface
-=====================================================
-
-Extended character codes returned by the IBM BIOS in the keyboard buffer, through INT 16h, and at the MS-DOS console driver as 00h <code>
-
- - Character code: Character code returned by the BIOS
- - Key combination: Key combination that generates the character code
-
-Character code | Key combination
-===============|==========================
-0x01           | Alt+Esc                   [*1]
-0x03           | Ctrl+2                    [*1]
-0x03           | Null character (none)     [*0]
-0x0E           | Alt+Backspace             [*1]
-0x0F           | Shift Tab
-0x10           | Alt+Q
-0x11           | Alt+W
-0x12           | Alt+E
-0x13           | Alt+R
-0x14           | Alt+T
-0x15           | Alt+Y
-0x16           | Alt+U
-0x17           | Alt+I
-0x18           | Alt+O
-0x19           | Alt+P
-0x1A           | Alt+[                     [*1]
-0x1B           | Alt+]                     [*1]
-0x1C           | Alt+Enter                 [*1]
-0x1E           | Alt+A
-0x1F           | Alt+S
-0x20           | Alt+D
-0x21           | Alt+F
-0x22           | Alt+G
-0x23           | Alt+H
-0x24           | Alt+J
-0x25           | Alt+K
-0x26           | Alt+L
-0x27           | Alt+;                     [*1]
-0x28           | Alt+'                     [*1]
-0x29           | Alt+`                     [*1]
-0x2B           | Alt+\                     [*1]
-0x2C           | Alt+Z
-0x2D           | Alt+X
-0x2E           | Alt+C
-0x2F           | Alt+V
-0x30           | Alt+B
-0x31           | Alt+N
-0x32           | Alt+M
-0x33           | Alt+,                     [*1]
-0x34           | Alt+.                     [*1]
-0x35           | Alt+/                     [*1]
-0x37           | Alt+*                     [*1]
-0x3B           | Function key 1
-0x3C           | Function key 2
-0x3D           | Function key 3
-0x3E           | Function key 4
-0x3F           | Function key 5
-0x40           | Function key 6
-0x41           | Function key 7
-0x42           | Function key 8
-0x43           | Function key 9
-0x44           | Function key 10
-0x47           | Home
-0x48           | Up arrow
-0x49           | Page Up
-0x4A           | Alt+-                     [*1]
-0x4B           | Left arrow
-0x4C           | Center Key 5              [*1]
-0x4D           | Right arrow
-0x4E           | Alt++                     [*1]
-0x4F           | End
-0x50           | Down arrow
-0x51           | Page Down
-0x52           | Insert
-0x53           | Delete
-0x54           | Shift+F1
-0x55           | Shift+F2
-0x56           | Shift+F3
-0x57           | Shift+F4
-0x58           | Shift+F5
-0x59           | Shift+F6
-0x5A           | Shift+F7
-0x5B           | Shift+F8
-0x5C           | Shift+F9
-0x5D           | Shift+F10
-0x5E           | Control+F1
-0x5F           | Control+F2
-0x60           | Control+F3
-0x61           | Control+F4
-0x62           | Control+F5
-0x63           | Control+F6
-0x64           | Control+F7
-0x65           | Control+F8
-0x66           | Control+F9
-0x67           | Control+F10
-0x68           | Alt+F1
-0x69           | Alt+F2
-0x6A           | Alt+F3
-0x6B           | Alt+F4
-0x6C           | Alt+F5
-0x6D           | Alt+F6
-0x6E           | Alt+F7
-0x6F           | Alt+F8
-0x70           | Alt+F9
-0x71           | Alt+F10
-0x72           | Control+PrtSc
-0x73           | Control+Left arrow
-0x74           | Control+Right arrow
-0x75           | Control+End
-0x76           | Control+PgDn
-0x77           | Control+Home
-0x78           | Alt + upper row 1
-0x79           | Alt + upper row 2
-0x7A           | Alt + upper row 3
-0x7B           | Alt + upper row 4
-0x7C           | Alt + upper row 5
-0x7D           | Alt + upper row 6
-0x7E           | Alt + upper row 7
-0x7F           | Alt + upper row 8
-0x80           | Alt + upper row 9
-0x81           | Alt + upper row 0
-0x82           | Alt+hyphen
-0x83           | Alt+equals
-0x84           | Control+PgUp
-0x85           | Function key 11           [*1]
-0x86           | Function key 12           [*1]
-0x87           | Shift+F11                 [*1]
-0x88           | Shift+F12                 [*1]
-0x89           | Ctrl+F11                  [*1]
-0x8A           | Ctrl+F12                  [*1]
-0x8B           | Alt+F11                   [*1]
-0x8C           | Alt+F12                   [*1]
-0x8D           | Ctrl+Up arrow             [*1]
-0x8E           | Ctrl+-                    [*1]
-0x8F           | Ctrl+Center Key 5         [*1]
-0x90           | Ctrl++                    [*1]
-0x91           | Ctrl+Down arrow           [*1]
-0x92           | Ctrl+Ins                  [*1]
-0x93           | Ctrl+Del                  [*1]
-0x94           | Ctrl+Tab                  [*1]
-0x95           | Ctrl+/ (101-key)          [*1]
-0x96           | Ctrl+*                    [*1]
-0x97           | Alt+Home (101-key)        [*1]
-0x98           | Alt+Up arrow (101-key)    [*1]
-0x99           | Alt+Page up (101-key)     [*1]
-0x9B           | Alt+Left arrow (101-key)  [*1]
-0x9D           | Alt+Right arrow (101-key) [*1]
-0x9F           | Alt+End (101-key)         [*1]
-0xA0           | Alt+Down arrow (101-key)  [*1]
-0xA1           | Alt+Page down (101-key)   [*1]
-0xA2           | Alt+Insert (101-key)      [*1]
-0xA3           | Alt+Delete (101-key)      [*1]
-0xA4           | Alt+/ (101-key)           [*1]
-0xA5           | Alt+Tab                   [*1]
-0xA6           | Alt+Enter (101-key)       [*1]
-
-Sources
--------
-  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
-       Part 1, Miscellaneous Information => Section 1, General Information => 1.23, IBM Extended Character Codes
-
-  [*1] Keyboard scan code/character code combinations returned in AH/AL by INT 16h functions 00h/01h (standard) and functions 01h/11h (extended)
-       URL: https://sites.google.com/site/pcdosretro/scancodes
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.40, Floppy Disk Format Summary
 
 Notes
 -----
- * Some codes match the scan code returned by the keyboard. See also "IBM keyboard scan code set 1"
+ * A summary of MS-DOS disk formats
+ * Despite the title, borrowed from the PC Programmer's Sourcebook, this table has been rearranged to provide more general 
+   information
+
+ * Filesystem details, like reserved sectors, sectors/FAT, root directory sectors, etc. can vary according to the BIOS Parameter 
+   Block. They are not fixed, except for older DOS versions
+
+ * Total usable sectors and total usable clusters will change if bad sectors are found during formatting
+ * FAT disk ID bytes are unreliable. Use disk parameter block to determine media type
+
+
+
+Hard Disk Format Summary
+========================
+
+ - Disk: Disk size, 3.5 inch or 5.25 in, etc
+ - ID: Media ID byte
+ - ID: Interleave
+ - H: Heads, or more appropriately, sides
+ - T: Tracks per side
+ - S: Sectors per track
+ - B/S: Bytes per sector
+ - S/C: Sectors per cluster
+ - Res: Reserved sector count
+ - SF: Sectors per FAT
+ - FT: Number of FAT tables
+ - Rs: Number of root directory sectors
+ - Rm: Maxmimum root directories allowed given root directory size
+ - TS: Total sectors
+ - US: Usable sectors
+ - UC: Usable clusters
+ - DOS: Minimum DOS version
+ - System: Systems that commonly use this format
+
+Format | Disk | ID   | ID  | H | T   | S  | B/S | S/C | Res | SF | FT | Rs | Rm  | TS    | US    | UC    | DOS | System
+=======|======|======|=====|===|=====|====|=====|=====|=====|====|====|====|=====|=======|=======|=======|=====|==============
+10 MB  | 5.25 | 0xF8 | 6:1 | 4 | 306 | 17 | 512 | 8   | 1   | 8  | 2  | 32 | 512 | 20808 | 20759 | 2595  | 2   | XT
+20 MB  | 3.5  | 0xF8 | 1:1 | - | -   | 17 | 512 | -   | -   | -  | -  | -  | -   | -     | -     | -     | 2   | PS/2 Model 50
+20 MB  | 5.25 | 0xF8 | 3:1 | 4 | 615 | 17 | 512 | 4   | 1   | 40 | 2  | 32 | 512 | 41820 | 41707 | 10427 | 2   | AT
+44 MB  | 3.5  | 0xF8 | 1:1 | - | -   | 17 | 512 | -   | -   | -  | -  | -  | -   | -     | -     | -     | 2   | PS/2 Model 60
+70 MB  | 3.5  | 0xF8 | 1:1 | - | -   | 17 | 512 | -   | -   | -  | -  | -  | -   | -     | -     | -     | 2   | PS/2 Model 80
+
+Sources
+-------
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.41, Hard Disk Format Summary
+
+Notes
+-----
+ * Despite the title, borrowed from the PC Programmer's Sourcebook, this table has been rearranged to provide more general 
+   information
+
+ * Filesystem details, like reserved sectors, sectors/FAT, root directory sectors, etc. can vary according to the BIOS Parameter 
+   Block. They are not fixed, except for older DOS versions
+
+ * Total usable sectors and total usable clusters will change if bad sectors are found during formatting
+ * FAT disk ID bytes are unreliable. Use disk parameter block to determine media type
+
+
+
+Media descriptor byte ID values
+===============================
+
+This is the 8-bit value used in the MS-DOS filesystem and kernel that was used to describe floppy disk formats
+
+ID   | Tracks/side | Sectors/track | Sides | Bytes/sector | Format
+=====|=============|===============|=======|==============|===========================================================
+0xE5 | 77          | 26            | 1     | 128          | 8 inch (DR-DOS only) (250KB)                               [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xED | 80          | 9             | 2     | 512          | 5.25 inch (Tandy 2000 only) (720KB)                        [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xEE | -           | -             | -     | -            | Custom non-standard partitions with nonstandard            [*1]
+     |             |               |       |              | BIOS Parameter Block or special media access.
+     |             |               |       |              | Like 0xF8 but not recognized by unaware systems by design.
+     |             |               |       |              | FAT ID does not have to match this value (DR-DOS)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xEF | -           | -             | -     | -            | Custom non-standard floppy and superfloppy formats.        [*1]
+     |             |               |       |              | Like 0xF0 but not recognized by unaware systems by design.
+     |             |               |       |              | FAT ID does not have to match this value (DR-DOS)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF0 | -           | -             | -     | -            | Custom floppy and superfloppy formats.                     [*1]
+     |             |               |       |              | geometry is defined in the BIOS Parameter Block
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF0 | 80          | 18            | 2     | 512          | 3.5 inch floppy disk (1.44MB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF0 | 80          | 36            | 2     | 512          | 3.5 inch floppy disk (2.88MB)                              [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF4 | -           | -             | -     | -            | Double density (Altos MS-DOS 2.11 only)                    [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF5 | -           | -             | -     | -            | Fixed disk (Altos MS-DOS 2.11 only)                        [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF8 | -           | -             | -     | -            | Fixed disk
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF8 | -           | -             | -     | -            | Single sided (Altos MS-DOS 2.11 only)                      [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF8 | 80          | 9             | 1     | 512          | 3.5 inch floppy disk (MS-DOS 3.1 and MSX-DOS) (360KB)      [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF8 | 80          | 9             | 2     | 512          | 5.25 inch floppy disk (Sanyo 55x DS-DOS 2.11 only) (720KB) [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF9 | 80          | 15            | 2     | 512          | 5.25 inch floppy disk (1.2MB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF9 | 80          | 18            | 2     | 512          | 3.5 inch floppy disk (DOS 3.2 only) (1.44MB)               [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF9 | 80          | 9             | 2     | 512          | 3.5 inch floppy disk (720KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFA | 80          | 8             | 1     | 512          | 3.5 inch floppy disk (320KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFA | 80          | 8             | 1     | 512          | 5.25 inch floppy disk (320KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFB | 80          | 8             | 2     | 512          | 3.5 inch floppy disk (640KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFB | 80          | 8             | 2     | 512          | 5.25 inch floppy disk (640KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFC | 40          | 9             | 1     | 512          | 5.25 inch floppy disk (180KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFD | 40          | 9             | 2     | 512          | 5.25 inch floppy disk (360KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFD | 77          | 26            | 2     | 128          | 8 inch floppy disk (500KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFE | 40          | 8             | 1     | 512          | 5.25 inch floppy disk (160KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFE | 77          | 26            | 1     | 128          | 8 inch floppy disk (250KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFE | 77          | 8             | 2     | 1024         | 8 inch floppy disk (1.2MB)                                 [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFF | -           | -             | -     | -            | Hard disk (Sanyo 55x DS-DOS 2.11 only)                     [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFF | 40          | 8             | 2     | 512          | 5.25 inch floppy disk (320KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+
+Sources
+-------
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.37, Disk ID Byte
+
+  [*1] Wikipedia, The Free Online Encylopedia
+       URL: https://en.wikipedia.org/wiki/Design_of_the_FAT_file_system#BIOS_Parameter_Block
+
+Notes
+-----
+ * The term "Fixed disk" usually refers to a hard drive or removable media, in which case the geometry must be read from the BIOS 
+   Parameter Block
+
+ * Bytes per sector have been added for completeness, even though not listed in the 1988 Programmer PC Sourcebook
+ * PC programmer's sourcebook (1988) incorrectly states 8-inch media id 0xFE has 2, 6, or 8 sectors per track
 
 
 
