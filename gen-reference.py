@@ -752,8 +752,8 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
     else:
         page1 = emitpdf.new_page()
     #
-    #if (emitpdf.currentPos.y+(10*15)/emitpdf.currentDPI) > (emitpdf.contentRegion.xy.y+emitpdf.contentRegion.wh.h):
-    #    page1 = emitpdf.new_page()
+    if (emitpdf.currentPos.y+(10*9)/emitpdf.currentDPI) > (emitpdf.contentRegion.xy.y+emitpdf.contentRegion.wh.h):
+        page1 = emitpdf.new_page()
     #
     ps = emitpdf.ps()
     # header
