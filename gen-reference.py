@@ -38,6 +38,7 @@ def text_split_text(text):
     return e
 
 def emit_table_as_text(f,table_id,tp):
+    f.write(("="*len(tp.display.header))+"\n")
     f.write(tp.display.header+"\n")
     f.write(("="*len(tp.display.header))+"\n")
     f.write("\n")
