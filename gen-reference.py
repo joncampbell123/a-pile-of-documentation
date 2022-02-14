@@ -738,43 +738,7 @@ class EmitPDF:
                 if self.layoutMaxEnd.x < self.currentPos.x:
                     self.layoutMaxEnd.x = self.currentPos.x
 
-def emit_table_as_pdf(path,table_id,tp):
-    emitpdf = EmitPDF()
-    #
-    pdf = pdf_module.PDFGen()
-    pdfhl = pdf_module.PDFGenHL(pdf)
-    emitpdf.setpdfhl(pdfhl)
-    # -- font 1: regular
-    emitpdf.font1.reg = pdfhl.add_font({
-        pdf_module.PDFName("Subtype"): pdf_module.PDFName("TrueType"),
-        pdf_module.PDFName("Name"): pdf_module.PDFName("F1"),
-        pdf_module.PDFName("Encoding"): pdf_module.PDFName("WinAnsiEncoding"),
-        pdf_module.PDFName("BaseFont"): pdf_module.PDFName("ABCDEE+Ubuntu")
-    },
-    desc={
-    },
-    ttffile="ttf/Ubuntu-R.ttf")
-    # -- font 1: bold
-    emitpdf.font1.bold = pdfhl.add_font({
-        pdf_module.PDFName("Subtype"): pdf_module.PDFName("TrueType"),
-        pdf_module.PDFName("Name"): pdf_module.PDFName("F2"),
-        pdf_module.PDFName("Encoding"): pdf_module.PDFName("WinAnsiEncoding"),
-        pdf_module.PDFName("BaseFont"): pdf_module.PDFName("ABCDEE+Ubuntu")
-    },
-    desc={
-    },
-    ttffile="ttf/Ubuntu-B.ttf")
-    # -- font 1: italic
-    emitpdf.font1.italic = pdfhl.add_font({
-        pdf_module.PDFName("Subtype"): pdf_module.PDFName("TrueType"),
-        pdf_module.PDFName("Name"): pdf_module.PDFName("F3"),
-        pdf_module.PDFName("Encoding"): pdf_module.PDFName("WinAnsiEncoding"),
-        pdf_module.PDFName("BaseFont"): pdf_module.PDFName("ABCDEE+Ubuntu")
-    },
-    desc={
-    },
-    ttffile="ttf/Ubuntu-RI.ttf")
-    # -------------- END FONTS
+def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
     emitpdf.set_title(tp.display.header)
     page1 = emitpdf.new_page()
     ps = emitpdf.ps()
@@ -1270,22 +1234,55 @@ def emit_table_as_pdf(path,table_id,tp):
             emitpdf.currentPos.x = lx
         #
         emitpdf.newline(y=5/emitpdf.currentDPI)
-    #
-    emitpdf.end_page()
-    pdfhl.finish()
-    f = open(path,"wb")
-    pdf.write_file(f)
-    f.close()
 
 os.system("rm -Rf reference/text/tables; mkdir -p reference/text")
 os.system("rm -Rf reference/html/tables; mkdir -p reference/html")
-os.system("rm -Rf reference/pdf/tables; mkdir -p reference/pdf/tables")
+os.system("rm -Rf reference/pdf/tables; mkdir -p reference/pdf")
 
 tables_json = common_json_help_module.load_json("compiled/tables.json")
 
 ftxt = open("reference/text/tables.txt","w",encoding="UTF-8")
 fhtml = open("reference/html/tables.htm","w",encoding="UTF-8")
+fpdf = open("reference/pdf/tables.pdf","wb")
 html_out_begin(fhtml)
+
+if True:
+    emitpdf = EmitPDF()
+    #
+    pdf = pdf_module.PDFGen()
+    pdfhl = pdf_module.PDFGenHL(pdf)
+    emitpdf.setpdfhl(pdfhl)
+    # -- font 1: regular
+    emitpdf.font1.reg = pdfhl.add_font({
+        pdf_module.PDFName("Subtype"): pdf_module.PDFName("TrueType"),
+        pdf_module.PDFName("Name"): pdf_module.PDFName("F1"),
+        pdf_module.PDFName("Encoding"): pdf_module.PDFName("WinAnsiEncoding"),
+        pdf_module.PDFName("BaseFont"): pdf_module.PDFName("ABCDEE+Ubuntu")
+    },
+    desc={
+    },
+    ttffile="ttf/Ubuntu-R.ttf")
+    # -- font 1: bold
+    emitpdf.font1.bold = pdfhl.add_font({
+        pdf_module.PDFName("Subtype"): pdf_module.PDFName("TrueType"),
+        pdf_module.PDFName("Name"): pdf_module.PDFName("F2"),
+        pdf_module.PDFName("Encoding"): pdf_module.PDFName("WinAnsiEncoding"),
+        pdf_module.PDFName("BaseFont"): pdf_module.PDFName("ABCDEE+Ubuntu")
+    },
+    desc={
+    },
+    ttffile="ttf/Ubuntu-B.ttf")
+    # -- font 1: italic
+    emitpdf.font1.italic = pdfhl.add_font({
+        pdf_module.PDFName("Subtype"): pdf_module.PDFName("TrueType"),
+        pdf_module.PDFName("Name"): pdf_module.PDFName("F3"),
+        pdf_module.PDFName("Encoding"): pdf_module.PDFName("WinAnsiEncoding"),
+        pdf_module.PDFName("BaseFont"): pdf_module.PDFName("ABCDEE+Ubuntu")
+    },
+    desc={
+    },
+    ttffile="ttf/Ubuntu-RI.ttf")
+    # -------------- END FONTS
 
 tables = tables_json.get("tables")
 if not tables == None:
@@ -1294,8 +1291,14 @@ if not tables == None:
         tp = table_presentation_module.TablePresentation(tables[table_id])
         emit_table_as_text(ftxt,table_id,tp)
         emit_table_as_html(fhtml,table_id,tp)
-        emit_table_as_pdf("reference/pdf/tables/"+table_id+".pdf",table_id,tp)
+        emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp)
 
+if True:
+    emitpdf.end_page()
+    pdfhl.finish()
+    pdf.write_file(fpdf)
+
+fpdf.close()
 html_out_end(fhtml)
 fhtml.close()
 ftxt.close()
