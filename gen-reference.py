@@ -536,6 +536,8 @@ class EmitPDF:
             self.pdfhl.make_page_content_stream(self.currentPage,data=self.pagestream.data())
         #
         if not self.pagestream == None:
+            if self.pagestream.intxt == True:
+                self.pagestream.end_text()
             del self.pagestream
         self.pagestream = None
         #
@@ -673,20 +675,23 @@ class EmitPDF:
             self.currentPos.x = x
         if not y == None:
             self.currentPos.y = y
-    def layout_span_page(self):
+    def layout_span_page(self,*,noEmitLeading=False,noEmitPosition=False):
         savedFont = self.pagestream.currentFont
         savedFontSize = self.pagestream.currentFontSize
+        self.layout_text_flush()
         self.end_page()
         self.new_page()
         if not savedFont == None and not savedFontSize == None:
             self.layout_text_begin()
             self.pagestream.set_text_font(savedFont,savedFontSize)
-            self.pagestream.text_leading(self.pagestream.currentFontSize)
+            if not noEmitLeading == True:
+                self.pagestream.text_leading(self.pagestream.currentFontSize)
             self.pagestream.fill_color(0,0,0)
             self.layoutVadj = XY(0,self.pagestream.currentFontSize/self.currentDPI)
             #
-            tp = self.coordxlate(self.currentPos+self.layoutVadj)
-            self.pagestream.text_move_to(tp.x,tp.y)
+            if not noEmitPosition == True:
+                tp = self.coordxlate(self.currentPos+self.layoutVadj)
+                self.pagestream.text_move_to(tp.x,tp.y)
     def layout_text_flush(self):
         if len(self.layoutLineTextBuf) > 0:
             self.pagestream.text(self.layoutLineTextBuf)
@@ -696,16 +701,18 @@ class EmitPDF:
         elements = self.split_text(text)
         #
         if self.layoutWritten == 0:
-            self.pagestream.text_leading(self.pagestream.currentFontSize)
             self.layoutVadj = XY(0,self.pagestream.currentFontSize/self.currentDPI)
+            #
+            if pagespan == True:
+                # NTS: PDF parsers like pdf.js in Firefox stop parsing a line if more than one TL occurs in a BT..ET block
+                if (self.currentPos+self.layoutVadj).y > (self.contentRegion.xy.y+self.contentRegion.wh.h):
+                    self.layout_span_page(noEmitLeading=True,noEmitPosition=True)
+            #
+            self.pagestream.text_leading(self.pagestream.currentFontSize)
             self.layoutWritten = 1
             #
             tp = self.coordxlate(self.currentPos+self.layoutVadj)
             self.pagestream.text_move_to(tp.x,tp.y)
-            #
-            if pagespan == True:
-                if (self.currentPos+self.layoutVadj).y > (self.contentRegion.xy.y+self.contentRegion.wh.h):
-                    self.layout_span_page()
         #
         for elem in elements:
             ew = self.pagestream.text_width(elem)
@@ -740,7 +747,14 @@ class EmitPDF:
 
 def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
     emitpdf.set_title(tp.display.header)
-    page1 = emitpdf.new_page()
+    if not emitpdf.currentPage == None:
+        page1 = emitpdf.currentPage
+    else:
+        page1 = emitpdf.new_page()
+    #
+    #if (emitpdf.currentPos.y+(10*15)/emitpdf.currentDPI) > (emitpdf.contentRegion.xy.y+emitpdf.contentRegion.wh.h):
+    #    page1 = emitpdf.new_page()
+    #
     ps = emitpdf.ps()
     # header
     emitpdf.newline(y=16/emitpdf.currentDPI)
@@ -751,6 +765,7 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
     ps.fill_color(0,0,0)
     emitpdf.layout_text(tp.display.header,overflow="stop")
     emitpdf.layout_text_end()
+    ps = emitpdf.ps()
     emitpdf.newline(y=emitpdf.layoutVadj.y)
     emitpdf.newline(y=16/emitpdf.currentDPI/5) # 1/5th the font size
     hdrlinew = emitpdf.layoutMaxEnd.x - emitpdf.layoutStartedAt.x
@@ -775,25 +790,30 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
         emitpdf.layout_text(tp.description,pagespan=True)
         emitpdf.layout_text("\n\n")
         emitpdf.layout_text_end()
+        ps = emitpdf.ps()
     #
     if not tp.display.disptable == None:
         desci = 0
         for ci in range(len(tp.display.colsiz)):
             if not tp.display.colhdr[ci] == None and not tp.display.coldesc[ci] == None:
+                ps = emitpdf.ps()
                 emitpdf.layout_text_begin()
                 #
                 ps.set_text_font(emitpdf.font1.bold,8)
                 emitpdf.layout_text(tp.display.colhdr[ci],pagespan=True)
                 emitpdf.layout_text_flush()
+                ps = emitpdf.ps()
                 #
                 ps.set_text_font(emitpdf.font1.reg,8)
                 emitpdf.layout_text(": "+tp.display.coldesc[ci],pagespan=True)
                 emitpdf.layout_text("\n",pagespan=True)
                 #
                 emitpdf.layout_text_end()
+                ps = emitpdf.ps()
                 emitpdf.newline(y=2/emitpdf.currentDPI)
                 #
                 desci = desci + 1
+                ps = emitpdf.ps()
         if desci > 0:
             emitpdf.newline(y=10/emitpdf.currentDPI)
         #
@@ -915,6 +935,7 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
                     ps.set_text_font(emitpdf.font1.reg,fontSize)
                     emitpdf.layout_text(val)
                     emitpdf.layout_text_end()
+                    ps = emitpdf.ps()
                 #
                 emitpdf.newline(y=rowh)
             #
@@ -981,8 +1002,10 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
                     emitpdf.currentPos.x = tx
                     emitpdf.layout_text(line)
                     emitpdf.layout_text_flush()
+                    ps = emitpdf.ps()
                     ps.text_next_line()
                 emitpdf.layout_text_end()
+                ps = emitpdf.ps()
                 #
                 if show_sources == True and coli == len(columns)-1:
                     sia = row.get("source index")
@@ -996,6 +1019,7 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
                             refmark = " [*"+str(si)+"]"
                             emitpdf.layout_text(refmark)
                         emitpdf.layout_text_end()
+                        ps = emitpdf.ps()
                         ps.fill_color(0,0,0)
             #
             emitpdf.currentPos.x = coltop.x
@@ -1042,6 +1066,7 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
         ps.set_text_font(emitpdf.font1.reg,10)
         emitpdf.layout_text("Sources\n",pagespan=True)
         emitpdf.layout_text_end()
+        ps = emitpdf.ps()
         emitpdf.newline(y=10/emitpdf.currentDPI/5) # 1/5th the font size
         hdrlinew = emitpdf.layoutMaxEnd.x - emitpdf.layoutStartedAt.x
         #
@@ -1073,6 +1098,7 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
             ps.fill_color(0,0,0.75)
             emitpdf.layout_text(refmark,pagespan=True)
             emitpdf.layout_text_end()
+            ps = emitpdf.ps()
             ps.fill_color(0,0,0)
             #
             if "book" in sobj:
@@ -1121,6 +1147,7 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
                         ps.fill_color(0,0,0)
                         emitpdf.layout_text(x+"\n",pagespan=True)
                         emitpdf.layout_text_end()
+                        ps = emitpdf.ps()
                         emit = True
                     #
                     url = citation.get("url")
@@ -1138,6 +1165,7 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
                         emitpdf.layout_text("URL: ",pagespan=True)
                         emitpdf.layout_text(url+"\n",pagespan=True)
                         emitpdf.layout_text_end()
+                        ps = emitpdf.ps()
                 if not where == None:
                     x = ""
                     for whi in where:
@@ -1167,6 +1195,7 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
                         ps.fill_color(0,0,0)
                         emitpdf.layout_text(x+"\n",pagespan=True)
                         emitpdf.layout_text_end()
+                        ps = emitpdf.ps()
             #
             emitpdf.newline(y=(8+2)/emitpdf.currentDPI)
         #
@@ -1177,6 +1206,7 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
         ps.set_text_font(emitpdf.font1.reg,10)
         emitpdf.layout_text("Notes\n",pagespan=True)
         emitpdf.layout_text_end()
+        ps = emitpdf.ps()
         emitpdf.newline(y=10/emitpdf.currentDPI/5) # 1/5th the font size
         hdrlinew = emitpdf.layoutMaxEnd.x - emitpdf.layoutStartedAt.x
         #
@@ -1229,6 +1259,7 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
             ps.set_text_font(emitpdf.font1.reg,8)
             emitpdf.layout_text(note+"\n",pagespan=True)
             emitpdf.layout_text_end()
+            ps = emitpdf.ps()
             emitpdf.popcontentregion()
             #
             emitpdf.currentPos.x = lx

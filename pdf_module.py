@@ -187,7 +187,7 @@ class PDFGen:
         self.root_id = None
         self.pdfver = [ 1, 4 ]
         self.objects = [ None ] # object 0 is always NULL because most PDFs seem to count from 1
-        self.zlib_compress_streams = True
+        self.zlib_compress_streams = False
     #
     def new_stream_object(self,value=None):
         id = len(self.objects)
