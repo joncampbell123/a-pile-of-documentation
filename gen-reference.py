@@ -250,20 +250,21 @@ def emit_table_as_text(f,table_id,tp):
     #
     f.write("\n\n")
 
-def emit_table_as_html(path,table_id,tp):
+def html_out_begin(f):
+    f.write("<head>")
+    f.write("<meta charset=\"utf-8\">")
+    f.write("<title>Tables</title>")
+    f.write("</head>")
+    f.write("<body>");
+
+def html_out_end(f):
+    f.write("</body>");
+    f.write("</html>")
+
+def emit_table_as_html(f,table_id,tp):
     #
     title = tp.display.header
     #
-    f = open(path,"w",encoding="UTF-8")
-    f.write("<!DOCTYPE HTML>\n")
-    f.write("<html>")
-    #
-    f.write("<head>")
-    f.write("<meta charset=\"utf-8\">")
-    f.write("<title>"+html_module.html_escape(title)+"</title>")
-    f.write("</head>")
-    #
-    f.write("<body>");
     f.write("<h2><span style=\"border-bottom: double;\">"+html_module.html_escape(title)+"</span></h2>")
     #
     if not tp.description == None:
@@ -425,10 +426,7 @@ def emit_table_as_html(path,table_id,tp):
             f.write("<li>"+html_module.html_escape(note)+"</li>")
         f.write("</ul>")
     #
-    f.write("</body>");
-    #
-    f.write("</html>")
-    f.close()
+    f.write("<br><br>")
 
 class XY:
     x = None
@@ -1280,12 +1278,14 @@ def emit_table_as_pdf(path,table_id,tp):
     f.close()
 
 os.system("rm -Rf reference/text/tables; mkdir -p reference/text")
-os.system("rm -Rf reference/html/tables; mkdir -p reference/html/tables")
+os.system("rm -Rf reference/html/tables; mkdir -p reference/html")
 os.system("rm -Rf reference/pdf/tables; mkdir -p reference/pdf/tables")
 
 tables_json = common_json_help_module.load_json("compiled/tables.json")
 
 ftxt = open("reference/text/tables.txt","w",encoding="UTF-8")
+fhtml = open("reference/html/tables.htm","w",encoding="UTF-8")
+html_out_begin(fhtml)
 
 tables = tables_json.get("tables")
 if not tables == None:
@@ -1293,7 +1293,9 @@ if not tables == None:
     for table_id in torder:
         tp = table_presentation_module.TablePresentation(tables[table_id])
         emit_table_as_text(ftxt,table_id,tp)
-        emit_table_as_html("reference/html/tables/"+table_id+".htm",table_id,tp)
+        emit_table_as_html(fhtml,table_id,tp)
         emit_table_as_pdf("reference/pdf/tables/"+table_id+".pdf",table_id,tp)
 
+html_out_end(fhtml)
+fhtml.close()
 ftxt.close()
