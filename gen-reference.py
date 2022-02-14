@@ -37,11 +37,7 @@ def text_split_text(text):
         e.append(w)
     return e
 
-def emit_table_as_text(path,table_id,tp):
-    #
-    f = open(path,"w",encoding="UTF-8")
-    f.write("\n")
-    #
+def emit_table_as_text(f,table_id,tp):
     f.write(tp.display.header+"\n")
     f.write(("="*len(tp.display.header))+"\n")
     f.write("\n")
@@ -142,7 +138,7 @@ def emit_table_as_text(path,table_id,tp):
     #
     if not tp.sources == None:
         f.write("Sources\n")
-        f.write("=======\n")
+        f.write("-------\n")
         for sii in range(len(tp.sources)):
             sobj = tp.sources[sii]
             if not int(sobj.get("source index")) == sii:
@@ -251,7 +247,7 @@ def emit_table_as_text(path,table_id,tp):
                 f.write("\n")
         f.write("\n")
     #
-    f.close()
+    f.write("\n\n")
 
 def emit_table_as_html(path,table_id,tp):
     #
@@ -1282,17 +1278,20 @@ def emit_table_as_pdf(path,table_id,tp):
     pdf.write_file(f)
     f.close()
 
-os.system("rm -Rf reference/text/tables; mkdir -p reference/text/tables")
+os.system("rm -Rf reference/text/tables; mkdir -p reference/text")
 os.system("rm -Rf reference/html/tables; mkdir -p reference/html/tables")
 os.system("rm -Rf reference/pdf/tables; mkdir -p reference/pdf/tables")
 
 tables_json = common_json_help_module.load_json("compiled/tables.json")
 
+ftxt = open("reference/text/tables.txt","w",encoding="UTF-8")
+
 tables = tables_json.get("tables")
 if not tables == None:
     for table_id in tables:
         tp = table_presentation_module.TablePresentation(tables[table_id])
-        emit_table_as_text("reference/text/tables/"+table_id+".txt",table_id,tp)
+        emit_table_as_text(ftxt,table_id,tp)
         emit_table_as_html("reference/html/tables/"+table_id+".htm",table_id,tp)
         emit_table_as_pdf("reference/pdf/tables/"+table_id+".pdf",table_id,tp)
 
+ftxt.close()

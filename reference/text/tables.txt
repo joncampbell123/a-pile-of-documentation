@@ -1,0 +1,732 @@
+COM vs EXE file differences
+===========================
+
+Item                 | COM Programs                                                | EXE Programs
+=====================|=============================================================|============================================================================
+CS at entry          | PSP                                                         | Segment containing module with entry point
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+DS at entry          | PSP                                                         | PSP
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Entry point          | PSP:0x100                                                   | EXE header initial CS:IP values
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+ES at entry          | PSP                                                         | PSP
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+IP at entry          | 0x100                                                       | Offset of entry point within it's segment
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Maximum program size | 65278                                                       | No limit
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Memory allocation    | All free memory is allocated to the program                 | All free memory, or the maximum allocation size specified in the EXE header
+                     |                                                             | whichever is smaller.
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Segment use          | One segment only                                            | Multiple segments allowed
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Size of file         | Exact size of program not including PSP                     | Size of program plus EXE header
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+SP at entry          | 0xFFFE, or top word of available memory, whichever is lower | EXE header, initial SP segment value
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+SS at entry          | PSP                                                         | EXE header, initial SS segment value
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Stack at entry       | Zero word on stack                                          | Initialized or uninitialized data
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Stack size           | 65536 - (ProgramSize + 256)                                 | Size of stack segment.
+                     |                                                             | If assembly language programming, size of the STACK segment
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+Subroutine calls     | NEAR CALLs only                                             | NEAR or FAR CALLS allowed
+---------------------+-------------------------------------------------------------+----------------------------------------------------------------------------
+
+Sources
+-------
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.44, COM Verses EXE File Differences
+
+Notes
+-----
+ * The 65278 COM program size limit is based on:
+   65536 - 256 byte Program Segment Prefix - 2 byte stack
+
+ * PC Programmer's Sourcebook (1988) incorrectly states the entry point is determined by END segment. It is actually determined by 
+   an initial CS:IP value in the EXE header
+
+ * PC Programmer's Sourcebook (1988) refers to the initial SS segment at entry in terms of assembly language programming, in which 
+   the segment defined with the STACK attribute becomes the stack. This compilation refers to the initial value according to the EXE
+   header instead. The initial value of SP in the book is defined as the size of the STACK segment.
+
+ * PSP = Program Segment Prefix
+ * NEAR CALLs in COM files are more of a limitation of assemblers in MS-DOS. If you are willing to lay out memory on your own, you 
+   can certainly have segments in a COM file, and FAR calls. However COM files do not have a relocation table, so any relocations 
+   have to be manually done somehow to get the same function.
+
+ * The EXE header specifies how much to load, which can be less than the size of the EXE file. Additional data can be placed beyond 
+   that point which is then ignored by MS-DOS when loading the EXE file into memory. This is widely used to carry additional data 
+   with an executable file, including self-extracting PKZIP archives (ZIP archive appended to an EXE). The Windows executable file 
+   format exploits this to place a PE or NE header beyond the MS-DOS "stub", so that if a Windows program is ever run in MS-DOS 
+   mode, only the small stub is loaded into memory so it can remind you to run it from Windows.
+
+
+
+Media descriptor byte ID values
+===============================
+
+This is the 8-bit value used in the MS-DOS filesystem and kernel that was used to describe floppy disk formats
+
+ID   | Tracks/side | Sectors/track | Sides | Bytes/sector | Format
+=====|=============|===============|=======|==============|===========================================================
+0xE5 | 77          | 26            | 1     | 128          | 8 inch (DR-DOS only) (250KB)                               [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xED | 80          | 9             | 2     | 512          | 5.25 inch (Tandy 2000 only) (720KB)                        [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xEE | -           | -             | -     | -            | Custom non-standard partitions with nonstandard            [*1]
+     |             |               |       |              | BIOS Parameter Block or special media access.
+     |             |               |       |              | Like 0xF8 but not recognized by unaware systems by design.
+     |             |               |       |              | FAT ID does not have to match this value (DR-DOS)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xEF | -           | -             | -     | -            | Custom non-standard floppy and superfloppy formats.        [*1]
+     |             |               |       |              | Like 0xF0 but not recognized by unaware systems by design.
+     |             |               |       |              | FAT ID does not have to match this value (DR-DOS)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF0 | -           | -             | -     | -            | Custom floppy and superfloppy formats.                     [*1]
+     |             |               |       |              | geometry is defined in the BIOS Parameter Block
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF0 | 80          | 18            | 2     | 512          | 3.5 inch floppy disk (1.44MB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF0 | 80          | 36            | 2     | 512          | 3.5 inch floppy disk (2.88MB)                              [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF4 | -           | -             | -     | -            | Double density (Altos MS-DOS 2.11 only)                    [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF5 | -           | -             | -     | -            | Fixed disk (Altos MS-DOS 2.11 only)                        [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF8 | -           | -             | -     | -            | Fixed disk
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF8 | -           | -             | -     | -            | Single sided (Altos MS-DOS 2.11 only)                      [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF8 | 80          | 9             | 1     | 512          | 3.5 inch floppy disk (MS-DOS 3.1 and MSX-DOS) (360KB)      [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF8 | 80          | 9             | 2     | 512          | 5.25 inch floppy disk (Sanyo 55x DS-DOS 2.11 only) (720KB) [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF9 | 80          | 15            | 2     | 512          | 5.25 inch floppy disk (1.2MB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF9 | 80          | 18            | 2     | 512          | 3.5 inch floppy disk (DOS 3.2 only) (1.44MB)               [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xF9 | 80          | 9             | 2     | 512          | 3.5 inch floppy disk (720KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFA | 80          | 8             | 1     | 512          | 3.5 inch floppy disk (320KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFA | 80          | 8             | 1     | 512          | 5.25 inch floppy disk (320KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFB | 80          | 8             | 2     | 512          | 3.5 inch floppy disk (640KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFB | 80          | 8             | 2     | 512          | 5.25 inch floppy disk (640KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFC | 40          | 9             | 1     | 512          | 5.25 inch floppy disk (180KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFD | 40          | 9             | 2     | 512          | 5.25 inch floppy disk (360KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFD | 77          | 26            | 2     | 128          | 8 inch floppy disk (500KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFE | 40          | 8             | 1     | 512          | 5.25 inch floppy disk (160KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFE | 77          | 26            | 1     | 128          | 8 inch floppy disk (250KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFE | 77          | 8             | 2     | 1024         | 8 inch floppy disk (1.2MB)                                 [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFF | -           | -             | -     | -            | Hard disk (Sanyo 55x DS-DOS 2.11 only)                     [*1]
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+0xFF | 40          | 8             | 2     | 512          | 5.25 inch floppy disk (320KB)
+-----+-------------+---------------+-------+--------------+-----------------------------------------------------------
+
+Sources
+-------
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.37, Disk ID Byte
+
+  [*1] Wikipedia, The Free Online Encylopedia
+       URL: https://en.wikipedia.org/wiki/Design_of_the_FAT_file_system#BIOS_Parameter_Block
+
+Notes
+-----
+ * The term "Fixed disk" usually refers to a hard drive or removable media, in which case the geometry must be read from the BIOS 
+   Parameter Block
+
+ * Bytes per sector have been added for completeness, even though not listed in the 1988 Programmer PC Sourcebook
+ * PC programmer's sourcebook (1988) incorrectly states 8-inch media id 0xFE has 2, 6, or 8 sectors per track
+
+
+
+Floppy Disk Format Summary
+==========================
+
+ - Disk: Disk size, 3.5 inch or 5.25 in, etc
+ - ID: Media ID byte
+ - H: Heads, or more appropriately, sides
+ - T: Tracks per side
+ - S: Sectors per track
+ - B/S: Bytes per sector
+ - S/C: Sectors per cluster
+ - Res: Reserved sector count
+ - SF: Sectors per FAT
+ - FT: Number of FAT tables
+ - Rs: Number of root directory sectors
+ - Rm: Maxmimum root directories allowed given root directory size
+ - TS: Total sectors
+ - US: Usable sectors
+ - UC: Usable clusters
+ - DOS: Minimum DOS version
+ - System: Systems that commonly use this format
+
+Format  | Disk | ID   | H | T  | S  | B/S | S/C | Res | SF | FT | Rs | Rm  | TS   | US   | UC   | DOS | System
+========|======|======|===|====|====|=====|=====|=====|====|====|====|=====|======|======|======|=====|===============
+160 KB  | 5.25 | 0xFE | 1 | 40 | 8  | 512 | 1   | 1   | 1  | 2  | 4  | 64  | 320  | 313  | 313  | 1   | 
+180 KB  | 5.25 | 0xFC | 1 | 40 | 9  | 512 | 1   | 1   | 2  | 2  | 4  | 64  | 360  | 351  | 351  | 2   | 
+320 KB  | 5.25 | 0xFF | 2 | 40 | 8  | 512 | 2   | 1   | 1  | 2  | 7  | 112 | 640  | 630  | 315  | 1.1 | 
+360 KB  | 5.25 | 0xFD | 2 | 40 | 9  | 512 | 2   | 1   | 2  | 2  | 7  | 112 | 720  | 708  | 354  | 2   | PC/XT
+720 KB  | 3.5  | 0xF9 | 2 | 80 | 9  | 512 | 2   | 1   | 3  | 2  | 7  | 112 | 1400 | 1426 | 713  | 3   | PC convertible
+1200 KB | 5.25 | 0xF9 | 2 | 80 | 15 | 512 | 1   | 1   | 7  | 2  | 14 | 224 | 2400 | 2371 | 2371 | 3   | AT
+1440 KB | 3.5  | 0xF0 | 2 | 80 | 18 | 512 | 1   | 1   | 9  | 2  | 14 | 224 | 2880 | 2847 | 2847 | 3.3 | PS/2
+
+Sources
+-------
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.40, Floppy Disk Format Summary
+
+Notes
+-----
+ * A summary of MS-DOS disk formats
+ * Despite the title, borrowed from the PC Programmer's Sourcebook, this table has been rearranged to provide more general 
+   information
+
+ * Filesystem details, like reserved sectors, sectors/FAT, root directory sectors, etc. can vary according to the BIOS Parameter 
+   Block. They are not fixed, except for older DOS versions
+
+ * Total usable sectors and total usable clusters will change if bad sectors are found during formatting
+ * FAT disk ID bytes are unreliable. Use disk parameter block to determine media type
+
+
+
+Hard Disk Format Summary
+========================
+
+ - Disk: Disk size, 3.5 inch or 5.25 in, etc
+ - ID: Media ID byte
+ - ID: Interleave
+ - H: Heads, or more appropriately, sides
+ - T: Tracks per side
+ - S: Sectors per track
+ - B/S: Bytes per sector
+ - S/C: Sectors per cluster
+ - Res: Reserved sector count
+ - SF: Sectors per FAT
+ - FT: Number of FAT tables
+ - Rs: Number of root directory sectors
+ - Rm: Maxmimum root directories allowed given root directory size
+ - TS: Total sectors
+ - US: Usable sectors
+ - UC: Usable clusters
+ - DOS: Minimum DOS version
+ - System: Systems that commonly use this format
+
+Format | Disk | ID   | ID  | H | T   | S  | B/S | S/C | Res | SF | FT | Rs | Rm  | TS    | US    | UC    | DOS | System
+=======|======|======|=====|===|=====|====|=====|=====|=====|====|====|====|=====|=======|=======|=======|=====|==============
+10 MB  | 5.25 | 0xF8 | 6:1 | 4 | 306 | 17 | 512 | 8   | 1   | 8  | 2  | 32 | 512 | 20808 | 20759 | 2595  | 2   | XT
+20 MB  | 3.5  | 0xF8 | 1:1 | - | -   | 17 | 512 | -   | -   | -  | -  | -  | -   | -     | -     | -     | 2   | PS/2 Model 50
+20 MB  | 5.25 | 0xF8 | 3:1 | 4 | 615 | 17 | 512 | 4   | 1   | 40 | 2  | 32 | 512 | 41820 | 41707 | 10427 | 2   | AT
+44 MB  | 3.5  | 0xF8 | 1:1 | - | -   | 17 | 512 | -   | -   | -  | -  | -  | -   | -     | -     | -     | 2   | PS/2 Model 60
+70 MB  | 3.5  | 0xF8 | 1:1 | - | -   | 17 | 512 | -   | -   | -  | -  | -  | -   | -     | -     | -     | 2   | PS/2 Model 80
+
+Sources
+-------
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.41, Hard Disk Format Summary
+
+Notes
+-----
+ * Despite the title, borrowed from the PC Programmer's Sourcebook, this table has been rearranged to provide more general 
+   information
+
+ * Filesystem details, like reserved sectors, sectors/FAT, root directory sectors, etc. can vary according to the BIOS Parameter 
+   Block. They are not fixed, except for older DOS versions
+
+ * Total usable sectors and total usable clusters will change if bad sectors are found during formatting
+ * FAT disk ID bytes are unreliable. Use disk parameter block to determine media type
+
+
+
+MS-DOS included command files
+=============================
+
+Commands included with MS-DOS
+
+ - Min: Minimum DOS version
+ - Max: Maximum DOS version
+
+Command  | Min | Max | Specific versions
+=========|=====|=====|==================
+APPEND   | 3.3 | -   | 
+ASSIGN   | 2.0 | -   | 
+ATTRIB   | 3.0 | -   | 
+BACKUP   | 2.0 | -   | 
+BASIC    | 1.0 | 3.2 | 
+BASICA   | 1.0 | 3.3 | 
+CHCP     | 3.3 | -   | 
+CHKDSK   | 1.0 | -   | 
+COMP     | 1.0 | -   | 
+DEBUG    | 1.0 | -   | 
+DISKCOMP | 1.0 | -   | 
+DISKCOPY | 1.0 | -   | 
+EDLIN    | 1.0 | -   | 
+EXE2BIN  | 2.0 | -   | 
+FASTOPEN | 3.3 | -   | 
+FDISK    | 2.0 | -   | 
+FIND     | 2.0 | -   | 
+FORMAT   | 1.0 | -   | 
+GRAFTABL | 2.0 | -   | 
+GRAPHICS | 2.0 | -   | 
+JOIN     | 3.0 | -   | 
+KEYBFR   | 3.0 | -   | 
+KEYBGR   | 3.0 | -   | 
+KEYBIT   | 3.0 | -   | 
+KEYBSP   | 3.0 | -   | 
+KEYBUK   | 3.0 | -   | 
+LABEL    | 3.0 | -   | 
+LINK     | 1.0 | -   | 
+MODE     | 1.0 | -   | 
+MORE     | 2.0 | -   | 
+NLSFUNC  | 3.3 | -   | 
+PRINT    | 2.0 | -   | 
+RECOVER  | 2.0 | -   | 
+REPLACE  | 3.0 | -   | 
+RESTORE  | 2.0 | -   | 
+SELECT   | 3.2 | -   | 
+SHARE    | 3.1 | -   | 
+SORT     | 2.0 | -   | 
+SUBST    | 3.0 | -   | 
+SYS      | 1.0 | -   | 
+TREE     | 2.0 | -   | 
+XCOPY    | 3.1 | -   | 
+
+Sources
+-------
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.47, Included Command Files Summary
+
+Notes
+-----
+ * PC Programmer's Sourcebook (1988): Commands listed (before MS-DOS 4.0) are from the IBM PC-DOS versions. MS-DOS versions may 
+   differ slightly
+
+
+
+Prompt ANSI Control Strings
+===========================
+
+ANSI control strings supported by MS-DOS
+
+String   | ANSI parameters                                   | Function
+=========|===================================================|=========================================================================================================
+ESC [ 6n |                                                   | Console driver outputs cursor position report sequence
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [ A  | 1: row count                                      | Moves cursor up by the number of rows indicated. If not specified, 1 is assumed
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [ B  | 1: row count                                      | Moves cursor down by the number of rows indicated. If not specified, 1 is assumed
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [ C  | 1: column count                                   | Moves cursor right by the number of columns indicated. If not specified, 1 is assumed
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [ D  | 1: column count                                   | Moves cusror left by the number of columns indicated. If not specified, 1 is assumed
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [ f  | 1: row (1-based)                                  | Moves to row, column
+         | 2: column (2-based)                               | 
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [ H  | 1: row                                            | Moves cursor to row (1) and column (2) position. H by itself positions the cursor to home (1,1) position
+         | 2:column                                          | 
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [ j  | 1: row (1-based)                                  | Moves to row, column
+         | 2: column (2-based)                               | 
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [ J  | 1: Erasure mode                                   | Erasure. MS-DOS only supports 2J to clear the screen according to PC Programmer's Sourcebook (1988)
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [ K  |                                                   | Erase from cursor to end of line, including cursor position
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [ m  | Any number of parameters is valid, including none | If no number given, acts as if zero.
+         |                                                   | Each number changes an attribute that will be used to print text after the escape.
+         |                                                   | 0 clears all attributes to default.
+         |                                                   | See table "MS-DOS Prompt ANSI Display Attribute Strings" for more information.
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [ p  | 1: key to remap                                   | Reassigns first key (1) to second key (2), or remap key (1)
+         | 2: key to remap to                                | 
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [ R  |                                                   | Report cursor position through standard input
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [ s  |                                                   | Save current cursor position
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [ u  |                                                   | Restore current cursor position
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [= h | 1: display mode                                   | Sets display mode according to display mode code.
+         |                                                   | Note that the code is ESC [= followed by the number, then h.
+         |                                                   | 
+         |                                                   | 0 = 40x25 monochrome text
+         |                                                   | 1 = 40x25 color text
+         |                                                   | 2 = 80x25 monochrome text
+         |                                                   | 3 = 80x25 color text
+         |                                                   | 4 = 320x200 color graphics
+         |                                                   | 5 = 320x200 monochrome graphics
+         |                                                   | 6 = 640x200 monochrome graphics
+         |                                                   | 7 = wrap at end of line
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+ESC [= l | 1: display mode                                   | Resets display mode according to display mode code.
+         |                                                   | Note that the code is ESC [= followed by the number, then l.
+         |                                                   | 
+         |                                                   | 0 = 40x25 monochrome text
+         |                                                   | 1 = 40x25 color text
+         |                                                   | 2 = 80x25 monochrome text
+         |                                                   | 3 = 80x25 color text
+         |                                                   | 4 = 320x200 color graphics
+         |                                                   | 5 = 320x200 monochrome graphics
+         |                                                   | 6 = 640x200 monochrome graphics
+         |                                                   | 7 = disable wrap at end of line
+---------+---------------------------------------------------+---------------------------------------------------------------------------------------------------------
+
+Sources
+-------
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.18, Prompt ANSI Control Strings
+
+Notes
+-----
+ * ANSI control strings are portrayed where possible as escape code separated from parameters.
+   ANSI escapes are usually ESC [ <paramaters> <code>.
+   <parameters> can be nothing, one number, or multiple numbers separated by semicolons.
+   The ANSI escape for bright yellow text for example would be written ESC [ 1;33m meaning 'm' to set attributes, 1 for bright, 33 
+   for yellow. MS-DOS generally confirms to the ANSI standard in this way.
+   If specific parameters set the function such as ESC [ 6n then the parameter is considered part of the escape but also listed as a
+   param as well.
+
+
+
+Prompt ANSI Display Attribute Strings
+=====================================
+
+ANSI display attribute strings supported by MS-DOS
+
+Escape with code | Sets attribute to               | MDA | CGA | EGA | VGA
+=================|=================================|=====|=====|=====|====
+ESC [ 0 m        | Normal text                     | X   | X   | X   | X
+ESC [ 1 m        | Bright text (intensity bit set) | X   | X   | X   | X
+ESC [ 4 m        | Underscored text                | X   |     |     | 
+ESC [ 5 m        | Blinking text                   | X   |     |     | 
+ESC [ 7 m        | Reversed text                   | X   | X   | X   | X
+ESC [ 8 m        | Canceled (invisible) text       | X   |     |     | 
+ESC [ 30 m       | Black text                      |     | X   | X   | X
+ESC [ 31 m       | Red text                        |     | X   | X   | X
+ESC [ 32 m       | Green text                      |     | X   | X   | X
+ESC [ 33 m       | Yellow text                     |     | X   | X   | X
+ESC [ 34 m       | Blue text                       |     | X   | X   | X
+ESC [ 35 m       | Magenta text                    |     | X   | X   | X
+ESC [ 36 m       | Cyan text                       |     | X   | X   | X
+ESC [ 37 m       | White text                      |     | X   | X   | X
+ESC [ 40 m       | Black background                |     | X   | X   | X
+ESC [ 41 m       | Red background                  |     | X   | X   | X
+ESC [ 42 m       | Green background                |     | X   | X   | X
+ESC [ 43 m       | Yellow background               |     | X   | X   | X
+ESC [ 44 m       | Blue background                 |     | X   | X   | X
+ESC [ 45 m       | Magenta background              |     | X   | X   | X
+ESC [ 46 m       | Cyan background                 |     | X   | X   | X
+ESC [ 47 m       | White background                |     | X   | X   | X
+
+Sources
+-------
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.19, Prompt ANSI Display Attribute Strings
+
+Notes
+-----
+ * The codes here reflect the numeric values given in ANSI.SYS escape sequence ESC [ m. Multiple codes can be combined, separated a 
+   by semicolon, into one ESC [ m code.
+
+
+
+$PROMPT escape codes
+====================
+
+Special escape codes in the $PROMPT environment variable interpreted by COMMAND.COM
+
+Character sequence | Displays as                                                           | Example          | Example displays as
+===================|=======================================================================|==================|=========================================
+$$                 | Dollar sign ( $ )                                                     | Time is $$$g     | Time is $>
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$+                 | Zero or more consecutive plus ( + ) according to PUSHD stack depth    |                  |                                          [*0]
+                   | (Command Extension)                                                   |                  | 
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$_                 | Carriage return/line feed                                             | $t$h$h$h$_$p$g   | 9:30:25
+                   |                                                                       |                  | C:\MYDIR>
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$a                 | Ampersand ( & )                                                       | $a               | &                                        [*0]
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$b                 | Vertical slash ( | )                                                  | $p$b             | C:\MYDIR}
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$c                 | Left parenthesis                                                      | $c               | (                                        [*0]
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$d                 | Current system date                                                   | $d $n$g          | Mon 9-5-1986 C>
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$e                 | Escape character (for use with ANSI.SYS)                              | $e[32m$n$g$e[0m  | C> (prompt is green)
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$f                 | Right parenthesis                                                     | $f               | )                                        [*0]
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$g                 | Greater than sign ( > )                                               | $p$g             | C:\MYDIR>
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$h                 | Destructive backspace                                                 | $t$h$h$h $p$g    | 09:30:26 C:\MYDIR>
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$l                 | Less than sign ( < )                                                  | $l$n$g           | <C>
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$m                 | Remote name associated with the current drive letter if network drive |                  |                                          [*0]
+                   | (Command Extension)                                                   |                  | 
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$n                 | Current drive letter                                                  | Drive is $n$g    | Drive is C>
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$p                 | Current pathname directory                                            | Path is $p$g     | Path is C:\MYDIR>
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$q                 | Equals sign ( = )                                                     | Drive $q $n$g    | Drive = C>
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$s                 | Space                                                                 | $p$s$g           | C:\MYDIR >                               [*0]
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$t                 | Current system time                                                   | Time is $t       | Time is 09:30:25.93
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+$v                 | DOS version number                                                    | $v               | IBM Personal Computer DOS Version   3.20
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+Any other          | Treated as character typed                                            | This is a prompt | This is a prompt
+-------------------+-----------------------------------------------------------------------+------------------+-----------------------------------------
+
+Sources
+-------
+  [*0] MS-DOS and Windows command line prompt command
+       URL: https://www.computerhope.com/prompthl.htm
+
+  [*1] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.17, Prompt Special Characters
+
+
+
+DOS Command Summary
+===================
+
+Commands included with MS-DOS
+
+Command  | Syntax                                    | Function                                      | Example                 | Notes
+=========|===========================================|===============================================|=========================|===========================
+APPEND   | d:path[,[d:]path...]                      | Locates files outside the current directory   | APPEND c:\dbfiles       | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+ASSIGN   | [x[=] y [...]]                            | Routes disk I/O to another drive              | ASSIGN a=c b=c          | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+ATTRIB   | [(+|-)parms] [d:][path]filespec[/parms]   | Modifies file attributes                      | ATTRIB -r myfile.doc /s | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+BACKUP   | d:[path][filespec] d:[/parms]             | Backs up one disk to another                  | BACKUP c:*.* a: /S/F    | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+BREAK    | [ON|OFF]                                  | Defines status of control break               | BREAK ON                | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+CD       | [d:][path]                                | Sets or displays current path                 | CD c:\wp\word\data      | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+CHCP     | [number]                                  | Selects code page DOS uses                    | CHCP 850                | Must execute NLSFUNC first
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+CHDIR    | [d:][path]                                | Sets or displays current path                 | CD c:\wp\word\data      | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+CHKDSK   | [d:][path][filespec][/parms]              | Analyzes disk and FAT                         | CHKDSK c:/F             | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+CLS      |                                           | Clears display screen                         | CLS                     | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+COMMAND  | [d:][path][/parms                         | Starts a secondary command processor          | COMMAND c:\ut /p        | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+COMP     | [d:][path][filespec] [d:][path][filespec] | Compares contents of files                    | COMP *.BAT A*.BAT       | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+COPY     | [/parms] [d:][path]filespec[/parms]       | Copies a file or set of files                 | COPY *.* c:             | 
+         | [d:][path][filespec][/parms]              |                                               |                         | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+CTTY     | devicename                                | Changes stdin and stdout to auxiliary console | CTTY COM1               | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+DATE     | [date]                                    | Enters, changes, or displays date             | DATE 1-12-87            | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+DEL      | [d:][path]filespec                        | Deletes specified file or files               | DEL *.bak               | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+DIR      | [d:][path][filespec][/parms]              | Lists directory entries                       | DIR c:/w                | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+DISKCOMP | [d: [d:]][/parms]                         | Compares contents of two disks                | DISKCOMP a: b:          | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+DISKCOPY | [d: [d:]][/parms]                         | Copies a disk                                 | DISKCOPY a: b:          | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+ERASE    | [d:][path]filespec                        | Deletes specified file or files               | ERASE *.bak             | 
+---------+-------------------------------------------+-----------------------------------------------+-------------------------+---------------------------
+
+Sources
+-------
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 2, Software => Section 2, DOS Commands, Utilities, and Summaries => 2.01, DOS Command Summary
+
+
+
+IBM Extended Character Codes, BIOS Keyboard Interface
+=====================================================
+
+Extended character codes returned by the IBM BIOS in the keyboard buffer, through INT 16h, and at the MS-DOS console driver as 00h <code>
+
+ - Character code: Character code returned by the BIOS
+ - Key combination: Key combination that generates the character code
+
+Character code | Key combination
+===============|==========================
+0x01           | Alt+Esc                   [*1]
+0x03           | Ctrl+2                    [*1]
+0x03           | Null character (none)     [*0]
+0x0E           | Alt+Backspace             [*1]
+0x0F           | Shift Tab
+0x10           | Alt+Q
+0x11           | Alt+W
+0x12           | Alt+E
+0x13           | Alt+R
+0x14           | Alt+T
+0x15           | Alt+Y
+0x16           | Alt+U
+0x17           | Alt+I
+0x18           | Alt+O
+0x19           | Alt+P
+0x1A           | Alt+[                     [*1]
+0x1B           | Alt+]                     [*1]
+0x1C           | Alt+Enter                 [*1]
+0x1E           | Alt+A
+0x1F           | Alt+S
+0x20           | Alt+D
+0x21           | Alt+F
+0x22           | Alt+G
+0x23           | Alt+H
+0x24           | Alt+J
+0x25           | Alt+K
+0x26           | Alt+L
+0x27           | Alt+;                     [*1]
+0x28           | Alt+'                     [*1]
+0x29           | Alt+`                     [*1]
+0x2B           | Alt+\                     [*1]
+0x2C           | Alt+Z
+0x2D           | Alt+X
+0x2E           | Alt+C
+0x2F           | Alt+V
+0x30           | Alt+B
+0x31           | Alt+N
+0x32           | Alt+M
+0x33           | Alt+,                     [*1]
+0x34           | Alt+.                     [*1]
+0x35           | Alt+/                     [*1]
+0x37           | Alt+*                     [*1]
+0x3B           | Function key 1
+0x3C           | Function key 2
+0x3D           | Function key 3
+0x3E           | Function key 4
+0x3F           | Function key 5
+0x40           | Function key 6
+0x41           | Function key 7
+0x42           | Function key 8
+0x43           | Function key 9
+0x44           | Function key 10
+0x47           | Home
+0x48           | Up arrow
+0x49           | Page Up
+0x4A           | Alt+-                     [*1]
+0x4B           | Left arrow
+0x4C           | Center Key 5              [*1]
+0x4D           | Right arrow
+0x4E           | Alt++                     [*1]
+0x4F           | End
+0x50           | Down arrow
+0x51           | Page Down
+0x52           | Insert
+0x53           | Delete
+0x54           | Shift+F1
+0x55           | Shift+F2
+0x56           | Shift+F3
+0x57           | Shift+F4
+0x58           | Shift+F5
+0x59           | Shift+F6
+0x5A           | Shift+F7
+0x5B           | Shift+F8
+0x5C           | Shift+F9
+0x5D           | Shift+F10
+0x5E           | Control+F1
+0x5F           | Control+F2
+0x60           | Control+F3
+0x61           | Control+F4
+0x62           | Control+F5
+0x63           | Control+F6
+0x64           | Control+F7
+0x65           | Control+F8
+0x66           | Control+F9
+0x67           | Control+F10
+0x68           | Alt+F1
+0x69           | Alt+F2
+0x6A           | Alt+F3
+0x6B           | Alt+F4
+0x6C           | Alt+F5
+0x6D           | Alt+F6
+0x6E           | Alt+F7
+0x6F           | Alt+F8
+0x70           | Alt+F9
+0x71           | Alt+F10
+0x72           | Control+PrtSc
+0x73           | Control+Left arrow
+0x74           | Control+Right arrow
+0x75           | Control+End
+0x76           | Control+PgDn
+0x77           | Control+Home
+0x78           | Alt + upper row 1
+0x79           | Alt + upper row 2
+0x7A           | Alt + upper row 3
+0x7B           | Alt + upper row 4
+0x7C           | Alt + upper row 5
+0x7D           | Alt + upper row 6
+0x7E           | Alt + upper row 7
+0x7F           | Alt + upper row 8
+0x80           | Alt + upper row 9
+0x81           | Alt + upper row 0
+0x82           | Alt+hyphen
+0x83           | Alt+equals
+0x84           | Control+PgUp
+0x85           | Function key 11           [*1]
+0x86           | Function key 12           [*1]
+0x87           | Shift+F11                 [*1]
+0x88           | Shift+F12                 [*1]
+0x89           | Ctrl+F11                  [*1]
+0x8A           | Ctrl+F12                  [*1]
+0x8B           | Alt+F11                   [*1]
+0x8C           | Alt+F12                   [*1]
+0x8D           | Ctrl+Up arrow             [*1]
+0x8E           | Ctrl+-                    [*1]
+0x8F           | Ctrl+Center Key 5         [*1]
+0x90           | Ctrl++                    [*1]
+0x91           | Ctrl+Down arrow           [*1]
+0x92           | Ctrl+Ins                  [*1]
+0x93           | Ctrl+Del                  [*1]
+0x94           | Ctrl+Tab                  [*1]
+0x95           | Ctrl+/ (101-key)          [*1]
+0x96           | Ctrl+*                    [*1]
+0x97           | Alt+Home (101-key)        [*1]
+0x98           | Alt+Up arrow (101-key)    [*1]
+0x99           | Alt+Page up (101-key)     [*1]
+0x9B           | Alt+Left arrow (101-key)  [*1]
+0x9D           | Alt+Right arrow (101-key) [*1]
+0x9F           | Alt+End (101-key)         [*1]
+0xA0           | Alt+Down arrow (101-key)  [*1]
+0xA1           | Alt+Page down (101-key)   [*1]
+0xA2           | Alt+Insert (101-key)      [*1]
+0xA3           | Alt+Delete (101-key)      [*1]
+0xA4           | Alt+/ (101-key)           [*1]
+0xA5           | Alt+Tab                   [*1]
+0xA6           | Alt+Enter (101-key)       [*1]
+
+Sources
+-------
+  [*0] The Programmer's PC Sourcebook, Thom Hogan, Microsoft Press, 1988
+       Part 1, Miscellaneous Information => Section 1, General Information => 1.23, IBM Extended Character Codes
+
+  [*1] Keyboard scan code/character code combinations returned in AH/AL by INT 16h functions 00h/01h (standard) and functions 01h/11h (extended)
+       URL: https://sites.google.com/site/pcdosretro/scancodes
+
+Notes
+-----
+ * Some codes match the scan code returned by the keyboard. See also "IBM keyboard scan code set 1"
+
+
+
