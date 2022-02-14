@@ -1266,9 +1266,9 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
         #
         emitpdf.newline(y=5/emitpdf.currentDPI)
 
-os.system("rm -Rf reference/text/tables; mkdir -p reference/text")
-os.system("rm -Rf reference/html/tables; mkdir -p reference/html")
-os.system("rm -Rf reference/pdf/tables; mkdir -p reference/pdf")
+os.system("rm -Rf reference/text; mkdir -p reference/text")
+os.system("rm -Rf reference/html; mkdir -p reference/html")
+os.system("rm -Rf reference/pdf; mkdir -p reference/pdf")
 
 tables_json = common_json_help_module.load_json("compiled/tables.json")
 
