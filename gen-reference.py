@@ -957,7 +957,7 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
                 #
                 colvals.append(vallines)
             #
-            if (emitpdf.currentPos.y+((rowh*maxlines)/emitpdf.currentDPI)) > (emitpdf.contentRegion.xy.y+emitpdf.contentRegion.wh.h):
+            if (emitpdf.currentPos.y+(rowh*maxlines)) > (emitpdf.contentRegion.xy.y+emitpdf.contentRegion.wh.h):
                 if drawrowcount > 0:
                     for coli in range(len(columns)):
                         x = tablepos.x+(hcolw*drawcol) + dpiposx[coli]
