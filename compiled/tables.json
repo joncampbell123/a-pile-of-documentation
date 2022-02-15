@@ -3180,8 +3180,28 @@
 				"JOIN": [
 					{
 						"value": [
-							"JOIN\nJOIN d: d:\\directory\nJOIN d: /D",
+							"JOIN",
+							"Shows logically connected drives",
+							"JOIN",
+							""
+						],
+						"source index": 0,
+						"original key": "JOIN"
+					},
+					{
+						"value": [
+							"JOIN d: d:\\directory",
 							"Logically connects drives",
+							"JOIN b: c:",
+							""
+						],
+						"source index": 0,
+						"original key": "JOIN"
+					},
+					{
+						"value": [
+							"JOIN d: /D",
+							"Disconnects logically connected drives",
 							"JOIN b: /d",
 							""
 						],
