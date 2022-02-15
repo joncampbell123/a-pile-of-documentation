@@ -25,7 +25,7 @@ def rowbuild_sort(a):
         v = ""
         if "value" in co:
             v = co["value"]
-        r.append(v)
+        r.append(v.lower())
     #
     r.append(a["source index"])
     #
