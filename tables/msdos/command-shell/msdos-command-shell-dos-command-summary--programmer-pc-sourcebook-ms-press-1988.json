@@ -50,6 +50,20 @@
 			{ "value": [ "device CODEPAGE SELECT=cp", "Selects or activates code pages", "MODE lpt1 cp select=863", "" ] },
 			{ "value": [ "device CODEPAGE [/STATUS]", "Displays active code page", "MODE lpt1 cp", "" ] },
 			{ "value": [ "device CODEPAGE REFRESH", "Refreshes a code page", "MODE lpt1 cp refresh", "" ] }
-		]
+		],
+		"MORE": { "value": [ "", "Reads data for stdin, sends pages to stdout", "MORE <screen.doc", "" ] },
+		"NLSFUNC": { "value": [ "[d:][path][filespec]", "Provides extended country support", "NLSFUNC c:\\uf\\country.sys", "" ] },
+		"PATH": { "value": [ "[[d:][path][[;[d:][path]]]]", "Sets search path for commands", "PATH c:'c:\\ut;c:\\dos", "" ] },
+		"PRINT": { "value": [ "[/parms][d:][path][filespec]...]", "Puts selected file in print queue", "PRINT c:*.asm", "" ] },
+		"PROMPT": { "value": [ "[prompt]", "Sets new DOS prompt", "PROMPT $p$g", "" ] },
+		"RECOVER": [
+			{ "value": [ "[d:][path]filespec", "Recovers files from defective disk", "RECOVER c:", "" ] },
+			{ "value": [ "d:", "Recovers files from defective disk", "RECOVER c:", "" ] }
+		],
+		"RENAME": { "value": [ "[d:][path]filespec1 filespec2", "Renames a file", "RENAME b:tom thom", "" ] },
+		"REPLACE": { "value": [ "[d:][path]filespec [d:][path][/parms]", "Selectively replaces matching files on target", "REPLACE a:*.doc c:\\ /s/p", "" ] },
+		"RESTORE": { "value": [ "d: [d:][path]filespec[/parms]", "Restores backed up files to disk", "RESTORE a: c:\\*.* /s", "" ] },
+		"RMDIR": { "value": [ "[d:]path", "Deletes a subdirectory from disk", "RMDIR c:\\lotus\\123", "" ] },
+		"RD": { "value": [ "[d:]path", "Deletes a subdirectory from disk", "RD c:\\lotus\\123", "" ] }
 	}
 }

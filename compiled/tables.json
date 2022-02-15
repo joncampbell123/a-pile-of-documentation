@@ -3346,6 +3346,148 @@
 						"source index": 0,
 						"original key": "MODE"
 					}
+				],
+				"MORE": [
+					{
+						"value": [
+							"",
+							"Reads data for stdin, sends pages to stdout",
+							"MORE <screen.doc",
+							""
+						],
+						"source index": 0,
+						"original key": "MORE"
+					}
+				],
+				"NLSFUNC": [
+					{
+						"value": [
+							"[d:][path][filespec]",
+							"Provides extended country support",
+							"NLSFUNC c:\\uf\\country.sys",
+							""
+						],
+						"source index": 0,
+						"original key": "NLSFUNC"
+					}
+				],
+				"PATH": [
+					{
+						"value": [
+							"[[d:][path][[;[d:][path]]]]",
+							"Sets search path for commands",
+							"PATH c:'c:\\ut;c:\\dos",
+							""
+						],
+						"source index": 0,
+						"original key": "PATH"
+					}
+				],
+				"PRINT": [
+					{
+						"value": [
+							"[/parms][d:][path][filespec]...]",
+							"Puts selected file in print queue",
+							"PRINT c:*.asm",
+							""
+						],
+						"source index": 0,
+						"original key": "PRINT"
+					}
+				],
+				"PROMPT": [
+					{
+						"value": [
+							"[prompt]",
+							"Sets new DOS prompt",
+							"PROMPT $p$g",
+							""
+						],
+						"source index": 0,
+						"original key": "PROMPT"
+					}
+				],
+				"RECOVER": [
+					{
+						"value": [
+							"[d:][path]filespec",
+							"Recovers files from defective disk",
+							"RECOVER c:",
+							""
+						],
+						"source index": 0,
+						"original key": "RECOVER"
+					},
+					{
+						"value": [
+							"d:",
+							"Recovers files from defective disk",
+							"RECOVER c:",
+							""
+						],
+						"source index": 0,
+						"original key": "RECOVER"
+					}
+				],
+				"RENAME": [
+					{
+						"value": [
+							"[d:][path]filespec1 filespec2",
+							"Renames a file",
+							"RENAME b:tom thom",
+							""
+						],
+						"source index": 0,
+						"original key": "RENAME"
+					}
+				],
+				"REPLACE": [
+					{
+						"value": [
+							"[d:][path]filespec [d:][path][/parms]",
+							"Selectively replaces matching files on target",
+							"REPLACE a:*.doc c:\\ /s/p",
+							""
+						],
+						"source index": 0,
+						"original key": "REPLACE"
+					}
+				],
+				"RESTORE": [
+					{
+						"value": [
+							"d: [d:][path]filespec[/parms]",
+							"Restores backed up files to disk",
+							"RESTORE a: c:\\*.* /s",
+							""
+						],
+						"source index": 0,
+						"original key": "RESTORE"
+					}
+				],
+				"RMDIR": [
+					{
+						"value": [
+							"[d:]path",
+							"Deletes a subdirectory from disk",
+							"RMDIR c:\\lotus\\123",
+							""
+						],
+						"source index": 0,
+						"original key": "RMDIR"
+					}
+				],
+				"RD": [
+					{
+						"value": [
+							"[d:]path",
+							"Deletes a subdirectory from disk",
+							"RD c:\\lotus\\123",
+							""
+						],
+						"source index": 0,
+						"original key": "RD"
+					}
 				]
 			},
 			"sources": [
