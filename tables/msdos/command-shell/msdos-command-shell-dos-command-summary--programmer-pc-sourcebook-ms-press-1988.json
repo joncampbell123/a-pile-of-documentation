@@ -64,6 +64,18 @@
 		"REPLACE": { "value": [ "[d:][path]filespec [d:][path][/parms]", "Selectively replaces matching files on target", "REPLACE a:*.doc c:\\ /s/p", "" ] },
 		"RESTORE": { "value": [ "d: [d:][path]filespec[/parms]", "Restores backed up files to disk", "RESTORE a: c:\\*.* /s", "" ] },
 		"RMDIR": { "value": [ "[d:]path", "Deletes a subdirectory from disk", "RMDIR c:\\lotus\\123", "" ] },
-		"RD": { "value": [ "[d:]path", "Deletes a subdirectory from disk", "RD c:\\lotus\\123", "" ] }
+		"RD": { "value": [ "[d:]path", "Deletes a subdirectory from disk", "RD c:\\lotus\\123", "" ] },
+		"SELECT": { "value": [ "[[A:][B:][d:][path]] xxx yy", "Installs DOS on new disk", "SELECT a: 001", "" ] },
+		"SET": { "value": [ "[name=[value]]", "Installs string with value in environment", "SET sidekickin = YES", "" ] },
+		"SHARE": { "value": [ "[/parms]", "Loads file sharing support", "SHARE /F:4048", "" ] },
+		"SORT": { "value": [ "[/parms", "Sorts data read from stdin, sends to stdout", "dir | SORT /+14", "" ] },
+		"SUBST": [
+			{ "value": [ "d: d:path", "Sets up different drive specifier for drive or path", "SUBST a: c:\\wp\\ws", "" ] },
+			{ "value": [ "d: /D", "Deletes SUBSTed drive", "SUBST a: /D", "" ] },
+			{ "value": [ "", "Shows SUBSTed drives", "SUBST", "" ] }
+		],
+		"SYS": { "value": [ "d:", "Copies DOS onto disk", "SYS a:", "" ] },
+		"TIME": { "value": [ "[/time", "Sets, changes, or displays time", "TIME 15:10", "" ] },
+		"TREE": { "value": [ "[d:][/F]", "Displays directory paths", "TREE c:/f", "" ] }
 	}
 }
