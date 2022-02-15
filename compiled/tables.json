@@ -3275,6 +3275,56 @@
 						],
 						"source index": 0,
 						"original key": "MODE"
+					},
+					{
+						"value": [
+							"device CODEPAGE PREPARE=((cp) [d:][path][filespec]",
+							"Prepares code pages",
+							"MODE lpt1 cp prep=((850,863) 4201.cpi)",
+							""
+						],
+						"source index": 0,
+						"original key": "MODE"
+					},
+					{
+						"value": [
+							"device CODEPAGE PREPARE=((cplist) [d:][path][filespec]",
+							"Prepares code pages",
+							"MODE lpt1 cp prep=((850) 4201.cpi)",
+							""
+						],
+						"source index": 0,
+						"original key": "MODE"
+					},
+					{
+						"value": [
+							"device CODEPAGE SELECT=cp",
+							"Selects or activates code pages",
+							"MODE lpt1 cp select=863",
+							""
+						],
+						"source index": 0,
+						"original key": "MODE"
+					},
+					{
+						"value": [
+							"device CODEPAGE [/STATUS]",
+							"Displays active code page",
+							"MODE lpt1 cp",
+							""
+						],
+						"source index": 0,
+						"original key": "MODE"
+					},
+					{
+						"value": [
+							"device CODEPAGE REFRESH",
+							"Refreshes a code page",
+							"MODE lpt1 cp refresh",
+							""
+						],
+						"source index": 0,
+						"original key": "MODE"
 					}
 				]
 			},

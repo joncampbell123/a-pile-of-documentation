@@ -40,7 +40,12 @@
 			{ "value": [ "n", "Sets video display mode", "MODE CO80", "" ] },
 			{ "value": [ "[n],m[,T]", "Sets video display mode", "MODE 80,r,t", "" ] },
 			{ "value": [ "COM#[:]baud[,[parity][,[databits][,[stopbits][,P]]]]", "Sets serial port specifications", "MODE com1:12,n,8,1,p", "" ] },
-			{ "value": [ "LPT#[:]=COM#", "Redirects parallel printer output", "MODE lpt1:=com1", "" ] }
+			{ "value": [ "LPT#[:]=COM#", "Redirects parallel printer output", "MODE lpt1:=com1", "" ] },
+			{ "value": [ "device CODEPAGE PREPARE=((cp) [d:][path][filespec]", "Prepares code pages", "MODE lpt1 cp prep=((850,863) 4201.cpi)", "" ] },
+			{ "value": [ "device CODEPAGE PREPARE=((cplist) [d:][path][filespec]", "Prepares code pages", "MODE lpt1 cp prep=((850) 4201.cpi)", "" ] },
+			{ "value": [ "device CODEPAGE SELECT=cp", "Selects or activates code pages", "MODE lpt1 cp select=863", "" ] },
+			{ "value": [ "device CODEPAGE [/STATUS]", "Displays active code page", "MODE lpt1 cp", "" ] },
+			{ "value": [ "device CODEPAGE REFRESH", "Refreshes a code page", "MODE lpt1 cp refresh", "" ] }
 		]
 	}
 }
