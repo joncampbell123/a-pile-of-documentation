@@ -3224,6 +3224,58 @@
 						"source index": 0,
 						"original key": "MKDIR"
 					}
+				],
+				"MODE": [
+					{
+						"value": [
+							"LPT#[:][n][,m][,p]",
+							"Sets printer specifications",
+							"MODE lpt1:132,8,p",
+							""
+						],
+						"source index": 0,
+						"original key": "MODE"
+					},
+					{
+						"value": [
+							"n",
+							"Sets video display mode",
+							"MODE CO80",
+							""
+						],
+						"source index": 0,
+						"original key": "MODE"
+					},
+					{
+						"value": [
+							"[n],m[,T]",
+							"Sets video display mode",
+							"MODE 80,r,t",
+							""
+						],
+						"source index": 0,
+						"original key": "MODE"
+					},
+					{
+						"value": [
+							"COM#[:]baud[,[parity][,[databits][,[stopbits][,P]]]]",
+							"Sets serial port specifications",
+							"MODE com1:12,n,8,1,p",
+							""
+						],
+						"source index": 0,
+						"original key": "MODE"
+					},
+					{
+						"value": [
+							"LPT#[:]=COM#",
+							"Redirects parallel printer output",
+							"MODE lpt1:=com1",
+							""
+						],
+						"source index": 0,
+						"original key": "MODE"
+					}
 				]
 			},
 			"sources": [
