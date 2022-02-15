@@ -891,6 +891,7 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
         drawrowtop = 0
         drawrowcount = 0
         rowh = ((5.0/4.0)*fontSize)/emitpdf.currentDPI
+        largestY = 0 # for multi column rendering, need to remember the largest Y coordinate
         rowidx = 0
         while rowidx < len(tp.display.disptable):
             row = tp.display.disptable[rowidx]
@@ -939,6 +940,9 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
                 #
                 emitpdf.newline(y=rowh)
             #
+            if largestY < emitpdf.currentPos.y:
+                largestY = emitpdf.currentPos.y
+            #
             maxlines = 1
             colvals = [ ]
             for coli in range(len(columns)):
@@ -978,6 +982,7 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
                 drawcol = drawcol + 1
                 if drawcol >= hcols:
                     drawcol = 0
+                    largestY = 0
                     page1 = emitpdf.new_page()
                     ps = emitpdf.ps()
                     tablepos = XY(emitpdf.contentRegion.xy.x,emitpdf.currentPos.y)
@@ -1035,6 +1040,9 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
             ps.lineto(p.x,p.y)
             ps.stroke()
             #
+            if largestY < emitpdf.currentPos.y:
+                largestY = emitpdf.currentPos.y
+            #
             drawrowcount = drawrowcount + 1
             rowidx = rowidx + 1
         #
@@ -1059,6 +1067,8 @@ def emit_table_as_pdf(emitpdf,pdf,pdfhl,table_id,tp):
             ps.stroke()
         #
         emitpdf.newline(y=(8+2)/emitpdf.currentDPI)
+        if emitpdf.currentPos.y < largestY:
+            emitpdf.currentPos.y = largestY
     #
     if not tp.sources == None:
         ps.fill_color(0,0,0)
