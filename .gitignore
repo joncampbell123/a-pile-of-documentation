@@ -131,3 +131,5 @@ dmypy.json
 # Do not commit generated files
 reference/
 
+# vim backup files
+*~
