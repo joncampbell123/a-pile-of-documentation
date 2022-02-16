@@ -70,6 +70,11 @@
 							"page": "61",
 							"source": "IBM PC/XT Technical Reference, pages 1-151 to 1-152"
 						},
+						"2.43": {
+							"title": "COM Program Layout (in memory)",
+							"page": "62",
+							"source": "IBM DOS 3.3 Technical Reference, page 7-9"
+						},
 						"2.44": {
 							"title": "COM Verses EXE File Differences",
 							"page": "62",

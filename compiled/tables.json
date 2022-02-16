@@ -200,6 +200,99 @@
 				"title": "Item"
 			}
 		},
+		"msdos-com-program-layout-in-memory": {
+			"table": {
+				"0x000": [
+					{
+						"value": [
+							"256 (0x100) bytes",
+							"Program segment prefix",
+							"Filled in by DOS at load time"
+						],
+						"source index": 0,
+						"original key": "0x000"
+					}
+				],
+				"0x100": [
+					{
+						"value": [
+							"Length of the file",
+							"Code and data segment",
+							"Only one segment allowed"
+						],
+						"source index": 0,
+						"original key": "0x100"
+					}
+				],
+				"0x100 + length": [
+					{
+						"value": [
+							"Length varies",
+							"Stack",
+							"Usually at top of segment, subject to available memory"
+						],
+						"source index": 0,
+						"original key": "0x100 + length"
+					}
+				]
+			},
+			"sources": [
+				{
+					"book": "programmer-pc-sourcebook-ms-press-1988",
+					"source index": 0,
+					"citation": {
+						"title": "The Programmer's PC Sourcebook",
+						"author": "Thom Hogan",
+						"publisher": "Microsoft Press",
+						"year": 1988,
+						"type": "book"
+					},
+					"where": [
+						{
+							"path": "Part 2",
+							"type": "part",
+							"title": "Software"
+						},
+						{
+							"path": "Section 2",
+							"type": "section",
+							"title": "DOS Commands, Utilities, and Summaries"
+						},
+						{
+							"path": "2.43",
+							"type": "subsection",
+							"title": "COM Program Layout (in memory)",
+							"page": "62"
+						}
+					]
+				}
+			],
+			"description": null,
+			"notes": [
+				"The program segment prefix is not usually part of the actual file.",
+				"It is created and filled in by DOS at program load time. COM files must have code segment ORGed at 1OOH."
+			],
+			"name": "COM Program Layout in memory",
+			"columns": [
+				{
+					"type": "string",
+					"title": "Length"
+				},
+				{
+					"type": "strings",
+					"title": "Description"
+				},
+				{
+					"type": "strings",
+					"title": "Comments"
+				}
+			],
+			"table format type": "key=value",
+			"key column": {
+				"type": "mixed",
+				"title": "Offset"
+			}
+		},
 		"msdos-media-descriptor-byte-bpb-id": {
 			"table": {
 				"0xff": [
@@ -5400,6 +5493,16 @@
 							"type": "sections"
 						},
 						"name lookup": "2.41"
+					},
+					{
+						"title": "COM Program Layout (in memory)",
+						"page": "62",
+						"source": "IBM DOS 3.3 Technical Reference, page 7-9",
+						"parent lookup": {
+							"name": "Section 2",
+							"type": "sections"
+						},
+						"name lookup": "2.43"
 					},
 					{
 						"title": "COM Verses EXE File Differences",
