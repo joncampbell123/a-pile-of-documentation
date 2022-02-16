@@ -1325,9 +1325,20 @@ if True:
     ttffile="ttf/Ubuntu-RI.ttf")
     # -------------- END FONTS
 
+def table_sort_by_title(a): # a is the key from the table
+    r = a
+    t = tables.get(a)
+    if not t == None:
+        if "name" in t:
+            n = t["name"]
+            if not n == None:
+                r = re.sub(r"[^a-zA-Z0-9]+"," ",n).strip()
+    #
+    return r.lower()
+
 tables = tables_json.get("tables")
 if not tables == None:
-    torder = sorted(tables.keys())
+    torder = sorted(tables,key=table_sort_by_title)
     for table_id in torder:
         tp = table_presentation_module.TablePresentation(tables[table_id])
         emit_table_as_text(ftxt,table_id,tp)
