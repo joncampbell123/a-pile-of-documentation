@@ -6,16 +6,38 @@
 	"notes": "Some codes match the scan code returned by the keyboard. See also \"IBM keyboard scan code set 1\"",
 	"base definition": true,
 	"table format": {
-		"type": "key=value",
+		"order": [ "key", "value", "extended", "comment", "description" ]
+	},
+	"table columns": {
 		"key": {
 			"type": "uint8_t",
+			"column": "charcode",
 			"title": "Character code",
+			"json": "key",
 			"description": "Character code returned by the BIOS"
 		},
 		"value": {
 			"type": "string",
+			"column": "keycombo",
 			"title": "Key combination",
 			"description": "Key combination that generates the character code"
+		},
+		"comment": {
+			"type": "string",
+			"column": "comment",
+			"title": "Comments",
+			"description": "Additional comments"
+		},
+		"description": {
+			"type": "string",
+			"column": "description",
+			"title": "Description"
+		},
+		"extended": {
+			"type": "bool",
+			"column": "extended",
+			"title": "Extended",
+			"default": false
 		}
 	}
 }
