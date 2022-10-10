@@ -68,7 +68,7 @@ class TableColProc:
             if v == "false" or v == "0" or v <= 0:
                 return False
             return False
-        if self.fromType == "uint8_t":
+        if self.fromType == "uint8_t" or self.fromType == "uint_t":
             return str2int(v)
         return v
     def sortfilter(self,v):
