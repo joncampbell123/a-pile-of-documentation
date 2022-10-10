@@ -41,7 +41,16 @@ def hierarchy_map_gen(hl,ji,sji,el):
         nel = el.copy()
         nel.append(ent)
         sent = eji[ent]
-        bse[ent] = nel
+        #
+        if not ent in bse:
+            bse[ent] = nel
+        else:
+            if len(bse[ent]) == 0:
+                raise Exception("Unexpected zero length bse")
+            if not type(bse[ent][0]) == list:
+                bse[ent] = [ bse[ent] ]
+            bse[ent].append(nel)
+        #
         hierarchy_map_gen(n_hl,ji,sent,nel)
 
 def hierarchy_map(ji):
