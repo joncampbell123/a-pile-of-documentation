@@ -288,6 +288,50 @@ for path in g:
     else:
         raise Exception("table data not in expected format")
 
+def combinestrobjsort(v):
+    if type(v) == dict:
+        if "_string" in v:
+            return v["_string"]
+        return ""
+    return v
+
+def combinedupcombinestr(cols):
+    ncols = [ ]
+    acidx = 0
+    scidx = 1
+    while scidx < len(cols):
+        if acidx >= scidx:
+            raise Exception("Processing error")
+        #
+        accol = cols[acidx]
+        sccol = cols[scidx]
+        if not type(accol) == dict:
+            raise Exception("not dict")
+        if not type(sccol) == dict:
+            raise Exception("not dict")
+        if not "_string" in accol:
+            raise Exception("no string")
+        if not "_string" in sccol:
+            raise Exception("no string")
+        #
+        if accol["_string"] == sccol["_string"]:
+            if "_source" in sccol:
+                if not "_source" in accol:
+                    accol["_source"] = [ ]
+                if not type(accol["_source"]) == list:
+                    accol["_source"] = [ accol["_source"] ]
+                accol["_source"].append(sccol["_source"])
+        else:
+            ncols.append(accol)
+            acidx = scidx
+        #
+        scidx = scidx + 1
+    #
+    if acidx < scidx:
+        ncols.append(cols[acidx])
+    #
+    return ncols
+
 def table_dedup_combine(table,tproc,rows):
     nrows = [ ]
     if len(rows) > 0:
@@ -322,6 +366,16 @@ def table_dedup_combine(table,tproc,rows):
                         nr.append(ce)
                     pe = ce
                 row["_source"] = nr
+        #
+        for colname in tproc.columns:
+            if not colname in row:
+                continue
+            rcol = row[colname]
+            colo = tproc.columns[colname]
+            if colo.fromType == "string" and colo.combineDifferent:
+                if type(rcol) == list:
+                    rcol.sort(key=combinestrobjsort)
+                    rcol = row[colname] = combinedupcombinestr(rcol)
     #
     return nrows
 
