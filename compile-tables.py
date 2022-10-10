@@ -284,6 +284,11 @@ for tid in tables:
 # write it
 if not os.path.exists("compiled"):
     os.mkdir("compiled")
+if not os.path.exists("compiled/tables"):
+    os.mkdir("compiled/tables")
 
-write_json("compiled/tables.json",tables);
+# the information is going to grow, eventually get very large.
+# let's put each table in separate files to avoid very large JSON files.
+for tablename in tables:
+    write_json("compiled/tables/"+tablename+".json",tables[tablename]);
 
