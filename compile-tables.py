@@ -269,6 +269,19 @@ def table_dedup_combine(table,tproc,rows):
         #
         if acidx < scidx:
             nrows.append(rows[acidx])
+    # sometimes this processing causes multiple redundant _source entries
+    for row in rows:
+        if "_source" in row:
+            rowsrc = row["_source"]
+            if type(rowsrc) == list:
+                rowsrc.sort()
+                nr = [ ]
+                pe = None
+                for ce in rowsrc:
+                    if not ce == pe:
+                        nr.append(ce)
+                    pe = ce
+                row["_source"] = nr
     #
     return nrows
 
