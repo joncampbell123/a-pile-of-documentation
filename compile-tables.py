@@ -25,6 +25,8 @@ tables = { }
 tablerowproc = { }
 
 def str2int(v):
+    if v == "-":
+        return v
     if v[0:2] == "0x":
         return int(v,base=16)
     return int(v)
@@ -74,6 +76,9 @@ class TableColProc:
     def sortfilter(self,v):
         if self.fromType == "string" and self.caseInsensitive == True:
             v = v.lower()
+        if self.fromType[0:4] == "uint":
+            if v == "-":
+                return 0 # allow - but make fake number
         return v
 
 class TableRowProc:
@@ -159,6 +164,9 @@ class TableRowProc:
                     ret[col] = colo.scanf(key)
         #
         for col in row:
+            colo = None
+            if col in self.columns:
+                colo = self.columns[col]
             if not colo == None:
                 ret[col] = colo.scanf(row[col])
             else:
