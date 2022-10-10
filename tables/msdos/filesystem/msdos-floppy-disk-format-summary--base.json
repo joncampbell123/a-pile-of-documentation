@@ -14,6 +14,7 @@
 	"table columns": {
 		"key": {
 			"type": "string",
+			"string sort": "numeric",
 			"column": "format",
 			"title": "Format",
 			"json": "key",

@@ -39,6 +39,7 @@ class TableColProc:
     defaultValue = None
     caseInsensitive = False
     combineDifferent = False
+    stringSort = None
     def __init__(self,row,tcol_json,col):
         if "type" in tcol_json:
             self.fromType = tcol_json["type"]
@@ -60,6 +61,9 @@ class TableColProc:
         if "combine different" in tcol_json:
             self.combineDifferent = tcol_json["combine different"] == True
         #
+        if "string sort" in tcol_json:
+            self.stringSort = tcol_json["string sort"];
+        #
         self.fromValue = col
     def scanf(self,v):
         if self.fromType == "bool":
@@ -76,6 +80,15 @@ class TableColProc:
     def sortfilter(self,v):
         if self.fromType == "string" and self.caseInsensitive == True:
             v = v.lower()
+        if self.fromType == "string":
+            if self.stringSort == "numeric":
+                nv = [ ]
+                for e in re.findall('\d+|[^\d]+',v):
+                    if re.search('^\d+$',e):
+                        nv.append(str2int(e))
+                    else:
+                        nv.append(e)
+                return nv
         if self.fromType[0:4] == "uint":
             if v == "-":
                 return 0 # allow - but make fake number
