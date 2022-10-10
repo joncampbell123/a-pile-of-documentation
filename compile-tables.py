@@ -35,6 +35,8 @@ class TableColProc:
     fromType = None
     fromColumn = None
     defaultValue = None
+    caseInsensitive = False
+    combineDifferent = False
     def __init__(self,row,tcol_json,col):
         if "type" in tcol_json:
             self.fromType = tcol_json["type"]
@@ -50,6 +52,12 @@ class TableColProc:
         if "default" in tcol_json:
             self.defaultValue = tcol_json["default"]
         #
+        if "case insensitive" in tcol_json:
+            self.caseInsensitive = tcol_json["case insensitive"] == True
+        #
+        if "combine different" in tcol_json:
+            self.combineDifferent = tcol_json["combine different"] == True
+        #
         self.fromValue = col
     def scanf(self,v):
         if self.fromType == "bool":
@@ -64,6 +72,8 @@ class TableColProc:
             return str2int(v)
         return v
     def sortfilter(self,v):
+        if self.fromType == "string" and self.caseInsensitive == True:
+            v = v.lower()
         return v
 
 class TableRowProc:
@@ -98,7 +108,6 @@ class TableRowProc:
                 v = colo.sortfilter(v)
             ar.append(v)
         #
-        print(ar)
         return ar
     def format(self,key,row):
         colo = None

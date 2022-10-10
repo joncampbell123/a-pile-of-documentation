@@ -27,6 +27,7 @@
 		"comment": {
 			"type": "string",
 			"case insensitive": true,
+			"combine different": true,
 			"column": "comment",
 			"title": "Comments",
 			"description": "Additional comments"
@@ -34,6 +35,7 @@
 		"description": {
 			"type": "string",
 			"case insensitive": true,
+			"combine different": true,
 			"column": "description",
 			"title": "Description"
 		},
