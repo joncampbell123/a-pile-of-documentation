@@ -63,6 +63,8 @@ class TableColProc:
         if self.fromType == "uint8_t":
             return str2int(v)
         return v
+    def sortfilter(self,v):
+        return v
 
 class TableRowProc:
     columns = None
@@ -85,6 +87,19 @@ class TableRowProc:
                 if col in self.columns:
                     raise Exception(col+" already exists in columns")
                 self.columns[col] = TableColProc(self,tc[col],col)
+    def rowsortfunc(self,val):
+        ar = [ ]
+        for col in self.columnOrder:
+            v = ""
+            if col in val:
+                v = val[col]
+            if col in self.columns:
+                colo = self.columns[col]
+                v = colo.sortfilter(v)
+            ar.append(v)
+        #
+        print(ar)
+        return ar
     def format(self,key,row):
         colo = None
         ret = { }
@@ -159,6 +174,13 @@ for path in g:
             tables[ji["id"]]["rows"].append(rowf)
     else:
         raise Exception("table data not in expected format")
+
+# sort all table rows
+for tid in tables:
+    table = tables[tid]
+    tproc = tablerowproc[tid]
+    rows = table["rows"]
+    rows.sort(key=tproc.rowsortfunc)
 
 # write it
 if not os.path.exists("compiled"):
