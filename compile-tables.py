@@ -109,6 +109,42 @@ class TableRowProc:
             ar.append(v)
         #
         return ar
+    def dedupsortfunc(self,val):
+        ar = [ ]
+        for col in self.columnOrder:
+            v = ""
+            if col in val:
+                v = val[col]
+            if col in self.columns:
+                colo = self.columns[col]
+                if colo.combineDifferent:
+                    v = ''
+                else:
+                    v = colo.sortfilter(v)
+            ar.append(v)
+        #
+        return ar
+    def combinerows(self,acrow,scrow):
+        # combine the contents of any column marked combine contents
+        for col in self.columnOrder:
+            if not col in scrow:
+                continue
+            if not col in self.columns:
+                continue
+            colo = self.columns[col]
+            if colo.combineDifferent:
+                if colo.fromType == "string":
+                    if acrow[col] == None:
+                        acrow[col] = ""
+                    if len(acrow[col]) > 0:
+                        acrow[col] += "\n"
+                    acrow[col] += scrow[col]
+        # always combine the _source list
+        if "_source" in acrow and "_source" in scrow:
+            if not type(acrow["_source"]) == list:
+                acrow["_source"] = [ acrow["_source"] ]
+            acrow["_source"].append(scrow["_source"])
+        return acrow
     def format(self,key,row):
         colo = None
         ret = { }
@@ -184,12 +220,38 @@ for path in g:
     else:
         raise Exception("table data not in expected format")
 
+def table_dedup_combine(table,tproc,rows):
+    nrows = [ ]
+    if len(rows) > 0:
+        acidx = 0
+        scidx = 1
+        while scidx < len(rows):
+            if acidx >= scidx:
+                raise Exception("Processing error")
+            #
+            acrow = rows[acidx]
+            scrow = rows[scidx]
+            if tproc.dedupsortfunc(acrow) == tproc.dedupsortfunc(scrow):
+                tproc.combinerows(acrow,scrow) # combine, dedup contents (pass by reference)
+            else:
+                nrows.append(acrow) # flush combined row,
+                acidx = scidx # begin accumulating on this row
+            #
+            scidx = scidx + 1
+        #
+        if acidx < scidx:
+            nrows.append(rows[acidx])
+    #
+    return nrows
+
 # sort all table rows
 for tid in tables:
     table = tables[tid]
     tproc = tablerowproc[tid]
     rows = table["rows"]
     rows.sort(key=tproc.rowsortfunc)
+    # then remove or combine duplicate or redundant data, which is easy now the data is sorted
+    table["rows"] = rows = table_dedup_combine(table,tproc,rows)
 
 # write it
 if not os.path.exists("compiled"):
