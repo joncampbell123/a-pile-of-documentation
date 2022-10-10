@@ -76,10 +76,18 @@ class TableColProc:
             return False
         if self.fromType == "uint8_t" or self.fromType == "uint_t":
             return str2int(v)
+        if self.fromType == "string" and self.combineDifferent == True:
+            v = { "_string": v }
         return v
     def sortfilter(self,v):
         if self.fromType == "string" and self.caseInsensitive == True:
-            v = v.lower()
+            if type(v) == dict:
+                if "_string" in v:
+                    v = v["_string"].lower()
+                else:
+                    v = ""
+            else:
+                v = v.lower()
         if self.fromType == "string":
             if self.stringSort == "numeric":
                 nv = [ ]
@@ -150,13 +158,14 @@ class TableRowProc:
             if not col in self.columns:
                 continue
             colo = self.columns[col]
-            if colo.combineDifferent:
+            if colo.combineDifferent == True:
                 if colo.fromType == "string":
                     if acrow[col] == None:
-                        acrow[col] = ""
-                    if len(acrow[col]) > 0:
-                        acrow[col] += "\n"
-                    acrow[col] += scrow[col]
+                        acrow[col] = scrow[col]
+                    else:
+                        if not type(acrow[col]) == list:
+                            acrow[col] = [ acrow[col] ]
+                        acrow[col].append(scrow[col])
         # always combine the _source list
         if "_source" in acrow and "_source" in scrow:
             if not type(acrow["_source"]) == list:
@@ -171,10 +180,12 @@ class TableRowProc:
             ret[col] = ""
             if col in self.columns:
                 colo = self.columns[col]
-                if not colo.defaultValue == None:
-                    ret[col] = colo.scanf(colo.defaultValue)
                 if colo.fromJsonKey == True:
                     ret[col] = colo.scanf(key)
+                elif not colo.defaultValue == None:
+                    ret[col] = colo.scanf(colo.defaultValue)
+                elif colo.fromType == "string":
+                    ret[col] = colo.scanf("")
         #
         for col in row:
             colo = None
@@ -264,6 +275,14 @@ for path in g:
         for key in table_data:
             for row in table_row_postprocess(ji,table_data[key]):
                 rowf = tablerowproc[ji["id"]].format(key,row)
+                #
+                for colname in rowf:
+                    if colname in tablerowproc[ji["id"]].columns:
+                        colo = tablerowproc[ji["id"]].columns[colname]
+                        if colo.fromType == "string" and colo.combineDifferent:
+                            if type(rowf[colname]) == dict:
+                                rowf[colname]["_source"] = path;
+                #
                 rowf["_source"] = path;
                 tables[ji["id"]]["rows"].append(rowf)
     else:
