@@ -5,28 +5,38 @@
 	"description": "Commands included with MS-DOS",
 	"base definition": true,
 	"table format": {
-		"type": "key=value",
+		"order": [ "key", "syntax", "function", "example", "notes" ]
+	},
+	"table columns": {
 		"key": {
 			"type": "string",
-			"title": "Command"
+			"title": "Command",
+			"case insensitive": true,
+			"json": "key"
 		},
-		"value": [
-			{
-				"type": "string",
-				"title": "Syntax"
-			},
-			{
-				"type": "string",
-				"title": "Function"
-			},
-			{
-				"type": "string",
-				"title": "Example"
-			},
-			{
-				"type": "string",
-				"title": "Notes"
-			}
-		]
+		"syntax": {
+			"type": "string",
+			"case insensitive": true,
+			"combine different": true,
+			"title": "Syntax"
+		},
+		"function": {
+			"type": "string",
+			"case insensitive": true,
+			"combine different": true,
+			"title": "Function"
+		},
+		"example": {
+			"type": "string",
+			"case insensitive": true,
+			"combine different": true,
+			"title": "Example"
+		},
+		"notes": {
+			"type": "string",
+			"case insensitive": true,
+			"combine different": true,
+			"title": "Notes"
+		}
 	}
 }
