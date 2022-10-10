@@ -68,6 +68,22 @@ class TableRowProc:
                 if col in self.columns:
                     raise Exception(col+" already exists in columns")
                 self.columns[col] = TableColProc(self,tc[col],col)
+    def format(self,key,row):
+        ret = { }
+        #
+        for col in self.columnOrder:
+            ret[col] = ""
+            if col in self.columns:
+                colo = self.columns[col]
+                if not colo.defaultValue == None:
+                    ret[col] = colo.defaultValue
+                if colo.fromJsonKey == True:
+                    ret[col] = key
+        #
+        for col in row:
+            ret[col] = row[col]
+        #
+        return ret
 
 # process, first base definitions
 g = glob.glob("tables/**/*--base.json",recursive=True)
@@ -75,7 +91,7 @@ for path in g:
     ji = load_json(path)
     if not "id" in ji:
         continue
-    if not "base definition":
+    if not "base definition" in ji:
         continue
     if not ji["base definition"] == True:
         raise Exception("base json that is not base definition")
@@ -84,10 +100,44 @@ for path in g:
     #
     ji["source json file"] = path
     #
+    ji["sources"] = { }
     ji["rows"] = [ ]
     #
     tables[ji["id"]] = ji;
     tablerowproc[ji["id"]] = TableRowProc(ji)
+
+# process, tables
+g = glob.glob("tables/**/*.json",recursive=True)
+for path in g:
+    ji = load_json(path)
+    if not "id" in ji:
+        continue
+    if "base definition" in ji:
+        if ji["base definition"] == True:
+            continue
+    if not ji["id"] in tables:
+        raise Exception("table "+ji["id"]+" does not exist")
+    if not ji["id"] in tablerowproc:
+        raise Exception("table "+ji["id"]+" processing not init")
+    #
+    ji["source json file"] = path
+    # extract table, remove from source JSON object
+    if "table" in ji:
+        table_data = ji["table"]
+        del ji["table"]
+    else:
+        continue
+    #
+    tables[ji["id"]]["sources"][path] = ji
+    # process table rows and add to table
+    if type(table_data) == dict:
+        for key in table_data:
+            row = table_data[key]
+            rowf = tablerowproc[ji["id"]].format(key,row)
+            rowf["_source"] = path;
+            tables[ji["id"]]["rows"].append(rowf)
+    else:
+        raise Exception("table data not in expected format")
 
 # write it
 if not os.path.exists("compiled"):
