@@ -7,50 +7,50 @@
 	"table value column order": [ "trackpside", "sectptrack", "sides", "bytespsector", "format" ],
 	"table": {
 		"0xFF": [
-			{ "value": [ "40", "8", "2", "512", "5.25 inch floppy disk (320KB)" ] },
-			{ "value": [ "-", "-", "-", "-", "Hard disk (Sanyo 55x DS-DOS 2.11 only)" ] }
+			{ "_columns": [ "40", "8", "2", "512", "5.25 inch floppy disk (320KB)" ] },
+			{ "_columns": [ "-", "-", "-", "-", "Hard disk (Sanyo 55x DS-DOS 2.11 only)" ] }
 		],
 		"0xFE": [
-			{ "value": [ "40", "8", "1", "512", "5.25 inch floppy disk (160KB)" ] },
-			{ "value": [ "77", "26", "1", "128", "8 inch floppy disk (250KB)" ] },
-			{ "value": [ "77", "8", "2", "1024", "8 inch floppy disk (1.2MB)" ] }
+			{ "_columns": [ "40", "8", "1", "512", "5.25 inch floppy disk (160KB)" ] },
+			{ "_columns": [ "77", "26", "1", "128", "8 inch floppy disk (250KB)" ] },
+			{ "_columns": [ "77", "8", "2", "1024", "8 inch floppy disk (1.2MB)" ] }
 		],
 		"0xFD": [
-			{ "value": [ "40", "9", "2", "512", "5.25 inch floppy disk (360KB)" ] },
-			{ "value": [ "77", "26", "2", "128", "8 inch floppy disk (500KB)" ] }
+			{ "_columns": [ "40", "9", "2", "512", "5.25 inch floppy disk (360KB)" ] },
+			{ "_columns": [ "77", "26", "2", "128", "8 inch floppy disk (500KB)" ] }
 		],
 		"0xFC": [
-			{ "value": [ "40", "9", "1", "512", "5.25 inch floppy disk (180KB)" ] }
+			{ "_columns": [ "40", "9", "1", "512", "5.25 inch floppy disk (180KB)" ] }
 		],
 		"0xFB": [
-			{ "value": [ "80", "8", "2", "512", "3.5 inch floppy disk (640KB)" ] },
-			{ "value": [ "80", "8", "2", "512", "5.25 inch floppy disk (640KB)" ] }
+			{ "_columns": [ "80", "8", "2", "512", "3.5 inch floppy disk (640KB)" ] },
+			{ "_columns": [ "80", "8", "2", "512", "5.25 inch floppy disk (640KB)" ] }
 		],
 		"0xFA": [
-			{ "value": [ "80", "8", "1", "512", "3.5 inch floppy disk (320KB)" ] },
-			{ "value": [ "80", "8", "1", "512", "5.25 inch floppy disk (320KB)" ] }
+			{ "_columns": [ "80", "8", "1", "512", "3.5 inch floppy disk (320KB)" ] },
+			{ "_columns": [ "80", "8", "1", "512", "5.25 inch floppy disk (320KB)" ] }
 		],
 		"0xF9": [
-			{ "value": [ "80", "9", "2", "512", "3.5 inch floppy disk (720KB)" ] },
-			{ "value": [ "80", "18", "2", "512", "3.5 inch floppy disk (DOS 3.2 only) (1.44MB)" ] },
-			{ "value": [ "80", "15", "2", "512", "5.25 inch floppy disk (1.2MB)" ] }
+			{ "_columns": [ "80", "9", "2", "512", "3.5 inch floppy disk (720KB)" ] },
+			{ "_columns": [ "80", "18", "2", "512", "3.5 inch floppy disk (DOS 3.2 only) (1.44MB)" ] },
+			{ "_columns": [ "80", "15", "2", "512", "5.25 inch floppy disk (1.2MB)" ] }
 		],
 		"0xF8": [
-			{ "value": [ "-", "-", "-", "-", "Fixed disk" ] },
-			{ "value": [ "80", "9", "1", "512", "3.5 inch floppy disk (MS-DOS 3.1 and MSX-DOS) (360KB)" ] },
-			{ "value": [ "80", "9", "2", "512", "5.25 inch floppy disk (Sanyo 55x DS-DOS 2.11 only) (720KB)" ] },
-			{ "value": [ "-", "-", "-", "-", "Single sided (Altos MS-DOS 2.11 only)" ] }
+			{ "_columns": [ "-", "-", "-", "-", "Fixed disk" ] },
+			{ "_columns": [ "80", "9", "1", "512", "3.5 inch floppy disk (MS-DOS 3.1 and MSX-DOS) (360KB)" ] },
+			{ "_columns": [ "80", "9", "2", "512", "5.25 inch floppy disk (Sanyo 55x DS-DOS 2.11 only) (720KB)" ] },
+			{ "_columns": [ "-", "-", "-", "-", "Single sided (Altos MS-DOS 2.11 only)" ] }
 		],
-		"0xF5": { "value": [ "-", "-", "-", "-", "Fixed disk (Altos MS-DOS 2.11 only)" ] },
-		"0xF4": { "value": [ "-", "-", "-", "-", "Double density (Altos MS-DOS 2.11 only)" ] },
+		"0xF5": { "_columns": [ "-", "-", "-", "-", "Fixed disk (Altos MS-DOS 2.11 only)" ] },
+		"0xF4": { "_columns": [ "-", "-", "-", "-", "Double density (Altos MS-DOS 2.11 only)" ] },
 		"0xF0": [
-			{ "value": [ "80", "18", "2", "512", "3.5 inch floppy disk (1.44MB)" ] },
-			{ "value": [ "80", "36", "2", "512", "3.5 inch floppy disk (2.88MB)" ] },
-			{ "value": [ "-", "-", "-", "-", "Custom floppy and superfloppy formats.\ngeometry is defined in the BIOS Parameter Block" ] }
+			{ "_columns": [ "80", "18", "2", "512", "3.5 inch floppy disk (1.44MB)" ] },
+			{ "_columns": [ "80", "36", "2", "512", "3.5 inch floppy disk (2.88MB)" ] },
+			{ "_columns": [ "-", "-", "-", "-", "Custom floppy and superfloppy formats.\ngeometry is defined in the BIOS Parameter Block" ] }
 		],
-		"0xEF": { "value": [ "-", "-", "-", "-", "Custom non-standard floppy and superfloppy formats.\nLike 0xF0 but not recognized by unaware systems by design.\nFAT ID does not have to match this value (DR-DOS)" ] },
-		"0xEE": { "value": [ "-", "-", "-", "-", "Custom non-standard partitions with nonstandard\nBIOS Parameter Block or special media access.\nLike 0xF8 but not recognized by unaware systems by design.\nFAT ID does not have to match this value (DR-DOS)" ] },
-		"0xED": { "value": [ "80", "9", "2", "512", "5.25 inch (Tandy 2000 only) (720KB)" ] },
-		"0xE5": { "value": [ "77", "26", "1", "128", "8 inch (DR-DOS only) (250KB)" ] }
+		"0xEF": { "_columns": [ "-", "-", "-", "-", "Custom non-standard floppy and superfloppy formats.\nLike 0xF0 but not recognized by unaware systems by design.\nFAT ID does not have to match this value (DR-DOS)" ] },
+		"0xEE": { "_columns": [ "-", "-", "-", "-", "Custom non-standard partitions with nonstandard\nBIOS Parameter Block or special media access.\nLike 0xF8 but not recognized by unaware systems by design.\nFAT ID does not have to match this value (DR-DOS)" ] },
+		"0xED": { "_columns": [ "80", "9", "2", "512", "5.25 inch (Tandy 2000 only) (720KB)" ] },
+		"0xE5": { "_columns": [ "77", "26", "1", "128", "8 inch (DR-DOS only) (250KB)" ] }
 	}
 }

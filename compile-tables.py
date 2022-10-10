@@ -187,6 +187,34 @@ for path in g:
     tables[ji["id"]] = ji;
     tablerowproc[ji["id"]] = TableRowProc(ji)
 
+# table row postprocessing
+def table_row_postprocess(ji,rtrow):
+    nrows = [ ]
+    if type(rtrow) == list:
+        for irtrow in rtrow:
+            nrows.extend(table_row_postprocess(ji,irtrow))
+    elif "_columns" in rtrow:
+        cols = { }
+        scols = rtrow["_columns"]
+        if not "table value column order" in ji:
+            raise Exception("_columns without table value column order")
+        colnames = ji["table value column order"]
+        if not type(colnames) == list:
+            raise Exception("table value column order must be list")
+        if not type(scols) == list:
+            raise Exception("_columns must be list")
+        for coli in range(0,len(scols)):
+            colval = scols[coli]
+            colname = colnames[coli]
+            if colname in cols:
+                raise Exception("Duplicate column")
+            cols[colname] = colval
+        nrows.append(cols)
+    else:
+        nrows.append(rtrow)
+    #
+    return nrows
+
 # process, tables
 g = glob.glob("tables/**/*.json",recursive=True)
 for path in g:
@@ -213,10 +241,10 @@ for path in g:
     # process table rows and add to table
     if type(table_data) == dict:
         for key in table_data:
-            row = table_data[key]
-            rowf = tablerowproc[ji["id"]].format(key,row)
-            rowf["_source"] = path;
-            tables[ji["id"]]["rows"].append(rowf)
+            for row in table_row_postprocess(ji,table_data[key]):
+                rowf = tablerowproc[ji["id"]].format(key,row)
+                rowf["_source"] = path;
+                tables[ji["id"]]["rows"].append(rowf)
     else:
         raise Exception("table data not in expected format")
 

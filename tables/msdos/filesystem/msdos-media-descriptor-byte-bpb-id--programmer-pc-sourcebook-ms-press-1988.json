@@ -10,29 +10,29 @@
 	],
 	"table value column order": [ "trackpside", "sectptrack", "sides", "bytespsector", "format" ],
 	"table": {
-		"0xFF": { "value": [ "40", "8", "2", "512", "5.25 inch floppy disk (320KB)" ] },
+		"0xFF": { "_columns": [ "40", "8", "2", "512", "5.25 inch floppy disk (320KB)" ] },
 		"0xFE": [
-			{ "value": [ "40", "8", "1", "512", "5.25 inch floppy disk (160KB)" ] },
-			{ "value": [ "77", "26", "1", "128", "8 inch floppy disk (250KB)" ] }
+			{ "_columns": [ "40", "8", "1", "512", "5.25 inch floppy disk (160KB)" ] },
+			{ "_columns": [ "77", "26", "1", "128", "8 inch floppy disk (250KB)" ] }
 		],
 		"0xFD": [
-			{ "value": [ "40", "9", "2", "512", "5.25 inch floppy disk (360KB)" ] },
-			{ "value": [ "77", "26", "2", "128", "8 inch floppy disk (500KB)" ] }
+			{ "_columns": [ "40", "9", "2", "512", "5.25 inch floppy disk (360KB)" ] },
+			{ "_columns": [ "77", "26", "2", "128", "8 inch floppy disk (500KB)" ] }
 		],
-		"0xFC": { "value": [ "40", "9", "1", "512", "5.25 inch floppy disk (180KB)" ] },
+		"0xFC": { "_columns": [ "40", "9", "1", "512", "5.25 inch floppy disk (180KB)" ] },
 		"0xFB": [
-			{ "value": [ "80", "8", "2", "512", "5.25 inch floppy disk (640KB)" ] },
-			{ "value": [ "80", "8", "2", "512", "3.5 inch floppy disk (640KB)" ] }
+			{ "_columns": [ "80", "8", "2", "512", "5.25 inch floppy disk (640KB)" ] },
+			{ "_columns": [ "80", "8", "2", "512", "3.5 inch floppy disk (640KB)" ] }
 		],
 		"0xFA": [
-			{ "value": [ "80", "8", "1", "512", "5.25 inch floppy disk (320KB)" ] },
-			{ "value": [ "80", "8", "1", "512", "3.5 inch floppy disk (320KB)" ] }
+			{ "_columns": [ "80", "8", "1", "512", "5.25 inch floppy disk (320KB)" ] },
+			{ "_columns": [ "80", "8", "1", "512", "3.5 inch floppy disk (320KB)" ] }
 		],
 		"0xF9": [
-			{ "value": [ "80", "9", "2", "512", "3.5 inch floppy disk (720KB)" ] },
-			{ "value": [ "80", "15", "2", "512", "5.25 inch floppy disk (1.2MB)" ] }
+			{ "_columns": [ "80", "9", "2", "512", "3.5 inch floppy disk (720KB)" ] },
+			{ "_columns": [ "80", "15", "2", "512", "5.25 inch floppy disk (1.2MB)" ] }
 		],
-		"0xF8": { "value": [ "-", "-", "-", "-", "Fixed disk" ] },
-		"0xF0": { "value": [ "80", "18", "2", "512", "3.5 inch floppy disk (1.44MB)" ] }
+		"0xF8": { "_columns": [ "-", "-", "-", "-", "Fixed disk" ] },
+		"0xF0": { "_columns": [ "80", "18", "2", "512", "3.5 inch floppy disk (1.44MB)" ] }
 	}
 }
