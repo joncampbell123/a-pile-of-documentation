@@ -8,102 +8,109 @@
 	],
 	"base definition": true,
 	"table format": {
-		"type": "key=value",
+		"order": [ "key", "disk", "midb", "interleave", "heads", "tracks", "sectors", "bytespsector", "sectpcluster", "reservedsect", "sectpfat", "nfattabl", "rootdirent", "maxrootdirent", "totalsect", "usablesect", "usablecluster", "mindosver", "comusesys" ]
+	},
+	"table columns": {
 		"key": {
-			"type": "mixed",
-			"title": "Format"
+			"type": "string",
+			"string sort": "numeric",
+			"column": "format",
+			"title": "Format",
+			"json": "key",
+			"description": "Disk format"
 		},
-		"value": [
-			{
-				"type": "string",
-				"title": "Disk",
-				"description": "Disk size, 3.5 inch or 5.25 in, etc"
-			},
-			{
-				"type": "uint_t",
-				"title": "ID",
-				"description": "Media ID byte"
-			},
-			{
-				"type": "mixed",
-				"title": "ID",
-				"description": "Interleave"
-			},
-			{
-				"type": "uint_t",
-				"title": "H",
-				"description": "Heads, or more appropriately, sides"
-			},
-			{
-				"type": "uint_t",
-				"title": "T",
-				"description": "Tracks per side"
-			},
-			{
-				"type": "uint_t",
-				"title": "S",
-				"description": "Sectors per track"
-			},
-			{
-				"type": "uint_t",
-				"title": "B/S",
-				"description": "Bytes per sector"
-			},
-			{
-				"type": "uint_t",
-				"title": "S/C",
-				"description": "Sectors per cluster"
-			},
-			{
-				"type": "uint_t",
-				"title": "Res",
-				"description": "Reserved sector count"
-			},
-			{
-				"type": "uint_t",
-				"title": "SF",
-				"description": "Sectors per FAT"
-			},
-			{
-				"type": "uint_t",
-				"title": "FT",
-				"description": "Number of FAT tables"
-			},
-			{
-				"type": "uint_t",
-				"title": "Rs",
-				"description": "Number of root directory sectors"
-			},
-			{
-				"type": "uint_t",
-				"title": "Rm",
-				"description": "Maxmimum root directories allowed given root directory size"
-			},
-			{
-				"type": "uint_t",
-				"title": "TS",
-				"description": "Total sectors"
-			},
-			{
-				"type": "uint_t",
-				"title": "US",
-				"description": "Usable sectors"
-			},
-			{
-				"type": "uint_t",
-				"title": "UC",
-				"description": "Usable clusters"
-			},
-			{
-				"type": "string",
-				"title": "DOS",
-				"description": "Minimum DOS version"
-			},
-			{
-				"type": "string",
-				"title": "System",
-				"description": "Systems that commonly use this format"
-			}
-		]
+		"disk": {
+			"type": "string",
+			"case insensitive": true,
+			"combine different": true,
+			"title": "Disk",
+			"description": "Disk size, 3.5 inch or 5.25 in, etc"
+		},
+		"midb": {
+			"type": "uint_t",
+			"title": "ID",
+			"description": "Media ID byte"
+		},
+		"interleave": {
+			"type": "string",
+			"string sort": "numeric",
+			"title": "ID",
+			"description": "Interleave"
+		},
+		"heads": {
+			"type": "uint_t",
+			"title": "H",
+			"description": "Heads, or more appropriately, sides"
+		},
+		"tracks": {
+			"type": "uint_t",
+			"title": "T",
+			"description": "Tracks per side"
+		},
+		"sectors": {
+			"type": "uint_t",
+			"title": "S",
+			"description": "Sectors per track"
+		},
+		"bytespsector": {
+			"type": "uint_t",
+			"title": "B/S",
+			"description": "Bytes per sector"
+		},
+		"sectpcluster": {
+			"type": "uint_t",
+			"title": "S/C",
+			"description": "Sectors per cluster"
+		},
+		"reservedsect": {
+			"type": "uint_t",
+			"title": "Res",
+			"description": "Reserved sector count"
+		},
+		"sectpfat": {
+			"type": "uint_t",
+			"title": "SF",
+			"description": "Sectors per FAT"
+		},
+		"nfattabl": {
+			"type": "uint_t",
+			"title": "FT",
+			"description": "Number of FAT tables"
+		},
+		"rootdirent": {
+			"type": "uint_t",
+			"title": "Rs",
+			"description": "Number of root directory sectors"
+		},
+		"maxrootdirent": {
+			"type": "uint_t",
+			"title": "Rm",
+			"description": "Maxmimum root directories allowed given root directory size"
+		},
+		"totalsect": {
+			"type": "uint_t",
+			"title": "TS",
+			"description": "Total sectors"
+		},
+		"usablesect": {
+			"type": "uint_t",
+			"title": "US",
+			"description": "Usable sectors"
+		},
+		"usablecluster": {
+			"type": "uint_t",
+			"title": "UC",
+			"description": "Usable clusters"
+		},
+		"mindosver": {
+			"type": "string",
+			"title": "DOS",
+			"description": "Minimum DOS version"
+		},
+		"comusesys": {
+			"type": "string",
+			"title": "System",
+			"description": "Systems that commonly use this format"
+		}
 	}
 }
