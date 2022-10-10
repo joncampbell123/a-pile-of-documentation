@@ -7,7 +7,7 @@
 	"table value column order": [ "displayas", "example", "exampledisplayas" ],
 	"table": {
 		"$a": { "_columns": [ "Ampersand ( & )", "$a", "&" ] },
-		"$b": { "_columns": [ "Vertical slash ( | )", "$p$b", "C:\\MYDIR}" ] },
+		"$b": { "_columns": [ "Vertical slash ( | )", "$p$b", "C:\\MYDIR|" ] },
 		"$c": { "_columns": [ "Left parenthesis", "$c", "(" ] },
 		"$d": { "_columns": [ "Current system date", "$d $n$g", "Mon 9-5-1986 C>" ] },
 		"$e": { "_columns": [ "Escape character (for use with ANSI.SYS)", "$e[32m$n$g$e[0m", "C> (prompt is green)" ] },
