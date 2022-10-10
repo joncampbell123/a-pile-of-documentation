@@ -32,6 +32,7 @@ for path in g:
         continue
     if ji["id"] in books:
         raise Exception("Book "+ji["id"]+" already exists")
+    ji["source json file"] = path
     books[ji["id"]] = ji
 
 # write it
