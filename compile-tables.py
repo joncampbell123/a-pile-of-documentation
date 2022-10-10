@@ -52,6 +52,14 @@ class TableColProc:
         #
         self.fromValue = col
     def scanf(self,v):
+        if self.fromType == "bool":
+            if isinstance(v,bool):
+                return v
+            if v == "true" or v == "1" or v > 0:
+                return True
+            if v == "false" or v == "0" or v <= 0:
+                return False
+            return False
         if self.fromType == "uint8_t":
             return str2int(v)
         return v
