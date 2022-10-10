@@ -24,6 +24,11 @@ def write_json(path,ji):
 tables = { }
 tablerowproc = { }
 
+def str2int(v):
+    if v[0:2] == "0x":
+        return int(v,base=16)
+    return int(v)
+
 class TableColProc:
     fromValue = None
     fromJsonKey = False
@@ -46,6 +51,10 @@ class TableColProc:
             self.defaultValue = tcol_json["default"]
         #
         self.fromValue = col
+    def scanf(self,v):
+        if self.fromType == "uint8_t":
+            return str2int(v)
+        return v
 
 class TableRowProc:
     columns = None
@@ -69,6 +78,7 @@ class TableRowProc:
                     raise Exception(col+" already exists in columns")
                 self.columns[col] = TableColProc(self,tc[col],col)
     def format(self,key,row):
+        colo = None
         ret = { }
         #
         for col in self.columnOrder:
@@ -76,12 +86,15 @@ class TableRowProc:
             if col in self.columns:
                 colo = self.columns[col]
                 if not colo.defaultValue == None:
-                    ret[col] = colo.defaultValue
+                    ret[col] = colo.scanf(colo.defaultValue)
                 if colo.fromJsonKey == True:
-                    ret[col] = key
+                    ret[col] = colo.scanf(key)
         #
         for col in row:
-            ret[col] = row[col]
+            if not colo == None:
+                ret[col] = colo.scanf(row[col])
+            else:
+                ret[col] = row[col]
         #
         return ret
 
