@@ -4,6 +4,7 @@
 		"website": "wikipedia",
 		"url": "https://en.wikipedia.org/wiki/Design_of_the_FAT_file_system#BIOS_Parameter_Block"
 	},
+	"table value column order": [ "trackpside", "sectptrack", "sides", "bytespsector", "format" ],
 	"table": {
 		"0xFF": [
 			{ "value": [ "40", "8", "2", "512", "5.25 inch floppy disk (320KB)" ] },

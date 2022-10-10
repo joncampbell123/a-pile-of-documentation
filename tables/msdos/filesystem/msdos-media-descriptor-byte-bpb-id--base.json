@@ -1,0 +1,59 @@
+{
+	"table": "Media descriptor byte ID values",
+	"id": "msdos-media-descriptor-byte-bpb-id",
+	"combinable": true,
+	"description": "This is the 8-bit value used in the MS-DOS filesystem and kernel that was used to describe floppy disk formats",
+	"notes": [
+		"The term \"Fixed disk\" usually refers to a hard drive or removable media, in which case the geometry must be read from the BIOS Parameter Block"
+	],
+	"base definition": true,
+	"table format": {
+		"order": [ "key", "trackpside", "sectptrack", "sides", "bytespsector", "format" ]
+	},
+	"table columns": {
+		"key": {
+			"type": "uint8_t",
+			"display": "hex",
+			"column": "id",
+			"title": "ID",
+			"json": "key",
+			"description": "BPB ID for format"
+		},
+		"trackpside": {
+			"type": "uint_t",
+			"display": "decimal",
+			"column": "trackpside",
+			"title": "Tracks/side",
+			"description": "Tracks per disk side"
+		},
+		"sectptrack": {
+			"type": "uint_t",
+			"display": "decimal",
+			"column": "sectptrack",
+			"title": "Sectors/track",
+			"description": "Sectors per track"
+		},
+		"sides": {
+			"type": "uint_t",
+			"display": "decimal",
+			"column": "sides",
+			"title": "Sides",
+			"description": "Number of disk sides (also known as heads)"
+		},
+		"bytespsector": {
+			"type": "uint_t",
+			"display": "decimal",
+			"column": "bytespsector",
+			"title": "Bytes/sector",
+			"description": "Bytes per sector"
+		},
+		"format": {
+			"type": "string",
+			"case insensitive": true,
+			"combine different": true,
+			"column": "format",
+			"title": "Format",
+			"description": "What the BPB dsscribes"
+		}
+	}
+}
