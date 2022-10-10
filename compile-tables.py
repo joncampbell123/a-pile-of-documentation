@@ -329,6 +329,9 @@ def combinedupcombinestr(cols):
     #
     if acidx < scidx:
         ncols.append(cols[acidx])
+    # an array of one should become the object itself
+    if len(ncols) == 1:
+        ncols = ncols[0]
     #
     return ncols
 
