@@ -53,7 +53,7 @@ def hierarchy_map(ji):
     hierarchy_map_gen(hl,ji,ji,[])
 
 # process
-g = glob.glob("sources/*.json",recursive=True)
+g = glob.glob("sources/**/*.json",recursive=True)
 for path in g:
     ji = load_json(path)
     if not "id" in ji:
