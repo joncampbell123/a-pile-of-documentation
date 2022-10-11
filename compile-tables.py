@@ -147,6 +147,10 @@ class TableRowProc:
                     v = ''
                 else:
                     v = colo.sortfilter(v)
+                #
+                if colo.fromJsonKey == True:
+                    if "_count" in val: # tie uniqueness to index
+                        v = str(v) + "@@@" + str(val["_count"])
             ar.append(v)
         #
         return ar
@@ -223,8 +227,14 @@ for path in g:
 def table_row_postprocess(ji,rtrow):
     nrows = [ ]
     if type(rtrow) == list:
+        count = 0
         for irtrow in rtrow:
-            nrows.extend(table_row_postprocess(ji,irtrow))
+            obj = table_row_postprocess(ji,irtrow)
+            for row in obj:
+                if type(row) == dict:
+                    row["_count"] = count
+                count = count + 1
+            nrows.extend(obj)
     elif "_columns" in rtrow:
         cols = { }
         scols = rtrow["_columns"]
