@@ -100,11 +100,15 @@
 		"mindosver": {
 			"type": "string",
 			"title": "DOS",
+			"case insensitive": true,
+			"combine different": true,
 			"description": "Minimum DOS version"
 		},
 		"comusesys": {
 			"type": "string",
 			"title": "System",
+			"case insensitive": true,
+			"combine different": true,
 			"description": "Systems that commonly use this format"
 		}
 	}
