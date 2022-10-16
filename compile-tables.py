@@ -38,10 +38,24 @@ tables = { }
 tablerowproc = { }
 
 def str2int(v):
-    if v == "-":
-        return v
     if v[0:2] == "0x":
+        if re.search("^0x[0-9a-fA-F]+$",v) == None:
+            return v
         return int(v,base=16)
+    #
+    if v[0:2] == "0b":
+        if re.search("^0b[0-1]+$",v) == None:
+            return v
+        return int(v,base=2)
+    #
+    if v[0:1] == "0":
+        if re.search("^0[0-7]+$",v) == None:
+            return v
+        return int(v,base=8)
+    #
+    if re.search("^[0-9]+$",v) == None:
+        return v
+    #
     return int(v)
 
 class TableColProc:
