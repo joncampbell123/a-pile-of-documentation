@@ -416,6 +416,11 @@ def table_dedup_combine(table,tproc,rows):
                 if type(rcol) == list:
                     rcol.sort(key=combinestrobjsort)
                     rcol = row[colname] = combinedupcombinestr(rcol)
+                if type(rcol) == dict:
+                # "" object should just become ""
+                    if "_string" in rcol:
+                        if rcol["_string"] == "":
+                            rcol = row[colname] = ""
     #
     return nrows
 
