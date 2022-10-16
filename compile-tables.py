@@ -176,8 +176,8 @@ class TableRowProc:
                     v = colo.sortfilter(v)
                 #
                 if colo.fromJsonKey == True:
-                    if "_count" in val: # tie uniqueness to index
-                        v = str(v) + "@@@" + str(val["_count"])
+                    if "_mutid" in val: # multiple entries in a table
+                        v = str(v) + "@" + str(val["_mutid"])
             ar.append(v)
         #
         return ar
@@ -253,13 +253,13 @@ for path in g:
 # table row postprocessing
 def table_row_postprocess(ji,rtrow):
     nrows = [ ]
-    if type(rtrow) == list:
+    if type(rtrow) == list: # allow multiple variations of something i.e MS-DOS commands
         count = 0
         for irtrow in rtrow:
             obj = table_row_postprocess(ji,irtrow)
             for row in obj:
                 if type(row) == dict:
-                    row["_count"] = count
+                    row["_mutid"] = str(count) + "@" + ji["id"]
                 count = count + 1
             nrows.extend(obj)
     elif "_columns" in rtrow:
