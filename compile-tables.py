@@ -2,12 +2,25 @@
 
 import os
 import re
+import csv
 import glob
 import json
 import zlib
 import math
 import struct
 import pathlib
+
+def load_csv(path):
+    ret = { "columnNames": [ ], "rows": [ ] }
+    f = open(path,"r",encoding='utf-8',newline='')
+    reader = csv.reader(f)
+    ret["columnNames"] = next(reader) # first row is names of columns
+    for rawrow in reader: # and then the rest
+        while len(rawrow) < len(ret["columnNames"]):
+            rawrow.append('')
+        ret["rows"].append(rawrow)
+    f.close()
+    return ret
 
 def load_json(path):
     f = open(path,"r",encoding='utf-8')
