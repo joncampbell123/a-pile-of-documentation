@@ -417,7 +417,15 @@ def table_dedup_combine(table,tproc,rows):
                     rcol.sort(key=combinestrobjsort)
                     rcol = row[colname] = combinedupcombinestr(rcol)
                 if type(rcol) == dict:
-                # "" object should just become ""
+                    # if the source list matches the row source list exactly, then
+                    # remove it because it is redundant. if rcol were still a list,
+                    # then most likely there are multiple sources with different
+                    # data and therefore different sources per entry.
+                    if "_string" in rcol and "_source" in rcol and "_source" in row:
+                        if rcol["_source"] == row["_source"]:
+                            rcol = row[colname] = rcol["_string"]
+                if type(rcol) == dict:
+                    # "" object should just become ""
                     if "_string" in rcol:
                         if rcol["_string"] == "":
                             rcol = row[colname] = ""
