@@ -1,0 +1,8 @@
+{
+	"id": "ebcdic",
+	"source": {
+		"website": "wikipedia",
+		"url": "https://en.wikipedia.org/wiki/EBCDIC"
+	},
+	"table in csv": true
+}
