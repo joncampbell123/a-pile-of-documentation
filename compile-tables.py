@@ -306,7 +306,9 @@ for path in g:
     # we may be asked to load from CSV
     if not "table" in ji and "table in csv" in ji:
         if ji["table in csv"] == True:
+            del ji["table in csv"]
             path_csv = path[0:-5]+".csv"
+            ji["source csv file"] = path_csv
             ics = load_csv(path_csv)
             if not "rows" in ics:
                 raise Exception("no rows in csv")
