@@ -483,11 +483,18 @@ for tid in tables:
             hierby = source_info["by hierarchy"]
             hieri_match = None
             hieri_res = None
+            # Match what the table provided for sources, even if only one of or incomplete. We allow that.
+            # Scan down to the deepest match in the hierarchy.
             for hieri in range(0,len(hierlist)):
                 if hierlist[hieri] in src_obj:
                     hieri_match = hieri
                     hieri_res = [ None ] * (hieri + 1) # list with (hieri + 1) entries filled with None
-            #
+            # If anything was provided, match it to the full reference.
+            # Usually a singular specification like "subsection": "1.23" is enough to look up the full
+            # reference without trouble, but in case a book has multiple "Chapter 2" entries, one per
+            # part, we need to detect that and say that the singular reference is ambiguous (WHICH
+            # "chapter 2" is it?) and that more information is needed. A fix for that might be to change
+            # { "chapter": "Chapter 2" } to { "part": "Part 3", "chapter": "Chapter 2" }
             if not hieri_match == None:
                 hieri = hieri_match
                 while hieri >= 0:
@@ -512,8 +519,11 @@ for tid in tables:
                     if len(byo) == 0:
                         raise Exception("List is zero length")
                     # if the list is itself a list, the reference is ambiguous. else if it's just
-                    # a list of strings, it's the result we want
+                    # a list of strings, it's the result we want with no further trouble.
                     if type(byo[0]) == list:
+                        # Uh, oh, then the reference is ambiguous and we need to match each entry
+                        # against any other information provided by the reference to resolve it
+                        # down to one reference. If we cannot do that, then exit in error.
                         count = 0
                         for byoe in byo:
                             if not len(byoe) == (hieri + 1):
