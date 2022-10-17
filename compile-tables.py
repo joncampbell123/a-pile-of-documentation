@@ -96,9 +96,9 @@ class TableColProc:
         if self.fromType == "bool":
             if isinstance(v,bool):
                 return v
-            if v == "true" or v == "1" or v > 0:
+            if v == "true" or v == "1" or (isinstance(v,int) and v > 0):
                 return True
-            if v == "false" or v == "0" or v <= 0:
+            if v == "false" or v == "0" or (isinstance(v,int) and v <= 0):
                 return False
             return False
         if self.fromType == "uint8_t" or self.fromType == "uint_t":
@@ -299,6 +299,42 @@ for path in g:
         raise Exception("table "+ji["id"]+" processing not init")
     #
     ji["source json file"] = path
+    # we may be asked to load from CSV
+    if not "table" in ji and "table in csv" in ji:
+        if ji["table in csv"] == True:
+            path_csv = path[0:-5]+".csv"
+            ics = load_csv(path_csv)
+            if not "rows" in ics:
+                raise Exception("no rows in csv")
+            if not "columnNames" in ics:
+                raise Exception("no column names in csv")
+            keybased = False
+            if "key" in tablerowproc[ji["id"]].columns:
+                if tablerowproc[ji["id"]].columns["key"].fromJsonKey == True:
+                    keybased = True
+            if keybased == True:
+                rows = { }
+                columns = ics["columnNames"]
+                for row in ics["rows"]:
+                    key = None
+                    res = { }
+                    for coli in range(0,len(columns)):
+                        colname = columns[coli]
+                        colval = row[coli]
+                        if colname == "key":
+                            key = colval
+                        else:
+                            res[colname] = colval
+                        #
+                    if key in rows:
+                        if not type(rows[key]) == list:
+                            rows[key] = [ rows[key] ]
+                        rows[key].append(res)
+                    else:
+                        rows[key] = res
+                ji["table"] = rows
+            else:
+                raise Exception("?")
     # extract table, remove from source JSON object
     if "table" in ji:
         table_data = ji["table"]
