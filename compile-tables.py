@@ -441,6 +441,72 @@ for tid in tables:
     # then remove or combine duplicate or redundant data, which is easy now the data is sorted
     table["rows"] = rows = table_dedup_combine(table,tproc,rows)
 
+# expand table sources references, for example from merely "subsection": "1.24" to the full
+# [ "part": "Part 1", "section": "Section 1", "subsection": "1.24" ]
+source_json = load_json("compiled/sources.json")
+for tid in tables:
+    table = tables[tid]
+    if not "sources" in table:
+        continue
+    sources = table["sources"]
+    for sourceid in sources:
+        source = sources[sourceid]
+        if not "source" in source:
+            continue
+        src_obj = source["source"]
+        # it can be a book, or a website.
+        # FIXME: All this complicated processing can go away if the table JSON itself provided
+        #        the source in the format this code produces and transformation was not necessary!
+        src_id = None
+        if "book" in src_obj:
+            src_id = src_obj["book"]
+            del src_obj["book"]
+            src_obj["type"] = "book"
+        elif "website" in src_obj:
+            src_id = src_obj["website"]
+            del src_obj["website"]
+            src_obj["type"] = "website"
+        #
+        if src_id == None:
+            raise Exception("Unable to determine source info for "+sourceid)
+        if not src_id in source_json:
+            raise Exception("No such source "+src_id)
+        #
+        source_info = source_json[src_id]
+        ref = None
+        #
+        if not "url" in src_obj and "url" in source_info:
+            src_obj["url"] = source_info["url"]
+        #
+        if "hierarchy" in source_info and "by hierarchy" in source_info:
+            hierlist = source_info["hierarchy"]
+            hierby = source_info["by hierarchy"]
+            hieri_match = None
+            hieri_ref = None
+            for hieri in range(0,len(hierlist)):
+                if hierlist[hieri] in src_obj:
+                    hieri_match = hieri
+                    hieri_ref = src_obj[hierlist[hieri]]
+                    del src_obj[hierlist[hieri]]
+                    break
+            #
+            if not hieri_match == None and not hieri_ref == None:
+                if hierlist[hieri_match] in hierby:
+                    by = hierby[hierlist[hieri_match]]
+                    if hieri_ref in by:
+                        byr = by[hieri_ref]
+                        if type(byr) == list:
+                            ref = { "where": byr }
+        #
+        if ref == None and "url" in src_obj:
+            ref = { "url": src_obj["url"] }
+            del src_obj["url"]
+        #
+        if not ref == None:
+            src_obj["reference"] = ref
+        else:
+            raise Exception("Unable to resolve "+hierlist[hieri_match]+" "+hieri_ref+" in "+tid)
+
 # write it
 if not os.path.exists("compiled"):
     os.mkdir("compiled")
