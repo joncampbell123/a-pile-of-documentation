@@ -461,10 +461,12 @@ for tid in tables:
         if "book" in src_obj:
             src_id = src_obj["book"]
             del src_obj["book"]
+            src_obj["id"] = src_id
             src_obj["type"] = "book"
         elif "website" in src_obj:
             src_id = src_obj["website"]
             del src_obj["website"]
+            src_obj["id"] = src_id
             src_obj["type"] = "website"
         #
         if src_id == None:
