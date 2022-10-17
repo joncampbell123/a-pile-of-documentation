@@ -24,6 +24,10 @@
 							"title": "IBM Extended Character Codes",
 							"page": "29",
 							"source": "IBM PC/XT Technical Reference, page 2-14"
+						},
+						"1.25": {
+							"title": "EBCDIC Character Set",
+							"page": "31"
 						}
 					}
 				}

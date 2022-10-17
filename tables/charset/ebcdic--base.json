@@ -1,0 +1,31 @@
+{
+	"table": "EBCDIC Character set",
+	"id": "ebcdic",
+	"combinable": true,
+	"base definition": true,
+	"table format": {
+		"order": [ "key", "name", "character" ]
+	},
+	"table columns": {
+		"key": {
+			"type": "uint8_t",
+			"display": "hex",
+			"column": "charcode",
+			"title": "Character code",
+			"json": "key"
+		},
+		"name": {
+			"type": "string",
+			"case insensitive": true,
+			"column": "keycombo",
+			"title": "Char name"
+		},
+		"character": {
+			"type": "string",
+			"case insensitive": true,
+			"combine different": true,
+			"column": "comment",
+			"title": "Character"
+		}
+	}
+}

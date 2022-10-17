@@ -48,6 +48,8 @@ def str2int(v):
             return v
         return int(v,base=2)
     #
+    if v == "0":
+        return 0
     if v[0:1] == "0":
         if re.search("^0[0-7]+$",v) == None:
             return v
