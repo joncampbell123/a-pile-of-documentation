@@ -482,21 +482,73 @@ for tid in tables:
             hierlist = source_info["hierarchy"]
             hierby = source_info["by hierarchy"]
             hieri_match = None
-            hieri_ref = None
+            hieri_res = None
             for hieri in range(0,len(hierlist)):
                 if hierlist[hieri] in src_obj:
                     hieri_match = hieri
-                    hieri_ref = src_obj[hierlist[hieri]]
-                    del src_obj[hierlist[hieri]]
-                    break
+                    hieri_res = [ None ] * (hieri + 1) # list with (hieri + 1) entries filled with None
             #
-            if not hieri_match == None and not hieri_ref == None:
-                if hierlist[hieri_match] in hierby:
-                    by = hierby[hierlist[hieri_match]]
-                    if hieri_ref in by:
-                        byr = by[hieri_ref]
-                        if type(byr) == list:
-                            ref = { "where": byr }
+            if not hieri_match == None:
+                hieri = hieri_match
+                while hieri >= 0:
+                    if hierlist[hieri] in src_obj:
+                        hieri_res[hieri] = src_obj[hierlist[hieri]]
+                        del src_obj[hierlist[hieri]]
+                    hieri = hieri - 1
+                #
+                hieri = hieri_match
+                hieri_name = hierlist[hieri]
+                if hieri_name in hierby:
+                    by = hierby[hieri_name];
+                    if not type(by) == dict:
+                        raise Exception("Incorrect data type "+hieri_name+" reference to "+hieri_res[hieri])
+                    if hieri_res[hieri] == None:
+                        raise Exception("Lookup key is None??")
+                    if not hieri_res[hieri] in by:
+                        raise Exception("Unable to find "+hieri_name+" "+hieri_res[hieri]+" source")
+                    byo = by[hieri_res[hieri]]
+                    if not type(byo) == list:
+                        raise Exception("Not a list")
+                    if len(byo) == 0:
+                        raise Exception("List is zero length")
+                    # if the list is itself a list, the reference is ambiguous. else if it's just
+                    # a list of strings, it's the result we want
+                    if type(byo[0]) == list:
+                        count = 0
+                        for byoe in byo:
+                            if not len(byoe) == (hieri + 1):
+                                raise Exception("Result has wrong number of entries")
+                            match = 0
+                            for i in range(0,hieri):
+                                if not hieri_res[i] == None:
+                                    if hieri_res[i] == byoe[i]:
+                                        match = match + 1
+                                else:
+                                    match = match + 1
+                            if match == hieri:
+                                ref = byoe
+                                count = count + 1
+                        if ref == None:
+                            if count > 0:
+                                raise Exception("Wait, what?")
+                            print("Given: ")
+                            print(hieri_res)
+                            raise Exception("No match for reference to "+hieri_name+" "+hieri_res[hieri]+" table "+tid)
+                        elif count > 1:
+                            print("Given: ");
+                            print(hieri_res)
+                            print("Last result out of "+str(count)+": ");
+                            print(ref)
+                            raise Exception("Ambiguous reference to "+hieri_name+" "+hieri_res[hieri]+" table "+tid)
+                    else:
+                        if not len(byo) == (hieri + 1):
+                            print("Got: ")
+                            print(byo)
+                            raise Exception("Result has wrong number of entries")
+                        ref = byo
+                #
+                else:
+                    raise Exception("Unable to resolve "+hieri_name+" reference, no lookup table")
         #
         if ref == None and "url" in src_obj:
             ref = { "url": src_obj["url"] }
@@ -505,7 +557,7 @@ for tid in tables:
         if not ref == None:
             src_obj["reference"] = ref
         else:
-            raise Exception("Unable to resolve "+hierlist[hieri_match]+" "+hieri_ref+" in "+tid)
+            raise Exception("Unable to resolve source in "+tid)
 
 # write it
 if not os.path.exists("compiled"):
