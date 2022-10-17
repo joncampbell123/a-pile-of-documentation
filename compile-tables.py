@@ -322,6 +322,20 @@ for path in g:
                 #
                 rowf["_source"] = path;
                 tables[ji["id"]]["rows"].append(rowf)
+    elif type(table_data) == list:
+        for rawrow in table_data:
+            for row in table_row_postprocess(ji,rawrow):
+                rowf = tablerowproc[ji["id"]].format(None,row) # key=None, you're not supposed to use json key with this type
+                #
+                for colname in rowf:
+                    if colname in tablerowproc[ji["id"]].columns:
+                        colo = tablerowproc[ji["id"]].columns[colname]
+                        if colo.fromType == "string" and colo.combineDifferent:
+                            if type(rowf[colname]) == dict:
+                                rowf[colname]["_source"] = path;
+                #
+                rowf["_source"] = path;
+                tables[ji["id"]]["rows"].append(rowf)
     else:
         raise Exception("table data not in expected format")
 
