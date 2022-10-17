@@ -16,6 +16,8 @@ def load_csv(path):
     reader = csv.reader(f)
     ret["columnNames"] = next(reader) # first row is names of columns
     for rawrow in reader: # and then the rest
+        if len(rawrow) == 0:
+            continue
         while len(rawrow) < len(ret["columnNames"]):
             rawrow.append('')
         ret["rows"].append(rawrow)
