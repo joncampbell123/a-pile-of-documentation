@@ -561,6 +561,9 @@ for tid in tables:
                 #
                 else:
                     raise Exception("Unable to resolve "+hieri_name+" reference, no lookup table")
+            # Make ref from array to object
+            if type(ref) == list:
+                ref = { "where": ref }
         #
         if ref == None and "url" in src_obj:
             ref = { "url": src_obj["url"] }
