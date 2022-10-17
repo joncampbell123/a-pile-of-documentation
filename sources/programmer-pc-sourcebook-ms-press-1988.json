@@ -12,14 +12,14 @@
 		"isbn-10": "1-55615-118-7",
 		"isbn-13": "9-781556-151187"
 	},
-	"hierarchy": [ "parts", "sections", "subsections" ],
-	"parts": {
+	"hierarchy": [ "part", "section", "subsection" ],
+	"part": {
 		"Part 1": {
 			"title": "Miscellaneous Information",
-			"sections": {
+			"section": {
 				"Section 1": {
 					"title": "General Information",
-					"subsections": {
+					"subsection": {
 						"1.23": {
 							"title": "IBM Extended Character Codes",
 							"page": "29",
@@ -31,10 +31,10 @@
 		},
 		"Part 2": {
 			"title": "Software",
-			"sections": {
+			"section": {
 				"Section 2": {
 					"title": "DOS Commands, Utilities, and Summaries",
-					"subsections": {
+					"subsection": {
 						"2.01": {
 							"title": "DOS Command Summary",
 							"page": "40",
