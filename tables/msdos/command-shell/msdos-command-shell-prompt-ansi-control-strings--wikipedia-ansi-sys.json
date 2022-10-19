@@ -1,0 +1,22 @@
+{
+	"id": "msdos-command-shell-prompt-ansi-control-strings",
+	"source": {
+		"website": "wikipedia",
+		"url": "https://en.wikipedia.org/wiki/ANSI.SYS"
+	},
+	"table value column order": [ "string", "ansiparam", "function" ],
+	"table": {
+		"ESC [ A": { "_columns": [ "ESC [ #A", "1: row count", "Cursor up (CUU)" ] },
+		"ESC [ B": { "_columns": [ "ESC [ #B", "1: row count", "Cursor down (CUD)" ] },
+		"ESC [ C": { "_columns": [ "ESC [ #C", "1: column count", "Cursor forward (CUF)" ] },
+		"ESC [ D": { "_columns": [ "ESC [ #D", "1: column count", "Cursor back (CUB)" ] },
+		"ESC [ f": { "_columns": [ "ESC [ #;# f", "1: row (1-based)\n2: column (2-based)", "Horizontal and vertical position (HVP)" ] },
+		"ESC [ H": { "_columns": [ "ESC [ #;# H", "1: row\n2:column", "Cursor position (CUP)" ] },
+		"ESC [ J": { "_columns": [ "ESC [ #J", "1: Erasure mode", "Erase display (ED) (n=2)\nErase display (ED) (n=0,1,2) (Japanese versions)" ] },
+		"ESC [ K": { "_columns": [ "ESC [ #K", "1: Erasure mode", "Erase line (EL) (n=0)\nErase line (EL) (n=0,1,2) (Japanese versions)" ] },
+		"ESC [ m": { "_columns": [ "ESC [ #;...;#m", "1: Graphic rendition", "Select graphic rendition (SGR) (n=0..47)" ] },
+		"ESC [ 6n": { "_columns": [ "ESC [ 6n", "", "Device status report (DSR) requests cursor position, returned as Cursor position report (CPR): ESC [ r;c R" ] },
+		"ESC [ s": { "_columns": [ "ESC [ s", "", "Save cursor position (SCP)" ] },
+		"ESC [ u": { "_columns": [ "ESC [ u", "", "Restore cursor position (RCP)" ] }
+	}
+}
