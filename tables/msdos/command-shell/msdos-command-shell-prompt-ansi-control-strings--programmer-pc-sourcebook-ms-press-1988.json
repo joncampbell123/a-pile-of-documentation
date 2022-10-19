@@ -7,7 +7,7 @@
 	"table value column order": [ "string", "ansiparam", "function" ],
 	"table": {
 		"ESC [ f": { "_columns": [ "ESC [ #;# f", "1: row (1-based)\n2: column (2-based)", "Moves to row, column" ] },
-		"ESC [= h": { "_columns": [ "ESC [= h", 
+		"ESC [= h": { "_columns": [ "ESC [=# h",
 			"1: display mode",
 			"Sets display mode according to display mode code.\nNote that the code is ESC [= followed by the number, then h.\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = wrap at end of line"
 		] },
@@ -22,7 +22,10 @@
 		"ESC [ B": { "_columns": [ "ESC [ #B", "1: row count", "Moves cursor down by the number of rows indicated. If not specified, 1 is assumed" ] },
 		"ESC [ C": { "_columns": [ "ESC [ #C", "1: column count", "Moves cursor right by the number of columns indicated. If not specified, 1 is assumed" ] },
 		"ESC [ D": { "_columns": [ "ESC [ #D", "1: column count", "Moves cusror left by the number of columns indicated. If not specified, 1 is assumed" ] },
-		"ESC [ H": { "_columns": [ "ESC [ #;# H", "1: row\n2:column", "Moves cursor to row (1) and column (2) position. H by itself positions the cursor to home (1,1) position" ] },
+		"ESC [ H": [
+			{ "_columns": [ "ESC [ H", "", "Moves cursor to Home position (row 1, column 1)" ] },
+			{ "_columns": [ "ESC [ #;# H", "1: row\n2:column", "Moves cursor to row (first #) and column (second #) position" ] }
+		],
 		"ESC [ J": { "_columns": [ "ESC [ 2J", "1: Erasure mode", "Erasure. MS-DOS only supports 2J to clear the screen according to PC Programmer's Sourcebook (1988)" ] },
 		"ESC [ K": { "_columns": [ "ESC [ K", "", "Erase from cursor to end of line, including cursor position" ] },
 		"ESC [ R": { "_columns": [ "ESC [ #;# R", "", "Report cursor position through standard input" ] },
