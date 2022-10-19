@@ -25,6 +25,14 @@
 		"ESC [ l": { "_columns": [ "ESC [# l", "1: display mode", "Reset screen mode (RM)" ] },
 		"ESC [? l": { "_columns": [ "ESC [?# l", "1: display mode", "Reset screen mode (RM)" ] },
 		"ESC [= l": { "_columns": [ "ESC [=# l", "1: display mode", "Reset screen mode (RM)" ] },
-		"ESC [> l": { "_columns": [ "ESC [># l", "1: display mode", "Reset screen mode (RM) (Japanese versions, for special modes specific to platform)" ] }
+		"ESC [> l": { "_columns": [ "ESC [># l", "1: display mode", "Reset screen mode (RM) (Japanese versions, for special modes specific to platform)" ] },
+		"ESC [ q": { "_columns": [ "ESC [ #q", "1: Enable flag","Enable (1) or disable (0) /x support" ] },
+		"ESC [ L": { "_columns": [ "ESC [ L", "", "Insert line (IL) (Japanese versions, multiuser DOS)" ] },
+		"ESC [ M": { "_columns": [ "ESC [ M", "", "Delete line (DL) (Japanese versions, multiuser DOS)" ] },
+		"ESC $ ) 1": { "_columns": [ "ESC $ ) 1", "", "Switch keyboard input mode to Korean (Hangul) (Korean MS-DOS only)" ] },
+		"ESC ( 2": { "_columns": [ "ESC ( 2", "", "Switch keyboard input mode to English" ] },
+		"ESC [ +": { "_columns": [ "ESC [ +", "", "Enable console output (DR-DOS 7.x+)" ] },
+		"ESC [ -": { "_columns": [ "ESC [ -", "", "Disable console output (DR-DOS 7.x+)" ] },
+		"ESC [ p": { "_columns": [ "ESC [ #;#;... p", "1: key to remap\n:2: key to remap to", "Set key re-definement (SKR/KR)" ] }
 	}
 }
