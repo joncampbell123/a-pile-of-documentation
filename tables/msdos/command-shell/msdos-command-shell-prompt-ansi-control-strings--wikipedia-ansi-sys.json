@@ -17,6 +17,14 @@
 		"ESC [ m": { "_columns": [ "ESC [ #;...;#m", "1: Graphic rendition", "Select graphic rendition (SGR) (n=0..47)" ] },
 		"ESC [ 6n": { "_columns": [ "ESC [ 6n", "", "Device status report (DSR) requests cursor position, returned as Cursor position report (CPR): ESC [ r;c R" ] },
 		"ESC [ s": { "_columns": [ "ESC [ s", "", "Save cursor position (SCP)" ] },
-		"ESC [ u": { "_columns": [ "ESC [ u", "", "Restore cursor position (RCP)" ] }
+		"ESC [ u": { "_columns": [ "ESC [ u", "", "Restore cursor position (RCP)" ] },
+		"ESC [ h": { "_columns": [ "ESC [# h", "1: display mode", "Set screen mode (SM)" ] },
+		"ESC [? h": { "_columns": [ "ESC [?# h", "1: display mode", "Set screen mode (SM)" ] },
+		"ESC [= h": { "_columns": [ "ESC [=# h", "1: display mode", "Set screen mode (SM)" ] },
+		"ESC [> h": { "_columns": [ "ESC [># h", "1: display mode", "Set screen mode (SM) (Japanese versions, for special modes specific to platform)" ] },
+		"ESC [ l": { "_columns": [ "ESC [# l", "1: display mode", "Reset screen mode (RM)" ] },
+		"ESC [? l": { "_columns": [ "ESC [?# l", "1: display mode", "Reset screen mode (RM)" ] },
+		"ESC [= l": { "_columns": [ "ESC [=# l", "1: display mode", "Reset screen mode (RM)" ] },
+		"ESC [> l": { "_columns": [ "ESC [># l", "1: display mode", "Reset screen mode (RM) (Japanese versions, for special modes specific to platform)" ] }
 	}
 }
