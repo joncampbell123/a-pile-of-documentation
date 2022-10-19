@@ -6,14 +6,19 @@
 	"description": "ANSI control strings supported by MS-DOS",
 	"base definition": true,
 	"table format": {
-		"order": [ "key", "ansiparam", "function" ]
+		"order": [ "key", "string", "ansiparam", "function" ]
 	},
 	"table columns": {
 		"key": {
 			"type": "string",
-			"title": "String",
+			"title": "Escape",
 			"case insensitive": false,
 			"json": "key"
+		},
+		"string": {
+			"type": "string",
+			"title": "String",
+			"case insensitive": false
 		},
 		"ansiparam": {
 			"type": "string",
