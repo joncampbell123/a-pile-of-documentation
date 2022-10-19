@@ -12,7 +12,7 @@
 		"key": {
 			"type": "string",
 			"title": "String",
-			"case insensitive": true,
+			"case insensitive": false,
 			"json": "key"
 		},
 		"ansiparam": {
