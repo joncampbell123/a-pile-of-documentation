@@ -1,0 +1,32 @@
+{
+	"id": "msdos-command-shell-prompt-ansi-display-attribute-strings",
+	"source": {
+		"book": "programmer-pc-sourcebook-ms-press-1988",
+		"subsection": "2.19"
+	},
+	"table value column order": [ "sets", "mda", "cga", "ega", "vga" ],
+	"table": {
+		"ESC [ 0 m": { "_columns": [ "Normal text", "X", "X", "X", "X" ] },
+		"ESC [ 1 m": { "_columns": [ "Bright text (intensity bit set)", "X", "X", "X", "X" ] },
+		"ESC [ 4 m": { "_columns": [ "Underscored text", "X", "", "", "" ] },
+		"ESC [ 5 m": { "_columns": [ "Blinking text", "X", "", "", "" ] },
+		"ESC [ 7 m": { "_columns": [ "Reversed text", "X", "X", "X", "X" ] },
+		"ESC [ 8 m": { "_columns": [ "Canceled (invisible) text", "X", "", "", "" ] },
+		"ESC [ 30 m": { "_columns": [ "Black text", "", "X", "X", "X" ] },
+		"ESC [ 31 m": { "_columns": [ "Red text", "", "X", "X", "X" ] },
+		"ESC [ 32 m": { "_columns": [ "Green text", "", "X", "X", "X" ] },
+		"ESC [ 33 m": { "_columns": [ "Yellow text", "", "X", "X", "X" ] },
+		"ESC [ 34 m": { "_columns": [ "Blue text", "", "X", "X", "X" ] },
+		"ESC [ 35 m": { "_columns": [ "Magenta text", "", "X", "X", "X" ] },
+		"ESC [ 36 m": { "_columns": [ "Cyan text", "", "X", "X", "X" ] },
+		"ESC [ 37 m": { "_columns": [ "White text", "", "X", "X", "X" ] },
+		"ESC [ 40 m": { "_columns": [ "Black background", "", "X", "X", "X" ] },
+		"ESC [ 41 m": { "_columns": [ "Red background", "", "X", "X", "X" ] },
+		"ESC [ 42 m": { "_columns": [ "Green background", "", "X", "X", "X" ] },
+		"ESC [ 43 m": { "_columns": [ "Yellow background", "", "X", "X", "X" ] },
+		"ESC [ 44 m": { "_columns": [ "Blue background", "", "X", "X", "X" ] },
+		"ESC [ 45 m": { "_columns": [ "Magenta background", "", "X", "X", "X" ] },
+		"ESC [ 46 m": { "_columns": [ "Cyan background", "", "X", "X", "X" ] },
+		"ESC [ 47 m": { "_columns": [ "White background", "", "X", "X", "X" ] }
+	}
+}

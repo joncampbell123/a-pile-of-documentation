@@ -1,0 +1,44 @@
+{
+	"table": "Prompt ANSI Display Attribute Strings",
+	"id": "msdos-command-shell-prompt-ansi-display-attribute-strings",
+	"combinable": true,
+	"notes": "The codes here reflect the numeric values given in ANSI.SYS escape sequence ESC [ m. Multiple codes can be combined, separated a by semicolon, into one ESC [ m code.",
+	"description": "ANSI display attribute strings supported by MS-DOS",
+	"base definition": true,
+	"table format": {
+		"order": [ "key", "sets", "mda", "cga", "ega", "vga" ]
+	},
+	"table columns": {
+		"key": {
+			"type": "mixed",
+			"title": "Escape with code",
+			"case insensitive": false,
+			"json": "key"
+		},
+		"sets": {
+			"type": "string",
+			"title": "Sets attribute to",
+			"case insensitive": false
+		},
+		"mda": {
+			"type": "string",
+			"title": "MDA",
+			"type": "bool"
+		},
+		"cga": {
+			"type": "string",
+			"title": "CGA",
+			"type": "bool"
+		},
+		"ega": {
+			"type": "string",
+			"title": "EGA",
+			"type": "bool"
+		},
+		"vga": {
+			"type": "string",
+			"title": "VGA",
+			"type": "bool"
+		}
+	}
+}
