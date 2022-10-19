@@ -6,20 +6,26 @@
 	"description": "ANSI control strings supported by MS-DOS",
 	"base definition": true,
 	"table format": {
-		"type": "key=value",
+		"order": [ "key", "ansiparam", "function" ]
+	},
+	"table columns": {
 		"key": {
 			"type": "string",
-			"title": "String"
+			"title": "String",
+			"case insensitive": true,
+			"json": "key"
 		},
-		"value": [
-			{
-				"type": "string",
-				"title": "ANSI parameters"
-			},
-			{
-				"type": "string",
-				"title": "Function"
-			}
-		]
+		"ansiparam": {
+			"type": "string",
+			"title": "ANSI parameters",
+			"case insensitive": true,
+			"combine different": true
+		},
+		"function": {
+			"type": "string",
+			"title": "Function",
+			"case insensitive": true,
+			"combine different": true
+		}
 	}
 }
