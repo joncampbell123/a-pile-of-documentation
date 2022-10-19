@@ -6,12 +6,12 @@
 	},
 	"table value column order": [ "string", "ansiparam", "function" ],
 	"table": {
-		"ESC [ f": { "_columns": [ "ESC [ #;# f", "1: row (1-based)\n2: column (2-based)", "Moves to row, column" ] },
+		"ESC [ f": { "_columns": [ "ESC [ #;# f", "1: row (1-based)\n2: column (1-based)", "Moves to row, column" ] },
 		"ESC [= h": { "_columns": [ "ESC [=# h",
 			"1: display mode",
 			"Sets display mode according to display mode code.\nNote that the code is ESC [= followed by the number, then h.\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = wrap at end of line"
 		] },
-		"ESC [ j": { "_columns": [ "ESC [ #;# j", "1: row (1-based)\n2: column (2-based)", "Moves to row, column" ] },
+		"ESC [ j": { "_columns": [ "ESC [ #;# j", "1: row (1-based)\n2: column (1-based)", "Moves to row, column" ] },
 		"ESC [ K": { "_columns": [ "ESC [ K", "", "Clears line from cursor to end of line" ] },
 		"ESC [= l": { "_columns": [ "ESC [=# l", "1: display mode", "Resets display mode according to display mode code.\nNote that the code is ESC [= followed by the number, then l.\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = disable wrap at end of line" ], "notes": "PC programmer's sourcebook (1988) incorrectly lists 7 as wrap at end of line" },
 		"ESC [ m": { "_columns": [ "ESC [ #;...;#m", "Any number of parameters is valid, including none", "If no number given, acts as if zero.\nEach number changes an attribute that will be used to print text after the escape.\n0 clears all attributes to default.\nSee table \"MS-DOS Prompt ANSI Display Attribute Strings\" for more information." ] },
