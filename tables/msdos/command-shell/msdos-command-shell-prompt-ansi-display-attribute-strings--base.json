@@ -6,14 +6,18 @@
 	"description": "ANSI display attribute strings supported by MS-DOS",
 	"base definition": true,
 	"table format": {
-		"order": [ "key", "sets", "mda", "cga", "ega", "vga" ]
+		"order": [ "key", "esc", "sets", "mda", "cga", "ega", "vga" ]
 	},
 	"table columns": {
 		"key": {
-			"type": "mixed",
-			"title": "Escape with code",
-			"case insensitive": false,
+			"type": "uint8_t",
+			"title": "Code",
 			"json": "key"
+		},
+		"esc": {
+			"type": "string",
+			"title": "Escape",
+			"case insensitive": false
 		},
 		"sets": {
 			"type": "string",
