@@ -1,5 +1,5 @@
 #!/bin/bash
-rm -Rf compiled || exit 1
-./compile-sources.py || exit 1
-./compile-tables.py || exit 1
+#rm -Rf compiled || exit 1
+#./compile-sources.py || exit 1
+#./compile-tables.py || exit 1
 
