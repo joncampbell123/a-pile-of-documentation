@@ -63,6 +63,13 @@ books = { }
 #
 # Recursion is used to drill deeper into the object
 def tocbyref(refby,contents,hiernames,hlevel,nhierlist):
+    if "group" in contents:
+        group = contents["group"]
+        if not type(group) == list:
+            raise Exception("Group must be array")
+        for ent in group:
+            tocbyref(refby,ent,hiernames,hlevel,nhierlist)
+    #
     if not hlevel in contents:
         return
     hlevelcontent = contents[hlevel]
