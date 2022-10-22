@@ -24,6 +24,44 @@ def write_json(path,ji):
 # init
 books = { }
 
+# scan "contents" in "table of contents" recursively here.
+# refby: "reference by" object, to contain keys of content names and objects providing the full hierarchy
+# contents: the "contents" object in which to look for string value hlevel. upon recursion this code digs deeper into the object.
+# hiernames: object upon which the name of the level and content name are added as recursion runs, becomes the object tied to content names
+# hlevel: level name such as "@part", "@section", etc. as recursion is done
+# nhierlist: the rest of the list yet to parse. this is the parent call nhierlist with first element removed and given in hlevel
+#
+# Example:
+#
+#             "hierarchy": [
+# hlevel =      "@part",
+# nhierlist ->  "@section",
+#               "@subsection" <-
+#             ],
+#
+# contents =  "contents": {
+#               "@part": {
+#                   "Part 1": {
+#                       "title": "Miscellaneous Information",
+#                       "@section": {
+#                           "Section 1": {
+#                               "title": "General Information",
+#                               "@subsection": {
+#                                   "1.23": {
+#                                       "title": "IBM Extended Character Codes",
+#                                       "page": "29",
+#                                       "source": "IBM PC/XT Technical Reference, page 2-14"
+#                                   },
+#                                   "1.25": {
+#                                       "title": "EBCDIC Character Set",
+#                                       "page": "31"
+#                                   }
+#                               }
+#                           }
+#                       }
+#                   },
+#
+# Recursion is used to drill deeper into the object
 def tocbyref(refby,contents,hiernames,hlevel,nhierlist):
     if not hlevel in contents:
         return
@@ -41,6 +79,7 @@ def tocbyref(refby,contents,hiernames,hlevel,nhierlist):
         if len(nhierlist) > 0:
             tocbyref(refby,levent,srf,nhierlist[0],nhierlist[1:])
 
+# process "table of contents" JSON object
 def proc_table_of_contents(ji):
     if not "table of contents" in ji:
         return
@@ -71,10 +110,9 @@ def proc_table_of_contents(ji):
     if "reference by" in toc:
         raise Exception("TOC contents already compiled into lookup in "+str(ji["id"]))
     refby = { }
-    #
+    # process contents by hierarchy (TODO: Allow sub-hierarchy if there are weird books like that)
     if len(hierlist) > 0:
         tocbyref(refby,contents,{ },hierlist[0],hierlist[1:])
-    #
     toc["reference by"] = refby
 
 # process
