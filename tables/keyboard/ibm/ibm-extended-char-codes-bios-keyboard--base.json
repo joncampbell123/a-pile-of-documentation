@@ -1,0 +1,42 @@
+{
+	"table": "IBM Extended Character Codes, BIOS Keyboard Interface",
+	"id": "ibm-extended-char-codes-bios-keyboard",
+	"combinable": true,
+	"description": "Extended character codes returned by the IBM BIOS in the keyboard buffer, through INT 16h, and at the MS-DOS console driver as 00h <code>",
+	"notes": "Some codes match the scan code returned by the keyboard. See also \"IBM keyboard scan code set 1\"",
+	"base definition": true,
+	"table columns": [
+		{
+			"type": "uint8_t",
+			"display": "hex",
+			"name": "code",
+			"title": "Scan code",
+			"is array": true,
+			"required": true,
+			"description": "Character code returned by BIOS INT 16h"
+		},
+		{
+			"type": "string",
+			"case insensitive": true,
+			"name": "keystroke",
+			"title": "Key combination",
+			"required": true,
+			"description": "Key combination that generates the character code"
+		},
+		{
+			"type": "string",
+			"case insensitive": true,
+			"combine different": true,
+			"name": "comments",
+			"title": "Comments",
+			"description": "Additional comments"
+		},
+		{
+			"type": "bool",
+			"column": "extended",
+			"title": "Extended",
+			"description": "Whether INT 16h AH=10h is needed to read this code",
+			"default": false
+		}
+	]
+}
