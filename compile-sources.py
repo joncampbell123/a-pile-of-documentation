@@ -127,6 +127,15 @@ for path in g:
         continue
     if ji["id"] in books:
         raise Exception("Book "+ji["id"]+" already exists")
+    # our JSON has schema version numbers now, because in the future we may have to make
+    # some changes
+    if not "schema" in ji:
+        raise Exception("Book "+ji["id"]+" has no schema information")
+    if not "version" in ji["schema"]:
+        raise Exception("Book "+ji["id"]+" has no schema version")
+    ver = ji["schema"]["version"]
+    if ver < 1 or ver > 1:
+        raise Exception("Book "+ji["id"]+" is using unsupported schema "+str(ver))
     #
     proc_table_of_contents(ji)
     #

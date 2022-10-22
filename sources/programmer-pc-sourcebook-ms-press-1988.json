@@ -1,5 +1,8 @@
 {
 	"type": "book",
+	"schema": {
+		"version": 1
+	},
 	"title": "The Programmer's PC Sourcebook",
 	"id": "programmer-pc-sourcebook-ms-press-1988",
 	"author": "Thom Hogan",
