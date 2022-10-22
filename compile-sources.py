@@ -74,7 +74,9 @@ def tocbyref(refby,contents,hiernames,hlevel,nhierlist):
         if not levname in refby:
             refby[levname] = srf
         else:
-            raise Exception("Already in TOC, level "+hlevel+" "+levname) # TODO convert to array and append
+            if not type(refby[levname]) == list:
+                refby[levname] = [ refby[levname] ] # convert to list
+            refby[levname].append(srf)
         #
         if len(nhierlist) > 0:
             tocbyref(refby,levent,srf,nhierlist[0],nhierlist[1:])
