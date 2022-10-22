@@ -26,14 +26,122 @@
 						"Section 1": {
 							"title": "General Information",
 							"@subsection": {
+								"1.01": {
+									"title": "Hexadecimal to Decimal Number Conversion",
+									"page": "4"
+								},
+								"1.02": {
+									"title": "Hexadecimal to Binary Number Conversion",
+									"page": "5"
+								},
+								"1.03": {
+									"title": "Hexadecimal to Octal Number Conversion",
+									"page": "6"
+								},
+								"1.04": {
+									"title": "Hexadecimal Addition Tables",
+									"page": "7"
+								},
+								"1.05": {
+									"title": "Hexadecimal Multiplication Tables",
+									"page": "9"
+								},
+								"1.06": {
+									"title": "Binary Number Conversions",
+									"page": ""
+								},
+								"1.07": {
+									"title": "Binary to Signed Decimal Number Conversion",
+									"page": ""
+								},
+								"1.08": {
+									"title": "Octal to Decimal Number Conversion",
+									"page": ""
+								},
+								"1.09": {
+									"title": "Octal to Hexadecimal Number Conversion",
+									"page": ""
+								},
+								"1.10": {
+									"title": "Octal to Binary Number Conversion",
+									"page": ""
+								},
+								"1.11": {
+									"title": "Decimal to Binary Number Conversion",
+									"page": ""
+								},
+								"1.12": {
+									"title": "Decimal to Hexadecimal Number Conversion",
+									"page": ""
+								},
+								"1.13": {
+									"title": "Decimal to Octal Number Conversion",
+									"page": ""
+								},
+								"1.14": {
+									"title": "Two's Complements",
+									"page": ""
+								},
+								"1.15": {
+									"title": "Common 8086 Family Data Formats",
+									"page": ""
+								},
+								"1.16": {
+									"title": "Common Numeric Data Formats",
+									"page": ""
+								},
+								"1.17": {
+									"title": "Common String Formats",
+									"page": ""
+								},
+								"1.18": {
+									"title": "Common Memory Area Terminology",
+									"page": ""
+								},
+								"1.19": {
+									"title": "Binary Coded Decimal Number Format",
+									"page": ""
+								},
+								"1.20": {
+									"title": "ASCII Control Codes",
+									"page": ""
+								},
+								"1.21": {
+									"title": "ASCII Character Set",
+									"page": ""
+								},
+								"1.22": {
+									"title": "IBM ASCII Character Set",
+									"page": ""
+								},
 								"1.23": {
 									"title": "IBM Extended Character Codes",
 									"page": "29",
 									"source": "IBM PC/XT Technical Reference, page 2-14"
 								},
+								"1.24": {
+									"title": "Line Drawing Character Set",
+									"page": ""
+								},
 								"1.25": {
 									"title": "EBCDIC Character Set",
 									"page": "31"
+								},
+								"1.26": {
+									"title": "Digit Positions in Common Bases",
+									"page": ""
+								},
+								"1.27": {
+									"title": "Powers of Two",
+									"page": ""
+								},
+								"1.28": {
+									"title": "International Sort Ordering",
+									"page": ""
+								},
+								"1.29": {
+									"title": "Truth Tables for Logical Operations",
+									"page": ""
 								}
 							}
 						}
