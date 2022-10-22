@@ -48,71 +48,71 @@
 								},
 								"1.06": {
 									"title": "Binary Number Conversions",
-									"page": ""
+									"page": "10"
 								},
 								"1.07": {
 									"title": "Binary to Signed Decimal Number Conversion",
-									"page": ""
+									"page": "12"
 								},
 								"1.08": {
 									"title": "Octal to Decimal Number Conversion",
-									"page": ""
+									"page": "13"
 								},
 								"1.09": {
 									"title": "Octal to Hexadecimal Number Conversion",
-									"page": ""
+									"page": "14"
 								},
 								"1.10": {
 									"title": "Octal to Binary Number Conversion",
-									"page": ""
+									"page": "15"
 								},
 								"1.11": {
 									"title": "Decimal to Binary Number Conversion",
-									"page": ""
+									"page": "16"
 								},
 								"1.12": {
 									"title": "Decimal to Hexadecimal Number Conversion",
-									"page": ""
+									"page": "17"
 								},
 								"1.13": {
 									"title": "Decimal to Octal Number Conversion",
-									"page": ""
+									"page": "18"
 								},
 								"1.14": {
 									"title": "Two's Complements",
-									"page": ""
+									"page": "19"
 								},
 								"1.15": {
 									"title": "Common 8086 Family Data Formats",
-									"page": ""
+									"page": "20"
 								},
 								"1.16": {
 									"title": "Common Numeric Data Formats",
-									"page": ""
+									"page": "21"
 								},
 								"1.17": {
 									"title": "Common String Formats",
-									"page": ""
+									"page": "22"
 								},
 								"1.18": {
 									"title": "Common Memory Area Terminology",
-									"page": ""
+									"page": "23"
 								},
 								"1.19": {
 									"title": "Binary Coded Decimal Number Format",
-									"page": ""
+									"page": "24"
 								},
 								"1.20": {
 									"title": "ASCII Control Codes",
-									"page": ""
+									"page": "25"
 								},
 								"1.21": {
 									"title": "ASCII Character Set",
-									"page": ""
+									"page": "25"
 								},
 								"1.22": {
 									"title": "IBM ASCII Character Set",
-									"page": ""
+									"page": "27"
 								},
 								"1.23": {
 									"title": "IBM Extended Character Codes",
@@ -121,7 +121,7 @@
 								},
 								"1.24": {
 									"title": "Line Drawing Character Set",
-									"page": ""
+									"page": "30"
 								},
 								"1.25": {
 									"title": "EBCDIC Character Set",
@@ -129,19 +129,19 @@
 								},
 								"1.26": {
 									"title": "Digit Positions in Common Bases",
-									"page": ""
+									"page": "33"
 								},
 								"1.27": {
 									"title": "Powers of Two",
-									"page": ""
+									"page": "33"
 								},
 								"1.28": {
 									"title": "International Sort Ordering",
-									"page": ""
+									"page": "34"
 								},
 								"1.29": {
 									"title": "Truth Tables for Logical Operations",
-									"page": ""
+									"page": "35"
 								}
 							}
 						}
