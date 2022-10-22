@@ -75,8 +75,12 @@ def tocbyref(refby,contents,hiernames,hlevel,nhierlist):
     hlevelcontent = contents[hlevel]
     for levname in hlevelcontent:
         levent = hlevelcontent[levname]
+        #
         srf = copy.deepcopy(hiernames)
-        srf[hlevel] = levname
+        #
+        if not type(srf["path"]) == list:
+            raise Exception("Must be list");
+        srf["path"].append({ "level": hlevel, "name": levname });
         #
         if not levname in refby:
             refby[levname] = srf
@@ -121,7 +125,7 @@ def proc_table_of_contents(ji):
     refby = { }
     # process contents by hierarchy (TODO: Allow sub-hierarchy if there are weird books like that)
     if len(hierlist) > 0:
-        tocbyref(refby,contents,{ },hierlist[0],hierlist[1:])
+        tocbyref(refby,contents,{ "path": [ ] },hierlist[0],hierlist[1:])
     toc["reference by"] = refby
 
 # process
