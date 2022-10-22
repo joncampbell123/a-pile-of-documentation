@@ -1,0 +1,105 @@
+{
+	"type": "book",
+	"title": "The Programmer's PC Sourcebook",
+	"id": "programmer-pc-sourcebook-ms-press-1988",
+	"author": "Thom Hogan",
+	"publisher": "Microsoft Press",
+	"language": "English",
+	"copyright": {
+		"year": 1988,
+		"by": "Thom Hogan"
+	},
+	"isbn": {
+		"isbn-10": "1-55615-118-7",
+		"isbn-13": "9-781556-151187"
+	},
+	"table of contents": {
+		"hierarchy": [ "@part", "@section", "@subsection" ],
+		"contents": {
+			"@part": {
+				"Part 1": {
+					"title": "Miscellaneous Information",
+					"@section": {
+						"Section 1": {
+							"title": "General Information",
+							"@subsection": {
+								"1.23": {
+									"title": "IBM Extended Character Codes",
+									"page": "29",
+									"source": "IBM PC/XT Technical Reference, page 2-14"
+								},
+								"1.25": {
+									"title": "EBCDIC Character Set",
+									"page": "31"
+								}
+							}
+						}
+					}
+				},
+				"Part 2": {
+					"title": "Software",
+					"@section": {
+						"Section 2": {
+							"title": "DOS Commands, Utilities, and Summaries",
+							"@subsection": {
+								"2.01": {
+									"title": "DOS Command Summary",
+									"page": "40",
+									"source": "IBM DOS 3.3 Reference, section 7"
+								},
+								"2.17": {
+									"title": "Prompt Special Characters",
+									"page": "48",
+									"source": "IBM DOS 3.3 Reference, page 7-177"
+								},
+								"2.18": {
+									"title": "Prompt ANSI Control Strings",
+									"page": "48",
+									"source": "IBM DOS 3.3 Technical Reference, pages 3-1 to 3-20"
+								},
+								"2.19": {
+									"title": "Prompt ANSI Display Attribute Strings",
+									"page": "49",
+									"source": "IBM DOS 3.3 Technical Reference, pages 3-15"
+								},
+								"2.37": {
+									"title": "Disk ID Byte",
+									"page": "59",
+									"source": "IBM DOS 3.3 Technical Reference, pages 5-6"
+								},
+								"2.40": {
+									"title": "Floppy Disk Format Summary",
+									"page": "61",
+									"source": "MS-DOS 3.2 Progammer's Reference, pages 3-9, 3-10"
+								},
+								"2.41": {
+									"title": "Hard Disk Format Summary",
+									"page": "61",
+									"source": "IBM PC/XT Technical Reference, pages 1-151 to 1-152"
+								},
+								"2.43": {
+									"title": "COM Program Layout (in memory)",
+									"page": "62",
+									"source": "IBM DOS 3.3 Technical Reference, page 7-9"
+								},
+								"2.44": {
+									"title": "COM Verses EXE File Differences",
+									"page": "62",
+									"source": "Advanced MS-DOS (Microsoft Press), Ray Duncan"
+								},
+								"2.47": {
+									"title": "Included Command Files Summary",
+									"page": "64"
+								}
+							}
+						},
+						"Section 3": {
+							"title": "DOS Function Calls and Support Tables",
+							"page": "71"
+						}
+					}
+				}
+			}
+		}
+	}
+}
