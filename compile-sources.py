@@ -144,6 +144,13 @@ def proc_table_of_contents(ji):
 # process
 g = glob.glob("sources/**/*.json",recursive=True)
 for path in g:
+    pathelem = path.split('/')
+    if len(pathelem) < 1:
+        raise Exception("What??")
+    basename = pathelem[-1] # the last element
+    if basename == None or basename == "":
+        raise Exception("What??")
+    #
     ji = load_json(path)
     if not "id" in ji:
         continue
@@ -151,6 +158,10 @@ for path in g:
         continue
     if ji["id"] in books:
         raise Exception("Book "+ji["id"]+" already exists")
+    # the "id" must match the file name because that's the only way we can keep our sanity
+    # maintaining this collection.
+    if not basename == (ji["id"] + ".json"):
+        raise Exception("Book "+ji["id"]+" id does not match filename "+basename)
     # our JSON has schema version numbers now, because in the future we may have to make
     # some changes
     if not "schema" in ji:
