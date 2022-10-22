@@ -56,6 +56,24 @@ for path in g:
     ver = ji["schema"]["version"]
     if ver < 1 or ver > 1:
         raise Exception("Table "+ji["id"]+" is using unsupported schema "+str(ver))
+    # table column name to index lookup
+    if "table columns" in ji:
+        tablecols = ji["table columns"]
+        if not type(tablecols) == list:
+            raise Exception("Table "+ji["id"]+" columns not an array")
+        refby = { }
+        for coli in range(0,len(tablecols)):
+            col = tablecols[coli]
+            if not type(col) == dict:
+                raise Exception("Table "+ji["id"]+" column "+str(coli)+" not an object")
+            if not "name" in col:
+                raise Exception("Table "+ji["id"]+" column "+str(coli)+" has no name")
+            colname = col["name"]
+            if colname in refby:
+                raise Exception("Table "+ji["id"]+" column "+str(coli)+" name "+colname+" already exists")
+            refby[colname] = coli
+        #
+        ji["table name to column"] = refby
     #
     ji["schema"]["compiled version"] = 1
     ji["source json file"] = path

@@ -36,8 +36,8 @@
 		},
 		{
 			"type": "bool",
-			"column": "extended",
 			"title": "Extended",
+			"name": "extended",
 			"description": "Whether INT 16h AH=10h is needed to read this code",
 			"default": false
 		}
