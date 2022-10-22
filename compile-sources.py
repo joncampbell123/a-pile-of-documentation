@@ -67,8 +67,16 @@ def tocbyref(refby,contents,hiernames,hlevel,nhierlist):
         group = contents["group"]
         if not type(group) == list:
             raise Exception("Group must be array")
-        for ent in group:
-            tocbyref(refby,ent,hiernames,hlevel,nhierlist)
+        for groupi in range(0,len(group)):
+            ent = group[groupi]
+            #
+            srf = copy.deepcopy(hiernames)
+            #
+            if not type(srf["path"]) == list:
+                raise Exception("Must be list");
+            srf["path"].append({ "group index": groupi });
+            #
+            tocbyref(refby,ent,srf,hlevel,nhierlist)
     #
     if not hlevel in contents:
         return
