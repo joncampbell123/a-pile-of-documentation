@@ -38,9 +38,9 @@ for path in g:
     if not "id" in ji:
         continue
     if not "base definition" in ji:
-        continue
+        raise Exception("Table "+ji["id"]+" does not indicate base definition, but has --base.json extension")
     if not ji["base definition"] == True:
-        continue
+        raise Exception("Table "+ji["id"]+" is not base definition, but has --base.json extension")
     if ji["id"] in tables:
         raise Exception("Table "+ji["id"]+" already exists")
     # the "id" must match the file name because that's the only way we can keep our sanity
