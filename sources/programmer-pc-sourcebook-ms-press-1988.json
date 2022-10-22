@@ -25,125 +25,170 @@
 					"@section": {
 						"Section 1": {
 							"title": "General Information",
-							"@subsection": {
-								"1.01": {
-									"title": "Hexadecimal to Decimal Number Conversion",
-									"page": "4"
+							"group": [
+								{
+									"title": "Numeric Conversions",
+									"group": [
+										{
+											"title": "Hexadecimal",
+											"@subsection": {
+												"1.01": {
+													"title": "Hexadecimal to Decimal Number Conversion",
+													"page": "4"
+												},
+												"1.02": {
+													"title": "Hexadecimal to Binary Number Conversion",
+													"page": "5"
+												},
+												"1.03": {
+													"title": "Hexadecimal to Octal Number Conversion",
+													"page": "6"
+												},
+												"1.04": {
+													"title": "Hexadecimal Addition Tables",
+													"page": "7"
+												},
+												"1.05": {
+													"title": "Hexadecimal Multiplication Tables",
+													"page": "9"
+												}
+											}
+										},
+										{
+											"title": "Binary",
+											"@subsection": {
+												"1.06": {
+													"title": "Binary Number Conversions",
+													"page": "10"
+												},
+												"1.07": {
+													"title": "Binary to Signed Decimal Number Conversion",
+													"page": "12"
+												}
+											}
+										},
+										{
+											"title": "Octal",
+											"@subsection": {
+												"1.08": {
+													"title": "Octal to Decimal Number Conversion",
+													"page": "13"
+												},
+												"1.09": {
+													"title": "Octal to Hexadecimal Number Conversion",
+													"page": "14"
+												},
+												"1.10": {
+													"title": "Octal to Binary Number Conversion",
+													"page": "15"
+												}
+											}
+										},
+										{
+											"title": "Decimal",
+											"@subsection": {
+												"1.11": {
+													"title": "Decimal to Binary Number Conversion",
+													"page": "16"
+												},
+												"1.12": {
+													"title": "Decimal to Hexadecimal Number Conversion",
+													"page": "17"
+												},
+												"1.13": {
+													"title": "Decimal to Octal Number Conversion",
+													"page": "18"
+												}
+											}
+										}
+									]
 								},
-								"1.02": {
-									"title": "Hexadecimal to Binary Number Conversion",
-									"page": "5"
+								{
+									"title": "Data Formats",
+									"@subsection": {
+										"1.14": {
+											"title": "Two's Complements",
+											"page": "19"
+										},
+										"1.15": {
+											"title": "Common 8086 Family Data Formats",
+											"page": "20"
+										},
+										"1.16": {
+											"title": "Common Numeric Data Formats",
+											"page": "21"
+										},
+										"1.17": {
+											"title": "Common String Formats",
+											"page": "22"
+										},
+										"1.18": {
+											"title": "Common Memory Area Terminology",
+											"page": "23"
+										},
+										"1.19": {
+											"title": "Binary Coded Decimal Number Format",
+											"page": "24"
+										}
+									}
 								},
-								"1.03": {
-									"title": "Hexadecimal to Octal Number Conversion",
-									"page": "6"
+								{
+									"title": "ASCII",
+									"@subsection": {
+										"1.20": {
+											"title": "ASCII Control Codes",
+											"page": "25"
+										},
+										"1.21": {
+											"title": "ASCII Character Set",
+											"page": "25"
+										},
+										"1.22": {
+											"title": "IBM ASCII Character Set",
+											"page": "27"
+										},
+										"1.23": {
+											"title": "IBM Extended Character Codes",
+											"page": "29",
+											"source": "IBM PC/XT Technical Reference, page 2-14"
+										},
+										"1.24": {
+											"title": "Line Drawing Character Set",
+											"page": "30"
+										}
+									}
 								},
-								"1.04": {
-									"title": "Hexadecimal Addition Tables",
-									"page": "7"
+								{
+									"title": "EBCDIC",
+									"@subsection": {
+										"1.25": {
+											"title": "EBCDIC Character Set",
+											"page": "31"
+										}
+									}
 								},
-								"1.05": {
-									"title": "Hexadecimal Multiplication Tables",
-									"page": "9"
-								},
-								"1.06": {
-									"title": "Binary Number Conversions",
-									"page": "10"
-								},
-								"1.07": {
-									"title": "Binary to Signed Decimal Number Conversion",
-									"page": "12"
-								},
-								"1.08": {
-									"title": "Octal to Decimal Number Conversion",
-									"page": "13"
-								},
-								"1.09": {
-									"title": "Octal to Hexadecimal Number Conversion",
-									"page": "14"
-								},
-								"1.10": {
-									"title": "Octal to Binary Number Conversion",
-									"page": "15"
-								},
-								"1.11": {
-									"title": "Decimal to Binary Number Conversion",
-									"page": "16"
-								},
-								"1.12": {
-									"title": "Decimal to Hexadecimal Number Conversion",
-									"page": "17"
-								},
-								"1.13": {
-									"title": "Decimal to Octal Number Conversion",
-									"page": "18"
-								},
-								"1.14": {
-									"title": "Two's Complements",
-									"page": "19"
-								},
-								"1.15": {
-									"title": "Common 8086 Family Data Formats",
-									"page": "20"
-								},
-								"1.16": {
-									"title": "Common Numeric Data Formats",
-									"page": "21"
-								},
-								"1.17": {
-									"title": "Common String Formats",
-									"page": "22"
-								},
-								"1.18": {
-									"title": "Common Memory Area Terminology",
-									"page": "23"
-								},
-								"1.19": {
-									"title": "Binary Coded Decimal Number Format",
-									"page": "24"
-								},
-								"1.20": {
-									"title": "ASCII Control Codes",
-									"page": "25"
-								},
-								"1.21": {
-									"title": "ASCII Character Set",
-									"page": "25"
-								},
-								"1.22": {
-									"title": "IBM ASCII Character Set",
-									"page": "27"
-								},
-								"1.23": {
-									"title": "IBM Extended Character Codes",
-									"page": "29",
-									"source": "IBM PC/XT Technical Reference, page 2-14"
-								},
-								"1.24": {
-									"title": "Line Drawing Character Set",
-									"page": "30"
-								},
-								"1.25": {
-									"title": "EBCDIC Character Set",
-									"page": "31"
-								},
-								"1.26": {
-									"title": "Digit Positions in Common Bases",
-									"page": "33"
-								},
-								"1.27": {
-									"title": "Powers of Two",
-									"page": "33"
-								},
-								"1.28": {
-									"title": "International Sort Ordering",
-									"page": "34"
-								},
-								"1.29": {
-									"title": "Truth Tables for Logical Operations",
-									"page": "35"
+								{
+									"title": "Other",
+									"@subsection": {
+										"1.26": {
+											"title": "Digit Positions in Common Bases",
+											"page": "33"
+										},
+										"1.27": {
+											"title": "Powers of Two",
+											"page": "33"
+										},
+										"1.28": {
+											"title": "International Sort Ordering",
+											"page": "34"
+										},
+										"1.29": {
+											"title": "Truth Tables for Logical Operations",
+											"page": "35"
+										}
+									}
 								}
-							}
+							]
 						}
 					}
 				},
