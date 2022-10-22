@@ -5,6 +5,9 @@
 	"description": "Extended character codes returned by the IBM BIOS in the keyboard buffer, through INT 16h, and at the MS-DOS console driver as 00h <code>",
 	"notes": "Some codes match the scan code returned by the keyboard. See also \"IBM keyboard scan code set 1\"",
 	"base definition": true,
+	"schema": {
+		"version": 1
+	},
 	"table columns": [
 		{
 			"type": "uint8_t",
