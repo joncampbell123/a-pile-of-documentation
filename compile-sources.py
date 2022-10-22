@@ -139,6 +139,7 @@ for path in g:
     #
     proc_table_of_contents(ji)
     #
+    ji["schema"]["compiled version"] = 1
     ji["source json file"] = path
     #
     books[ji["id"]] = ji
