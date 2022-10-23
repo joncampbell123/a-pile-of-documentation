@@ -279,6 +279,8 @@ for path in g:
                 if len(matches) > 1:
                     print(matches)
                     raise Exception("Table "+ji["id"]+" source "+source_id+" where clause is ambigious. More source information needed to select the specific part of the source.")
+                #
+                where["path"] = matches[0]
 
 # write it
 if not os.path.exists("compiled"):
