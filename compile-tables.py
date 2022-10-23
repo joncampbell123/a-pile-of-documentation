@@ -45,15 +45,17 @@ if not os.path.exists("compiled"):
 if not os.path.exists("compiled/tables"):
     os.mkdir("compiled/tables")
 
-# get a list of tables to process
-tablescan = [ ]
-g = glob.glob("tables/**/*--base.json",recursive=True)
-for path in g:
-    basepath = str(path)
-    if not basepath[-11:] == "--base.json":
-        raise Exception("What??")
-    basepath = basepath[0:len(basepath)-11]
-    tablescan.append({ "base path": basepath, "base json path": path })
+def get_base_tables():
+    tablescanret = [ ]
+    g = glob.glob("tables/**/*--base.json",recursive=True)
+    for path in g:
+        basepath = str(path)
+        if not basepath[-11:] == "--base.json":
+            raise Exception("What??")
+        basepath = basepath[0:len(basepath)-11]
+        tablescanret.append({ "base path": basepath, "base json path": path })
+    #
+    return tablescanret
 
 def procbasetable(scan,obj):
     path = scan["base json path"]
@@ -109,6 +111,9 @@ def procbasetable(scan,obj):
     #
     ji["schema"]["compiled version"] = 1
     ji["source json file"] = path
+
+# get a list of tables to process
+tablescan = get_base_tables()
 
 # process base descriptions
 for scan in tablescan:
