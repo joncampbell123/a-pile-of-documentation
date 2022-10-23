@@ -26,6 +26,13 @@ def sortbylen(x):
         return len(x)
     return 0
 
+def tocpathtoobj(p):
+    r = { }
+    for pel in p:
+        if "name" in pel and "level" in pel:
+            r[pel["level"]] = pel["name"]
+    return r
+
 # init
 tables = { }
 sources = { }
@@ -212,16 +219,66 @@ for path in g:
                                     else:
                                         match = False
                                         break # from for loop
+                        if match == True: # make sure everything the where clause specifies is actually there
+                            chk = tocpathtoobj(rpath)
+                            for level in lookup:
+                                if not level in chk:
+                                    match = False
+                                    break
                         if match == True: # only add paths where everything matches the where object lookup
                             matches.append(rpath)
                 #
                 if len(matches) == 0:
                     raise Exception("Table "+ji["id"]+" source "+source_id+" no matches for where clause")
-                # the longest path is the authoratative one, all others must match.
+                # the longest path is the authoratative one, match all others against it.
                 # to do this, sort longest to shortest.
+                # if there is a mismatch and the lookup refers to it, discard the mismatch.
+                # if there is a mismatch and the lookup does not refer to it, it's an ambiguity and therefore an error
                 if len(matches) > 1:
                     matches.sort(reverse=True,key=sortbylen)
-                # TODO
+                # first add to where clause
+                authoritah = tocpathtoobj(matches[0])
+                for level in authoritah:
+                    name = authoritah[level]
+                    if level in where:
+                        if not name == where[level]:
+                            print(authoritah)
+                            print(where)
+                            raise Exception("Whoah, where object mismatch for "+level+"?")
+                    else:
+                        where[level] = name
+                # then go down the array, checking (does nothing if only one match)
+                if len(matches) > 1:
+                    scan = 1
+                    nmatches = [ matches[0] ]
+                    while scan < len(matches):
+                        pel = tocpathtoobj(matches[scan])
+                        match = None
+                        for level in lookup:
+                            pval = ""
+                            if level in pel:
+                                pval = pel[level]
+                            aval = ""
+                            if level in authoritah:
+                                aval = authoritah[level]
+                            #
+                            if pval == aval:
+                                match = True
+                            else:
+                                match = False
+                                break
+                        #
+                        if match == True:
+                            print(['match',match])
+                            nmatches.append(matches[scan])
+                        scan = scan + 1
+                    #
+                    matches = nmatches
+                # if after all the source resolution there are multiple results, then the where clause is ambiguous
+                # and more information is needed
+                if len(matches) > 1:
+                    print(matches)
+                    raise Exception("Table "+ji["id"]+" source "+source_id+" where clause is ambigious. More source information needed to select the specific part of the source.")
 
 # write it
 if not os.path.exists("compiled"):
