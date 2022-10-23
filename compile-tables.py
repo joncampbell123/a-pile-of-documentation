@@ -23,6 +23,10 @@ def write_json(path,ji):
 
 # init
 tables = { }
+sources = { }
+
+# load compiled sources
+sources = load_json("compiled/sources.json")
 
 # process base descriptions
 g = glob.glob("tables/**/*--base.json",recursive=True)
@@ -120,11 +124,15 @@ for path in g:
     if not "table columns" in table:
         raise Exception("Table "+ji["id"]+" is missing table columns")
     # source id?
+    sourceref = None
     source_id = None
+    source_type = None
     if "source" in ji:
         source_obj = ji["source"]
         if "id" in source_obj:
             source_id = source_obj["id"]
+        if "type" in source_obj:
+            source_type = source_obj["type"]
     # source id must be in file name along with table id. sorry, this is how we maintain sanity.
     if not source_id == None:
         cut = len(ji["id"])+2+len(source_id)
@@ -134,6 +142,13 @@ for path in g:
             cut = cut + 2
         if not basename[0:cut] == match:
             raise Exception("Table "+ji["id"]+" id and source "+source_id+" id does not match filename "+basename)
+        # does the source exist?
+        if not source_id in sources:
+            raise Exception("Table "+ji["id"]+" no such source "+source_id)
+        sourceref = sources[source_id]
+        if "type" in sourceref and not source_type == None:
+            if not sourceref["type"] == source_type:
+                raise Exception("Table "+ji["id"]+" source "+source_id+" type mismatch")
 
 # write it
 if not os.path.exists("compiled"):
