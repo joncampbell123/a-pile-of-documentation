@@ -21,6 +21,11 @@ def write_json(path,ji):
     json.dump(ji,f,indent=4)
     f.close()
 
+def sortbylen(x):
+    if type(x) == list:
+        return len(x)
+    return 0
+
 # init
 tables = { }
 sources = { }
@@ -149,6 +154,74 @@ for path in g:
         if "type" in sourceref and not source_type == None:
             if not sourceref["type"] == source_type:
                 raise Exception("Table "+ji["id"]+" source "+source_id+" type mismatch")
+    #
+    toc = None
+    toc_refby = None
+    toc_contents = None
+    toc_hierlist = None
+    if not sourceref == None:
+        if "table of contents" in sourceref:
+            toc = sourceref["table of contents"]
+            if not type(toc) == dict:
+                raise Exception("Table "+ji["id"]+" source "+source_id+" table of contents not object")
+            if "hierarchy" in toc:
+                toc_hierlist = toc["hierarchy"]
+                if not type(toc_hierlist) == list:
+                    raise Exception("Table "+ji["id"]+" source "+source_id+" table of contents hierarchy not array")
+            if "contents" in toc:
+                toc_contents = toc["contents"]
+                if not type(toc_contents) == dict:
+                    raise Exception("Table "+ji["id"]+" source "+source_id+" table of contents contents not object")
+            if "reference by" in toc:
+                toc_refby = toc["reference by"]
+                if not type(toc_refby) == dict:
+                    raise Exception("Table "+ji["id"]+" source "+source_id+" table of contents reference by not object")
+    #
+    if not source_id == None and not source_obj == None and not sourceref == None:
+        if "where" in source_obj:
+            where = source_obj["where"]
+            if not type(where) == dict:
+                raise Exception("Table "+ji["id"]+" source "+source_id+" where not an object")
+            lookup = { }
+            lookpaths = { }
+            for key in where:
+                val = where[key]
+                if key[0] == '@':
+                    lookup[key] = val
+            if len(lookup) > 0:
+                matches = [ ]
+                if toc_contents == None or toc_hierlist == None or toc == None or toc_refby == None:
+                    raise Exception("Table "+ji["id"]+" source "+source_id+" where object with no or incomplete table of contents")
+                for level in lookup:
+                    value = lookup[level]
+                    if not value in toc_refby:
+                        raise Exception("Table "+ji["id"]+" source "+source_id+" no such "+level+" "+value)
+                    robj = toc_refby[value]
+                    if type(robj) == dict:
+                        robj = [ robj ]
+                    for roe in robj:
+                        if not "path" in roe:
+                            raise Exception("Table "+ji["id"]+" source "+source_id+" no such path for "+level+" "+value)
+                        rpath = roe["path"]
+                        match = False
+                        for pelo in rpath:
+                            if "level" in pelo and "name" in pelo:
+                                if pelo["level"] in lookup:
+                                    if pelo["name"] == lookup[pelo["level"]]:
+                                        match = True
+                                    else:
+                                        match = False
+                                        break # from for loop
+                        if match == True: # only add paths where everything matches the where object lookup
+                            matches.append(rpath)
+                #
+                if len(matches) == 0:
+                    raise Exception("Table "+ji["id"]+" source "+source_id+" no matches for where clause")
+                # the longest path is the authoratative one, all others must match.
+                # to do this, sort longest to shortest.
+                if len(matches) > 1:
+                    matches.sort(reverse=True,key=sortbylen)
+                # TODO
 
 # write it
 if not os.path.exists("compiled"):
