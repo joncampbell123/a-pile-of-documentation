@@ -2,6 +2,7 @@
 
 import os
 import re
+import csv
 import glob
 import json
 import zlib
@@ -9,6 +10,18 @@ import math
 import copy
 import struct
 import pathlib
+
+def load_csv(path):
+    ret = { }
+    f = open(path,"r",newline='')
+    r = csv.reader(f)
+    ret["columnnames"] = next(r)
+    ret["rows"] = [ ]
+    for row in r:
+        if len(row) > 0:
+            ret["rows"].append(row)
+    f.close()
+    return ret
 
 def load_json(path):
     f = open(path,"r",encoding='utf-8')
@@ -123,6 +136,7 @@ def procbasetable(scan,obj):
     ji["schema"]["compiled version"] = 1
     ji["source json file"] = path
     ji["sources"] = { }
+    ji["rows"] = [ ]
 
 def procconttenttable(scan,obj):
     if not "path" in scan:
@@ -308,8 +322,44 @@ def procconttenttable(scan,obj):
                     raise Exception("Table "+ji["id"]+" source "+source_id+" where clause is ambigious. More source information needed to select the specific part of the source.")
                 #
                 where["path"] = matches[0]
+    # proc table data
+    basetablecols = table["table columns"]
+    nametocol = table["table name to column"]
+    rows = table["rows"]
+    if not "table" in ji and "table in csv" in ji:
+        if ji["table in csv"] == True:
+            csv_path = path[0:len(path)-5] + ".csv" # replace .json with .csv
+            c = load_csv(csv_path)
+            ji["table columns"] = c["columnnames"]
+            ji["table"] = c["rows"]
     #
-    for what in ["schema","table in csv","table"]:
+    if "table" in ji:
+        if "table columns" in ji:
+            src_columns = ji["table columns"]
+        else:
+            src_columns = [ ]
+            for ent in basetablecols:
+                src_columns.append(ent["name"])
+        src_rows = ji["table"]
+        if not type(src_columns) == list or not type(src_rows) == list:
+            raise Exception("Table "+ji["id"]+" source "+source_id+" table columns or table rows not an array")
+        remapfromsrc = [ ] # [src col] -> basetablecols index
+        for col in src_columns:
+            if col in nametocol:
+                remapfromsrc.append(nametocol[col])
+            else:
+                raise Exception("No such column "+col) # TODO: we could just add the column dynamically in the future...
+        for row in src_rows:
+            drowobj = { "source": path }
+            drow = drowobj["data"] = [ "" ] * len(basetablecols)
+            for scoli in range(0,len(row)):
+                data = row[scoli]
+                dcoli = remapfromsrc[scoli]
+                drow[dcoli] = data
+            #
+            rows.append(drow)
+    #
+    for what in ["schema","table in csv","table","table columns"]:
         if what in ji:
             del ji[what]
     if not source_obj == None:
