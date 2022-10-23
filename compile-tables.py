@@ -74,11 +74,66 @@ for path in g:
             refby[colname] = coli
         #
         ji["table name to column"] = refby
+    else:
+        raise Exception("Table "+ji["id"]+" has no columns defined")
     #
     ji["schema"]["compiled version"] = 1
     ji["source json file"] = path
     #
     tables[ji["id"]] = ji
+
+# process base descriptions
+g = glob.glob("tables/**/*.json",recursive=True)
+for path in g:
+    pathelem = path.split('/')
+    if len(pathelem) < 1:
+        raise Exception("What??")
+    basename = pathelem[-1] # the last element
+    if basename == None or basename == "":
+        raise Exception("What??")
+    if len(basename) >= 11 and basename[-11:] == "--base.json":
+        continue
+    #
+    ji = load_json(path)
+    if not "id" in ji:
+        continue
+    if "base definition" in ji:
+        if ji["base definition"] == True:
+            raise Exception("Table "+ji["id"]+" is base definition, but does not have --base.json extension")
+    if not ji["id"] in tables:
+        raise Exception("Table "+ji["id"]+" does not exist (no base def?)")
+    table = tables[ji["id"]]
+    # the "id" must match the file name because that's the only way we can keep our sanity
+    # maintaining this collection.
+    if not basename[0:len(ji["id"])+2] == (ji["id"] + "--"):
+        raise Exception("Table "+ji["id"]+" id does not match filename "+basename)
+    # our JSON has schema version numbers now, because in the future we may have to make
+    # some changes
+    if not "schema" in ji:
+        raise Exception("Table "+ji["id"]+" has no schema information")
+    if not "version" in ji["schema"]:
+        raise Exception("Table "+ji["id"]+" has no schema version")
+    ver = ji["schema"]["version"]
+    if ver < 1 or ver > 1:
+        raise Exception("Table "+ji["id"]+" is using unsupported schema "+str(ver))
+    # table column name to index lookup
+    if not "table columns" in table:
+        raise Exception("Table "+ji["id"]+" is missing table columns")
+    # source id?
+    source_id = None
+    if "source" in ji:
+        source_obj = ji["source"]
+        if "id" in source_obj:
+            source_id = source_obj["id"]
+    # source id must be in file name along with table id. sorry, this is how we maintain sanity.
+    if not source_id == None:
+        cut = len(ji["id"])+2+len(source_id)
+        match = ji["id"] + "--" + source_id
+        if len(basename) >= (cut+2) and basename[cut+2:2] == "--":
+            match = match + "--"
+            cut = cut + 2
+        if not basename[0:cut] == match:
+            raise Exception("Table "+ji["id"]+" id and source "+source_id+" id does not match filename "+basename)
 
 # write it
 if not os.path.exists("compiled"):
