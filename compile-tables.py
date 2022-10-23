@@ -135,7 +135,7 @@ def procbasetable(scan,obj):
     #
     ji["schema"]["compiled version"] = 1
     ji["source json file"] = path
-    ji["sources"] = { }
+    ji["sources"] = [ ]
     ji["rows"] = [ ]
 
 def procconttenttable(scan,obj):
@@ -350,7 +350,11 @@ def procconttenttable(scan,obj):
             else:
                 raise Exception("No such column "+col) # TODO: we could just add the column dynamically in the future...
         for row in src_rows:
-            drowobj = { "source": path }
+            drowobj = { }
+            # the code below will append to sources, so the index to list is the length of the list NOW before appending
+            if not source_obj == None:
+                drowobj["source index"] = len(table["sources"])
+            #
             drow = drowobj["data"] = [ "" ] * len(basetablecols)
             for scoli in range(0,len(row)):
                 data = row[scoli]
@@ -359,11 +363,12 @@ def procconttenttable(scan,obj):
             #
             rows.append(drowobj)
     #
+    ji["source json file"] = path
     for what in ["schema","table in csv","table","table columns"]:
         if what in ji:
             del ji[what]
     if not source_obj == None:
-        table["sources"][path] = ji
+        table["sources"].append(ji)
 
 # get a list of tables to process
 tablescan = get_base_tables()
