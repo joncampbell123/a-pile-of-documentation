@@ -14,7 +14,6 @@
 			"display": "hex",
 			"name": "code",
 			"title": "Scan code",
-			"is array": true,
 			"required": true,
 			"description": "Character code returned by BIOS INT 16h"
 		},
