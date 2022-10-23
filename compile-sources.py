@@ -79,6 +79,7 @@ def tocbyref(refby,contents,hiernames,hlevel,nhierlist):
             if "title" in ent:
                 nfo["group title"] = ent["title"]
             #
+            srf["level"] = hlevel
             srf["path"].append(nfo)
             #
             tocbyref(refby,ent,srf,hlevel,nhierlist)
@@ -93,6 +94,7 @@ def tocbyref(refby,contents,hiernames,hlevel,nhierlist):
         #
         if not type(srf["path"]) == list:
             raise Exception("Must be list");
+        srf["level"] = hlevel
         srf["path"].append({ "level": hlevel, "name": levname });
         #
         if not levname in refby:
