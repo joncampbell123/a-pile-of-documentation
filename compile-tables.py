@@ -122,6 +122,7 @@ def procbasetable(scan,obj):
     #
     ji["schema"]["compiled version"] = 1
     ji["source json file"] = path
+    ji["sources"] = { }
 
 def procconttenttable(scan,obj):
     if not "path" in scan:
@@ -307,6 +308,12 @@ def procconttenttable(scan,obj):
                     raise Exception("Table "+ji["id"]+" source "+source_id+" where clause is ambigious. More source information needed to select the specific part of the source.")
                 #
                 where["path"] = matches[0]
+    #
+    for what in ["schema","table in csv","table"]:
+        if what in ji:
+            del ji[what]
+    if not source_obj == None:
+        table["sources"][path] = ji
 
 # get a list of tables to process
 tablescan = get_base_tables()
