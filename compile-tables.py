@@ -55,8 +55,7 @@ for path in g:
     basepath = basepath[0:len(basepath)-11]
     tablescan.append({ "base path": basepath, "base json path": path })
 
-# process base descriptions
-for scan in tablescan:
+def procbasetable(scan,obj):
     path = scan["base json path"]
     pathelem = path.split('/')
     if len(pathelem) < 1:
@@ -65,9 +64,11 @@ for scan in tablescan:
     if basename == None or basename == "":
         raise Exception("What??")
     #
-    ji = load_json(path)
+    if "ji" in obj:
+        raise Exception("What??")
+    ji = obj["ji"] = load_json(path)
     if not "id" in ji:
-        continue
+        raise Exception("Table in "+path+" does not have an ID")
     if not "base definition" in ji:
         raise Exception("Table "+ji["id"]+" does not indicate base definition, but has --base.json extension")
     if not ji["base definition"] == True:
@@ -108,7 +109,13 @@ for scan in tablescan:
     #
     ji["schema"]["compiled version"] = 1
     ji["source json file"] = path
+
+# process base descriptions
+for scan in tablescan:
+    obj = { }
     #
+    procbasetable(scan,obj)
     #
+    ji = obj["ji"]
     write_json("compiled/tables/"+ji["id"]+".json",ji);
 
