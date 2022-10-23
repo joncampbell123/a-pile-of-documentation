@@ -357,7 +357,7 @@ def procconttenttable(scan,obj):
                 dcoli = remapfromsrc[scoli]
                 drow[dcoli] = data
             #
-            rows.append(drow)
+            rows.append(drowobj)
     #
     for what in ["schema","table in csv","table","table columns"]:
         if what in ji:
