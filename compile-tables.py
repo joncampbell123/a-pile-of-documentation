@@ -448,6 +448,50 @@ def sorttable(obj):
     rows = table["rows"]
     rows.sort(key=tablerowsort)
 
+def dedupxlate(row):
+    r = { }
+    if "source index" in row:
+        sidx = row["source index"]
+        if not type(sidx) == list:
+            sidx = [ sidx ]
+        r["source index"] = sidx
+    if "data" in row:
+        data = row["data"]
+        dr = [ ]
+        for coli in range(0,len(data)):
+            cr = { }
+            if "source index" in r:
+                cr["source index"] = r["source index"]
+            cr["value"] = [ data[coli] ]
+            dr.append(cr)
+        r["data"] = dr
+    if "source index" in r:
+        del r["source index"]
+    return r
+
+def deduptable(obj):
+    # must have been handled with sorttable first!
+    if not "ji" in obj:
+        raise Exception("What?")
+    table = obj["ji"]
+    if not "rows" in table:
+        raise Exception("What?")
+    srows = table["rows"]
+    if len(srows) < 1:
+        return
+    nrows = [ ]
+    sidx = 0
+    #
+    buildrow = dedupxlate(srows[sidx])
+    sidx = sidx + 1
+    nrows.append(buildrow)
+    while sidx < len(srows):
+        srow = dedupxlate(srows[sidx])
+        sidx = sidx + 1
+        nrows.append(srow)
+    #
+    table["rows"] = nrows
+
 # get a list of tables to process
 tablescan = get_base_tables()
 
@@ -460,6 +504,7 @@ for scan in tablescan:
     for content in contentscan:
         procconttenttable(content,obj)
     sorttable(obj)
+    deduptable(obj)
     #
     ji = obj["ji"]
     write_json("compiled/tables/"+ji["id"]+".json",ji);
