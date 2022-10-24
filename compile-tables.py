@@ -425,6 +425,7 @@ def procconttenttable(scan,obj):
         if what in ji:
             del ji[what]
     if not source_obj == None:
+        ji["source index"] = len(table["sources"])
         table["sources"].append(ji)
 
 def rowsortcolfiltercombine(tcol,col):
