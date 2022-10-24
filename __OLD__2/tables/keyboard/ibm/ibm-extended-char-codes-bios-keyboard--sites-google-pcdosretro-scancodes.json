@@ -1,7 +1,0 @@
-{
-	"id": "ibm-extended-char-codes-bios-keyboard",
-	"source": {
-		"website": "sites-google-pcdosretro-scancodes"
-	},
-	"table in csv": true
-}

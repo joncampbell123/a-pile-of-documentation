@@ -1,8 +1,0 @@
-{
-	"id": "ibm-extended-char-codes-bios-keyboard",
-	"source": {
-		"book": "programmer-pc-sourcebook-ms-press-1988",
-		"subsection": "1.23"
-	},
-	"table in csv": true
-}
