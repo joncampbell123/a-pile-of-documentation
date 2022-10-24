@@ -138,6 +138,61 @@ def procbasetable(scan,obj):
     ji["sources"] = [ ]
     ji["rows"] = [ ]
 
+def xlatebool(column,data):
+    if data == None or data == "":
+        return False
+    if isinstance(data,int):
+        return data > 0
+    if isinstance(data,float):
+        return data > 0.0
+    if type(data) == str:
+        if data == "1":
+            return True
+        if data == "0":
+            return False
+        if data.lower() == "true":
+            return True
+        if data.lower() == "false":
+            return False
+        return False
+    raise Exception("Not sure how to parse type "+str(type(data))+" val "+str(data))
+
+def xlateuint(column,data):
+    if data == None or data == "":
+        return 0
+    if isinstance(data,int) or isinstance(data,float):
+        return data
+    if isinstance(data,str):
+        if data == "0":
+            return 0
+        if re.search('^0x[0-9a-fA-F]+ *$',data):
+            return int(data,base=16)
+        if re.search('^0b[0-1]+ *$',data):
+            return int(data,base=2)
+        if re.search('^0[0-7]+ *$',data):
+            return int(data,base=8)
+        if re.search('^[0-9]+ *$',data):
+            return int(data,base=10)
+        return data
+    raise Exception("Not sure how to parse type "+str(type(data))+" val "+str(data))
+
+def tablecolxlate(column,data):
+    if data == None or data == "":
+        if "default" in column:
+            return column["default"]
+    if column["type"] == "bool":
+        return xlatebool(column,data)
+    if column["type"] == "uint8_t" or column["type"] == "uint_t":
+        return xlateuint(column,data)
+    return data
+
+def tablerowtodatatype(tablecols,drow):
+    for coli in range(0,len(tablecols)):
+        if coli >= len(drow):
+            break
+        #
+        drow[coli] = tablecolxlate(tablecols[coli],drow[coli])
+
 def procconttenttable(scan,obj):
     if not "path" in scan:
         raise Exception("What?")
@@ -360,6 +415,8 @@ def procconttenttable(scan,obj):
                 data = row[scoli]
                 dcoli = remapfromsrc[scoli]
                 drow[dcoli] = data
+            #
+            tablerowtodatatype(basetablecols,drow)
             #
             rows.append(drowobj)
     #
