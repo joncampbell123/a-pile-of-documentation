@@ -133,6 +133,10 @@ def procbasetable(scan,obj):
     else:
         raise Exception("Table "+ji["id"]+" has no columns defined")
     #
+    for what in ["base definition"]:
+        if what in ji:
+            del ji[what]
+    #
     ji["schema"]["compiled version"] = 1
     ji["source json file"] = path
     ji["sources"] = [ ]
@@ -421,7 +425,7 @@ def procconttenttable(scan,obj):
             rows.append(drowobj)
     #
     ji["source json file"] = path
-    for what in ["schema","table in csv","table","table columns"]:
+    for what in ["schema","table in csv","table","table columns","base definition"]:
         if what in ji:
             del ji[what]
     if not source_obj == None:
