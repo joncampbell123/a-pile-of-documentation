@@ -19,6 +19,11 @@ def load_csv(path):
     ret["rows"] = [ ]
     for row in r:
         if len(row) > 0:
+            for coli in range(0,len(row)):
+                col = row[coli]
+                col = re.sub('^ +','',col)
+                col = re.sub(' +$','',col)
+                row[coli] = col
             ret["rows"].append(row)
     f.close()
     return ret
