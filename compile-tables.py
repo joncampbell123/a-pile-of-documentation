@@ -427,14 +427,25 @@ def procconttenttable(scan,obj):
     if not source_obj == None:
         table["sources"].append(ji)
 
+def rowsortcolfiltercombine(tcol,col):
+    if "combine different" in tcol:
+        if tcol["combine different"] == True:
+            if tcol["type"] == "string":
+                if tcol["case insensitive"] == True:
+                    if isinstance(col,str):
+                        col = col.lower()
+    #
+    return col
+
 def rowsortfilter(tcols,row):
     r = [ ]
     for coli in range(0,len(tcols)):
         tcol = tcols[coli]
         col = row[coli] # FIXME: If col is a dict or list, copy!
         #
-        if tcol["type"] == "combine different":
-            col = "" # for sorting purposes these columns are ignored
+        if "combine different" in tcol:
+            if tcol["combine different"] == True:
+                col = "" # for sorting purposes these columns are ignored
         #
         if tcol["type"] == "string":
             if tcol["case insensitive"] == True and isinstance(col,str):
@@ -508,6 +519,37 @@ def deduptable(obj):
             duplicate = True
         #
         if duplicate == True:
+            for coli in range(0,len(tcols)):
+                tcol = tcols[coli]
+                scol = srowdat[coli]
+                bcol = browdat[coli]
+                # some columns are "combine different", those are ignored during the compare
+                if "combine different" in tcol:
+                    if tcol["combine different"] == True and isinstance(scol,str):
+                        if isinstance(bcol,str) and rowsortcolfiltercombine(tcol,scol) == rowsortcolfiltercombine(tcol,bcol):
+                            True # ignore
+                        elif not scol == "":
+                            if type(bcol) == dict:
+                                nobj = bcol
+                            else:
+                                o_bcol = bcol
+                                nobj = bcol = browdat[coli] = { }
+                                nobj["type"] = "multiple"
+                                nobj["values"] = [ ]
+                                if not o_bcol == "":
+                                    nobj["values"].append({ "source index": buildrow["source index"].copy(), "value": o_bcol })
+                            #
+                            chidx = 0
+                            while chidx < len(nobj["values"]):
+                                if rowsortcolfiltercombine(tcol,scol) == rowsortcolfiltercombine(tcol,nobj["values"][chidx]["value"]):
+                                    break
+                                chidx = chidx + 1
+                            #
+                            if chidx < len(nobj["values"]):
+                                nobj["values"][chidx]["source index"] += srow["source index"]
+                            else:
+                                nobj["values"].append({ "source index": srow["source index"].copy(), "value": scol })
+            #
             buildrow["source index"] += srow["source index"]
         else:
             buildrow = srow
