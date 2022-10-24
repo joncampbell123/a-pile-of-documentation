@@ -525,30 +525,31 @@ def deduptable(obj):
                 bcol = browdat[coli]
                 # some columns are "combine different", those are ignored during the compare
                 if "combine different" in tcol:
-                    if tcol["combine different"] == True and isinstance(scol,str):
-                        if isinstance(bcol,str) and rowsortcolfiltercombine(tcol,scol) == rowsortcolfiltercombine(tcol,bcol):
-                            True # ignore
-                        elif not scol == "":
-                            if type(bcol) == dict:
-                                nobj = bcol
-                            else:
-                                o_bcol = bcol
-                                nobj = bcol = browdat[coli] = { }
-                                nobj["type"] = "multiple"
-                                nobj["values"] = [ ]
-                                if not o_bcol == "":
-                                    nobj["values"].append({ "source index": buildrow["source index"].copy(), "value": o_bcol })
-                            #
-                            chidx = 0
-                            while chidx < len(nobj["values"]):
-                                if rowsortcolfiltercombine(tcol,scol) == rowsortcolfiltercombine(tcol,nobj["values"][chidx]["value"]):
-                                    break
-                                chidx = chidx + 1
-                            #
-                            if chidx < len(nobj["values"]):
-                                nobj["values"][chidx]["source index"] += srow["source index"]
-                            else:
-                                nobj["values"].append({ "source index": srow["source index"].copy(), "value": scol })
+                    if tcol["combine different"] == True:
+                        if isinstance(scol,str):
+                            if isinstance(bcol,str) and rowsortcolfiltercombine(tcol,scol) == rowsortcolfiltercombine(tcol,bcol):
+                                True # ignore
+                            elif not scol == "":
+                                if type(bcol) == dict:
+                                    nobj = bcol
+                                else:
+                                    o_bcol = bcol
+                                    nobj = bcol = browdat[coli] = { }
+                                    nobj["type"] = "multiple"
+                                    nobj["values"] = [ ]
+                                    if not o_bcol == "":
+                                        nobj["values"].append({ "source index": buildrow["source index"].copy(), "value": o_bcol })
+                                #
+                                chidx = 0
+                                while chidx < len(nobj["values"]):
+                                    if rowsortcolfiltercombine(tcol,scol) == rowsortcolfiltercombine(tcol,nobj["values"][chidx]["value"]):
+                                        break
+                                    chidx = chidx + 1
+                                #
+                                if chidx < len(nobj["values"]):
+                                    nobj["values"][chidx]["source index"] += srow["source index"]
+                                else:
+                                    nobj["values"].append({ "source index": srow["source index"].copy(), "value": scol })
             #
             buildrow["source index"] += srow["source index"]
         else:
