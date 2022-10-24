@@ -441,7 +441,7 @@ def rowsortcolfiltercombine(tcol,col):
     if "combine different" in tcol:
         if tcol["combine different"] == True:
             if tcol["type"] == "string":
-                if tcol["case insensitive"] == True:
+                if "case insensitive" in tcol and tcol["case insensitive"] == True:
                     if isinstance(col,str):
                         col = col.lower()
     #
@@ -458,7 +458,7 @@ def rowsortfilter(tcols,row):
                 col = "" # for sorting purposes these columns are ignored
         #
         if tcol["type"] == "string":
-            if tcol["case insensitive"] == True and isinstance(col,str):
+            if "case insensitive" in tcol and tcol["case insensitive"] == True and isinstance(col,str):
                 col = col.lower()
         if tcol["type"] == "uint8_t" or tcol["type"] == "uint_t":
             col = tablecolxlate(tcol,col)
