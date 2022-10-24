@@ -1,7 +1,11 @@
 {
 	"id": "ebcdic",
+	"schema": {
+		"version": 1
+	},
 	"source": {
-		"website": "wikipedia",
+		"type": "website",
+		"id": "wikipedia",
 		"url": "https://en.wikipedia.org/wiki/EBCDIC"
 	},
 	"table in csv": true

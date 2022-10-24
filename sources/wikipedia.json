@@ -1,5 +1,8 @@
 {
 	"type": "website",
+	"schema": {
+		"version": 1
+	},
 	"id": "wikipedia",
 	"title": "Wikipedia, The Free Online Encylopedia",
 	"url": "https://en.wikipedia.org"

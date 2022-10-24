@@ -3,29 +3,33 @@
 	"id": "ebcdic",
 	"combinable": true,
 	"base definition": true,
-	"table format": {
-		"order": [ "key", "name", "character" ]
+	"schema": {
+		"version": 1
 	},
-	"table columns": {
-		"key": {
+	"table columns": [
+		{
 			"type": "uint8_t",
 			"display": "hex",
 			"column": "charcode",
 			"title": "Character code",
-			"json": "key"
+			"required": true,
+			"name": "charcode"
 		},
-		"name": {
+		{
 			"type": "string",
 			"case insensitive": true,
 			"column": "keycombo",
-			"title": "Char name"
+			"title": "Char name",
+			"required": true,
+			"name": "name"
 		},
-		"character": {
+		{
 			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
 			"column": "comment",
+			"name": "character",
 			"title": "Character"
 		}
-	}
+	]
 }

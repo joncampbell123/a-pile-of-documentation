@@ -1,5 +1,8 @@
 {
 	"type": "website",
+	"schema": {
+		"version": 1
+	},
 	"id": "ibm-website-docs",
 	"title": "IBM Website, Documentation",
 	"url": "https://www.ibm.com/docs/"

@@ -1,7 +1,11 @@
 {
 	"id": "ebcdic",
+	"schema": {
+		"version": 1
+	},
 	"source": {
-		"website": "ibm-website-docs",
+		"type": "website",
+		"id": "ibm-website-docs",
 		"url": "https://www.ibm.com/docs/en/xffbg/121.141?topic=appendix-ascii-ebcdic-character-sets"
 	},
 	"table in csv": true

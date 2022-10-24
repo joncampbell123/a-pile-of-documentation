@@ -1,0 +1,14 @@
+{
+	"id": "ebcdic",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"id": "programmer-pc-sourcebook-ms-press-1988",
+		"type": "book",
+		"where": {
+			"@subsection": "1.25"
+		}
+	},
+	"table in csv": true
+}
