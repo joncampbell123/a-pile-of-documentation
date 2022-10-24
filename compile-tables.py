@@ -448,6 +448,74 @@ def sorttable(obj):
     rows = table["rows"]
     rows.sort(key=tablerowsort)
 
+def rowsortfilter(tcols,row):
+    r = [ ]
+    for coli in range(0,len(tcols)):
+        tcol = tcols[coli]
+        col = row[coli] # FIXME: If col is a dict or list, copy!
+        #
+        if tcol["type"] == "combine different":
+            col = "" # for sorting purposes these columns are ignored
+        #
+        if tcol["type"] == "string":
+            if tcol["case insensitive"] == True and isinstance(col,str):
+                col = col.lower()
+        #
+        r.append(col)
+    return r
+
+def deduptable(obj):
+    # must have been handled with sorttable first!
+    if not "ji" in obj:
+        raise Exception("What?")
+    table = obj["ji"]
+    if not "rows" in table:
+        raise Exception("What?")
+    srows = table["rows"]
+    if len(srows) < 1:
+        return
+    if not "table columns" in table:
+        return
+    tcols = table["table columns"]
+    nrows = [ ]
+    sidx = 0
+    #
+    buildrow = srows[sidx]
+    sidx = sidx + 1
+    if not "data" in buildrow:
+        raise Exception("row with no data")
+    if not "source index" in buildrow:
+        buildrow["source index"] = [ ]
+    if not type(buildrow["source index"]) == list:
+        buildrow["source index"] = [ buildrow["source index"] ]
+    nrows.append(buildrow)
+    while sidx < len(srows):
+        duplicate = False
+        srow = srows[sidx]
+        sidx = sidx + 1
+        if not "data" in srow:
+            raise Exception("row with no data")
+        if not "source index" in srow:
+            srow["source index"] = [ ]
+        if not type(srow["source index"]) == list:
+            srow["source index"] = [ srow["source index"] ]
+        srowdat = srow["data"]
+        browdat = buildrow["data"]
+        srowcmp = rowsortfilter(tcols,srowdat)
+        browcmp = rowsortfilter(tcols,browdat)
+        #
+        if srowcmp == browcmp:
+            duplicate = True
+        #
+        if duplicate == True:
+            buildrow["source index"] += srow["source index"]
+        else:
+            buildrow = srow
+            nrows.append(buildrow)
+        #
+    #
+    table["rows"] = nrows
+
 # get a list of tables to process
 tablescan = get_base_tables()
 
@@ -460,6 +528,7 @@ for scan in tablescan:
     for content in contentscan:
         procconttenttable(content,obj)
     sorttable(obj)
+    deduptable(obj)
     #
     ji = obj["ji"]
     write_json("compiled/tables/"+ji["id"]+".json",ji);
