@@ -461,6 +461,31 @@ def rowsortfilter(tcols,row):
             if "case insensitive" in tcol and tcol["case insensitive"] == True and isinstance(col,str):
                 col = col.lower()
             if "string sort" in tcol:
+                if tcol["string sort"] == "bytes":
+                    # "160 KB" "40MB" etc
+                    # TODO: This should be a standalone function
+                    res = re.findall('^([0-9]+) *([KMGTP]{0,1}B{0,1})$',col)
+                    col = ""
+                    if not res == None and len(res) > 0:
+                        res = res[0]
+                        base_n = int(res[0])
+                        unit_n = res[1].lower()
+                        if unit_n == "b" or unit_n == "":
+                            True # nothing
+                        elif unit_n == "kb":
+                            base_n <<= 10
+                        elif unit_n == "mb":
+                            base_n <<= 20
+                        elif unit_n == "gb":
+                            base_n <<= 30
+                        elif unit_n == "tb":
+                            base_n <<= 40
+                        elif unit_n == "pb":
+                            base_n <<= 50
+                        else:
+                            raise Exception("Unknown suffix "+base_n)
+                        col = base_n
+                    #
                 if tcol["string sort"] == "numeric" or tcol["string sort"] == "mixed":
                     # it might be something like "180 KB" or "450 foo 3"
                     sp = re.split(' +',col)

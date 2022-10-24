@@ -14,7 +14,7 @@
 	"table columns": [
 		{
 			"type": "string",
-			"string sort": "numeric",
+			"string sort": "bytes",
 			"column": "format",
 			"title": "Format",
 			"name": "format",
