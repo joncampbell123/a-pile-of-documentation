@@ -1,116 +1,134 @@
 {
 	"table": "Hard Disk Format Summary",
 	"id": "msdos-hard-disk-format-summary",
+	"schema": {
+		"version": 1
+	},
 	"combinable": true,
 	"notes": [
 		"Despite the title, borrowed from the PC Programmer's Sourcebook, this table has been rearranged to provide more general information",
 		"Filesystem details, like reserved sectors, sectors/FAT, root directory sectors, etc. can vary according to the BIOS Parameter Block. They are not fixed, except for older DOS versions"
 	],
 	"base definition": true,
-	"table format": {
-		"order": [ "key", "disk", "midb", "interleave", "heads", "tracks", "sectors", "bytespsector", "sectpcluster", "reservedsect", "sectpfat", "nfattabl", "rootdirent", "maxrootdirent", "totalsect", "usablesect", "usablecluster", "mindosver", "comusesys" ]
-	},
-	"table columns": {
-		"key": {
+	"table columns": [
+		{
 			"type": "string",
-			"string sort": "numeric",
+			"string sort": "bytes",
 			"column": "format",
 			"title": "Format",
-			"json": "key",
+			"name": "format",
 			"description": "Disk format"
 		},
-		"disk": {
+		{
 			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
 			"title": "Disk",
+			"name": "disk",
 			"description": "Disk size, 3.5 inch or 5.25 in, etc"
 		},
-		"midb": {
+		{
 			"type": "uint_t",
 			"title": "ID",
+			"name": "midb",
 			"description": "Media ID byte"
 		},
-		"interleave": {
+		{
 			"type": "string",
 			"string sort": "numeric",
 			"title": "ID",
+			"name": "interleave",
 			"description": "Interleave"
 		},
-		"heads": {
+		{
 			"type": "uint_t",
 			"title": "H",
+			"name": "heads",
 			"description": "Heads, or more appropriately, sides"
 		},
-		"tracks": {
+		{
 			"type": "uint_t",
 			"title": "T",
+			"name": "tracks",
 			"description": "Tracks per side"
 		},
-		"sectors": {
+		{
 			"type": "uint_t",
 			"title": "S",
+			"name": "sectors",
 			"description": "Sectors per track"
 		},
-		"bytespsector": {
+		{
 			"type": "uint_t",
 			"title": "B/S",
+			"name": "bytespsector",
 			"description": "Bytes per sector"
 		},
-		"sectpcluster": {
+		{
 			"type": "uint_t",
 			"title": "S/C",
+			"name": "sectpcluster",
 			"description": "Sectors per cluster"
 		},
-		"reservedsect": {
+		{
 			"type": "uint_t",
 			"title": "Res",
+			"name": "reservedsect",
 			"description": "Reserved sector count"
 		},
-		"sectpfat": {
+		{
 			"type": "uint_t",
 			"title": "SF",
+			"name": "sectpfat",
 			"description": "Sectors per FAT"
 		},
-		"nfattabl": {
+		{
 			"type": "uint_t",
 			"title": "FT",
+			"name": "nfattabl",
 			"description": "Number of FAT tables"
 		},
-		"rootdirent": {
+		{
 			"type": "uint_t",
 			"title": "Rs",
+			"name": "rootdirent",
 			"description": "Number of root directory sectors"
 		},
-		"maxrootdirent": {
+		{
 			"type": "uint_t",
 			"title": "Rm",
+			"name": "maxrootdirent",
 			"description": "Maxmimum root directories allowed given root directory size"
 		},
-		"totalsect": {
+		{
 			"type": "uint_t",
 			"title": "TS",
+			"name": "totalsect",
 			"description": "Total sectors"
 		},
-		"usablesect": {
+		{
 			"type": "uint_t",
 			"title": "US",
+			"name": "usablesect",
 			"description": "Usable sectors"
 		},
-		"usablecluster": {
+		{
 			"type": "uint_t",
 			"title": "UC",
+			"name": "usablecluster",
 			"description": "Usable clusters"
 		},
-		"mindosver": {
+		{
 			"type": "string",
 			"title": "DOS",
+			"name": "mindosver",
 			"description": "Minimum DOS version"
 		},
-		"comusesys": {
+		{
 			"type": "string",
 			"title": "System",
+			"name": "comusesys",
 			"description": "Systems that commonly use this format"
 		}
-	}
+	]
 }
