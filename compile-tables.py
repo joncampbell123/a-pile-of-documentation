@@ -565,6 +565,19 @@ def deduptable(obj):
             buildrow = srow
             nrows.append(buildrow)
         #
+    # dedup source index array per row
+    for row in nrows:
+        if not "source index" in row:
+            raise Exception("What?")
+        si = row["source index"]
+        si.sort()
+        p = None
+        nsi = [ ]
+        for n in si:
+            if not p == n: # remove duplicates
+                nsi.append(n)
+            p = n
+        row["source index"] = nsi
     #
     table["rows"] = nrows
 
