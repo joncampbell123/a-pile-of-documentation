@@ -10,6 +10,7 @@
 	"schema": {
 		"version": 1
 	},
+	"table sort": "reverse",
 	"table columns": [
 		{
 			"type": "uint8_t",

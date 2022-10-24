@@ -482,7 +482,12 @@ def sorttable(obj):
         raise Exception("What?")
     tcols = table["table columns"]
     rows = table["rows"]
-    rows.sort(key=lambda x: tablerowsort(tcols,x))
+    optRev = False
+    if "table sort" in table:
+        how = table["table sort"]
+        if how == "reverse":
+            optRev=True
+    rows.sort(key=lambda x: tablerowsort(tcols,x),reverse=optRev)
 
 def deduptable(obj):
     # must have been handled with sorttable first!
