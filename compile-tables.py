@@ -427,27 +427,6 @@ def procconttenttable(scan,obj):
     if not source_obj == None:
         table["sources"].append(ji)
 
-def tablerowsort(row):
-    # TODO: Conversion of each column into type/organization suitable for sorting
-    r = [ ]
-    if "data" in row:
-        r = row["data"].copy()
-    if "source index" in row:
-        si = row["source index"]
-        if isinstance(si,int):
-            si = [ si ]
-        r.append(si)
-    return r
-
-def sorttable(obj):
-    if not "ji" in obj:
-        raise Exception("What?")
-    table = obj["ji"]
-    if not "rows" in table:
-        raise Exception("What?")
-    rows = table["rows"]
-    rows.sort(key=tablerowsort)
-
 def rowsortfilter(tcols,row):
     r = [ ]
     for coli in range(0,len(tcols)):
@@ -463,6 +442,27 @@ def rowsortfilter(tcols,row):
         #
         r.append(col)
     return r
+
+def tablerowsort(tcols,row):
+    r = [ ]
+    if "data" in row:
+        r = rowsortfilter(tcols,row["data"])
+    if "source index" in row:
+        si = row["source index"]
+        if isinstance(si,int):
+            si = [ si ]
+        r.append(si)
+    return r
+
+def sorttable(obj):
+    if not "ji" in obj:
+        raise Exception("What?")
+    table = obj["ji"]
+    if not "rows" in table:
+        raise Exception("What?")
+    tcols = table["table columns"]
+    rows = table["rows"]
+    rows.sort(key=lambda x: tablerowsort(tcols,x))
 
 def deduptable(obj):
     # must have been handled with sorttable first!
