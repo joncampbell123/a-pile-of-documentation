@@ -460,6 +460,13 @@ def rowsortfilter(tcols,row):
         if tcol["type"] == "string":
             if "case insensitive" in tcol and tcol["case insensitive"] == True and isinstance(col,str):
                 col = col.lower()
+            if "string sort" in tcol:
+                if tcol["string sort"] == "numeric" or tcol["string sort"] == "mixed":
+                    # it might be something like "180 KB" or "450 foo 3"
+                    sp = re.split(' +',col)
+                    for spi in range(0,len(sp)):
+                        sp[spi] = xlateuint(tcol,sp[spi])
+                    col = sp
         if tcol["type"] == "uint8_t" or tcol["type"] == "uint_t":
             col = tablecolxlate(tcol,col)
             if isinstance(col,str) and col == "-": # we allow "-" "N/A" etc
