@@ -455,6 +455,10 @@ def rowsortfilter(tcols,row):
         if tcol["type"] == "string":
             if tcol["case insensitive"] == True and isinstance(col,str):
                 col = col.lower()
+        if tcol["type"] == "uint8_t" or tcol["type"] == "uint_t":
+            col = tablecolxlate(tcol,col)
+            if isinstance(col,str) and col == "-": # we allow "-" "N/A" etc
+                col = 999999999 # it has to be made into an integer for comparison, Python will not compare str vs int. Make it an int so - often follows values
         #
         r.append(col)
     return r
