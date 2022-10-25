@@ -1,42 +1,46 @@
 {
 	"table": "DOS Command Summary",
 	"id": "msdos-command-shell-dos-command-summary",
+	"schema": {
+		"version": 1
+	},
 	"combinable": true,
 	"description": "Commands included with MS-DOS",
 	"base definition": true,
-	"table format": {
-		"order": [ "key", "syntax", "function", "example", "notes" ]
-	},
-	"table columns": {
-		"key": {
+	"table columns": [
+		{
 			"type": "string",
 			"title": "Command",
 			"case insensitive": true,
-			"json": "key"
+			"name": "command"
 		},
-		"syntax": {
+		{
 			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
+			"name": "syntax",
 			"title": "Syntax"
 		},
-		"function": {
+		{
 			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
+			"name": "function",
 			"title": "Function"
 		},
-		"example": {
+		{
 			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
+			"name": "example",
 			"title": "Example"
 		},
-		"notes": {
+		{
 			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
+			"name": "notes",
 			"title": "Notes"
 		}
-	}
+	]
 }
