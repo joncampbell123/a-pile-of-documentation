@@ -1,0 +1,7 @@
+format,disk,midb,interleave,heads,tracks,sectors,bytespsector,sectpcluster,reservedsect,sectpfat,nfattabl,rootdirent,maxrootdirent,totalsect,usablesect,usablecluster,mindosver,comusesys
+10 MB,   5.25, 0xF8, 6:1, 4, 306, 17, 512, 8, 1, 8,  2, 32, 512, 20808,  20759,  2595,   2,   XT
+20 MB,   5.25, 0xF8, 3:1, 4, 615, 17, 512, 4, 1, 40, 2, 32, 512, 41820,  41707,  10427,  2,   AT
+20 MB,   3.5,  0xF8, 1:1, -, -,   17, 512, -, -, -,  -, -,  -,   -,      -,      -,      2,   PS/2 Model 50
+44 MB,   3.5,  0xF8, 1:1, -, -,   17, 512, -, -, -,  -, -,  -,   -,      -,      -,      2,   PS/2 Model 60
+70 MB,   3.5,  0xF8, 1:1, -, -,   17, 512, -, -, -,  -, -,  -,   -,      -,      -,      2,   PS/2 Model 80
+
