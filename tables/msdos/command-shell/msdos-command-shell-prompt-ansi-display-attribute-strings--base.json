@@ -27,28 +27,36 @@
 			"name": "sets"
 		},
 		{
-			"type": "string",
 			"title": "MDA",
 			"type": "bool",
 			"name": "mda"
 		},
 		{
-			"type": "string",
 			"title": "CGA",
 			"type": "bool",
 			"name": "cga"
 		},
 		{
-			"type": "string",
 			"title": "EGA",
 			"type": "bool",
 			"name": "ega"
 		},
 		{
-			"type": "string",
 			"title": "VGA",
 			"type": "bool",
 			"name": "vga"
+		},
+		{
+			"title": "PC-98",
+			"type": "bool",
+			"name": "pc98"
+		},
+		{
+			"title": "Notes",
+			"type": "string",
+			"combine different": true,
+			"case insensitive": false,
+			"name": "notes"
 		}
 	]
 }

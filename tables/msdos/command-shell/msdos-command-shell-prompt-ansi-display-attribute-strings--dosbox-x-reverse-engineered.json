@@ -1,0 +1,11 @@
+{
+	"id": "msdos-command-shell-prompt-ansi-display-attribute-strings",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"type": "notes",
+		"notes": "Codes reverse-engineered as part of DOSBox-X development"
+	},
+	"table in csv": true
+}
