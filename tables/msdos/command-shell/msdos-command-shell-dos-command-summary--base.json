@@ -16,10 +16,9 @@
 		},
 		{
 			"type": "string",
+			"title": "Syntax",
 			"case insensitive": true,
-			"combine different": true,
-			"name": "syntax",
-			"title": "Syntax"
+			"name": "syntax"
 		},
 		{
 			"type": "string",
