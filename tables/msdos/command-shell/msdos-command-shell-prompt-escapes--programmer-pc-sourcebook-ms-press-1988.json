@@ -1,0 +1,30 @@
+{
+	"id": "msdos-command-shell-prompt-escapes",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"type": "book",
+		"id": "programmer-pc-sourcebook-ms-press-1988",
+		"where": {
+			"@subsection": "2.17"
+		}
+	},
+	"table columns": [ "charseq", "displayas", "example", "exampledisplayas" ],
+	"table": [
+		[ "$b", "Vertical slash ( | )", "$p$b", "C:\\MYDIR|" ],
+		[ "$d", "Current system date", "$d $n$g", "Mon 9-5-1986 C>" ],
+		[ "$e", "Escape character (for use with ANSI.SYS)", "$e[32m$n$g$e[0m", "C> (prompt is green)" ],
+		[ "$g", "Greater than sign ( > )", "$p$g", "C:\\MYDIR>" ],
+		[ "$h", "Destructive backspace", "$t$h$h$h $p$g", "09:30:26 C:\\MYDIR>" ],
+		[ "$l", "Less than sign ( < )", "$l$n$g", "<C>" ],
+		[ "$n", "Current drive letter", "Drive is $n$g", "Drive is C>" ],
+		[ "$p", "Current pathname directory", "Path is $p$g", "Path is C:\\MYDIR>" ],
+		[ "$q", "Equals sign ( = )", "Drive $q $n$g", "Drive = C>" ],
+		[ "$t", "Current system time", "Time is $t", "Time is 09:30:25.93" ],
+		[ "$v", "DOS version number", "$v", "IBM Personal Computer DOS Version   3.20" ],
+		[ "$_", "Carriage return/line feed", "$t$h$h$h$_$p$g", "9:30:25\nC:\\MYDIR>" ],
+		[ "$$", "Dollar sign ( $ )", "Time is $$$g", "Time is $>" ],
+		[ "Any other", "Treated as character typed", "This is a prompt", "This is a prompt" ]
+	]
+}

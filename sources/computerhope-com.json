@@ -1,5 +1,8 @@
 {
 	"type": "website",
+	"schema": {
+		"version": 1
+	},
 	"id": "computerhope-com",
 	"title": "MS-DOS and Windows command line prompt command",
 	"url": "https://www.computerhope.com"
