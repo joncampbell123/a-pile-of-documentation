@@ -202,7 +202,8 @@ def tablecolxlate(column,data):
     return data
 
 def chartoregex(x):
-    # array separator is supposed to be a single char, re.split() takes regex
+    # array separator is supposed to be a single char, re.split() takes regex.
+    # if someone specifies multiple chars, well, then, they want a regex.
     if x == "|" or x == "\\" or x == "[" or x == "]" or x == "(" or x == ")" or x == "+" or x == "." or x == "'" or x == "\"":
         return "\\" + x
     return x
@@ -214,7 +215,7 @@ def tablerowtodatatype(tablecols,drow,ji):
         #
         if "is array" in tablecols[coli] and tablecols[coli]["is array"] == True and not type(drow[coli]) == list:
             if isinstance(drow[coli],str) and "table column array separator" in ji and isinstance(ji["table column array separator"],str):
-                drow[coli] = re.split(chartoregex(ji["table column array separator"]),drow[coli]) # FIXME: "array separator" is defined as a single char, re.split takes regex
+                drow[coli] = re.split(chartoregex(ji["table column array separator"]),drow[coli])
             else:
                 drow[coli] = [ drow[coli] ]
         #
