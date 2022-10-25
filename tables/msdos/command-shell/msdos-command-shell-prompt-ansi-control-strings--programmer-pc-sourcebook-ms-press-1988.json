@@ -99,7 +99,7 @@
 		[
 			["ESC","[","H"],
 			["ESC","[","#;#","H"],
-			["1: row","2:column"],
+			["1: row","2: column"],
 			"Move cursor to row (first #) and column (second #) position"
 		],
 		[
