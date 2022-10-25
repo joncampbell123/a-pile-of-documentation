@@ -5,7 +5,7 @@
 		"version": 1
 	},
 	"combinable": true,
-	"notes": "ANSI control strings are portrayed where possible as escape code separated from parameters.\nANSI escapes are usually ESC [ <paramaters> <code>.\n<parameters> can be nothing, one number, or multiple numbers separated by semicolons.\nThe ANSI escape for bright yellow text for example would be written ESC [ 1;33m meaning 'm' to set attributes, 1 for bright, 33 for yellow. MS-DOS generally confirms to the ANSI standard in this way.\nIf specific parameters set the function such as ESC [ 6n then the parameter is considered part of the escape but also listed as a param as well.",
+	"notes": "ANSI control strings are portrayed where possible as escape code separated from parameters.\nANSI escapes are usually ESC [ <paramaters> <code>.\n<parameters> can be nothing, one number, or multiple numbers separated by semicolons.\nThe ANSI escape for bright yellow text for example would be written ESC [ 1;33m meaning 'm' to set attributes, 1 for bright, 33 for yellow. MS-DOS generally confirms to the ANSI standard in this way.\nIf specific parameters set the function such as ESC [ 6n then the parameter is considered part of the escape but also listed as a param as well.\n\nParameter encoding example using ESC [ m:\nESC[m\nESC[4m\nESC[1;4m\nESC[1;4;30;37m",
 	"description": "ANSI control strings supported by MS-DOS",
 	"base definition": true,
 	"table columns": [
