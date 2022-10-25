@@ -436,9 +436,9 @@ def procconttenttable(scan,obj):
                 remapfromsrc.append(nametocol[col])
             else:
                 raise Exception("No such column "+col) # TODO: we could just add the column dynamically in the future...
-        ji["source columns present"] = src_cols_present
+        ji["source columns present"] = src_cols_present.copy()
         for row in src_rows:
-            drowobj = { }
+            drowobj = { "columns present": src_cols_present.copy() }
             # the code below will append to sources, so the index to list is the length of the list NOW before appending
             if not source_obj == None:
                 drowobj["source index"] = len(table["sources"])
@@ -599,12 +599,25 @@ def deduptable(obj):
         browdat = buildrow["data"]
         srowcmp = rowsortfilter(tcols,srowdat)
         browcmp = rowsortfilter(tcols,browdat)
+        # ignore any column not provided by both tables in order to allow tables to add to separate
+        # columns without causing multiple entries
+        for coli in range(0,len(tcols)):
+            spr = srow["columns present"][coli]
+            bpr = buildrow["columns present"][coli]
+            if not (spr == True and bpr == True):
+                srowcmp[coli] = browcmp[coli] = None
         #
         if srowcmp == browcmp:
             duplicate = True
         #
         if duplicate == True:
             for coli in range(0,len(tcols)):
+                if srow["columns present"][coli] == True:
+                    if not buildrow["columns present"][coli] == True:
+                        buildrow["columns present"][coli] = True
+                        browdat[coli] = srowdat[coli]
+                        continue
+                #
                 tcol = tcols[coli]
                 scol = srowdat[coli]
                 bcol = browdat[coli]
@@ -654,6 +667,8 @@ def deduptable(obj):
                 nsi.append(n)
             p = n
         row["source index"] = nsi
+        # also clear temp stuff
+        del row["columns present"]
     #
     table["rows"] = nrows
 
