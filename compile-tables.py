@@ -186,6 +186,12 @@ def xlateuint(column,data):
     raise Exception("Not sure how to parse type "+str(type(data))+" val "+str(data))
 
 def tablecolxlate(column,data):
+    if type(data) == list:
+        r = [ ]
+        for scol in data:
+            r.append(tablecolxlate(column,scol))
+        return r
+    #
     if data == None or data == "":
         if "default" in column:
             return column["default"]
@@ -199,6 +205,9 @@ def tablerowtodatatype(tablecols,drow):
     for coli in range(0,len(tablecols)):
         if coli >= len(drow):
             break
+        #
+        if "is array" in tablecols[coli] and tablecols[coli]["is array"] == True and not type(drow[coli]) == list:
+            drow[coli] = [ drow[coli] ]
         #
         drow[coli] = tablecolxlate(tablecols[coli],drow[coli])
 
