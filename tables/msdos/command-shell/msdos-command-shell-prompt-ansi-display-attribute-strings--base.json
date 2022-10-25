@@ -1,48 +1,54 @@
 {
 	"table": "Prompt ANSI Display Attribute Strings",
 	"id": "msdos-command-shell-prompt-ansi-display-attribute-strings",
+	"schema": {
+		"version": 1
+	},
 	"combinable": true,
 	"notes": "The codes here reflect the numeric values given in ANSI.SYS escape sequence ESC [ m. Multiple codes can be combined, separated a by semicolon, into one ESC [ m code.",
 	"description": "ANSI display attribute strings supported by MS-DOS",
 	"base definition": true,
-	"table format": {
-		"order": [ "key", "esc", "sets", "mda", "cga", "ega", "vga" ]
-	},
-	"table columns": {
-		"key": {
+	"table columns": [
+		{
 			"type": "uint8_t",
 			"title": "Code",
-			"json": "key"
+			"name": "code"
 		},
-		"esc": {
+		{
 			"type": "string",
 			"title": "Escape",
-			"case insensitive": false
+			"case insensitive": false,
+			"name": "esc"
 		},
-		"sets": {
+		{
 			"type": "string",
 			"title": "Sets attribute to",
-			"case insensitive": false
+			"case insensitive": false,
+			"name": "sets"
 		},
-		"mda": {
+		{
 			"type": "string",
 			"title": "MDA",
-			"type": "bool"
+			"type": "bool",
+			"name": "mda"
 		},
-		"cga": {
+		{
 			"type": "string",
 			"title": "CGA",
-			"type": "bool"
+			"type": "bool",
+			"name": "cga"
 		},
-		"ega": {
+		{
 			"type": "string",
 			"title": "EGA",
-			"type": "bool"
+			"type": "bool",
+			"name": "ega"
 		},
-		"vga": {
+		{
 			"type": "string",
 			"title": "VGA",
-			"type": "bool"
+			"type": "bool",
+			"name": "vga"
 		}
-	}
+	]
 }

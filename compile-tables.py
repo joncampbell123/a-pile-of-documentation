@@ -155,7 +155,7 @@ def xlatebool(column,data):
     if isinstance(data,float):
         return data > 0.0
     if type(data) == str:
-        if data == "1":
+        if data == "1" or data == "x" or data == "X":
             return True
         if data == "0":
             return False
