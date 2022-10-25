@@ -32,7 +32,7 @@
 		],
 		[
 			["ESC","[","K"],
-			["ESC","[","K"],
+			["ESC","[","#","K"],
 			"",
 			"Clear line from cursor to end of line"
 		],
@@ -104,7 +104,7 @@
 		],
 		[
 			["ESC","[","J"],
-			["ESC","[","2","J"],
+			["ESC","[","#","J"],
 			["1: Erasure mode"],
 			"Erasure. MS-DOS only supports 2J to clear the screen according to PC Programmer's Sourcebook (1988)"
 		],
