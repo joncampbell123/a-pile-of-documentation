@@ -201,13 +201,22 @@ def tablecolxlate(column,data):
         return xlateuint(column,data)
     return data
 
-def tablerowtodatatype(tablecols,drow):
+def chartoregex(x):
+    # array separator is supposed to be a single char, re.split() takes regex
+    if x == "|" or x == "\\" or x == "[" or x == "]" or x == "(" or x == ")" or x == "+" or x == "." or x == "'" or x == "\"":
+        return "\\" + x
+    return x
+
+def tablerowtodatatype(tablecols,drow,ji):
     for coli in range(0,len(tablecols)):
         if coli >= len(drow):
             break
         #
         if "is array" in tablecols[coli] and tablecols[coli]["is array"] == True and not type(drow[coli]) == list:
-            drow[coli] = [ drow[coli] ]
+            if isinstance(drow[coli],str) and "table column array separator" in ji and isinstance(ji["table column array separator"],str):
+                drow[coli] = re.split(chartoregex(ji["table column array separator"]),drow[coli]) # FIXME: "array separator" is defined as a single char, re.split takes regex
+            else:
+                drow[coli] = [ drow[coli] ]
         #
         drow[coli] = tablecolxlate(tablecols[coli],drow[coli])
 
@@ -404,6 +413,8 @@ def procconttenttable(scan,obj):
             csv_path = path[0:len(path)-5] + ".csv" # replace .json with .csv
             c = load_csv(csv_path)
             ji["table columns"] = c["columnnames"]
+            if not "table column array separator" in ji:
+                ji["table column array separator"] = " " # default separate by spaces
             ji["table"] = c["rows"]
     #
     if "table" in ji:
@@ -434,7 +445,7 @@ def procconttenttable(scan,obj):
                 dcoli = remapfromsrc[scoli]
                 drow[dcoli] = data
             #
-            tablerowtodatatype(basetablecols,drow)
+            tablerowtodatatype(basetablecols,drow,ji)
             #
             rows.append(drowobj)
     #
