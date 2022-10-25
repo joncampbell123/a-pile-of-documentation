@@ -4,7 +4,8 @@
 		"version": 1
 	},
 	"source": {
-		"website": "sites-google-pcdosretro-scancodes"
+		"type": "website",
+		"id": "sites-google-pcdosretro-scancodes"
 	},
 	"table in csv": true
 }
