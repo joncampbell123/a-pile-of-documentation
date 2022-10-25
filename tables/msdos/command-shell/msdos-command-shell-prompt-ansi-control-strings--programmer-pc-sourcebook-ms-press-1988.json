@@ -22,7 +22,7 @@
 			["ESC","[","h"],
 			["ESC","[","=","#","h"],
 			["1: display mode"],
-			"Set display mode\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = wrap at end of line"
+			"Set display mode (see 'ANSI.SYS screen modes')"
 		],
 		[
 			["ESC","[","j"],
@@ -40,7 +40,7 @@
 			["ESC","[","l"],
 			["ESC","[","=","#","l"],
 			["1: display mode"],
-			"Reset display mode\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = disable wrap at end of line\n\nnotes: PC programmer's sourcebook (1988) incorrectly lists 7 as wrap at end of line"
+			"Reset display mode (see 'ANSI.SYS screen modes')"
 		],
 		[
 			["ESC","[","m"],

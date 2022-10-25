@@ -85,19 +85,19 @@
 			["ESC","[","h"],
 			["ESC","[","#","h"],
 			["1: display mode"],
-			"Set screen mode (SM)"
+			"Set screen mode (SM) (see 'ANSI.SYS screen modes')"
 		],
 		[
 			["ESC","[","?","h"],
 			["ESC","[","?","#","h"],
 			["1: display mode"],
-			"Set screen mode (SM)"
+			"Set screen mode (SM) (see 'ANSI.SYS screen modes')"
 		],
 		[
 			["ESC","[","=","h"],
 			["ESC","[","=","#","h"],
 			["1: display mode"],
-			"Set screen mode (SM)\n\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = wrap at end of line\n13 = 320x200 color (graphics)\n14 = 640x200 color (16-color graphics)\n15 = 640x350 monochrome (2-color graphics)\n16 = 640x350 color (16-color graphics)\n17 = 640x480 monochrome (2-color graphics)\n18 = 640x480 color (16-color graphics)\n19 = 320x200 color (256-color graphics)\n114 = 640x480 color (16-color graphics) (Japanese DOS/V)\n115 = 640x475 color (16-color graphics) (Japanese DOS/V)"
+			"Set screen mode (SM) (see 'ANSI.SYS screen modes')"
 		],
 		[
 			["ESC","[",">","h"],
@@ -109,19 +109,19 @@
 			["ESC","[","l"],
 			["ESC","[","#","l"],
 			["1: display mode"],
-			"Reset screen mode (RM)"
+			"Reset screen mode (RM) (see 'ANSI.SYS screen modes')"
 		],
 		[
 			["ESC","[","?","l"],
 			["ESC","[","?","#","l"],
 			["1: display mode"],
-			"Reset screen mode (RM)"
+			"Reset screen mode (RM) (see 'ANSI.SYS screen modes')"
 		],
 		[
 			["ESC","[","=","l"],
 			["ESC","[","=","#","l"],
 			["1: display mode"],
-			"Reset screen mode (RM)"
+			"Reset screen mode (RM) (see 'ANSI.SYS screen modes')"
 		],
 		[
 			["ESC","[",">","l"],

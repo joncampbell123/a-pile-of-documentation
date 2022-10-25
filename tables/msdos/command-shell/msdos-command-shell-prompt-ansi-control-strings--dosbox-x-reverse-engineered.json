@@ -1,0 +1,25 @@
+{
+	"id": "msdos-command-shell-prompt-ansi-control-strings",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"type": "notes",
+		"notes": "Codes reverse-engineered as part of DOSBox-X development"
+	},
+	"table columns": [ "escape", "string", "ansiparam", "function" ],
+	"table": [
+		[
+			["ESC","[",">","h"],
+			["ESC","[",">","#","h"],
+			["1: function"],
+			"NEC PC-98 MS-DOS screen functions (see 'NEC PC-98 screen mode functions')"
+		],
+		[
+			["ESC","[",">","l"],
+			["ESC","[",">","#","l"],
+			["1: function"],
+			"NEC PC-98 MS-DOS screen functions (see 'NEC PC-98 screen mode functions')"
+		]
+	]
+}
