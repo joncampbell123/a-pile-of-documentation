@@ -20,6 +20,12 @@
 			["ESC","[",">","#","l"],
 			["1: function"],
 			"NEC PC-98 MS-DOS screen functions (see 'NEC PC-98 screen mode functions')"
+		],
+		[
+			["ESC","="],
+			["ESC","=","#","#"],
+			["1: row","2: column"],
+			"Position cursor to row, column.\nNOTICE: This escape does not follow normal ANSI parameter encoding. The two parameters are individual bytes NOT separated by a semicolon. Row and column are sent as single bytes each of the value N + 0x20. To home the cursor to 0,0 for example, send 'ESC=  ' (two spaces). 1,1 would be 'ESC=!!' (! = 0x21), 2,4 would be 'ESC=\"$' (\" = 0x22, $ = 0x24), and so on. On PC-98 architecture, this escape triggers the same DOS kernel code as INT DCh CL=0x10 AH=0x03 though adding 0x20 to each byte is not necessary for the INT DCh call."
 		]
 	]
 }
