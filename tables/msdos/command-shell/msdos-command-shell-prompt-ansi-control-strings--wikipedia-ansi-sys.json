@@ -1,0 +1,44 @@
+{
+	"id": "msdos-command-shell-prompt-ansi-control-strings",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"type": "website",
+		"id": "wikipedia",
+		"url": "https://en.wikipedia.org/wiki/ANSI.SYS"
+	},
+	"table columns": [ "escape", "string", "ansiparam", "function" ],
+	"table": [
+		[ "ESC [ A", "ESC [ #A", "1: row count", "Cursor up (CUU)" ],
+		[ "ESC [ B", "ESC [ #B", "1: row count", "Cursor down (CUD)" ],
+		[ "ESC [ C", "ESC [ #C", "1: column count", "Cursor forward (CUF)" ],
+		[ "ESC [ D", "ESC [ #D", "1: column count", "Cursor back (CUB)" ],
+		[ "ESC [ f", "ESC [ #;# f", "1: row (1-based)\n2: column (2-based)", "Horizontal and vertical position (HVP)" ],
+		[ "ESC [ H", "ESC [ #;# H", "1: row\n2:column", "Cursor position (CUP)" ],
+		[ "ESC [ J", "ESC [ #J", "1: Erasure mode", "Erase display (ED) (n=2)\nErase display (ED) (n=0,1,2) (Japanese versions)" ],
+		[ "ESC [ K", "ESC [ #K", "1: Erasure mode", "Erase line (EL) (n=0)\nErase line (EL) (n=0,1,2) (Japanese versions)" ],
+		[ "ESC [ m", "ESC [ #;...;#m", "Any number of parameters is valid, including none", "Select graphic rendition (SGR) (n=0..47)" ],
+		[ "ESC [ 6n", "ESC [ 6n", "", "Device status report (DSR) requests cursor position, returned as Cursor position report (CPR): ESC [ r;c R" ],
+		[ "ESC [ s", "ESC [ s", "", "Save cursor position (SCP)" ],
+		[ "ESC [ u", "ESC [ u", "", "Restore cursor position (RCP)" ],
+		[ "ESC [ h", "ESC [# h", "1: display mode", "Set screen mode (SM)" ],
+		[ "ESC [ h", "ESC [?# h", "1: display mode", "Set screen mode (SM)" ],
+		[ "ESC [ h", "ESC [=# h",
+			"1: display mode",
+			"Set screen mode (SM)\n\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = wrap at end of line\n13 = 320x200 color (graphics)\n14 = 640x200 color (16-color graphics)\n15 = 640x350 monochrome (2-color graphics)\n16 = 640x350 color (16-color graphics)\n17 = 640x480 monochrome (2-color graphics)\n18 = 640x480 color (16-color graphics)\n19 = 320x200 color (256-color graphics)\n114 = 640x480 color (16-color graphics) (Japanese DOS/V)\n115 = 640x475 color (16-color graphics) (Japanese DOS/V)" ],
+		[ "ESC [># h", "1: display mode", "Set screen mode (SM) (Japanese versions, for special modes specific to platform)" ],
+		[ "ESC [# l", "1: display mode", "Reset screen mode (RM)" ],
+		[ "ESC [?# l", "1: display mode", "Reset screen mode (RM)" ],
+		[ "ESC [=# l", "1: display mode", "Reset screen mode (RM)" ],
+		[ "ESC [># l", "1: display mode", "Reset screen mode (RM) (Japanese versions, for special modes specific to platform)" ],
+		[ "ESC [ q", "ESC [ #q", "1: Enable flag","Enable (1) or disable (0) /x support" ],
+		[ "ESC [ L", "ESC [ L", "", "Insert line (IL) (Japanese versions, multiuser DOS)" ],
+		[ "ESC [ M", "ESC [ M", "", "Delete line (DL) (Japanese versions, multiuser DOS)" ],
+		[ "ESC $ ) 1", "ESC $ ) 1", "", "Switch keyboard input mode to Korean (Hangul) (Korean MS-DOS only)" ],
+		[ "ESC ( 2", "ESC ( 2", "", "Switch keyboard input mode to English" ],
+		[ "ESC [ +", "ESC [ +", "", "Enable console output (DR-DOS 7.x+)" ],
+		[ "ESC [ -", "ESC [ -", "", "Disable console output (DR-DOS 7.x+)" ],
+		[ "ESC [ p", "ESC [ #;#;... p", "1: key to remap\n:2: key to remap to", "Set key re-definement (SKR/KR)" ]
+	]
+}
