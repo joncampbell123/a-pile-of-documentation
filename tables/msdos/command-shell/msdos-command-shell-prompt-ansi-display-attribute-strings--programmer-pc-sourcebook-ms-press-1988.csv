@@ -1,24 +1,24 @@
-code,esc,sets,mda,cga,ega,vga
-0,  ESC [ 0 m,  Normal text,                         X,X,X,X
-1,  ESC [ 1 m,  Bright text (intensity bit set),     X,X,X,X
-4,  ESC [ 4 m,  Underscored text,                    X, , ,
-5,  ESC [ 5 m,  Blinking text,                       X, , ,
-7,  ESC [ 7 m,  Reversed text,                       X,X,X,X
-8,  ESC [ 8 m,  Canceled (invisible) text,           X, , ,
-30, ESC [ 30 m, Black text,                           ,X,X,X
-31, ESC [ 31 m, Red text,                             ,X,X,X
-32, ESC [ 32 m, Green text,                           ,X,X,X
-33, ESC [ 33 m, Yellow text,                          ,X,X,X
-34, ESC [ 34 m, Blue text,                            ,X,X,X
-35, ESC [ 35 m, Magenta text,                         ,X,X,X
-36, ESC [ 36 m, Cyan text,                            ,X,X,X
-37, ESC [ 37 m, White text,                           ,X,X,X
-40, ESC [ 40 m, Black background,                     ,X,X,X
-41, ESC [ 41 m, Red background,                       ,X,X,X
-42, ESC [ 42 m, Green background,                     ,X,X,X
-43, ESC [ 43 m, Yellow background,                    ,X,X,X
-44, ESC [ 44 m, Blue background,                      ,X,X,X
-45, ESC [ 45 m, Magenta background,                   ,X,X,X
-46, ESC [ 46 m, Cyan background,                      ,X,X,X
-47, ESC [ 47 m, White background,                     ,X,X,X
+code,esc,sets,mda,cga,ega,vga,notes
+0,  ESC [ 0 m,  Normal text,                         X,X,X,X,
+1,  ESC [ 1 m,  Bright text (intensity bit set),     X,X,X,X,
+4,  ESC [ 4 m,  Underscored text,                    X, , , ,
+5,  ESC [ 5 m,  Blinking text,                       X, , , ,
+7,  ESC [ 7 m,  Reversed text,                       X,X,X,X,
+8,  ESC [ 8 m,  Canceled (invisible) text,           X, , , ,
+30, ESC [ 30 m, Black text,                           ,X,X,X,
+31, ESC [ 31 m, Red text,                             ,X,X,X,
+32, ESC [ 32 m, Green text,                           ,X,X,X,
+33, ESC [ 33 m, Yellow text,                          ,X,X,X,
+34, ESC [ 34 m, Blue text,                            ,X,X,X,
+35, ESC [ 35 m, Magenta text,                         ,X,X,X,
+36, ESC [ 36 m, Cyan text,                            ,X,X,X,
+37, ESC [ 37 m, White text,                           ,X,X,X,
+40, ESC [ 40 m, Black background,                     ,X,X,X,
+41, ESC [ 41 m, Red background,                       ,X,X,X,
+42, ESC [ 42 m, Green background,                     ,X,X,X,
+43, ESC [ 43 m, Yellow background,                    ,X,X,X,
+44, ESC [ 44 m, Blue background,                      ,X,X,X,
+45, ESC [ 45 m, Magenta background,                   ,X,X,X,
+46, ESC [ 46 m, Cyan background,                      ,X,X,X,
+47, ESC [ 47 m, White background,                     ,X,X,X,
 
