@@ -1,0 +1,32 @@
+{
+	"table": "Prompt ANSI Control Strings: Screen Modes",
+	"id": "msdos-command-shell-prompt-ansi-control-strings-nec-pc98-screen-modes",
+	"schema": {
+		"version": 1
+	},
+	"combinable": true,
+	"notes": "Screen modes as set by ESC [ > h, ESC [ > l and other modes",
+	"description": "ANSI control string screen modes supported by NEC PC-98 MS-DOS",
+	"base definition": true,
+	"table columns": [
+		{
+			"type": "uint8_t",
+			"title": "Mode",
+			"name": "mode"
+		},
+		{
+			"type": "string",
+			"title": "Description",
+			"case insensitive": false,
+			"combine different": true,
+			"name": "desc"
+		},
+		{
+			"type": "string",
+			"title": "Notes",
+			"case insensitive": true,
+			"combine different": true,
+			"name": "notes"
+		}
+	]
+}
