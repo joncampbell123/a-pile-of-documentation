@@ -477,6 +477,12 @@ def strtol_bytes(col):
     return col
 
 def rowcolsortfilter(tcol,col):
+    if type(col) == list:
+        r = [ ]
+        for scol in col:
+            r.append(rowcolsortfilter(tcol,scol))
+        return r
+    #
     if "combine different" in tcol:
         if tcol["combine different"] == True:
             col = "" # for sorting purposes these columns are ignored
