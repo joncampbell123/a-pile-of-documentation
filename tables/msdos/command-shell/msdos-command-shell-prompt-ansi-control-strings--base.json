@@ -12,6 +12,7 @@
 		{
 			"type": "string",
 			"title": "Escape",
+			"is array": true,
 			"case insensitive": false,
 			"name": "escape"
 		},
@@ -20,13 +21,16 @@
 			"title": "String",
 			"description": "String formatting in practice.\n# is a placeholder for an ANSI parameter. Spaces are added for display purposes only and are not part of the escape.",
 			"case insensitive": false,
+			"is array": true,
 			"name": "string"
 		},
 		{
 			"type": "string",
 			"title": "ANSI parameters",
+			"description": "Parameters to the escape, counting up from 1",
 			"case insensitive": true,
 			"combine different": true,
+			"is array": true,
 			"name": "ansiparam"
 		},
 		{
