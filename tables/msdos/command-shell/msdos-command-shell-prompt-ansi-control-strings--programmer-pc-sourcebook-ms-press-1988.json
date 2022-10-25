@@ -42,19 +42,89 @@
 			["1: display mode"],
 			"Reset display mode\n\n0 = 40x25 monochrome text\n1 = 40x25 color text\n2 = 80x25 monochrome text\n3 = 80x25 color text\n4 = 320x200 color graphics\n5 = 320x200 monochrome graphics\n6 = 640x200 monochrome graphics\n7 = disable wrap at end of line\n\nnotes: PC programmer's sourcebook (1988) incorrectly lists 7 as wrap at end of line"
 		],
-		[ "ESC [ m", "ESC [ # m", "Any number of parameters is valid, including none", "If no number given, acts as if zero.\nEach number changes an attribute that will be used to print text after the escape.\n0 clears all attributes to default.\nSee table \"MS-DOS Prompt ANSI Display Attribute Strings\" for more information." ],
-		[ "ESC [ p", "ESC [ #;# p", "1: key to remap\n2: key to remap to", "Reassigns first key (1) to second key (2), or remap key (1)" ],
-		[ "ESC [ s", "ESC [ s", "", "Save current cursor position" ],
-		[ "ESC [ u", "ESC [ u", "", "Restore current cursor position" ],
-		[ "ESC [ A", "ESC [ # A", "1: row count", "Moves cursor up by the number of rows indicated. If not specified, 1 is assumed" ],
-		[ "ESC [ B", "ESC [ # B", "1: row count", "Moves cursor down by the number of rows indicated. If not specified, 1 is assumed" ],
-		[ "ESC [ C", "ESC [ # C", "1: column count", "Moves cursor right by the number of columns indicated. If not specified, 1 is assumed" ],
-		[ "ESC [ D", "ESC [ # D", "1: column count", "Moves cusror left by the number of columns indicated. If not specified, 1 is assumed" ],
-		[ "ESC [ H", "ESC [ H", "", "Moves cursor to Home position (row 1, column 1)" ],
-		[ "ESC [ H", "ESC [ #;# H", "1: row\n2:column", "Moves cursor to row (first #) and column (second #) position" ],
-		[ "ESC [ J", "ESC [ 2 J", "1: Erasure mode", "Erasure. MS-DOS only supports 2J to clear the screen according to PC Programmer's Sourcebook (1988)" ],
-		[ "ESC [ K", "ESC [ K", "", "Erase from cursor to end of line, including cursor position" ],
-		[ "ESC [ R", "ESC [ #;# R", "", "Report cursor position through standard input" ],
-		[ "ESC [ 6n", "ESC [ 6 n", "", "Console driver outputs cursor position report sequence" ]
+		[
+			["ESC","[","m"],
+			["ESC","[","#","m"],
+			["Any number of parameters is valid, including none"],
+			"Set display attributes.\nBehaves like ESC [ 0m if no parameters given.\nEach number changes an attribute that will be used to print text after the escape.\n0 clears all attributes to default.\nSee table \"MS-DOS Prompt ANSI Display Attribute Strings\" for more information."
+		],
+		[
+			["ESC","[","p"],
+			["ESC","[","#;#","p"],
+			["1: key to remap","2: key to remap to"],
+			"Reassign first key (1) to second key (2), or remap key (1)"
+		],
+		[
+			["ESC","[","s"],
+			["ESC","[","s"],
+			"",
+			"Save current cursor position"
+		],
+		[
+			["ESC","[","u"],
+			["ESC","[","u"],
+			"",
+			"Restore current cursor position"
+		],
+		[
+			["ESC","[","A"],
+			["ESC","[","#","A"],
+			["1: row count"],
+			"Move cursor up by the number of rows indicated. If not specified, 1 is assumed"
+		],
+		[
+			["ESC","[","B"],
+			["ESC","[","#","B"],
+			["1: row count"],
+			"Move cursor down by the number of rows indicated. If not specified, 1 is assumed"
+		],
+		[
+			["ESC","[","C"],
+			["ESC","[","#","C"],
+			["1: column count"],
+			"Move cursor right by the number of columns indicated. If not specified, 1 is assumed"
+		],
+		[
+			["ESC","[","D"],
+			["ESC","[","#","D"],
+			["1: column count"],
+			"Move cusror left by the number of columns indicated. If not specified, 1 is assumed"
+		],
+		[
+			["ESC","[","H"],
+			["ESC","[","H"],
+			"",
+			"Move cursor to Home position (row 1, column 1)"
+		],
+		[
+			["ESC","[","H"],
+			["ESC","[","#;#","H"],
+			["1: row","2:column"],
+			"Move cursor to row (first #) and column (second #) position"
+		],
+		[
+			["ESC","[","J"],
+			["ESC","[","2","J"],
+			["1: Erasure mode"],
+			"Erasure. MS-DOS only supports 2J to clear the screen according to PC Programmer's Sourcebook (1988)"
+		],
+		[
+			["ESC","[","K"],
+			["ESC","[","K"],
+			"",
+			"Erase from cursor to end of line, including cursor position"
+		],
+		[
+			["ESC","[","R"],
+			["ESC","[","#;#","R"],
+			"",
+			"Report cursor position through standard input"
+		],
+		[
+			["ESC","[","6","n"],
+			["ESC","[","6","n"],
+			"",
+			"Console driver outputs cursor position report sequence"
+		]
 	]
 }
