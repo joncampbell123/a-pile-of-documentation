@@ -408,6 +408,7 @@ def procconttenttable(scan,obj):
     # proc table data
     basetablecols = table["table columns"]
     nametocol = table["table name to column"]
+    src_cols_present = [ False ] * len(basetablecols)
     rows = table["rows"]
     if not "table" in ji and "table in csv" in ji:
         if ji["table in csv"] == True:
@@ -431,9 +432,11 @@ def procconttenttable(scan,obj):
         remapfromsrc = [ ] # [src col] -> basetablecols index
         for col in src_columns:
             if col in nametocol:
+                src_cols_present[nametocol[col]] = True
                 remapfromsrc.append(nametocol[col])
             else:
                 raise Exception("No such column "+col) # TODO: we could just add the column dynamically in the future...
+        ji["source columns present"] = src_cols_present
         for row in src_rows:
             drowobj = { }
             # the code below will append to sources, so the index to list is the length of the list NOW before appending
