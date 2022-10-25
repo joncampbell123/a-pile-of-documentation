@@ -476,35 +476,32 @@ def strtol_bytes(col):
     #
     return col
 
+def rowcolsortfilter(tcol,col):
+    if "combine different" in tcol:
+        if tcol["combine different"] == True:
+            col = "" # for sorting purposes these columns are ignored
+    if tcol["type"] == "string":
+        if "case insensitive" in tcol and tcol["case insensitive"] == True and isinstance(col,str):
+            col = col.lower()
+        if "string sort" in tcol:
+            if tcol["string sort"] == "bytes":
+                col = strtol_bytes(col)
+            if tcol["string sort"] == "numeric" or tcol["string sort"] == "mixed":
+                # it might be something like "180 KB" or "450 foo 3"
+                sp = re.split(' +',col)
+                for spi in range(0,len(sp)):
+                    sp[spi] = xlateuint(tcol,sp[spi])
+                col = sp
+    if tcol["type"] == "uint8_t" or tcol["type"] == "uint_t":
+        col = tablecolxlate(tcol,col)
+        if isinstance(col,str) and col == "-": # we allow "-" "N/A" etc
+            col = 999999999 # it has to be made into an integer for comparison, Python will not compare str vs int. Make it an int so - often follows values
+    return col
 
 def rowsortfilter(tcols,row):
     r = [ ]
     for coli in range(0,len(tcols)):
-        tcol = tcols[coli]
-        col = row[coli] # FIXME: If col is a dict or list, copy!
-        #
-        if "combine different" in tcol:
-            if tcol["combine different"] == True:
-                col = "" # for sorting purposes these columns are ignored
-        #
-        if tcol["type"] == "string":
-            if "case insensitive" in tcol and tcol["case insensitive"] == True and isinstance(col,str):
-                col = col.lower()
-            if "string sort" in tcol:
-                if tcol["string sort"] == "bytes":
-                    col = strtol_bytes(col)
-                if tcol["string sort"] == "numeric" or tcol["string sort"] == "mixed":
-                    # it might be something like "180 KB" or "450 foo 3"
-                    sp = re.split(' +',col)
-                    for spi in range(0,len(sp)):
-                        sp[spi] = xlateuint(tcol,sp[spi])
-                    col = sp
-        if tcol["type"] == "uint8_t" or tcol["type"] == "uint_t":
-            col = tablecolxlate(tcol,col)
-            if isinstance(col,str) and col == "-": # we allow "-" "N/A" etc
-                col = 999999999 # it has to be made into an integer for comparison, Python will not compare str vs int. Make it an int so - often follows values
-        #
-        r.append(col)
+        r.append(rowcolsortfilter(tcols[coli],row[coli]))
     return r
 
 def tablerowsort(tcols,row):
