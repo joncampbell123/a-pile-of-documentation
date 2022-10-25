@@ -18,6 +18,7 @@
 			"type": "string",
 			"title": "Description",
 			"case insensitive": false,
+			"combine different": true,
 			"name": "desc"
 		},
 		{
