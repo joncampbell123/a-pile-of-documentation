@@ -1,0 +1,13 @@
+cmdbyte,params,command,comments
+0x20,,Read keyboard controller command byte,
+0x60,nn,Write keyboard controller command byte,
+0xAA,,Self test,
+0xAB,,Interface test,
+0xAD,,Disable keyboard,
+0xAE,,Enable keyboard,
+0xC0,,Read input port,
+0xD0,,Read output port,
+0xD1,nn,Write output port,
+0xE0,,Read test inputs,
+0xFE,,System reset,
+
