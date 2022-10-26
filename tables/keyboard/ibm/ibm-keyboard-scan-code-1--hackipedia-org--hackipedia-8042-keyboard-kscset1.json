@@ -1,0 +1,12 @@
+{
+	"id": "ibm-keyboard-scan-code-1",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"id": "hackipedia-org",
+		"type": "website",
+		"url": "http://hackipedia.org/browse.cgi/Computer/Platform/PC%2c%20IBM%20compatible/Keyboard%20controller/8042/Keyboard/Keyboard%20Scan%20Codes%20%2d%20Set%201%2ehtml"
+	},
+	"table in csv": true
+}
