@@ -116,6 +116,6 @@ cmdbyte,syntax,command,comments
 0xFB,0xFB,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
 0xFC,0xFC,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
 0xFD,0xFD,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
-0xFE,0xFE,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xFE,0xFE,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port. Bit 0 is tied to the reset line on the CPU and command FEh is used to reset the CPU."
 0xFF,0xFF,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
 
