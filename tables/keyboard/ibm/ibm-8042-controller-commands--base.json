@@ -20,11 +20,11 @@
 		{
 			"type": "uint8_t",
 			"display": "hex",
-			"name": "syntax",
+			"name": "params",
 			"title": "Syntax",
 			"required": true,
 			"is array": true,
-			"description": "Command format"
+			"description": "Command parameters"
 		},
 		{
 			"type": "string",
