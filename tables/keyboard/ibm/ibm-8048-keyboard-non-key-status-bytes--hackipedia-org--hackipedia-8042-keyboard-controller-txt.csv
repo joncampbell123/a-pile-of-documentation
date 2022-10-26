@@ -1,0 +1,12 @@
+byte,meaning,comments
+0x00,Key detection error or buffer full,
+0xAA,Power-on/reset diagnostics successful,
+0xE0,Prefix byte for "gray" keys not on original keyboard,Scan code sets 1 and 2
+0xEE,Sent in response to the ECHO command,
+0xF0,Prefix byte for break codes,Scan code set 3 only
+0xFA,Acknowledge,Most commands respond with this code
+0xFC,Diagnostics failed (MF keyboard)
+0xFD,Diagnostics failed (AT keyboard)
+0xFE,"Last command was invalid or had parity error, resend it",
+0xFF,Key detection error or buffer full,
+
