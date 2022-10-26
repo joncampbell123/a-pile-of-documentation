@@ -444,6 +444,11 @@ def procconttenttable(scan,obj):
                 drowobj["source index"] = len(table["sources"])
             #
             drow = drowobj["data"] = [ "" ] * len(basetablecols)
+            #
+            if len(row) > len(remapfromsrc):
+                print(row)
+                raise Exception("Row has too many columns")
+            #
             for scoli in range(0,len(row)):
                 data = row[scoli]
                 dcoli = remapfromsrc[scoli]
