@@ -218,6 +218,12 @@ def tablerowtodatatype(tablecols,drow,ji):
                 drow[coli] = re.split(chartoregex(ji["table column array separator"]),drow[coli])
             else:
                 drow[coli] = [ drow[coli] ]
+            #
+            if "is range" in tablecols[coli] and tablecols[coli]["is range"] == True and type(drow[coli]) == list:
+                for doli in range(0,len(drow[coli])):
+                    drow[coli][doli] = re.split(chartoregex(ji["table column range separator"]),drow[coli][doli])
+                    if len(drow[coli][doli]) > 2:
+                        raise Exception("Range with more than 2 values")
         #
         drow[coli] = tablecolxlate(tablecols[coli],drow[coli])
 
@@ -417,6 +423,8 @@ def procconttenttable(scan,obj):
             ji["table columns"] = c["columnnames"]
             if not "table column array separator" in ji:
                 ji["table column array separator"] = " " # default separate by spaces
+            if not "table column range separator" in ji:
+                ji["table column range separator"] = "-" # default A-B range
             ji["table"] = c["rows"]
     #
     if "table" in ji:

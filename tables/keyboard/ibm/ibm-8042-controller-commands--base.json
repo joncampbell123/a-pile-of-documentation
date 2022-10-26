@@ -12,6 +12,8 @@
 			"type": "uint8_t",
 			"display": "hex",
 			"name": "cmdbyte",
+			"is array": true,
+			"is range": true,
 			"title": "Command byte",
 			"required": true
 		},
