@@ -29,6 +29,7 @@
 		{
 			"type": "string",
 			"case insensitive": true,
+			"combine different": true,
 			"name": "command",
 			"title": "Command",
 			"required": true
