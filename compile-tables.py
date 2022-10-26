@@ -215,7 +215,10 @@ def tablerowtodatatype(tablecols,drow,ji):
         #
         if "is array" in tablecols[coli] and tablecols[coli]["is array"] == True and not type(drow[coli]) == list:
             if isinstance(drow[coli],str) and "table column array separator" in ji and isinstance(ji["table column array separator"],str):
-                drow[coli] = re.split(chartoregex(ji["table column array separator"]),drow[coli])
+                if drow[coli] == "":
+                    drow[coli] = [ ]
+                else:
+                    drow[coli] = re.split(chartoregex(ji["table column array separator"]),drow[coli])
             else:
                 drow[coli] = [ drow[coli] ]
             #
