@@ -1,29 +1,19 @@
 cmdbyte,syntax,command,comments
 0x20-0x3F,0x20,"Read byte from 8042 RAM, byte 0","This byte is also the Command Byte"
-
 0x60-0x7F,0x60 nn,"Write byte nn to 8042 RAM, byte 0","This byte is also the Command Byte"
-
 0x90-0x9F,0x90,"Write bottom 4 bits (0x0) to bottom 4 bits of the Output port"
-
 0xA7,0xA7,"Disable PS/2 mouse port"
 0xA8,0xA8,"Enable PS/2 mouse port"
 0xA9,0xA9,"Self-test mouse interface, return result byte"
 0xAA,0xAA,"Self-test 8042, return 55h if success, FCh if failure"
 0xAB,0xAB,"Self-test keyboard interface, return result byte"
-
 0xAD,0xAD,"Disable keyboard, set bit 4 of Command Byte"
 0xAE,0xAE,"Enable keyboard, clear bit 4 of Command Byte"
-
 0xC0,0xC0,"Read Input Port"
-
 0xD0,0xD0,"Read Output Port"
 0xD1,0xD1 nn,"Write nn to Outport Port"
-
 0xD4,0xD4 nn,"Send command to PS/2 mouse"
-
 0xDD,0xDD,"Disable A20 line","Vectra PC"
-
 0xDF,0xDF,"Enable A20 line","Vectra PC"
-
 0xF0-0xFF,0xF0,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port. Bit 0 is tied to the reset line on the CPU and command FEh is used to reset the CPU."
 
