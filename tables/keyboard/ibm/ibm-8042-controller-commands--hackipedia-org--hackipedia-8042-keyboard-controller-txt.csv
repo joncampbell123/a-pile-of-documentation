@@ -65,3 +65,57 @@ cmdbyte,syntax,command,comments
 0x7E,0x7E nn,"Write byte nn to 8042 RAM, byte 30","May not exist on clone or later hardware"
 0x7F,0x7F nn,"Write byte nn to 8042 RAM, byte 31","May not exist on clone or later hardware"
 
+0x90,0x90,"Write bottom 4 bits (0x0) to bottom 4 bits of the Output port"
+0x91,0x91,"Write bottom 4 bits (0x1) to bottom 4 bits of the Output port"
+0x92,0x92,"Write bottom 4 bits (0x2) to bottom 4 bits of the Output port"
+0x93,0x93,"Write bottom 4 bits (0x3) to bottom 4 bits of the Output port"
+0x94,0x94,"Write bottom 4 bits (0x4) to bottom 4 bits of the Output port"
+0x95,0x95,"Write bottom 4 bits (0x5) to bottom 4 bits of the Output port"
+0x96,0x96,"Write bottom 4 bits (0x6) to bottom 4 bits of the Output port"
+0x97,0x97,"Write bottom 4 bits (0x7) to bottom 4 bits of the Output port"
+0x98,0x98,"Write bottom 4 bits (0x8) to bottom 4 bits of the Output port"
+0x99,0x99,"Write bottom 4 bits (0x9) to bottom 4 bits of the Output port"
+0x9A,0x9A,"Write bottom 4 bits (0xA) to bottom 4 bits of the Output port"
+0x9B,0x9B,"Write bottom 4 bits (0xB) to bottom 4 bits of the Output port"
+0x9C,0x9C,"Write bottom 4 bits (0xC) to bottom 4 bits of the Output port"
+0x9D,0x9D,"Write bottom 4 bits (0xD) to bottom 4 bits of the Output port"
+0x9E,0x9E,"Write bottom 4 bits (0xE) to bottom 4 bits of the Output port"
+0x9F,0x9F,"Write bottom 4 bits (0xF) to bottom 4 bits of the Output port"
+
+0xA7,0xA7,"Disable PS/2 mouse port"
+0xA8,0xA8,"Enable PS/2 mouse port"
+0xA9,0xA9,"Self-test mouse interface, return result byte"
+0xAA,0xAA,"Self-test 8042, return 55h if success, FCh if failure"
+0xAB,0xAB,"Self-test keyboard interface, return result byte"
+
+0xAD,0xAD,"Disable keyboard, set bit 4 of Command Byte"
+0xAE,0xAE,"Enable keyboard, clear bit 4 of Command Byte"
+
+0xC0,0xC0,"Read Input Port"
+
+0xD0,0xD0,"Read Output Port"
+0xD1,0xD1 nn,"Write nn to Outport Port"
+
+0xD4,0xD4 nn,"Send command to PS/2 mouse"
+
+0xDD,0xDD,"Disable A20 line","Vectra PC"
+
+0xDF,0xDF,"Enable A20 line","Vectra PC"
+
+0xF0,0xF0,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xF1,0xF1,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xF2,0xF2,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xF3,0xF3,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xF4,0xF4,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xF5,0xF5,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xF6,0xF6,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xF7,0xF7,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xF8,0xF8,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xF9,0xF9,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xFA,0xFA,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xFB,0xFB,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xFC,0xFC,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xFD,0xFD,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xFE,0xFE,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+0xFF,0xFF,"Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port."
+
