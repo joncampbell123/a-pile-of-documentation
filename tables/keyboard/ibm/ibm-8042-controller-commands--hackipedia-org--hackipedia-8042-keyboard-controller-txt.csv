@@ -1,7 +1,7 @@
 cmdbyte,params,command,comments
 0x20-0x3F,,          Read byte from 8042 RAM. Byte index is low 5 bits of command,Byte 0 (command 0x20) is also known as the Command Byte
 0x60-0x7F,nn,        Write byte nn to 8042 RAM. Byte index is low 5 bits of command,Byte 0 (command 0x60) is also known as the Command Byte
-0x90-0x9F,,          Write bottom 4 bits (0x0) to bottom 4 bits of the Output port,Bit 0 must be set or you may cause a hung condition where the CPU is stuck in a reset state
+0x90-0x9F,,          Write bottom 4 bits of command to bottom 4 bits of the Output port,Bit 0 must be set or you may cause a hung condition where the CPU is stuck in a reset state
 0xA7,,               Disable PS/2 mouse port
 0xA8,,               Enable PS/2 mouse port
 0xA9,,               Self-test mouse interface and return result byte
