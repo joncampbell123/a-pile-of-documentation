@@ -1,0 +1,43 @@
+{
+	"table": "IBM compatible 8042 keyboard controller, controller commands",
+	"id": "ibm-8042-controller-commands",
+	"combinable": true,
+	"description": "Keyboard controller commands, written to I/O port 64h",
+	"base definition": true,
+	"schema": {
+		"version": 1
+	},
+	"table columns": [
+		{
+			"type": "uint8_t",
+			"display": "hex",
+			"name": "cmdbyte",
+			"title": "Command byte",
+			"required": true
+		},
+		{
+			"type": "uint8_t",
+			"display": "hex",
+			"name": "syntax",
+			"title": "Syntax",
+			"required": true,
+			"is array": true,
+			"description": "Command format"
+		},
+		{
+			"type": "string",
+			"case insensitive": true,
+			"name": "command",
+			"title": "Command",
+			"required": true
+		},
+		{
+			"type": "string",
+			"case insensitive": true,
+			"combine different": true,
+			"name": "comments",
+			"title": "Comments",
+			"description": "Additional comments"
+		}
+	]
+}
