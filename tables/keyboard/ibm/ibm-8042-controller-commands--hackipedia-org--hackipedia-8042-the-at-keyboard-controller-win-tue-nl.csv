@@ -45,4 +45,19 @@ cmdbyte,params,command,comments
 0xAF,,Read keyboard version,"Award BIOS, VIA"
 0xB0-0xB5 0xB8-0xBD,,Reset/set keyboard controller line,"Bit 3 is used, AMI BIOS: 1=Set 0=Reset a line 1=high 0=low, command selects between P10,P11,P12,P13,P22,P23. Responds with one garbage byte"
 0xB0-0xB7 0xB8-0xBF,,Reset/set keyboard controller line,"Bit 3 is used, VIA BIOS: Write 1=1 0=0 to one of P10,P11,P12,P13,P22,P23,P14,P15 according to command"
+0xC0,,Read input port
+0xC1,,"Continuous input port poll, low","Continuously copy bits 3-0 of the input port to be read from port 64h until another keyboard command"
+0xC2,,"Continuous input port poll, high","Continuously copy bits 7-4 of the input port to be read from port 64h until another keyboard command"
+0xC8,,Unblock keyboard controller lines P22 and P23,"ISA/EISA AMIBIOS systems, allow command D1h to change P22 and P23"
+0xC9,,Block keyboard controller lines P22 and P23,"ISA/EISA AMIBIOS systems, prevent command D1h from changing P22 and P23"
+0xCA,,Read keyboard controller mode,"AMI BIOS, VIA: Read keyboard controller mode to bit 0 of port 60h 0=ISA (AT) 1=PS/2 (MCA)"
+0xCB,,Write keyboard controller mode,"AMI BIOS, VIA: Write keyboard controller through bit 0, 0=ISA (AT) 1=PS/2 (MCA). You should first read with CAh and modify before writing with CBh"
+0xD0,,Read output port
+0xD1,nn,Write output port
+0xD2,nn,Write keyboard output buffer,"Byte written is returned as if originating from a device"
+0xD3,nn,Write mouse output buffer,"Byte written is returned as if originating from a device"
+0xD4,nn,Write to mouse
+0xDD,,Disable A20 address line,"HP Vectra"
+0xDF,,Enable A20 address line,"HP Vectra"
+0xF0-0xFF,,Pulse output bit,"Each zero bit represents a corresponding output port bit to pulse low. The most commonly used command in this range is FEh to reset the CPU"
 
