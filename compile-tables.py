@@ -193,7 +193,7 @@ def xlatefloat(column,data):
     if isinstance(data,str):
         if data == "0":
             return 0
-        if re.search('^[0-9]+(\.[0-9]*) *$',data):
+        if re.search('^[0-9]+(\.[0-9]*){0,1} *$',data):
             return float(data)
         return data
     raise Exception("Not sure how to parse type "+str(type(data))+" val "+str(data))
