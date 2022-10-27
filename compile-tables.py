@@ -185,6 +185,19 @@ def xlateuint(column,data):
         return data
     raise Exception("Not sure how to parse type "+str(type(data))+" val "+str(data))
 
+def xlatefloat(column,data):
+    if data == None or data == "":
+        return 0
+    if isinstance(data,int) or isinstance(data,float):
+        return data
+    if isinstance(data,str):
+        if data == "0":
+            return 0
+        if re.search('^[0-9]+(\.[0-9]*) *$',data):
+            return float(data)
+        return data
+    raise Exception("Not sure how to parse type "+str(type(data))+" val "+str(data))
+
 def tablecolxlate(column,data):
     if type(data) == list:
         r = [ ]
@@ -199,6 +212,8 @@ def tablecolxlate(column,data):
         return xlatebool(column,data)
     if column["type"] == "uint8_t" or column["type"] == "uint_t":
         return xlateuint(column,data)
+    if column["type"] == "float":
+        return xlatefloat(column,data)
     return data
 
 def chartoregex(x):
@@ -538,6 +553,10 @@ def rowcolsortfilter(tcol,col):
                 for spi in range(0,len(sp)):
                     sp[spi] = xlateuint(tcol,sp[spi])
                 col = sp
+    if tcol["type"] == "float":
+        col = tablecolxlate(tcol,col)
+        if isinstance(col,str) and (col == "-" or col == "nn" or col == "n/a" or col == "N/A"): # we allow "-" "N/A" etc
+            col = 99e99 # it has to be made into a float for comparison, Python will not compare str vs int. Make it an int so - often follows values
     if tcol["type"] == "uint8_t" or tcol["type"] == "uint_t":
         col = tablecolxlate(tcol,col)
         if isinstance(col,str) and (col == "-" or col == "nn" or col == "n/a" or col == "N/A"): # we allow "-" "N/A" etc
