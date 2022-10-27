@@ -2,7 +2,7 @@ cmdbyte,params,command,comments
 0xED,nn,"Set/Reset Mode Indicators","Bit 0 = scroll lock. Bit 1 = Num lock. Bit 2 = Caps lock. Bit 3-7 = Reserved"
 0xEE,,"Echo","Keyboard responds with EEh"
 0xEF-0xF2,,"No-Operation","Not used by the system [at the time this IBM Technical Reference Manual was written]"
-0xF3,nn,"Set Typematic Rate/Delay","Bits 5-6 = delay. Bits 0-4 = Rate."
+0xF3,nn,"Set Typematic Rate/Delay","Bits 5-6 = delay. Bits 0-4 = Rate. Delay is 250 * (delay value + 1) ms"
 0xF4,,Enable,"Keyboard responds with ACK"
 0xF5,,Default Disable,"In addition to resetting all conditions to power-on default state, keyboard stops scanning"
 0xF6,,Set Default,"Resets all conditions to the power-on default state. Keyboard responds with ACK, clears output buffer, continues scanning if previously enabled"
