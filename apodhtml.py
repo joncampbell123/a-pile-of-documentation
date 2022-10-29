@@ -12,6 +12,6 @@ def mkhtmlid(idtype,sid,path=None):
             if "level" in pelo and "name" in pelo:
                 r += ":" + htmlidfilter(pelo["level"]) + ":" + htmlidfilter(pelo["name"])
             elif "group index" in pelo:
-                r += ":g" + str(pelo["group index"])
+                r += ":gi:" + str(pelo["group index"])
     return r
 
