@@ -11,6 +11,8 @@ import copy
 import struct
 import pathlib
 
+import apodjson
+
 def load_csv(path):
     ret = { }
     f = open(path,"r",newline='')
@@ -28,17 +30,6 @@ def load_csv(path):
     f.close()
     return ret
 
-def load_json(path):
-    f = open(path,"r",encoding='utf-8')
-    j = json.load(f)
-    f.close()
-    return j
-
-def write_json(path,ji):
-    f = open(path,"w",encoding='utf-8')
-    json.dump(ji,f,indent=4)
-    f.close()
-
 def sortbylen(x):
     if type(x) == list:
         return len(x)
@@ -55,7 +46,7 @@ def tocpathtoobj(p):
 sources = { }
 
 # load compiled sources
-sources = load_json("compiled/sources.json")
+sources = apodjson.load_json("compiled/sources.json")
 
 # write it
 if not os.path.exists("compiled"):
@@ -97,7 +88,7 @@ def procbasetable(scan,obj):
     #
     if "ji" in obj:
         raise Exception("What??")
-    ji = obj["ji"] = load_json(path)
+    ji = obj["ji"] = apodjson.load_json(path)
     if not "id" in ji:
         raise Exception("Table in "+path+" does not have an ID")
     if not "base definition" in ji:
@@ -261,7 +252,7 @@ def procconttenttable(scan,obj):
     if len(basename) >= 11 and basename[-11:] == "--base.json":
         raise Exception("What??")
     #
-    ji = load_json(path)
+    ji = apodjson.load_json(path)
     if not "id" in ji:
         raise Exception("Table in "+path+" does not have an ID")
     if "base definition" in ji:
@@ -722,5 +713,5 @@ for scan in tablescan:
     deduptable(obj)
     #
     ji = obj["ji"]
-    write_json("compiled/tables/"+ji["id"]+".json",ji);
+    apodjson.write_json("compiled/tables/"+ji["id"]+".json",ji);
 

@@ -10,16 +10,7 @@ import copy
 import struct
 import pathlib
 
-def load_json(path):
-    f = open(path,"r",encoding='utf-8')
-    j = json.load(f)
-    f.close()
-    return j
-
-def write_json(path,ji):
-    f = open(path,"w",encoding='utf-8')
-    json.dump(ji,f,indent=4)
-    f.close()
+import apodjson
 
 # init
 books = { }
@@ -153,7 +144,7 @@ for path in g:
     if basename == None or basename == "":
         raise Exception("What??")
     #
-    ji = load_json(path)
+    ji = apodjson.load_json(path)
     if not "id" in ji:
         continue
     if not "type" in ji:
@@ -185,5 +176,5 @@ for path in g:
 if not os.path.exists("compiled"):
     os.mkdir("compiled")
 
-write_json("compiled/sources.json",books);
+apodjson.write_json("compiled/sources.json",books);
 
