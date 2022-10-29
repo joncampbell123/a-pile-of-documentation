@@ -1,0 +1,12 @@
+{
+	"id": "ibm-ps2-mouse-commands-synaptics-touchpad",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"id": "hackipedia-org",
+		"type": "website",
+		"url": "http://hackipedia.org/browse.cgi/Computer/Platform/PC%2c%20IBM%20compatible/Mouse/PS%e2%88%952%20mouse%2c%20via%208042/Mouse/The%20PS%2d2%20Mouse%20Interface%20by%20Adam%20Chapweske%20%282003%2d04%2d01%29%2ehtm"
+	},
+	"table in csv": true
+}
