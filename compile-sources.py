@@ -11,6 +11,7 @@ import struct
 import pathlib
 
 import apodjson
+import apodhtml
 
 # init
 books = { }
