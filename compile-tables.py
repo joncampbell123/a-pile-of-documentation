@@ -485,7 +485,7 @@ def procconttenttable(scan,obj):
             rows.append(drowobj)
     #
     ji["source json file"] = path
-    for what in ["schema","table in csv","table","table columns","base definition"]:
+    for what in ["schema","table in csv","table","table columns","base definition","table column array separator","table column range separator"]:
         if what in ji:
             del ji[what]
     if not source_obj == None:
