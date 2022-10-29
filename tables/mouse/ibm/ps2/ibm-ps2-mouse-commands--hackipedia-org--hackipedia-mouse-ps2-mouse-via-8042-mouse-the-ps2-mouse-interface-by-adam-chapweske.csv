@@ -1,0 +1,18 @@
+cmdbyte,params,command,comments
+0xFF,,Reset,"The mouse responds to this command with "acknowledge" (FAh) then enters Reset Mode."
+0xFE,,Resend,"The host sends this command whenever it receives invalid data from the mouse. The mouse responds by resending the last packet it sent to the host"
+0xF6,,Set Defaults,"The mouse responds with 'acknowledge' (FAh) then loads the following values: Sampling rate = 100, Resolution = 4 counts/mm, Scaling = 1:1, Disable Data Reporting. The mouse then resets its movement counters and enters stream mode."
+0xF5,,Disable Data Reporting,"The mouse responds with 'acknowledge' (FAh) then disables data reporting and resets its movement counters. This only effects data reporting in Stream mode and does not disable sampling. Disabled stream mode funcions the same as remote mode."
+0xF4,,Enable Data Reporting,"The mouse responds with 'acknowledge' (FAh) then enables data reporting and resets its movement counters. This command may be issued while the mouse is in Remote Mode (or Stream mode), but it will only effect data reporting in Stream mode."
+0xF3,nn,Set Sample Rate,"The mouse responds with 'acknowledge' (FAh) then reads one more byte from the host. The mouse saves this byte as the new sample rate. After receiving the sample rate, the mouse again responds with 'acknowledge' (0xFA) and resets its movement counters. Valid sample rates are 10, 20, 40, 60, 80, 100, and 200 samples/sec."
+0xF2,,Get Device ID,The mouse responds with "acknowledge" (FAh) followed by its device ID (00h for the standard PS/2 mouse.)  The mouse should also reset its movement counters.
+0xF0,,Set Remote Mode,The mouse responds with "acknowledge" (FAh) then resets its movement counters and enters remote mode.
+0xEE,,Set Wrap Mode,The mouse responds with "acknowledge" (FAh) then resets its movement counters and  enters wrap mode.
+0xEC,,Reset Wrap Mode,The mouse responds with "acknowledge" (FAh) then resets its movement counters and enters the mode it was in prior to wrap mode (Stream Mode or Remote Mode.)
+0xEB,,Read Data,"The mouse responds with acknowledge (FAh) then sends a movement data packet. This is the only way to read data in Remote Mode. After the data packets has been successfully sent, it resets its movement counters."
+0xEA,,Set Stream Mode,The mouse responds with "acknowledge" then resets its movement counters and enters steram mode.
+0xE9,,Status Request,The mouse responds with "acknowledge" then sends a 3 byte status packet.
+0xE8,nn,Set Resolution,The mouse responds with acknowledge (FAh) then reads one byte from the host and again responds with acknowledge (FAh) then resets its movement counters.
+0xE7,,Set Scaling 2:1,The mouse responds with acknowledge (FAh) then enables 2:1 scaling (discussed earlier in this document.)
+0xE6,,Set Scaling 1:1,The mouse responds with acknowledge (FAh) then enables 1:1 scaling (discussed earlier in this document.)
+

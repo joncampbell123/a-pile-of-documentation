@@ -1,0 +1,46 @@
+{
+	"table": "IBM compatible PS/2 mouse commands",
+	"id": "ibm-ps2-mouse-commands",
+	"combinable": true,
+	"description": "PS/2 mouse commands, typically written to AUX on the 8042",
+	"base definition": true,
+	"schema": {
+		"version": 1
+	},
+	"table columns": [
+		{
+			"type": "uint8_t",
+			"display": "hex",
+			"name": "cmdbyte",
+			"is array": true,
+			"is range": true,
+			"title": "Command byte",
+			"required": true
+		},
+		{
+			"type": "uint8_t",
+			"display": "hex",
+			"name": "params",
+			"title": "Syntax",
+			"required": true,
+			"is array": true,
+			"description": "Command parameters"
+		},
+		{
+			"type": "string",
+			"case insensitive": true,
+			"combine different": true,
+			"name": "command",
+			"title": "Command",
+			"required": true
+		},
+		{
+			"type": "string",
+			"case insensitive": true,
+			"combine different": true,
+			"name": "comments",
+			"title": "Comments",
+			"description": "Additional comments"
+		}
+	]
+}
