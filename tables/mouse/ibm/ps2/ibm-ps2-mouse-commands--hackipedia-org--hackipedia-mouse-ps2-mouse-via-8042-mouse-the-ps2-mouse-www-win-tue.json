@@ -1,0 +1,13 @@
+{
+	"id": "ibm-ps2-mouse-commands",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"id": "hackipedia-org",
+		"type": "website",
+		"url": "http://hackipedia.org/browse.cgi/Computer/Platform/PC%2c%20IBM%20compatible/Mouse/PS%e2%88%952%20mouse%2c%20via%208042/Mouse/The%20PS%e2%88%952%20Mouse%20%28www%2ewin%2etue%2enl%29%2ehtml",
+		"notes": "Every command or data byte sent to the mouse (except for the resend command fe) is ACKed with fa. If the command or data is invalid, it is NACKed with fe. If the next byte is again invalid, the reply is ERROR: fc."
+	},
+	"table in csv": true
+}
