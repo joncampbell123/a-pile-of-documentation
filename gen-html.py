@@ -14,37 +14,124 @@ import apodtoc
 import apodjson
 import apodhtml
 
+class htmlelem:
+    tag = None # string
+    attr = None # object (dict)
+    content = None # binary
+    def __init__(self,tag,attr={ },content=None):
+        if not content == None and isinstance(content,str):
+            self.content = apodhtml.htmlescape(content).encode('UTF-8')
+        else:
+            self.content = content
+        self.attr = attr
+        self.tag = tag
+    def opentag(self):
+        return b"<"+self.tagcontent()+b">"
+    def closetag(self):
+        return b"</"+self.tag.encode('UTF-8')+b">"
+    def octag(self):
+        return b"<"+self.tagcontent()+b" />"
+    def tagcontent(self):
+        r = self.tag.encode('UTF-8')
+        if not self.attr == None and type(self.attr) == dict and len(self.attr) > 0:
+            for key in self.attr:
+                val = self.attr[key]
+                r += b" "+key.encode('UTF-8')
+                if not val == None:
+                    r += b"=\""+apodhtml.htmlescape(val).encode('UTF-8')+b"\""
+        return r
+
+class htmlwriter:
+    content = None
+    stack = None
+    def __init__(self):
+        self.content = None
+        self.stack = [ ]
+    def out(self,x):
+        if self.content == None:
+            self.content = b""
+        self.content += x
+    def topelemopen(self):
+        if len(self.stack) > 0 and self.stack[-1].content == None:
+            self.stack[-1].content = b""
+            self.out(self.stack[-1].opentag())
+    def topelemclose(self):
+        if len(self.stack) > 0:
+            if self.stack[-1].content == None:
+                self.out(self.stack[-1].octag())
+            else:
+                self.out(self.stack[-1].closetag())
+    def writetag(self,whtmlelem):
+        if not whtmlelem.content == None:
+            self.out(whtmlelem.opentag())
+            if isinstance(whtmlelem.content,htmlelem): # we allow tags within tags here
+                self.writetag(whtmlelem.content)
+            else:
+                self.out(whtmlelem.content)
+            self.out(whtmlelem.closetag())
+        else:
+            self.out(whtmlelem.octag())
+    def write(self,whtmlelem):
+        self.topelemopen()
+        self.writetag(whtmlelem)
+    def get(self):
+        if len(self.stack) > 0:
+            raise Exception("Attempt to render HTML without closing all tags with end()")
+        if not self.content == None:
+            r = self.content
+        else:
+            r = b""
+        self.content = None
+        return r
+    def begin(self,htmlelem):
+        self.topelemopen()
+        self.stack.append(htmlelem)
+    def end(self):
+        if len(self.stack) == 0:
+            raise Exception("HTML end with nothing left")
+        self.topelemclose()
+        self.stack.pop()
+
+def genfrag_sinfo_row(hw,name,value,rowattr={}):
+    hw.begin(htmlelem(tag="tr",attr=rowattr))
+    hw.write(htmlelem(tag="td",content=name))
+    hw.write(htmlelem(tag="td",content=value))
+    hw.end() # tr
+
 def genfrag(bookid,ji):
-    r = b"<a id=\""+apodhtml.mkhtmlid("source",ji["id"]).encode('UTF-8')+b"\"></a>"
-    r += b"<table class=\"apodsource\">\n"
-    r += b"<tr class=\"apodsourceid\"><td>ID:</td><td>"+apodhtml.htmlescape(bookid).encode('UTF-8')+b"</td></tr>\n";
+    hw = htmlwriter()
+    hw.write(htmlelem(tag="a",attr={ "id": ji["id"] }))
+    hw.begin(htmlelem(tag="table",attr={ "class": "apodsource" }))
+    #
+    genfrag_sinfo_row(hw,"ID:",bookid,rowattr={ "class": "apodsourceid" })
     if "type" in ji:
-        r += b"<tr class=\"apodsourcetype\"><td>Type:</td><td>"+apodhtml.htmlescape(ji["type"]).encode('UTF-8')+b"</td></tr>\n";
+        genfrag_sinfo_row(hw,"Type:",ji["type"],rowattr={ "class": "apodsourcetype" })
     if "title" in ji:
-        r += b"<tr class=\"apodsourcetitle\"><td>Title:</td><td>"+apodhtml.htmlescape(ji["title"]).encode('UTF-8')+b"</td></tr>\n";
+        genfrag_sinfo_row(hw,"Title:",ji["title"],rowattr={ "class": "apodsourcetitle" })
     if "url" in ji:
-        r += b"<tr class=\"apodsourceurl\"><td>URL:</td><td><a target=\"_blank\" href=\""+ji["url"].encode('UTF-8')+b"\">"+apodhtml.htmlescape(ji["url"]).encode('UTF-8')+b"</a></td></tr>\n";
+        ahref = htmlelem(tag="a",content=ji["url"],attr={ "target": "_blank", "href": ji["url"] })
+        genfrag_sinfo_row(hw,"URL:",ahref,rowattr={ "class": "apodsourceurl" })
     if "author" in ji:
-        r += b"<tr class=\"apodsourceauthor\"><td>Author:</td><td>"+apodhtml.htmlescape(ji["author"]).encode('UTF-8')+b"</td></tr>\n";
+        genfrag_sinfo_row(hw,"Author:",ji["author"],rowattr={ "class": "apodsourceauthor" })
     if "publisher" in ji:
-        r += b"<tr class=\"apodsourcepublisher\"><td>Publisher:</td><td>"+apodhtml.htmlescape(ji["publisher"]).encode('UTF-8')+b"</td></tr>\n";
+        genfrag_sinfo_row(hw,"Publisher:",ji["publisher"],rowattr={ "class": "apodsourcepublisher" })
     if "language" in ji:
-        r += b"<tr class=\"apodsourcelanguage\"><td>Language:</td><td>"+apodhtml.htmlescape(ji["language"]).encode('UTF-8')+b"</td></tr>\n";
+        genfrag_sinfo_row(hw,"Language:",ji["language"],rowattr={ "class": "apodsourcelanguage" })
     if "copyright" in ji:
         cpy = ji["copyright"]
-        # TODO: Perhaps this can be a list (array) for multiple copyrights
-        # TODO: Perhaps "year" can be a list (array) for multiple copyright years
-        r += b"<tr class=\"apodsourcecopyright\"><td>Copyright:</td><td>"+"© ".encode('UTF-8');
+        r = "©"
         if "year" in cpy:
-            r += b" "+str(cpy["year"]).encode('UTF-8');
+            r += " "+str(cpy["year"]);
         if "by" in cpy:
-            r += b" "+cpy["by"].encode('UTF-8');
-        r += b"</td></tr>\n";
+            r += " "+cpy["by"];
+        genfrag_sinfo_row(hw,"Copyright:",r,rowattr={ "class": "apodsourcecopyright" })
     if "isbn" in ji:
         isbn = ji["isbn"]
         for what in isbn:
-            r += b"<tr class=\"apodsourceisbn\"><td>ISBN:</td><td>"+apodhtml.htmlescape(isbn[what]+" ("+what.upper()+")").encode('UTF-8')+b"</td></tr>\n";
-    r += b"</table>\n"
+            genfrag_sinfo_row(hw,"ISBN:",isbn[what]+" ("+what.upper()+")",rowattr={ "class": "apodsourceisbn" })
+    #
+    hw.end() # table
+    r = hw.get()
     #
     if "table of contents" in ji:
         toc = ji["table of contents"]
@@ -150,7 +237,7 @@ writewhole_beginbody(f)
 sidcount = 0
 for sid in proclist:
     if sidcount > 0:
-        f.write(b"<hr class=\"apodsourcetoclistentseparator\">")
+        f.write(b"<hr class=\"apodsourcetoclistentseparator\" />")
     path = "compiled/sources/"+sid+".html.frag"
     sf = open(path,"rb")
     sf.seek(0,os.SEEK_END)
