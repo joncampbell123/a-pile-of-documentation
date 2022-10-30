@@ -19,12 +19,20 @@ class htmlelem:
     attr = None # object (dict) key=string, value=string
     content = None # binary
     def __init__(self,tag,attr={ },content=None):
-        if not content == None and isinstance(content,str):
-            self.content = apodhtml.htmlescape(content).encode('UTF-8')
-        else:
-            self.content = content
+        self.content = self.encodecontent(content)
         self.attr = attr
         self.tag = tag
+    def encodecontent(self,content):
+        if isinstance(content,list):
+            r = b""
+            for cent in content:
+                r += self.encodecontent(cent)
+            return r
+        else:
+            if not content == None and isinstance(content,str):
+                return apodhtml.htmlescape(content).encode('UTF-8')
+            else:
+                return content
     def opentag(self):
         return b"<"+self.tagcontent()+b">"
     def closetag(self):
