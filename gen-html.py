@@ -34,7 +34,7 @@ def genfrag(bookid,ji):
         cpy = ji["copyright"]
         # TODO: Perhaps this can be a list (array) for multiple copyrights
         # TODO: Perhaps "year" can be a list (array) for multiple copyright years
-        r += b"<tr class=\"apodsourcecopyright\"><td>Copyright:</td><td>&copy;";
+        r += b"<tr class=\"apodsourcecopyright\"><td>Copyright:</td><td>"+"© ".encode('UTF-8');
         if "year" in cpy:
             r += b" "+str(cpy["year"]).encode('UTF-8');
         if "by" in cpy:
@@ -90,9 +90,9 @@ def writefrag(bookid,ji,htmlfrag):
 def writewhole(bookid,ji,htmlfrag):
     path = "compiled/sources/"+bookid+".html"
     f = open(path,"wb")
-    f.write("<!doctype html><html><head>".encode('UTF-8'))
-    f.write("<meta charset=\"UTF-8\">".encode('UTF-8'))
-    f.write("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\">".encode('UTF-8'))
+    f.write("<!DOCTYPE HTML>\n<html><head>".encode('UTF-8'))
+    f.write("<meta charset=\"UTF-8\" />".encode('UTF-8'))
+    f.write("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\" />".encode('UTF-8'))
     if "title" in ji:
         f.write(("<title>"+apodhtml.htmlescape(ji["title"])+"</title>").encode('UTF-8'))
     f.write("</head><body>".encode('UTF-8'))
@@ -130,9 +130,9 @@ proclist.sort()
 
 # make overall source list HTML too
 f = open("compiled/sources.html","wb")
-f.write("<!doctype html><html><head>".encode('UTF-8'))
-f.write("<meta charset=\"UTF-8\">".encode('UTF-8'))
-f.write("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\">".encode('UTF-8'))
+f.write("<!DOCTYPE HTML>\n<html><head>".encode('UTF-8'))
+f.write("<meta charset=\"UTF-8\" />".encode('UTF-8'))
+f.write("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\" />".encode('UTF-8'))
 f.write("<title>Sources</title>".encode('UTF-8'))
 f.write("</head><body>".encode('UTF-8'))
 sidcount = 0
