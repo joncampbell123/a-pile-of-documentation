@@ -16,13 +16,14 @@ import apodhtml
 
 def genfrag(bookid,ji):
     r = b"<a id=\""+apodhtml.mkhtmlid("source",ji["id"]).encode('UTF-8')+b"\"></a>"
-    r += b"<table>\n"
+    r += b"<table class=\"apodsource\">\n"
+    r += b"<tr class=\"apodsourceid\"><td>ID:</td><td>"+apodhtml.htmlescape(bookid).encode('UTF-8')+b"</td>\n";
     if "type" in ji:
-        r += b"<tr><td>Type:</td><td>"+apodhtml.htmlescape(ji["type"]).encode('UTF-8')+b"</td>\n";
+        r += b"<tr class=\"apodsourcetype\"><td>Type:</td><td>"+apodhtml.htmlescape(ji["type"]).encode('UTF-8')+b"</td>\n";
     if "title" in ji:
-        r += b"<tr><td>Title:</td><td>"+apodhtml.htmlescape(ji["title"]).encode('UTF-8')+b"</td>\n";
+        r += b"<tr class=\"apodsourcetitle\"><td>Title:</td><td>"+apodhtml.htmlescape(ji["title"]).encode('UTF-8')+b"</td>\n";
     if "url" in ji:
-        r += b"<tr><td>URL:</td><td><a target=\"_blank\" href=\""+ji["url"].encode('UTF-8')+b"\">"+apodhtml.htmlescape(ji["url"]).encode('UTF-8')+b"</a></td>\n";
+        r += b"<tr class=\"apodsourceurl\"><td>URL:</td><td><a target=\"_blank\" href=\""+ji["url"].encode('UTF-8')+b"\">"+apodhtml.htmlescape(ji["url"]).encode('UTF-8')+b"</a></td>\n";
     r += b"</table>"
     return r
 
