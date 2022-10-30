@@ -216,6 +216,7 @@ def writewhole(bookid,ji,htmlfrag):
     writewhole_beginhead(f)
     if "title" in ji:
         f.write(("<title>"+apodhtml.htmlescape(ji["title"])+"</title>").encode('UTF-8'))
+    f.write(("<link rel=\"stylesheet\" href=\"../sources.css\" />").encode('UTF-8'))
     writewhole_endhead(f)
     writewhole_beginbody(f)
     f.write(htmlfrag)
@@ -254,6 +255,7 @@ proclist.sort()
 f = open("compiled/sources.html","wb")
 writewhole_beginhead(f)
 f.write("<title>Sources</title>".encode('UTF-8'))
+f.write(("<link rel=\"stylesheet\" href=\"sources.css\" />").encode('UTF-8'))
 writewhole_endhead(f)
 writewhole_beginbody(f)
 sidcount = 0
@@ -262,14 +264,16 @@ for sid in proclist:
         f.write(b"<hr class=\"apodsourcetoclistentseparator\" />\n")
     path = "compiled/sources/"+sid+".html.frag"
     sf = open(path,"rb")
-    sf.seek(0,os.SEEK_END)
-    sz = sf.tell()
-    sf.seek(0,os.SEEK_SET)
-    htmlfrag = sf.read()
-    f.write(htmlfrag)
+    f.write(sf.read())
     sf.close()
     sidcount = sidcount + 1
     os.unlink(path) # don't leave them around!
 writewhole_endbody(f)
 f.close()
 
+# cascading stylesheet too
+sf = open("sources.html.css","rb")
+df = open("compiled/sources.css","wb")
+df.write(sf.read())
+df.close()
+sf.close()

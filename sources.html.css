@@ -1,0 +1,22 @@
+
+table.apodsource {
+	border-spacing: 0px;
+	font-size: 10pt;
+	margin: 0px;
+}
+
+table.apodsource td {
+	padding: 0px;
+	padding-right: 2em;
+}
+
+tr.apodsourceid {
+	background-color: #DFDFDF;
+}
+
+ul.apodsourcetoclist {
+	font-size: 9pt;
+	padding-left: 2em;
+	list-style-type: circle;
+}
+
