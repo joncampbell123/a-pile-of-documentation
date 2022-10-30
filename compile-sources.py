@@ -14,8 +14,11 @@ import apodtoc
 import apodjson
 import apodhtml
 
-# init
-books = { }
+# write it
+if not os.path.exists("compiled"):
+    os.mkdir("compiled")
+if not os.path.exists("compiled/sources"):
+    os.mkdir("compiled/sources")
 
 # scan "contents" in "table of contents" recursively here.
 # refby: "reference by" object, to contain keys of content names and objects providing the full hierarchy
@@ -161,8 +164,6 @@ for path in g:
         continue
     if not "type" in ji:
         continue
-    if ji["id"] in books:
-        raise Exception("Book "+ji["id"]+" already exists")
     # the "id" must match the file name because that's the only way we can keep our sanity
     # maintaining this collection.
     if not basename == (ji["id"] + ".json"):
@@ -182,11 +183,5 @@ for path in g:
     ji["schema"]["compiled version"] = 1
     ji["source json file"] = path
     #
-    books[ji["id"]] = ji
-
-# write it
-if not os.path.exists("compiled"):
-    os.mkdir("compiled")
-
-apodjson.write_json("compiled/sources.json",books);
+    apodjson.write_json("compiled/sources/"+ji["id"]+".json",ji);
 
