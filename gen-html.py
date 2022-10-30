@@ -16,7 +16,7 @@ import apodhtml
 
 class htmlelem:
     tag = None # string
-    attr = None # object (dict)
+    attr = None # object (dict) key=string, value=string
     content = None # binary
     def __init__(self,tag,attr={ },content=None):
         if not content == None and isinstance(content,str):
