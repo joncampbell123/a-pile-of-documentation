@@ -44,7 +44,7 @@ def genfrag(bookid,ji):
         isbn = ji["isbn"]
         for what in isbn:
             r += b"<tr class=\"apodsourceisbn\"><td>ISBN:</td><td>"+apodhtml.htmlescape(isbn[what]+" ("+what.upper()+")").encode('UTF-8')+b"</td></tr>\n";
-    r += b"</table>"
+    r += b"</table>\n"
     #
     if "table of contents" in ji:
         toc = ji["table of contents"]
@@ -60,11 +60,11 @@ def genfrag(bookid,ji):
                     if tldpth > (curlev+1):
                         raise Exception("Unexpected jump in depth")
                     if curlev < tldpth:
-                        r += b"<ul class=\"apodsourcetoclist\">"
+                        r += b"<ul class=\"apodsourcetoclist\">\n"
                         curlev = curlev + 1
                     else:
                         while curlev > tldpth:
-                            r += b"</ul>"
+                            r += b"</ul>\n"
                             curlev = curlev - 1
                     if not curlev == tldpth:
                         raise Exception("Depth mismatch")
@@ -73,10 +73,10 @@ def genfrag(bookid,ji):
                     if not lookup == None:
                         if "page" in lookup:
                             r += b" <span class=\"apodsourcetoclistentpagenumber\">(page "+str(lookup["page"]).encode('UTF-8')+b")</span>"
-                    r += b"</li>"
+                    r += b"</li>\n"
             #
             while curlev > 0:
-                r += b"</ul>"
+                r += b"</ul>\n"
                 curlev = curlev - 1
     #
     return r
