@@ -10,6 +10,7 @@ import copy
 import struct
 import pathlib
 
+import apodtoc
 import apodjson
 import apodhtml
 
