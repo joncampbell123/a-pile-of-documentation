@@ -101,6 +101,7 @@ def writewhole(bookid,ji,htmlfrag):
     f.close()
 
 # process
+proclist = [ ]
 g = glob.glob("compiled/sources/*.json",recursive=True)
 for path in g:
     pathelem = path.split('/')
@@ -123,4 +124,29 @@ for path in g:
     htmlfrag = genfrag(ji["id"],ji)
     writefrag(ji["id"],ji,htmlfrag)
     writewhole(ji["id"],ji,htmlfrag)
+    proclist.append(ji["id"])
+#
+proclist.sort()
 
+# make overall source list HTML too
+f = open("compiled/sources.html","wb")
+f.write("<!doctype html><html><head>".encode('UTF-8'))
+f.write("<meta charset=\"UTF-8\">".encode('UTF-8'))
+f.write("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\">".encode('UTF-8'))
+f.write("<title>Sources</title>".encode('UTF-8'))
+f.write("</head><body>".encode('UTF-8'))
+sidcount = 0
+for sid in proclist:
+    if sidcount > 0:
+        f.write(b"<hr class=\"apodsourcetoclistentseparator\">")
+    path = "compiled/sources/"+sid+".html.frag"
+    sf = open(path,"rb")
+    sf.seek(0,os.SEEK_END)
+    sz = sf.tell()
+    sf.seek(0,os.SEEK_SET)
+    htmlfrag = sf.read()
+    f.write(htmlfrag)
+    sf.close()
+    sidcount = sidcount + 1
+f.write("</body></html>".encode('UTF-8'))
+f.close()
