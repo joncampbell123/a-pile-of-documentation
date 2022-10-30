@@ -48,9 +48,8 @@ sources = { }
 # load on demand
 def sources_load(sources,source_id):
     if not source_id in sources:
-        r = sources[source_id] = apodjson.load_json("compiled/sources/"+source_id+".json")
-        return r
-    elif source_id in sources:
+        sources[source_id] = apodjson.load_json("compiled/sources/"+source_id+".json")
+    if source_id in sources:
         return sources[source_id]
     return None
 
