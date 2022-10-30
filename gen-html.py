@@ -142,9 +142,7 @@ def genfrag_sourceinfo(bookid,ji):
     hw.end() # table
     return hw.get()
 
-def genfrag(bookid,ji):
-    r = genfrag_sourceinfo(bookid,ji)+b"\n"
-    #
+def genfrag_sourcetoc(bookid,ji):
     if "table of contents" in ji:
         toc = ji["table of contents"]
         if "toc list" in toc:
@@ -178,8 +176,17 @@ def genfrag(bookid,ji):
             while curlev > 0:
                 hw.end() # ul
                 curlev = curlev - 1
-        #
-        r += hw.get()+b"\n"
+            #
+            return hw.get()
+    #
+    return None
+
+def genfrag(bookid,ji):
+    r = genfrag_sourceinfo(bookid,ji)+b"\n"
+    #
+    tr = genfrag_sourcetoc(bookid,ji)
+    if not tr == None and not tr == b"":
+        r += tr+b"\n"
     #
     return r
 
