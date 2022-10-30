@@ -45,8 +45,14 @@ def tocpathtoobj(p):
 # init
 sources = { }
 
-# load compiled sources
-sources = apodjson.load_json("compiled/sources.json")
+# load on demand
+def sources_load(sources,source_id):
+    if not source_id in sources:
+        r = sources[source_id] = apodjson.load_json("compiled/sources/"+source_id+".json")
+        return r
+    elif source_id in sources:
+        return sources[source_id]
+    return None
 
 # write it
 if not os.path.exists("compiled"):
@@ -294,9 +300,9 @@ def procconttenttable(scan,obj):
         if not basename[0:cut] == match:
             raise Exception("Table "+ji["id"]+" id and source "+source_id+" id does not match filename "+basename)
         # does the source exist?
-        if not source_id in sources:
+        sourceref = sources_load(sources,source_id)
+        if sourceref == None:
             raise Exception("Table "+ji["id"]+" no such source "+source_id)
-        sourceref = sources[source_id]
         if "type" in sourceref and not source_type == None:
             if not sourceref["type"] == source_type:
                 raise Exception("Table "+ji["id"]+" source "+source_id+" type mismatch")
