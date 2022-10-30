@@ -98,7 +98,7 @@ def genfrag_sinfo_row(hw,name,value,rowattr={}):
     hw.write(htmlelem(tag="td",content=value))
     hw.end() # tr
 
-def genfrag(bookid,ji):
+def genfrag_sourceinfo(bookid,ji):
     hw = htmlwriter()
     hw.write(htmlelem(tag="a",attr={ "id": ji["id"] }))
     hw.begin(htmlelem(tag="table",attr={ "class": "apodsource" }))
@@ -131,7 +131,10 @@ def genfrag(bookid,ji):
             genfrag_sinfo_row(hw,"ISBN:",isbn[what]+" ("+what.upper()+")",rowattr={ "class": "apodsourceisbn" })
     #
     hw.end() # table
-    r = hw.get()+b"\n"
+    return hw.get()
+
+def genfrag(bookid,ji):
+    r = genfrag_sourceinfo(bookid,ji)+b"\n"
     #
     if "table of contents" in ji:
         toc = ji["table of contents"]
