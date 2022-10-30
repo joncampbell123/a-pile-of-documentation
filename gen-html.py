@@ -131,7 +131,7 @@ def genfrag(bookid,ji):
             genfrag_sinfo_row(hw,"ISBN:",isbn[what]+" ("+what.upper()+")",rowattr={ "class": "apodsourceisbn" })
     #
     hw.end() # table
-    r = hw.get()
+    r = hw.get()+b"\n"
     #
     if "table of contents" in ji:
         toc = ji["table of contents"]
@@ -180,10 +180,10 @@ def writewhole_beginhead(f):
     f.write("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\" />".encode('UTF-8'))
 
 def writewhole_endhead(f):
-    f.write(b"</head>")
+    f.write(b"</head>\n")
 
 def writewhole_beginbody(f):
-    f.write("<body>".encode('UTF-8'))
+    f.write("<body>\n".encode('UTF-8'))
 
 def writewhole_endbody(f):
     f.write("</body></html>".encode('UTF-8'))
@@ -237,7 +237,7 @@ writewhole_beginbody(f)
 sidcount = 0
 for sid in proclist:
     if sidcount > 0:
-        f.write(b"<hr class=\"apodsourcetoclistentseparator\" />")
+        f.write(b"<hr class=\"apodsourcetoclistentseparator\" />\n")
     path = "compiled/sources/"+sid+".html.frag"
     sf = open(path,"rb")
     sf.seek(0,os.SEEK_END)
