@@ -45,6 +45,40 @@ def genfrag(bookid,ji):
         for what in isbn:
             r += b"<tr class=\"apodsourceisbn\"><td>ISBN:</td><td>"+apodhtml.htmlescape(isbn[what]+" ("+what.upper()+")").encode('UTF-8')+b"</td>\n";
     r += b"</table>"
+    #
+    if "table of contents" in ji:
+        toc = ji["table of contents"]
+        if "toc list" in toc:
+            toclist = toc["toc list"]
+            curlev = 0
+            for tlent in toclist:
+                if "path" in tlent and "title" in tlent and "depth" in tlent:
+                    tlepth = tlent["path"]
+                    tletit = tlent["title"]
+                    tldpth = tlent["depth"]
+                    lookup = apodtoc.apodsourcetocpathlookup(ji,tlepth)
+                    if tldpth > (curlev+1):
+                        raise Exception("Unexpected jump in depth")
+                    if curlev < tldpth:
+                        r += b"<ul class=\"apodsourcetoclist\">"
+                        curlev = curlev + 1
+                    else:
+                        while curlev > tldpth:
+                            r += b"</ul>"
+                            curlev = curlev - 1
+                    if not curlev == tldpth:
+                        raise Exception("Depth mismatch")
+                    r += b"<li class=\"apodsourcetoclistent\" id=\""+apodhtml.mkhtmlid("source",bookid,tlepth).encode('UTF-8')+b"\">"
+                    r += b"<span class=\"apodsourcetoclistenttitle\">"+tletit.encode('UTF-8')+b"</span>"
+                    if not lookup == None:
+                        if "page" in lookup:
+                            r += b" <span class=\"apodsourcetoclistentpagenumber\">(page "+str(lookup["page"]).encode('UTF-8')+b")</span>"
+                    r += b"</li>"
+            #
+            while curlev > 0:
+                r += b"</ul>"
+                curlev = curlev - 1
+    #
     return r
 
 def writefrag(bookid,ji,htmlfrag):
