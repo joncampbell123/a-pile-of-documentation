@@ -30,6 +30,20 @@ def genfrag(bookid,ji):
         r += b"<tr class=\"apodsourcepublisher\"><td>Publisher:</td><td>"+apodhtml.htmlescape(ji["publisher"]).encode('UTF-8')+b"</td>\n";
     if "language" in ji:
         r += b"<tr class=\"apodsourcelanguage\"><td>Language:</td><td>"+apodhtml.htmlescape(ji["language"]).encode('UTF-8')+b"</td>\n";
+    if "copyright" in ji:
+        cpy = ji["copyright"]
+        # TODO: Perhaps this can be a list (array) for multiple copyrights
+        # TODO: Perhaps "year" can be a list (array) for multiple copyright years
+        r += b"<tr class=\"apodsourcecopyright\"><td>Copyright:</td><td>&copy;";
+        if "year" in cpy:
+            r += b" "+str(cpy["year"]).encode('UTF-8');
+        if "by" in cpy:
+            r += b" "+cpy["by"].encode('UTF-8');
+        r += b"</td>\n";
+    if "isbn" in ji:
+        isbn = ji["isbn"]
+        for what in isbn:
+            r += b"<tr class=\"apodsourceisbn\"><td>ISBN:</td><td>"+apodhtml.htmlescape(isbn[what]+" ("+what.upper()+")").encode('UTF-8')+b"</td>\n";
     r += b"</table>"
     return r
 
