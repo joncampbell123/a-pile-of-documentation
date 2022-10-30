@@ -54,7 +54,7 @@ books = { }
 #                   },
 #
 # Recursion is used to drill deeper into the object
-def tocbyref(refby,contents,hiernames,hlevel,nhierlist):
+def tocbyref(refby,toclist,contents,hiernames,hlevel,nhierlist):
     if "group" in contents:
         group = contents["group"]
         if not type(group) == list:
@@ -73,8 +73,12 @@ def tocbyref(refby,contents,hiernames,hlevel,nhierlist):
             #
             srf["level"] = hlevel
             srf["path"].append(nfo)
+            tnfo = { "path": srf["path"].copy(), "depth": len(srf["path"]) }
+            if "title" in ent:
+                tnfo["title"] = ent["title"]
+            toclist.append(tnfo)
             #
-            tocbyref(refby,ent,srf,hlevel,nhierlist)
+            tocbyref(refby,toclist,ent,srf,hlevel,nhierlist)
     #
     if not hlevel in contents:
         return
@@ -88,6 +92,10 @@ def tocbyref(refby,contents,hiernames,hlevel,nhierlist):
             raise Exception("Must be list");
         srf["level"] = hlevel
         srf["path"].append({ "level": hlevel, "name": levname });
+        tnfo = { "path": srf["path"].copy(), "depth": len(srf["path"]) }
+        if "title" in levent:
+            tnfo["title"] = levent["title"]
+        toclist.append(tnfo)
         #
         if not levname in refby:
             refby[levname] = srf
@@ -97,7 +105,7 @@ def tocbyref(refby,contents,hiernames,hlevel,nhierlist):
             refby[levname].append(srf)
         #
         if len(nhierlist) > 0:
-            tocbyref(refby,levent,srf,nhierlist[0],nhierlist[1:])
+            tocbyref(refby,toclist,levent,srf,nhierlist[0],nhierlist[1:])
 
 # process "table of contents" JSON object
 def proc_table_of_contents(ji):
@@ -130,10 +138,12 @@ def proc_table_of_contents(ji):
     if "reference by" in toc:
         raise Exception("TOC contents already compiled into lookup in "+str(ji["id"]))
     refby = { }
+    toclist = [ ]
     # process contents by hierarchy (TODO: Allow sub-hierarchy if there are weird books like that)
     if len(hierlist) > 0:
-        tocbyref(refby,contents,{ "path": [ ] },hierlist[0],hierlist[1:])
+        tocbyref(refby,toclist,contents,{ "path": [ ] },hierlist[0],hierlist[1:])
     toc["reference by"] = refby
+    toc["toc list"] = toclist
 
 # process
 g = glob.glob("sources/**/*.json",recursive=True)
