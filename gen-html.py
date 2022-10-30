@@ -31,6 +31,8 @@ class htmlelem:
         else:
             if not content == None and isinstance(content,str):
                 return apodhtml.htmlescape(content).encode('UTF-8')
+            elif isinstance(content,htmlelem): # we allow tags within tags here
+                return content.gettag()
             else:
                 return content
     def opentag(self):
@@ -48,6 +50,15 @@ class htmlelem:
                 if not val == None:
                     r += b"=\""+apodhtml.htmlescape(val).encode('UTF-8')+b"\""
         return r
+    def gettag(self):
+        if not self.content == None:
+            r = self.opentag()
+            if not self.content == None:
+                r += self.content
+            r += self.closetag()
+            return r
+        else:
+            return self.octag()
 
 class htmlwriter:
     content = None
@@ -69,19 +80,9 @@ class htmlwriter:
                 self.out(self.stack[-1].octag())
             else:
                 self.out(self.stack[-1].closetag())
-    def writetag(self,whtmlelem):
-        if not whtmlelem.content == None:
-            self.out(whtmlelem.opentag())
-            if isinstance(whtmlelem.content,htmlelem): # we allow tags within tags here
-                self.writetag(whtmlelem.content)
-            else:
-                self.out(whtmlelem.content)
-            self.out(whtmlelem.closetag())
-        else:
-            self.out(whtmlelem.octag())
     def write(self,whtmlelem):
         self.topelemopen()
-        self.writetag(whtmlelem)
+        self.out(whtmlelem.gettag())
     def get(self):
         if len(self.stack) > 0:
             raise Exception("Attempt to render HTML without closing all tags with end()")
@@ -148,6 +149,7 @@ def genfrag(bookid,ji):
         toc = ji["table of contents"]
         if "toc list" in toc:
             toclist = toc["toc list"]
+            hw = htmlwriter()
             curlev = 0
             for tlent in toclist:
                 if "path" in tlent and "title" in tlent and "depth" in tlent:
@@ -158,24 +160,26 @@ def genfrag(bookid,ji):
                     if tldpth > (curlev+1):
                         raise Exception("Unexpected jump in depth")
                     if curlev < tldpth:
-                        r += b"<ul class=\"apodsourcetoclist\">\n"
+                        hw.begin(htmlelem(tag='ul',attr={ "class": "apodsourcetoclist" }))
                         curlev = curlev + 1
                     else:
                         while curlev > tldpth:
-                            r += b"</ul>\n"
+                            hw.end() # ul
                             curlev = curlev - 1
                     if not curlev == tldpth:
                         raise Exception("Depth mismatch")
-                    r += b"<li class=\"apodsourcetoclistent\" id=\""+apodhtml.mkhtmlid("source",bookid,tlepth).encode('UTF-8')+b"\">"
-                    r += b"<span class=\"apodsourcetoclistenttitle\">"+tletit.encode('UTF-8')+b"</span>"
+                    c = [ htmlelem(tag='span',attr={ "class": "apodsourcetoclistenttitle" },content=tletit) ]
                     if not lookup == None:
                         if "page" in lookup:
-                            r += b" <span class=\"apodsourcetoclistentpagenumber\">(page "+str(lookup["page"]).encode('UTF-8')+b")</span>"
-                    r += b"</li>\n"
+                            c.append(" ")
+                            c.append(htmlelem(tag='span',attr={ "class": "apodsourcetoclistentpagenumber" },content=("(page "+str(lookup["page"])+")")))
+                    hw.write(htmlelem(tag='li',attr={ "class": "apodsourcetoclistent", "id": apodhtml.mkhtmlid("source",bookid,tlepth) },content=c))
             #
             while curlev > 0:
-                r += b"</ul>\n"
+                hw.end() # ul
                 curlev = curlev - 1
+        #
+        r += hw.get()+b"\n"
     #
     return r
 
