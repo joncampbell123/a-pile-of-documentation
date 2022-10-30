@@ -87,17 +87,30 @@ def writefrag(bookid,ji,htmlfrag):
     f.write(htmlfrag)
     f.close()
 
-def writewhole(bookid,ji,htmlfrag):
-    path = "compiled/sources/"+bookid+".html"
-    f = open(path,"wb")
+def writewhole_beginhead(f):
     f.write("<!DOCTYPE HTML>\n<html><head>".encode('UTF-8'))
     f.write("<meta charset=\"UTF-8\" />".encode('UTF-8'))
     f.write("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\" />".encode('UTF-8'))
+
+def writewhole_endhead(f):
+    f.write(b"</head>")
+
+def writewhole_beginbody(f):
+    f.write("<body>".encode('UTF-8'))
+
+def writewhole_endbody(f):
+    f.write("</body></html>".encode('UTF-8'))
+
+def writewhole(bookid,ji,htmlfrag):
+    path = "compiled/sources/"+bookid+".html"
+    f = open(path,"wb")
+    writewhole_beginhead(f)
     if "title" in ji:
         f.write(("<title>"+apodhtml.htmlescape(ji["title"])+"</title>").encode('UTF-8'))
-    f.write("</head><body>".encode('UTF-8'))
+    writewhole_endhead(f)
+    writewhole_beginbody(f)
     f.write(htmlfrag)
-    f.write("</body></html>".encode('UTF-8'))
+    writewhole_endbody(f)
     f.close()
 
 # process
@@ -130,11 +143,10 @@ proclist.sort()
 
 # make overall source list HTML too
 f = open("compiled/sources.html","wb")
-f.write("<!DOCTYPE HTML>\n<html><head>".encode('UTF-8'))
-f.write("<meta charset=\"UTF-8\" />".encode('UTF-8'))
-f.write("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\" />".encode('UTF-8'))
+writewhole_beginhead(f)
 f.write("<title>Sources</title>".encode('UTF-8'))
-f.write("</head><body>".encode('UTF-8'))
+writewhole_endhead(f)
+writewhole_beginbody(f)
 sidcount = 0
 for sid in proclist:
     if sidcount > 0:
@@ -149,6 +161,6 @@ for sid in proclist:
     sf.close()
     sidcount = sidcount + 1
     os.unlink(path) # don't leave them around!
-f.write("</body></html>".encode('UTF-8'))
+writewhole_endbody(f)
 f.close()
 
