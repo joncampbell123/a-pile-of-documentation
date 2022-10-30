@@ -2,4 +2,5 @@
 rm -Rf compiled || exit 1
 ./compile-sources.py || exit 1
 ./compile-tables.py || exit 1
+./gen-all.sh || exit 1
 
