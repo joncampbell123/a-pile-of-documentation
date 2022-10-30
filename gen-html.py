@@ -148,6 +148,7 @@ for sid in proclist:
     f.write(htmlfrag)
     sf.close()
     sidcount = sidcount + 1
+    os.unlink(path) # don't leave them around!
 f.write("</body></html>".encode('UTF-8'))
 f.close()
 
