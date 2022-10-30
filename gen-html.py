@@ -24,6 +24,12 @@ def genfrag(bookid,ji):
         r += b"<tr class=\"apodsourcetitle\"><td>Title:</td><td>"+apodhtml.htmlescape(ji["title"]).encode('UTF-8')+b"</td>\n";
     if "url" in ji:
         r += b"<tr class=\"apodsourceurl\"><td>URL:</td><td><a target=\"_blank\" href=\""+ji["url"].encode('UTF-8')+b"\">"+apodhtml.htmlescape(ji["url"]).encode('UTF-8')+b"</a></td>\n";
+    if "author" in ji:
+        r += b"<tr class=\"apodsourceauthor\"><td>Author:</td><td>"+apodhtml.htmlescape(ji["author"]).encode('UTF-8')+b"</td>\n";
+    if "publisher" in ji:
+        r += b"<tr class=\"apodsourcepublisher\"><td>Publisher:</td><td>"+apodhtml.htmlescape(ji["publisher"]).encode('UTF-8')+b"</td>\n";
+    if "language" in ji:
+        r += b"<tr class=\"apodsourcelanguage\"><td>Language:</td><td>"+apodhtml.htmlescape(ji["language"]).encode('UTF-8')+b"</td>\n";
     r += b"</table>"
     return r
 
