@@ -579,7 +579,6 @@ for sobj in sourceproclist:
     le = htmlelem(tag="a",attr={ "href": ("sources-"+sobj["id"]+".html"), "title": sobj["id"], "class": "apodsourceslisttitle" },content=sobj["title"])
     hw.write(htmlelem(tag="div",attr={ "class": "apodsourceslistent" },content=le))
     f.write(hw.get())
-f.write(b"<hr class=\"apodsourcetoclistentseparator\" />\n")
 writewhole_endbody(f)
 f.close()
 
@@ -596,7 +595,6 @@ for sobj in tableproclist:
     le = htmlelem(tag="a",attr={ "href": ("tables-"+sobj["id"]+".html"), "title": sobj["id"], "class": "apodtableslisttitle" },content=sobj["title"])
     hw.write(htmlelem(tag="div",attr={ "class": "apodtableslistent" },content=le))
     f.write(hw.get())
-f.write(b"<hr class=\"apodtabletoclistentseparator\" />\n")
 writewhole_endbody(f)
 f.close()
 
