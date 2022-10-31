@@ -181,7 +181,7 @@ def genfrag_sourcetoc(bookid,ji):
     #
     return None
 
-def genfrag(bookid,ji):
+def genfrag_source(bookid,ji):
     r = genfrag_sourceinfo(bookid,ji)+b"\n"
     #
     tr = genfrag_sourcetoc(bookid,ji)
@@ -190,7 +190,7 @@ def genfrag(bookid,ji):
     #
     return r
 
-def writefrag(bookid,ji,htmlfrag):
+def writefrag_source(bookid,ji,htmlfrag):
     path = "compiled/sources/"+bookid+".html.frag"
     f = open(path,"wb")
     f.write(htmlfrag)
@@ -210,7 +210,7 @@ def writewhole_beginbody(f):
 def writewhole_endbody(f):
     f.write("</body></html>".encode('UTF-8'))
 
-def writewhole(bookid,ji,htmlfrag):
+def writewhole_source(bookid,ji,htmlfrag):
     path = "compiled/sources/"+bookid+".html"
     f = open(path,"wb")
     writewhole_beginhead(f)
@@ -244,9 +244,9 @@ for path in g:
     if not basename == (ji["id"] + ".json"):
         raise Exception("Book "+ji["id"]+" id does not match filename "+basename)
     #
-    htmlfrag = genfrag(ji["id"],ji)
-    writefrag(ji["id"],ji,htmlfrag)
-    writewhole(ji["id"],ji,htmlfrag)
+    htmlfrag = genfrag_source(ji["id"],ji)
+    writefrag_source(ji["id"],ji,htmlfrag)
+    writewhole_source(ji["id"],ji,htmlfrag)
     sourceproclist.append(ji["id"])
 #
 sourceproclist.sort()
