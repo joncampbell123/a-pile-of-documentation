@@ -40,5 +40,23 @@ ul.apodnoteslist {
 	padding: 0px;
 	padding-left: 1.5em;
 	white-space: pre-wrap;
+	font-weight: 300;
+}
+
+div.apodsources {
+	font-size: 9pt;
+}
+
+.apodsourceshead {
+	font-weight: 300;
+}
+
+ul.apodsourceslist {
+	margin: 0px;
+	margin-bottom: 0.5em;
+	padding: 0px;
+	padding-left: 1.5em;
+	white-space: pre-wrap;
+	font-weight: 300;
 }
 

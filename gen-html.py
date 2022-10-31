@@ -219,6 +219,68 @@ def genfrag_table(bookid,ji):
             uli.append(htmlelem(tag="li",content=nent))
         nc = [ htmlelem(tag="span",attr={ "class": "apodnoteshead" },content="Notes:"), htmlelem(tag="ul",attr={ "class": "apodnoteslist" },content=uli) ]
         hw.write(htmlelem(tag="div",attr={ "class": "apodnotes", "title": bookid },content=nc))
+    if "sources" in ji:
+        uli = [ ]
+        sl = ji["sources"]
+        if not type(sl) == list:
+            raise Exception("sources list not an array")
+        for sil in range(0,len(sl)):
+            nent = [ ]
+            sel = sl[sil]
+            if not type(sel) == dict:
+                raise Exception("source element not object")
+            if not "id" in sel:
+                raise Exception("source has no id?")
+            if not "source index" in sel:
+                raise Exception("source object without source index")
+            if not sel["source index"] == sil:
+                raise Exception("source object wrong source index")
+            if not "source" in sel:
+                continue
+            src = sel["source"]
+            if not type(src) == dict:
+                raise Exception("source element source not object")
+            if not "id" in src:
+                continue
+            sref = sources_load(sources,src["id"])
+            if sref == None:
+                raise Exception("No such source "+src["id"])
+            title = src["id"]
+            if "title" in sref:
+                title = sref["title"]
+            if "title" in src:
+                title = src["title"]
+            copyright = ""
+            if "copyright" in sref:
+                cpy = sref["copyright"]
+                if "year" in cpy:
+                    if not copyright == "":
+                        copyright += ", "
+                    copyright += str(cpy["year"])
+                if "by" in cpy:
+                    if not copyright == "":
+                        copyright += ", "
+                    copyright += cpy["by"]
+            #
+            l = title
+            if not copyright == "":
+                l += ", "
+                l += copyright
+            nent.append(l)
+            #
+            url = None
+            if "url" in sref:
+                url = sref["url"]
+            if "url" in src:
+                url = src["url"]
+            if not url == None and not url == "":
+                nent.append(htmlelem(tag="br"))
+                nent.append(htmlelem(tag="a",attr={ "class": "apodsourceurl", "target": "_blank", "href": url },content=url))
+            #
+            uli.append(htmlelem(tag="li",content=nent))
+        #
+        nc = [ htmlelem(tag="span",attr={ "class": "apodsourceshead" },content="Sources:"), htmlelem(tag="ul",attr={ "class": "apodsourceslist" },content=uli) ]
+        hw.write(htmlelem(tag="div",attr={ "class": "apodsources", "title": bookid },content=nc))
     r = hw.get()
     return r
 
