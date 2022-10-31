@@ -15,6 +15,7 @@
 			"is array": true,
 			"is range": true,
 			"title": "Command byte",
+			"array separator": "\n",
 			"required": true
 		},
 		{

@@ -237,7 +237,10 @@ def tablecoltohtml(dcon,tcolo,dcolo):
         entc = 0
         for ent in dcolo:
             if entc > 0:
-                dcon.append(", ")
+                if "array separator" in tcolo:
+                    dcon.append(tcolo["array separator"])
+                else:
+                    dcon.append(", ")
             if isinstance(ent,str):
                 dcon.append(ent)
             elif isinstance(ent,int):
