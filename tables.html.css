@@ -1,7 +1,14 @@
 
-table.apodtable {
-	border-spacing: 0px;
-	font-size: 10pt;
-	margin: 0px;
+div.apodtitle {
+	font-size: 12pt;
+	font-weight: 900;
+	text-decoration: underline;
+	margin-bottom: 0.5em;
+}
+
+div.apoddescription {
+	font-size: 9pt;
+	font-weight: 300;
+	margin-bottom: 0.5em;
 }
 

@@ -109,7 +109,7 @@ def genfrag_sinfo_row(hw,name,value,rowattr={}):
 
 def genfrag_sourceinfo(bookid,ji):
     hw = htmlwriter()
-    hw.write(htmlelem(tag="a",attr={ "id": ji["id"] }))
+    hw.write(htmlelem(tag="a",attr={ "id": apodhtml.mkhtmlid("source",bookid) }))
     hw.begin(htmlelem(tag="table",attr={ "class": "apodsource" }))
     #
     genfrag_sinfo_row(hw,"ID:",bookid,rowattr={ "class": "apodsourceid" })
@@ -197,7 +197,12 @@ def writefrag_source(bookid,ji,htmlfrag):
     f.close()
 
 def genfrag_table(bookid,ji):
-    r = b""
+    hw = htmlwriter()
+    hw.write(htmlelem(tag="a",attr={ "id": apodhtml.mkhtmlid("table",bookid) }))
+    hw.write(htmlelem(tag="div",attr={ "class": "apodtitle", "title": bookid },content=ji["table"]))
+    if "description" in ji:
+        hw.write(htmlelem(tag="div",attr={ "class": "apoddescription" },content=ji["description"]))
+    r = hw.get()
     return r
 
 def writefrag_table(bookid,ji,htmlfrag):
