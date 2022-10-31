@@ -329,8 +329,9 @@ def genfrag_table(bookid,ji):
                                     psidx = None # FIXME: Source indexes may have duplicates
                                     for sidx in slist:
                                         if not psidx == sidx:
-                                            l = "["+str(sidx+1)+"]"
-                                            sdcon.append(htmlelem(tag="sup",attr={ "class": "apodsourceidx" },content=l))
+                                            idname = apodhtml.mkhtmlid("table-sr",bookid+":"+str(sidx+1))
+                                            iddisp = "["+str(sidx+1)+"]";
+                                            sdcon.append(htmlelem(tag="sup",content=htmlelem(tag="a",attr={ "href": "#"+idname, "class": "apodsourceidxref" },content=iddisp)))
                                         psidx = sidx
                                 dcon.append(htmlelem(tag="div",content=sdcon))
                 else:
@@ -412,6 +413,7 @@ def genfrag_table(bookid,ji):
             if not copyright == "":
                 l += ", "
                 l += copyright
+            nent.append(htmlelem(tag="a",attr={ "id": apodhtml.mkhtmlid("table-sr",bookid+":"+str(sil+1)) }))
             nent.append(l)
             #
             nent.append(htmlelem(tag="sup",content=htmlelem(tag="a",attr={ "href": ("sources-"+src["id"]+".html"), "class": "apodsourceidx" },content=("["+str(sil+1)+"]"))))
