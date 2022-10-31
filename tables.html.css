@@ -10,6 +10,7 @@ div.apoddescription {
 	font-size: 9pt;
 	font-weight: 300;
 	margin-bottom: 0.5em;
+	white-space: pre-wrap;
 }
 
 span.apodtabletoclistentpagenumber {
@@ -23,5 +24,21 @@ div.apodtableslistent {
 
 .apodtableslisttitle {
 	font-style: normal;
+}
+
+div.apodnotes {
+	font-size: 9pt;
+}
+
+.apodnoteshead {
+	font-weight: 900;
+}
+
+ul.apodnoteslist {
+	margin: 0px;
+	margin-bottom: 0.5em;
+	padding: 0px;
+	padding-left: 1.5em;
+	white-space: pre-wrap;
 }
 

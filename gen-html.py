@@ -202,6 +202,15 @@ def genfrag_table(bookid,ji):
     hw.write(htmlelem(tag="div",attr={ "class": "apodtitle", "title": bookid },content=ji["table"]))
     if "description" in ji:
         hw.write(htmlelem(tag="div",attr={ "class": "apoddescription" },content=ji["description"]))
+    if "notes" in ji:
+        nl = ji["notes"]
+        if not type(nl) == list:
+            nl = [ nl ]
+        uli = [ ]
+        for nent in nl:
+            uli.append(htmlelem(tag="li",content=nent))
+        nc = [ htmlelem(tag="span",attr={ "class": "apodnoteshead" },content="Notes:"), htmlelem(tag="ul",attr={ "class": "apodnoteslist" },content=uli) ]
+        hw.write(htmlelem(tag="div",attr={ "class": "apodnotes", "title": bookid },content=nc))
     r = hw.get()
     return r
 
