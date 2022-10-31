@@ -204,12 +204,6 @@ def genfrag_source(bookid,ji):
     #
     return r
 
-def writefrag_source(bookid,ji,htmlfrag):
-    path = "compiled/html/sources-"+bookid+".html.frag"
-    f = open(path,"wb")
-    f.write(htmlfrag)
-    f.close()
-
 def tablecolfloattohtml(tcolo,dcolo):
     if type(dcolo) == list:
         return str(dcolo)
@@ -463,12 +457,6 @@ def genfrag_table(bookid,ji):
     r = hw.get()
     return r
 
-def writefrag_table(bookid,ji,htmlfrag):
-    path = "compiled/html/tables-"+bookid+".html.frag"
-    f = open(path,"wb")
-    f.write(htmlfrag)
-    f.close()
-
 def writewhole_beginhead(f):
     f.write("<!DOCTYPE HTML>\n<html><head>".encode('UTF-8'))
     f.write("<meta charset=\"UTF-8\" />".encode('UTF-8'))
@@ -542,7 +530,6 @@ for path in g:
         raise Exception("Book "+ji["id"]+" id does not match filename "+basename)
     #
     htmlfrag = genfrag_source(ji["id"],ji)
-    writefrag_source(ji["id"],ji,htmlfrag)
     writewhole_source(ji["id"],ji,htmlfrag)
     #
     title = ji["id"]
@@ -568,7 +555,6 @@ for path in g:
         continue
     #
     htmlfrag = genfrag_table(ji["id"],ji)
-    writefrag_table(ji["id"],ji,htmlfrag)
     writewhole_table(ji["id"],ji,htmlfrag)
     #
     title = ji["id"]
@@ -588,22 +574,10 @@ writewhole_beginbody(f)
 #
 for sobj in sourceproclist:
     hw = htmlwriter()
-    le = [ "Source ", htmlelem(tag="a",attr={ "href": "#"+apodhtml.mkhtmlid("source",sobj["id"]), "title": sobj["id"], "class": "apodsourceslisttitle" },content=sobj["title"]) ]
+    le = htmlelem(tag="a",attr={ "href": ("sources-"+sobj["id"]+".html"), "title": sobj["id"], "class": "apodsourceslisttitle" },content=sobj["title"])
     hw.write(htmlelem(tag="div",attr={ "class": "apodsourceslistent" },content=le))
     f.write(hw.get())
 f.write(b"<hr class=\"apodsourcetoclistentseparator\" />\n")
-#
-sidcount = 0
-for sobj in sourceproclist:
-    sid = sobj["id"]
-    if sidcount > 0:
-        f.write(b"<hr class=\"apodsourcetoclistentseparator\" />\n")
-    path = "compiled/html/sources-"+sid+".html.frag"
-    sf = open(path,"rb")
-    f.write(sf.read())
-    sf.close()
-    sidcount = sidcount + 1
-    os.unlink(path) # don't leave them around!
 writewhole_endbody(f)
 f.close()
 
@@ -617,22 +591,10 @@ writewhole_beginbody(f)
 #
 for sobj in tableproclist:
     hw = htmlwriter()
-    le = [ "Table ", htmlelem(tag="a",attr={ "href": "#"+apodhtml.mkhtmlid("table",sobj["id"]), "title": sobj["id"], "class": "apodtableslisttitle" },content=sobj["title"]) ]
+    le = htmlelem(tag="a",attr={ "href": ("tables-"+sobj["id"]+".html"), "title": sobj["id"], "class": "apodtableslisttitle" },content=sobj["title"])
     hw.write(htmlelem(tag="div",attr={ "class": "apodtableslistent" },content=le))
     f.write(hw.get())
 f.write(b"<hr class=\"apodtabletoclistentseparator\" />\n")
-#
-sidcount = 0
-for sobj in tableproclist:
-    sid = sobj["id"]
-    if sidcount > 0:
-        f.write(b"<hr class=\"apodtableseparator\" />\n")
-    path = "compiled/html/tables-"+sid+".html.frag"
-    sf = open(path,"rb")
-    f.write(sf.read())
-    sf.close()
-    sidcount = sidcount + 1
-    os.unlink(path) # don't leave them around!
 writewhole_endbody(f)
 f.close()
 
