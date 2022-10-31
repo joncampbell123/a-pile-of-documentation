@@ -14,6 +14,12 @@ import apodtoc
 import apodjson
 import apodhtml
 
+# write it
+if not os.path.exists("compiled"):
+    os.mkdir("compiled")
+if not os.path.exists("compiled/html"):
+    os.mkdir("compiled/html")
+
 sources = { }
 def sources_load(sources,source_id):
     if not source_id in sources:
@@ -199,7 +205,7 @@ def genfrag_source(bookid,ji):
     return r
 
 def writefrag_source(bookid,ji,htmlfrag):
-    path = "compiled/sources/"+bookid+".html.frag"
+    path = "compiled/html/sources-"+bookid+".html.frag"
     f = open(path,"wb")
     f.write(htmlfrag)
     f.close()
@@ -412,7 +418,7 @@ def genfrag_table(bookid,ji):
     return r
 
 def writefrag_table(bookid,ji,htmlfrag):
-    path = "compiled/tables/"+bookid+".html.frag"
+    path = "compiled/html/tables-"+bookid+".html.frag"
     f = open(path,"wb")
     f.write(htmlfrag)
     f.close()
@@ -432,12 +438,12 @@ def writewhole_endbody(f):
     f.write("</body></html>".encode('UTF-8'))
 
 def writewhole_source(bookid,ji,htmlfrag):
-    path = "compiled/sources/"+bookid+".html"
+    path = "compiled/html/sources-"+bookid+".html"
     f = open(path,"wb")
     writewhole_beginhead(f)
     if "title" in ji:
         f.write(("<title>"+apodhtml.htmlescape(ji["title"])+"</title>").encode('UTF-8'))
-    f.write(("<link rel=\"stylesheet\" href=\"../sources.css\" />").encode('UTF-8'))
+    f.write(("<link rel=\"stylesheet\" href=\"sources.css\" />").encode('UTF-8'))
     writewhole_endhead(f)
     writewhole_beginbody(f)
     f.write(htmlfrag)
@@ -445,12 +451,12 @@ def writewhole_source(bookid,ji,htmlfrag):
     f.close()
 
 def writewhole_table(bookid,ji,htmlfrag):
-    path = "compiled/tables/"+bookid+".html"
+    path = "compiled/html/tables-"+bookid+".html"
     f = open(path,"wb")
     writewhole_beginhead(f)
     if "title" in ji:
         f.write(("<title>"+apodhtml.htmlescape(ji["title"])+"</title>").encode('UTF-8'))
-    f.write(("<link rel=\"stylesheet\" href=\"../tables.css\" />").encode('UTF-8'))
+    f.write(("<link rel=\"stylesheet\" href=\"tables.css\" />").encode('UTF-8'))
     writewhole_endhead(f)
     writewhole_beginbody(f)
     f.write(htmlfrag)
@@ -527,7 +533,7 @@ for path in g:
 tableproclist.sort(key=tableprocsort)
 
 # make overall source list HTML too
-f = open("compiled/sources.html","wb")
+f = open("compiled/html/sources.html","wb")
 writewhole_beginhead(f)
 f.write("<title>Sources</title>".encode('UTF-8'))
 f.write(("<link rel=\"stylesheet\" href=\"sources.css\" />").encode('UTF-8'))
@@ -546,7 +552,7 @@ for sobj in sourceproclist:
     sid = sobj["id"]
     if sidcount > 0:
         f.write(b"<hr class=\"apodsourcetoclistentseparator\" />\n")
-    path = "compiled/sources/"+sid+".html.frag"
+    path = "compiled/html/sources-"+sid+".html.frag"
     sf = open(path,"rb")
     f.write(sf.read())
     sf.close()
@@ -556,7 +562,7 @@ writewhole_endbody(f)
 f.close()
 
 # make overall table list HTML too
-f = open("compiled/tables.html","wb")
+f = open("compiled/html/tables.html","wb")
 writewhole_beginhead(f)
 f.write("<title>Tables</title>".encode('UTF-8'))
 f.write(("<link rel=\"stylesheet\" href=\"tables.css\" />").encode('UTF-8'))
@@ -575,7 +581,7 @@ for sobj in tableproclist:
     sid = sobj["id"]
     if sidcount > 0:
         f.write(b"<hr class=\"apodtableseparator\" />\n")
-    path = "compiled/tables/"+sid+".html.frag"
+    path = "compiled/html/tables-"+sid+".html.frag"
     sf = open(path,"rb")
     f.write(sf.read())
     sf.close()
@@ -586,13 +592,13 @@ f.close()
 
 # cascading stylesheet too
 sf = open("sources.html.css","rb")
-df = open("compiled/sources.css","wb")
+df = open("compiled/html/sources.css","wb")
 df.write(sf.read())
 df.close()
 sf.close()
 # cascading stylesheet too
 sf = open("tables.html.css","rb")
-df = open("compiled/tables.css","wb")
+df = open("compiled/html/tables.css","wb")
 df.write(sf.read())
 df.close()
 sf.close()
