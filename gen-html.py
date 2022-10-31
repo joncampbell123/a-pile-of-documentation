@@ -275,7 +275,7 @@ def genfrag_table(bookid,ji):
                 url = src["url"]
             if not url == None and not url == "":
                 nent.append(htmlelem(tag="br"))
-                nent.append(htmlelem(tag="a",attr={ "class": "apodsourceurl", "target": "_blank", "href": url },content=url))
+                nent.append(htmlelem(tag="a",attr={ "class": "apodsourceurl", "target": "_blank", "href": url },content=apodhtml.unescapeurl(url)))
             #
             where = None
             if "where" in src:
