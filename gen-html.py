@@ -14,6 +14,14 @@ import apodtoc
 import apodjson
 import apodhtml
 
+sources = { }
+def sources_load(sources,source_id):
+    if not source_id in sources:
+        sources[source_id] = apodjson.load_json("compiled/sources/"+source_id+".json")
+    if source_id in sources:
+        return sources[source_id]
+    return None
+
 class htmlelem:
     tag = None # string
     attr = None # object (dict) key=string, value=string
