@@ -251,6 +251,11 @@ def writewhole_table(bookid,ji,htmlfrag):
     writewhole_endbody(f)
     f.close()
 
+def englishpp(x):
+    if x[0:4].lower() == "the ":
+        x = x[4:]+", "+x[0:4]
+    return x
+
 def tableprocsort(x):
     return [ x["title"], x["id"] ]
 
@@ -275,7 +280,7 @@ for path in g:
     #
     title = ji["id"]
     if "table" in ji:
-        title = ji["table"]
+        title = englishpp(ji["table"])
     tableproclist.append({ "id": ji["id"], "title": title })
 #
 tableproclist.sort(key=tableprocsort)
@@ -310,7 +315,7 @@ for path in g:
     #
     title = ji["id"]
     if "title" in ji:
-        title = ji["title"]
+        title = englishpp(ji["title"])
     sourceproclist.append({ "id": ji["id"], "title": title })
 #
 sourceproclist.sort(key=sourceprocsort)
