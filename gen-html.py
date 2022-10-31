@@ -216,10 +216,13 @@ def tablecolfloattohtml(tcolo,dcolo):
     return str(dcolo)
 
 def hex8(x):
-    x = hex(x)[2:] # strip off the 0x
+    x = hex(x)[2:].upper() # strip off the 0x
     while len(x) < 2:
         x = '0' + x
     return "0x"+x
+
+def hexg(x):
+    return "0x"+hex(x)[2:].upper() # strip off the 0x, uppercase, add it back
 
 def tablecolinttohtml(tcolo,dcolo):
     if type(dcolo) == list:
@@ -227,7 +230,7 @@ def tablecolinttohtml(tcolo,dcolo):
     if "display" in tcolo and tcolo["display"] == "hex":
         if tcolo["type"] == "uint8_t":
             return hex8(dcolo)
-        return hex(dcolo)
+        return hexg(dcolo)
     return str(dcolo)
 
 def tablecolbooltohtml(tcolo,dcolo):
