@@ -266,7 +266,7 @@ def englishpp(x):
     return x
 
 def tableprocsort(x):
-    return [ x["title"], x["id"] ]
+    return [ x["title"].lower(), x["id"] ]
 
 # process
 tableproclist = [ ]
@@ -295,7 +295,7 @@ for path in g:
 tableproclist.sort(key=tableprocsort)
 
 def sourceprocsort(x):
-    return [ x["title"], x["id"] ]
+    return [ x["title"].lower(), x["id"] ]
 
 # process
 sourceproclist = [ ]
