@@ -12,3 +12,16 @@ div.apoddescription {
 	margin-bottom: 0.5em;
 }
 
+span.apodtabletoclistentpagenumber {
+	font-style: italic;
+}
+
+div.apodtableslistent {
+	font-size: 10pt;
+	font-style: italic;
+}
+
+.apodtableslisttitle {
+	font-style: normal;
+}
+

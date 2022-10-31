@@ -251,6 +251,9 @@ def writewhole_table(bookid,ji,htmlfrag):
     writewhole_endbody(f)
     f.close()
 
+def tableprocsort(x):
+    return [ x["title"], x["id"] ]
+
 # process
 tableproclist = [ ]
 g = glob.glob("compiled/tables/*.json",recursive=True)
@@ -269,9 +272,13 @@ for path in g:
     htmlfrag = genfrag_table(ji["id"],ji)
     writefrag_table(ji["id"],ji,htmlfrag)
     writewhole_table(ji["id"],ji,htmlfrag)
-    tableproclist.append(ji["id"])
+    #
+    title = ji["id"]
+    if "table" in ji:
+        title = ji["table"]
+    tableproclist.append({ "id": ji["id"], "title": title })
 #
-tableproclist.sort()
+tableproclist.sort(key=tableprocsort)
 
 def sourceprocsort(x):
     return [ x["title"], x["id"] ]
@@ -344,8 +351,17 @@ f.write("<title>Tables</title>".encode('UTF-8'))
 f.write(("<link rel=\"stylesheet\" href=\"tables.css\" />").encode('UTF-8'))
 writewhole_endhead(f)
 writewhole_beginbody(f)
+#
+for sobj in tableproclist:
+    hw = htmlwriter()
+    le = [ "Table ", htmlelem(tag="a",attr={ "href": "#"+apodhtml.mkhtmlid("table",sobj["id"]), "class": "apodtableslisttitle" },content=sobj["title"]) ]
+    hw.write(htmlelem(tag="div",attr={ "class": "apodtableslistent" },content=le))
+    f.write(hw.get())
+f.write(b"<hr class=\"apodtabletoclistentseparator\" />\n")
+#
 sidcount = 0
-for sid in tableproclist:
+for sobj in tableproclist:
+    sid = sobj["id"]
     if sidcount > 0:
         f.write(b"<hr class=\"apodtableseparator\" />\n")
     path = "compiled/tables/"+sid+".html.frag"
