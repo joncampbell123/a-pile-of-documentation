@@ -277,6 +277,29 @@ def genfrag_table(bookid,ji):
                 nent.append(htmlelem(tag="br"))
                 nent.append(htmlelem(tag="a",attr={ "class": "apodsourceurl", "target": "_blank", "href": url },content=url))
             #
+            where = None
+            if "where" in src:
+                where = src["where"]
+            if not where == None and type(where) == dict:
+                if "path" in where and type(where["path"]) == list:
+                    path = where["path"]
+                    pref = apodtoc.apodsourcetocpathlookup(sref,path)
+                    if not pref == None:
+                        l = [ ]
+                        if "title" in pref:
+                            if not len(l) == 0:
+                                l.append(", ")
+                            l.append(htmlelem(tag="span",content='"'))
+                            l.append(htmlelem(tag="span",attr={ "class": "apodsourcepreftitle" },content=pref["title"]))
+                            l.append(htmlelem(tag="span",content='"'))
+                        if "page" in pref:
+                            if not len(l) == 0:
+                                l.append(", ")
+                            l.append(htmlelem(tag="span",attr={ "class": "apodsourceprefpage" },content=("(page "+str(pref["page"])+")")))
+                    if not l == None:
+                        nent.append(htmlelem(tag="br"))
+                        nent.append(htmlelem(tag="div",attr={ "class": "apodsourcepref" },content=l))
+            #
             uli.append(htmlelem(tag="li",content=nent))
         #
         nc = [ htmlelem(tag="span",attr={ "class": "apodsourceshead" },content="Sources:"), htmlelem(tag="ul",attr={ "class": "apodsourceslist" },content=uli) ]

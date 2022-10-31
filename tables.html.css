@@ -60,3 +60,16 @@ ul.apodsourceslist {
 	font-weight: 300;
 }
 
+.apodsourcepreftitle {
+	font-weight: 300;
+}
+
+.apodsourcepreftitle:hover {
+	text-decoration: underline;
+}
+
+.apodsourceprefpage {
+	font-weight: 300;
+	font-style: italic;
+}
+
