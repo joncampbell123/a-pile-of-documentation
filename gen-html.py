@@ -330,7 +330,7 @@ writewhole_beginbody(f)
 #
 for sobj in sourceproclist:
     hw = htmlwriter()
-    le = [ "Source ", htmlelem(tag="a",attr={ "href": "#"+apodhtml.mkhtmlid("source",sobj["id"]), "class": "apodsourceslisttitle" },content=sobj["title"]) ]
+    le = [ "Source ", htmlelem(tag="a",attr={ "href": "#"+apodhtml.mkhtmlid("source",sobj["id"]), "title": sobj["id"], "class": "apodsourceslisttitle" },content=sobj["title"]) ]
     hw.write(htmlelem(tag="div",attr={ "class": "apodsourceslistent" },content=le))
     f.write(hw.get())
 f.write(b"<hr class=\"apodsourcetoclistentseparator\" />\n")
@@ -359,7 +359,7 @@ writewhole_beginbody(f)
 #
 for sobj in tableproclist:
     hw = htmlwriter()
-    le = [ "Table ", htmlelem(tag="a",attr={ "href": "#"+apodhtml.mkhtmlid("table",sobj["id"]), "class": "apodtableslisttitle" },content=sobj["title"]) ]
+    le = [ "Table ", htmlelem(tag="a",attr={ "href": "#"+apodhtml.mkhtmlid("table",sobj["id"]), "title": sobj["id"], "class": "apodtableslisttitle" },content=sobj["title"]) ]
     hw.write(htmlelem(tag="div",attr={ "class": "apodtableslistent" },content=le))
     f.write(hw.get())
 f.write(b"<hr class=\"apodtabletoclistentseparator\" />\n")
