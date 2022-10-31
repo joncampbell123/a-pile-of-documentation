@@ -426,6 +426,10 @@ def genfrag_table(bookid,ji):
                         nent.append(htmlelem(tag="br"))
                         nent.append(htmlelem(tag="div",attr={ "class": "apodsourcepref" },content=l))
             #
+            if "notes" in src:
+                nent.append(htmlelem(tag="br"))
+                nent.append(htmlelem(tag="span",content=[ "Notes: ", src["notes"] ]))
+            #
             uli.append(htmlelem(tag="li",content=nent))
         #
         nc = [ htmlelem(tag="span",attr={ "class": "apodsourceshead" },content="Sources:"), htmlelem(tag="ul",attr={ "class": "apodsourceslist" },content=uli) ]
