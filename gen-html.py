@@ -224,7 +224,7 @@ def writewhole(bookid,ji,htmlfrag):
     f.close()
 
 # process
-proclist = [ ]
+sourceproclist = [ ]
 g = glob.glob("compiled/sources/*.json",recursive=True)
 for path in g:
     pathelem = path.split('/')
@@ -247,9 +247,9 @@ for path in g:
     htmlfrag = genfrag(ji["id"],ji)
     writefrag(ji["id"],ji,htmlfrag)
     writewhole(ji["id"],ji,htmlfrag)
-    proclist.append(ji["id"])
+    sourceproclist.append(ji["id"])
 #
-proclist.sort()
+sourceproclist.sort()
 
 # make overall source list HTML too
 f = open("compiled/sources.html","wb")
@@ -259,7 +259,7 @@ f.write(("<link rel=\"stylesheet\" href=\"sources.css\" />").encode('UTF-8'))
 writewhole_endhead(f)
 writewhole_beginbody(f)
 sidcount = 0
-for sid in proclist:
+for sid in sourceproclist:
     if sidcount > 0:
         f.write(b"<hr class=\"apodsourcetoclistentseparator\" />\n")
     path = "compiled/sources/"+sid+".html.frag"
