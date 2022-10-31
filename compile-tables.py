@@ -717,6 +717,9 @@ def deduptable(obj):
                                         ndsi.append(n)
                                     p = n
                                 dvo["source index"] = ndsi
+                                # if the result is the same as the row source index, then remove it entirely, there is no point
+                                if dvo["source index"] == row["source index"]:
+                                    del dvo["source index"]
     #
     table["rows"] = nrows
 
