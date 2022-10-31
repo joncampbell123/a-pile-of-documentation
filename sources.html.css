@@ -20,3 +20,7 @@ ul.apodsourcetoclist {
 	list-style-type: circle;
 }
 
+span.apodsourcetoclistentpagenumber {
+	font-style: italic;
+}
+
