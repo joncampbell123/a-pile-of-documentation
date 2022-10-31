@@ -1,0 +1,9 @@
+{
+	"type": "website",
+	"schema": {
+		"version": 1
+	},
+	"id": "dosbox-x",
+	"title": "DOSBox-X emulator",
+	"url": "http://dosbox-x.com"
+}

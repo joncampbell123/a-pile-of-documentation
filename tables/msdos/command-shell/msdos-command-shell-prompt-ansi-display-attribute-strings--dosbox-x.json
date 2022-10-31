@@ -4,7 +4,8 @@
 		"version": 1
 	},
 	"source": {
-		"type": "notes",
+		"id": "dosbox-x",
+		"type": "website",
 		"notes": "Codes reverse-engineered as part of DOSBox-X development"
 	},
 	"table in csv": true

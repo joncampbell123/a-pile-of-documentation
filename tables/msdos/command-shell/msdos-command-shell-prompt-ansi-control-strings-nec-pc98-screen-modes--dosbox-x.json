@@ -4,7 +4,8 @@
 		"version": 1
 	},
 	"source": {
-		"type": "notes",
+		"type": "website",
+		"id": "dosbox-x",
 		"notes": "Codes reverse-engineered as part of DOSBox-X development. These do not appear to set modes so much as change other attributes relateed to the console."
 	},
 	"table columns": [ "mode", "desc", "notes" ],

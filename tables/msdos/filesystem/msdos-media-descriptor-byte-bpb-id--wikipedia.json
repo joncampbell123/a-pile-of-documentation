@@ -4,7 +4,8 @@
 		"version": 1
 	},
 	"source": {
-		"website": "wikipedia",
+		"id": "wikipedia",
+		"type": "website",
 		"url": "https://en.wikipedia.org/wiki/Design_of_the_FAT_file_system#BIOS_Parameter_Block"
 	},
 	"table columns": [ "id", "trackpside", "sectptrack", "sides", "bytespsector", "format" ],

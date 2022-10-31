@@ -357,12 +357,14 @@ def genfrag_table(bookid,ji):
             if not sel["source index"] == sil:
                 raise Exception("source object wrong source index")
             if not "source" in sel:
-                continue
+                print(sel)
+                raise Exception("source object, no source in "+bookid+"?")
             src = sel["source"]
             if not type(src) == dict:
                 raise Exception("source element source not object")
             if not "id" in src:
-                continue
+                print(src)
+                raise Exception("source object, no id in "+bookid+"?")
             sref = sources_load(sources,src["id"])
             if sref == None:
                 raise Exception("No such source "+src["id"])
@@ -388,6 +390,9 @@ def genfrag_table(bookid,ji):
                 l += ", "
                 l += copyright
             nent.append(l)
+            #
+            l = "["+str(sil+1)+"]"
+            nent.append(htmlelem(tag="sup",attr={ "class": "apodsourceidx" },content=l))
             #
             url = None
             if "url" in sref:
