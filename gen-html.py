@@ -196,6 +196,16 @@ def writefrag_source(bookid,ji,htmlfrag):
     f.write(htmlfrag)
     f.close()
 
+def genfrag_table(bookid,ji):
+    r = b""
+    return r
+
+def writefrag_table(bookid,ji,htmlfrag):
+    path = "compiled/tables/"+bookid+".html.frag"
+    f = open(path,"wb")
+    f.write(htmlfrag)
+    f.close()
+
 def writewhole_beginhead(f):
     f.write("<!DOCTYPE HTML>\n<html><head>".encode('UTF-8'))
     f.write("<meta charset=\"UTF-8\" />".encode('UTF-8'))
@@ -222,6 +232,41 @@ def writewhole_source(bookid,ji,htmlfrag):
     f.write(htmlfrag)
     writewhole_endbody(f)
     f.close()
+
+def writewhole_table(bookid,ji,htmlfrag):
+    path = "compiled/tables/"+bookid+".html"
+    f = open(path,"wb")
+    writewhole_beginhead(f)
+    if "title" in ji:
+        f.write(("<title>"+apodhtml.htmlescape(ji["title"])+"</title>").encode('UTF-8'))
+    f.write(("<link rel=\"stylesheet\" href=\"../tables.css\" />").encode('UTF-8'))
+    writewhole_endhead(f)
+    writewhole_beginbody(f)
+    f.write(htmlfrag)
+    writewhole_endbody(f)
+    f.close()
+
+# process
+tableproclist = [ ]
+g = glob.glob("compiled/tables/*.json",recursive=True)
+for path in g:
+    pathelem = path.split('/')
+    if len(pathelem) < 1:
+        raise Exception("What??")
+    basename = pathelem[-1] # the last element
+    if basename == None or basename == "":
+        raise Exception("What??")
+    #
+    ji = apodjson.load_json(path)
+    if not "id" in ji:
+        continue
+    #
+    htmlfrag = genfrag_table(ji["id"],ji)
+    writefrag_table(ji["id"],ji,htmlfrag)
+    writewhole_table(ji["id"],ji,htmlfrag)
+    tableproclist.append(ji["id"])
+#
+tableproclist.sort()
 
 # process
 sourceproclist = [ ]
@@ -271,9 +316,35 @@ for sid in sourceproclist:
 writewhole_endbody(f)
 f.close()
 
+# make overall table list HTML too
+f = open("compiled/tables.html","wb")
+writewhole_beginhead(f)
+f.write("<title>Tables</title>".encode('UTF-8'))
+f.write(("<link rel=\"stylesheet\" href=\"tables.css\" />").encode('UTF-8'))
+writewhole_endhead(f)
+writewhole_beginbody(f)
+sidcount = 0
+for sid in tableproclist:
+    if sidcount > 0:
+        f.write(b"<hr class=\"apodtableseparator\" />\n")
+    path = "compiled/tables/"+sid+".html.frag"
+    sf = open(path,"rb")
+    f.write(sf.read())
+    sf.close()
+    sidcount = sidcount + 1
+    os.unlink(path) # don't leave them around!
+writewhole_endbody(f)
+f.close()
+
 # cascading stylesheet too
 sf = open("sources.html.css","rb")
 df = open("compiled/sources.css","wb")
+df.write(sf.read())
+df.close()
+sf.close()
+# cascading stylesheet too
+sf = open("tables.html.css","rb")
+df = open("compiled/tables.css","wb")
 df.write(sf.read())
 df.close()
 sf.close()
