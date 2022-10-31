@@ -65,7 +65,10 @@ class htmlelem:
                     r += b"=\""+apodhtml.htmlescape(val).encode('UTF-8')+b"\""
         return r
     def gettag(self):
-        if not self.content == None:
+        # NTS: Mozilla Firefox seems to have a problem with <a id="blah" />, it seems to format
+        #      the DOM as if everything following it is contained within the anchor element.
+        #      The fact that the tag is self-closing seems lost on Mozilla.
+        if not self.content == None or self.tag.lower() == "a":
             r = self.opentag()
             if not self.content == None:
                 r += self.content
