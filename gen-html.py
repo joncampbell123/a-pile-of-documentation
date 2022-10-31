@@ -204,12 +204,106 @@ def writefrag_source(bookid,ji,htmlfrag):
     f.write(htmlfrag)
     f.close()
 
+def tablecolfloattohtml(tcolo,dcolo):
+    if type(dcolo) == list:
+        return str(dcolo)
+    return str(dcolo)
+
+def tablecolinttohtml(tcolo,dcolo):
+    if type(dcolo) == list:
+        return str(dcolo)
+    if "display" in tcolo and tcolo["display"] == "hex":
+        return hex(dcolo)
+    return str(dcolo)
+
+def tablecolbooltohtml(tcolo,dcolo):
+    if dcolo == True:
+        return "✓"
+    else:
+        return ""
+
+# dcon = array of elements to write
+# tcolo = column table info
+# dcolo = column
+def tablecoltohtml(dcon,tcolo,dcolo):
+    if isinstance(dcolo,str):
+        dcon.append(dcolo)
+    elif "is array" in tcolo and tcolo["is array"] == True:
+        if not type(dcolo) == list:
+            raise Exception("array column not array")
+        # each array of the element is an array containing a single value,
+        # or two values to signify a range. perhaps the two value array should
+        # just be an object that says "I'm a range"
+        entc = 0
+        for ent in dcolo:
+            if entc > 0:
+                dcon.append(", ")
+            if isinstance(ent,str):
+                dcon.append(ent)
+            elif isinstance(ent,int) or isinstance(ent,float):
+                dcon.append(str(ent))
+            elif not type(ent) == list:
+                print(ent)
+                raise Exception("array ent not an array")
+            elif len(ent) == 1:
+                dcon.append(htmlelem(tag="span",content=tablecolinttohtml(tcolo,ent[0])))
+            elif len(ent) == 2:
+                dcon.append(htmlelem(tag="span",content=(tablecolinttohtml(tcolo,ent[0])+"-"+tablecolinttohtml(tcolo,ent[1]))))
+            else:
+                print(ent)
+                raise Exception("array ent is array with wrong number of elements")
+            entc = entc + 1
+    elif tcolo["type"] == "bool":
+        if isinstance(dcolo,bool):
+            dcon.append(tablecolbooltohtml(tcolo,dcolo==True))
+        elif isinstance(dcolo,int):
+            dcon.append(tablecolbooltohtml(tcolo,dcolo>0))
+        else:
+            print(dcolo)
+            raise Exception("unexpected data type for bool")
+    elif tcolo["type"] == "uint8_t" or tcolo["type"] == "uint_t":
+        dcon.append(tablecolinttohtml(tcolo,dcolo))
+    elif tcolo["type"] == "float":
+        dcon.append(tablecolfloattohtml(tcolo,dcolo))
+
 def genfrag_table(bookid,ji):
     hw = htmlwriter()
     hw.write(htmlelem(tag="a",attr={ "id": apodhtml.mkhtmlid("table",bookid) }))
     hw.write(htmlelem(tag="div",attr={ "class": "apodtitle", "title": bookid },content=ji["table"]))
     if "description" in ji:
         hw.write(htmlelem(tag="div",attr={ "class": "apoddescription" },content=ji["description"]))
+    if "table columns" in ji and "rows" in ji:
+        hw.begin(htmlelem(tag="table",attr={ "class": "apodtable" }))
+        # header
+        hw.begin(htmlelem(tag="tr",attr={ "class": "apodtablehead" }))
+        for colo in ji["table columns"]:
+            title = ""
+            if "title" in colo:
+                title = colo["title"]
+            hw.write(htmlelem(tag="th",content=title))
+        hw.end() # th
+        # rows
+        for rowo in ji["rows"]:
+            if not "data" in rowo:
+                continue
+            hw.begin(htmlelem(tag="tr",attr={ "class": "apodtablerow" }))
+            for coli in range(0,len(rowo["data"])):
+                tcolo = ji["table columns"][coli]
+                dcolo = rowo["data"][coli]
+                dcon = [ ]
+                if type(dcolo) == dict:
+                    if "type" in dcolo and dcolo["type"] == "multiple" and "values" in dcolo and type(dcolo["values"]) == list:
+                        for val in dcolo["values"]:
+                            if "value" in val:
+                                sdcon = [ ]
+                                tablecoltohtml(sdcon,tcolo,val["value"])
+                                dcon.append(htmlelem(tag="div",content=sdcon))
+                else:
+                    tablecoltohtml(dcon,tcolo,dcolo)
+                hw.write(htmlelem(tag="td",content=dcon))
+            hw.end() # tr
+        # end
+        hw.end() # table
     if "notes" in ji:
         nl = ji["notes"]
         if not type(nl) == list:

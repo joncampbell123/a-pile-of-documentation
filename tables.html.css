@@ -73,3 +73,33 @@ ul.apodsourceslist {
 	font-style: italic;
 }
 
+table.apodtable {
+	border: 1px solid black;
+	border-right: none;
+	border-bottom: none;
+	font-size: 10px;
+	margin: 0px;
+	margin-bottom: 0.5em;
+	border-spacing: 0px;
+	text-align: left;
+}
+
+tr.apodtablehead th {
+	background-color: #DFDFDF;
+}
+
+tr.apodtablehead th,td {
+	font-weight: 900;
+	padding: 0.1em;
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	white-space: pre-wrap;
+}
+
+tr.apodtablerow th,td {
+	font-weight: 300;
+	white-space: pre-wrap;
+}
+
