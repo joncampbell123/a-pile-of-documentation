@@ -331,6 +331,21 @@ def genfrag_table(bookid,ji):
             hw.end() # tr
         # end
         hw.end() # table
+        #
+        uli = [ ]
+        for colo in ji["table columns"]:
+            desc = ""
+            title = ""
+            if "title" in colo:
+                title = colo["title"]
+            if "description" in colo:
+                desc = colo["description"]
+            if not title == "" and not desc == "":
+                uli.append(htmlelem(tag="li",content=[ htmlelem(tag="b",content=title), ": ", htmlelem(tag="span",content=desc) ]))
+        if len(uli) > 0:
+            nc = [ htmlelem(tag="span",attr={ "class": "apodnoteshead" },content="Columns:"), htmlelem(tag="ul",attr={ "class": "apodnoteslist" },content=uli) ]
+            hw.write(htmlelem(tag="div",attr={ "class": "apodnotes" },content=nc))
+        #
     if "notes" in ji:
         nl = ji["notes"]
         if not type(nl) == list:
