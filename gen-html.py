@@ -324,6 +324,16 @@ def genfrag_table(bookid,ji):
                             if "value" in val:
                                 sdcon = [ ]
                                 tablecoltohtml(sdcon,tcolo,val["value"])
+                                if "source index" in val:
+                                    slist = val["source index"]
+                                    if not type(slist) == list:
+                                        slist = [ slist ]
+                                    psidx = None # FIXME: Source indexes may have duplicates
+                                    for sidx in slist:
+                                        if not psidx == sidx:
+                                            l = "["+str(sidx+1)+"]"
+                                            sdcon.append(htmlelem(tag="sup",attr={ "class": "apodsourceidx" },content=l))
+                                        psidx = sidx
                                 dcon.append(htmlelem(tag="div",content=sdcon))
                 else:
                     tablecoltohtml(dcon,tcolo,dcolo)
