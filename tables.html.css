@@ -111,5 +111,7 @@ td.nowrap {
 
 .apodsourceidx {
 	color: #0000DF;
+	font-weight: 300;
+	text-decoration: none;
 }
 

@@ -411,8 +411,7 @@ def genfrag_table(bookid,ji):
                 l += copyright
             nent.append(l)
             #
-            l = "["+str(sil+1)+"]"
-            nent.append(htmlelem(tag="sup",attr={ "class": "apodsourceidx" },content=l))
+            nent.append(htmlelem(tag="sup",content=htmlelem(tag="a",attr={ "href": ("sources-"+src["id"]+".html"), "class": "apodsourceidx" },content=("["+str(sil+1)+"]"))))
             #
             url = None
             if "url" in sref:
