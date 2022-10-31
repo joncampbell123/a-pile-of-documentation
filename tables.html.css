@@ -96,11 +96,13 @@ tr.apodtablehead th,td {
 	padding-left: 0.5em;
 	padding-right: 0.5em;
 	white-space: pre-wrap;
+	vertical-align: top;
 }
 
 tr.apodtablerow th,td {
 	font-weight: 300;
 	white-space: pre-wrap;
+	vertical-align: top;
 }
 
 td.nowrap {
