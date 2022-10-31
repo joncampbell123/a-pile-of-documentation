@@ -268,32 +268,6 @@ def englishpp(x):
 def tableprocsort(x):
     return [ x["title"].lower(), x["id"] ]
 
-# process
-tableproclist = [ ]
-g = glob.glob("compiled/tables/*.json",recursive=True)
-for path in g:
-    pathelem = path.split('/')
-    if len(pathelem) < 1:
-        raise Exception("What??")
-    basename = pathelem[-1] # the last element
-    if basename == None or basename == "":
-        raise Exception("What??")
-    #
-    ji = apodjson.load_json(path)
-    if not "id" in ji:
-        continue
-    #
-    htmlfrag = genfrag_table(ji["id"],ji)
-    writefrag_table(ji["id"],ji,htmlfrag)
-    writewhole_table(ji["id"],ji,htmlfrag)
-    #
-    title = ji["id"]
-    if "table" in ji:
-        title = englishpp(ji["table"])
-    tableproclist.append({ "id": ji["id"], "title": title })
-#
-tableproclist.sort(key=tableprocsort)
-
 def sourceprocsort(x):
     return [ x["title"].lower(), x["id"] ]
 
@@ -328,6 +302,32 @@ for path in g:
     sourceproclist.append({ "id": ji["id"], "title": title })
 #
 sourceproclist.sort(key=sourceprocsort)
+
+# process
+tableproclist = [ ]
+g = glob.glob("compiled/tables/*.json",recursive=True)
+for path in g:
+    pathelem = path.split('/')
+    if len(pathelem) < 1:
+        raise Exception("What??")
+    basename = pathelem[-1] # the last element
+    if basename == None or basename == "":
+        raise Exception("What??")
+    #
+    ji = apodjson.load_json(path)
+    if not "id" in ji:
+        continue
+    #
+    htmlfrag = genfrag_table(ji["id"],ji)
+    writefrag_table(ji["id"],ji,htmlfrag)
+    writewhole_table(ji["id"],ji,htmlfrag)
+    #
+    title = ji["id"]
+    if "table" in ji:
+        title = englishpp(ji["table"])
+    tableproclist.append({ "id": ji["id"], "title": title })
+#
+tableproclist.sort(key=tableprocsort)
 
 # make overall source list HTML too
 f = open("compiled/sources.html","wb")
