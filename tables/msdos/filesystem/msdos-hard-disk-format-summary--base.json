@@ -17,7 +17,8 @@
 			"column": "format",
 			"title": "Format",
 			"name": "format",
-			"description": "Disk format"
+			"description": "Disk format",
+			"nowrap": true
 		},
 		{
 			"type": "string",
@@ -25,7 +26,8 @@
 			"combine different": true,
 			"title": "Disk",
 			"name": "disk",
-			"description": "Disk size, 3.5 inch or 5.25 in, etc"
+			"description": "Disk size, 3.5 inch or 5.25 in, etc",
+			"nowrap": true
 		},
 		{
 			"type": "uint_t",

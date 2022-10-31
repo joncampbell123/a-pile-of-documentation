@@ -12,13 +12,15 @@
 			"type": "string",
 			"title": "Command",
 			"case insensitive": true,
-			"name": "command"
+			"name": "command",
+			"nowrap": true
 		},
 		{
 			"type": "string",
 			"title": "Syntax",
 			"case insensitive": true,
-			"name": "syntax"
+			"name": "syntax",
+			"nowrap": true
 		},
 		{
 			"type": "string",
@@ -32,7 +34,8 @@
 			"case insensitive": true,
 			"combine different": true,
 			"name": "example",
-			"title": "Example"
+			"title": "Example",
+			"nowrap": true
 		},
 		{
 			"type": "string",

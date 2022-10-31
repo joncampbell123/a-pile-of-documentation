@@ -18,7 +18,8 @@
 			"column": "format",
 			"title": "Format",
 			"name": "format",
-			"description": "Disk format"
+			"description": "Disk format",
+			"nowrap": true
 		},
 		{
 			"type": "string",
@@ -26,14 +27,16 @@
 			"combine different": true,
 			"title": "Disk",
 			"name": "disk",
-			"description": "Disk size, 3.5 inch or 5.25 in, etc"
+			"description": "Disk size, 3.5 inch or 5.25 in, etc",
+			"nowrap": true
 		},
 		{
 			"type": "uint_t",
 			"title": "ID",
 			"name": "midb",
 			"display": "hex",
-			"description": "Media ID byte"
+			"description": "Media ID byte",
+			"nowrap": true
 		},
 		{
 			"type": "uint_t",
@@ -119,7 +122,8 @@
 			"name": "mindosver",
 			"case insensitive": true,
 			"combine different": true,
-			"description": "Minimum DOS version"
+			"description": "Minimum DOS version",
+			"nowrap": true
 		},
 		{
 			"type": "string",

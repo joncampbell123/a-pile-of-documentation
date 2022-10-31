@@ -103,3 +103,7 @@ tr.apodtablerow th,td {
 	white-space: pre-wrap;
 }
 
+td.nowrap {
+	white-space: pre;
+}
+

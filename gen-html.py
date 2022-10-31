@@ -290,9 +290,14 @@ def genfrag_table(bookid,ji):
                 continue
             hw.begin(htmlelem(tag="tr",attr={ "class": "apodtablerow" }))
             for coli in range(0,len(rowo["data"])):
+                attr = { }
                 tcolo = ji["table columns"][coli]
                 dcolo = rowo["data"][coli]
                 dcon = [ ]
+                #
+                if "nowrap" in tcolo and tcolo["nowrap"] == True:
+                    attr["class"] = "nowrap"
+                #
                 if type(dcolo) == dict:
                     if "type" in dcolo and dcolo["type"] == "multiple" and "values" in dcolo and type(dcolo["values"]) == list:
                         for val in dcolo["values"]:
@@ -302,7 +307,7 @@ def genfrag_table(bookid,ji):
                                 dcon.append(htmlelem(tag="div",content=sdcon))
                 else:
                     tablecoltohtml(dcon,tcolo,dcolo)
-                hw.write(htmlelem(tag="td",content=dcon))
+                hw.write(htmlelem(tag="td",attr=attr,content=dcon))
             hw.end() # tr
         # end
         hw.end() # table

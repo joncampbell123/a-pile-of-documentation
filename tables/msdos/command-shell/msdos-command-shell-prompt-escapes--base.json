@@ -11,7 +11,8 @@
 		{
 			"type": "string",
 			"title": "Character sequence",
-			"name": "charseq"
+			"name": "charseq",
+			"nowrap": true
 		},
 		{
 			"type": "string",
@@ -25,14 +26,16 @@
 			"case insensitive": true,
 			"combine different": true,
 			"title": "Example",
-			"name": "example"
+			"name": "example",
+			"nowrap": true
 		},
 		{
 			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
 			"title": "Example displays as",
-			"name": "exampledisplayas"
+			"name": "exampledisplayas",
+			"nowrap": true
 		}
 	]
 }

@@ -14,7 +14,8 @@
 			"title": "Escape",
 			"is array": true,
 			"case insensitive": false,
-			"name": "escape"
+			"name": "escape",
+			"nowrap": true
 		},
 		{
 			"type": "string",
@@ -22,7 +23,8 @@
 			"description": "String formatting in practice.\n# is a placeholder for an ANSI parameter. Spaces are added for display purposes only and are not part of the escape.",
 			"case insensitive": false,
 			"is array": true,
-			"name": "string"
+			"name": "string",
+			"nowrap": true
 		},
 		{
 			"type": "string",

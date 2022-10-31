@@ -18,7 +18,8 @@
 			"type": "string",
 			"title": "Escape",
 			"case insensitive": false,
-			"name": "esc"
+			"name": "esc",
+			"nowrap": true
 		},
 		{
 			"type": "string",
