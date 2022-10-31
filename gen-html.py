@@ -215,10 +215,18 @@ def tablecolfloattohtml(tcolo,dcolo):
         return str(dcolo)
     return str(dcolo)
 
+def hex8(x):
+    x = hex(x)[2:] # strip off the 0x
+    while len(x) < 2:
+        x = '0' + x
+    return "0x"+x
+
 def tablecolinttohtml(tcolo,dcolo):
     if type(dcolo) == list:
         return str(dcolo)
     if "display" in tcolo and tcolo["display"] == "hex":
+        if tcolo["type"] == "uint8_t":
+            return hex8(dcolo)
         return hex(dcolo)
     return str(dcolo)
 
