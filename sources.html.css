@@ -24,3 +24,12 @@ span.apodsourcetoclistentpagenumber {
 	font-style: italic;
 }
 
+div.apodsourceslistent {
+	font-size: 10pt;
+	font-style: italic;
+}
+
+.apodsourceslisttitle {
+	font-style: normal;
+}
+

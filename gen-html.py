@@ -273,6 +273,9 @@ for path in g:
 #
 tableproclist.sort()
 
+def sourceprocsort(x):
+    return [ x["title"], x["id"] ]
+
 # process
 sourceproclist = [ ]
 g = glob.glob("compiled/sources/*.json",recursive=True)
@@ -297,9 +300,13 @@ for path in g:
     htmlfrag = genfrag_source(ji["id"],ji)
     writefrag_source(ji["id"],ji,htmlfrag)
     writewhole_source(ji["id"],ji,htmlfrag)
-    sourceproclist.append(ji["id"])
+    #
+    title = ji["id"]
+    if "title" in ji:
+        title = ji["title"]
+    sourceproclist.append({ "id": ji["id"], "title": title })
 #
-sourceproclist.sort()
+sourceproclist.sort(key=sourceprocsort)
 
 # make overall source list HTML too
 f = open("compiled/sources.html","wb")
@@ -308,8 +315,17 @@ f.write("<title>Sources</title>".encode('UTF-8'))
 f.write(("<link rel=\"stylesheet\" href=\"sources.css\" />").encode('UTF-8'))
 writewhole_endhead(f)
 writewhole_beginbody(f)
+#
+for sobj in sourceproclist:
+    hw = htmlwriter()
+    le = [ "Source ", htmlelem(tag="a",attr={ "href": "#"+apodhtml.mkhtmlid("source",sobj["id"]), "class": "apodsourceslisttitle" },content=sobj["title"]) ]
+    hw.write(htmlelem(tag="div",attr={ "class": "apodsourceslistent" },content=le))
+    f.write(hw.get())
+f.write(b"<hr class=\"apodsourcetoclistentseparator\" />\n")
+#
 sidcount = 0
-for sid in sourceproclist:
+for sobj in sourceproclist:
+    sid = sobj["id"]
     if sidcount > 0:
         f.write(b"<hr class=\"apodsourcetoclistentseparator\" />\n")
     path = "compiled/sources/"+sid+".html.frag"
