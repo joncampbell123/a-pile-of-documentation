@@ -439,8 +439,10 @@ def genfrag_table(bookid,ji):
                         if "title" in pref:
                             if not len(l) == 0:
                                 l.append(", ")
+                            srctref = "sources-"+src["id"]+".html"
+                            srctref += "#" + apodhtml.mkhtmlid("source",src["id"],path)
                             l.append(htmlelem(tag="span",content='"'))
-                            l.append(htmlelem(tag="span",attr={ "class": "apodsourcepreftitle" },content=pref["title"]))
+                            l.append(htmlelem(tag="a",attr={ "class": "apodsourcepreftitle", "href": srctref },content=pref["title"]))
                             l.append(htmlelem(tag="span",content='"'))
                         if "page" in pref:
                             if not len(l) == 0:

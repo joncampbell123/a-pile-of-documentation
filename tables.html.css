@@ -115,3 +115,13 @@ td.nowrap {
 	text-decoration: none;
 }
 
+a.apodsourcepreftitle {
+	color: black;
+	font-weight: 300;
+	text-decoration: none;
+}
+
+a.apodsourcepreftitle:hover {
+	text-decoration: underline;
+}
+
