@@ -326,13 +326,10 @@ def genfrag_table(bookid,ji):
                                     if not type(slist) == list:
                                         slist = [ slist ]
                                     slist.sort()
-                                    psidx = None # FIXME: Source indexes may have duplicates
                                     for sidx in slist:
-                                        if not psidx == sidx:
-                                            idname = apodhtml.mkhtmlid("table-sr",bookid+":"+str(sidx+1))
-                                            iddisp = "["+str(sidx+1)+"]";
-                                            sdcon.append(htmlelem(tag="sup",content=htmlelem(tag="a",attr={ "href": "#"+idname, "class": "apodsourceidxref" },content=iddisp)))
-                                        psidx = sidx
+                                        idname = apodhtml.mkhtmlid("table-sr",bookid+":"+str(sidx+1))
+                                        iddisp = "["+str(sidx+1)+"]";
+                                        sdcon.append(htmlelem(tag="sup",content=htmlelem(tag="a",attr={ "href": "#"+idname, "class": "apodsourceidxref" },content=iddisp)))
                                 dcon.append(htmlelem(tag="div",content=sdcon))
                 else:
                     tablecoltohtml(dcon,tcolo,dcolo)

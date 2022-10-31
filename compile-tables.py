@@ -700,6 +700,23 @@ def deduptable(obj):
         row["source index"] = nsi
         # also clear temp stuff
         del row["columns present"]
+        # multiple values may have dupes too
+        if "data" in row:
+            data = row["data"]
+            for dcol in data:
+                if type(dcol) == dict:
+                    if "type" in dcol and dcol["type"] == "multiple" and "values" in dcol and type(dcol["values"]) == list:
+                        for dvo in dcol["values"]:
+                            if "source index" in dvo:
+                                dsi = dvo["source index"]
+                                dsi.sort()
+                                p = None
+                                ndsi = [ ]
+                                for n in dsi:
+                                    if not p == n:
+                                        ndsi.append(n)
+                                    p = n
+                                dvo["source index"] = ndsi
     #
     table["rows"] = nrows
 
