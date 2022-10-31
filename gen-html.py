@@ -325,9 +325,10 @@ def genfrag_table(bookid,ji):
                                 sdcon = [ ]
                                 tablecoltohtml(sdcon,tcolo,val["value"])
                                 if "source index" in val:
-                                    slist = val["source index"]
+                                    slist = val["source index"].copy()
                                     if not type(slist) == list:
                                         slist = [ slist ]
+                                    slist.sort()
                                     psidx = None # FIXME: Source indexes may have duplicates
                                     for sidx in slist:
                                         if not psidx == sidx:
