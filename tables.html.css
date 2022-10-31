@@ -125,3 +125,7 @@ a.apodsourcepreftitle:hover {
 	text-decoration: underline;
 }
 
+li.apodsourceref:target {
+	background-color: #FFFFAF;
+}
+

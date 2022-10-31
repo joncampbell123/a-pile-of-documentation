@@ -20,6 +20,10 @@ ul.apodsourcetoclist {
 	list-style-type: circle;
 }
 
+li.apodsourcetoclistent:target {
+	background-color: #FFFFAF;
+}
+
 span.apodsourcetoclistentpagenumber {
 	font-style: italic;
 }

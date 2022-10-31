@@ -413,7 +413,6 @@ def genfrag_table(bookid,ji):
             if not copyright == "":
                 l += ", "
                 l += copyright
-            nent.append(htmlelem(tag="a",attr={ "id": apodhtml.mkhtmlid("table-sr",bookid+":"+str(sil+1)) }))
             nent.append(l)
             #
             nent.append(htmlelem(tag="sup",content=htmlelem(tag="a",attr={ "href": ("sources-"+src["id"]+".html"), "class": "apodsourceidx" },content=("["+str(sil+1)+"]"))))
@@ -456,7 +455,7 @@ def genfrag_table(bookid,ji):
                 nent.append(htmlelem(tag="br"))
                 nent.append(htmlelem(tag="span",content=[ "Notes: ", src["notes"] ]))
             #
-            uli.append(htmlelem(tag="li",content=nent))
+            uli.append(htmlelem(tag="li",attr={ "class": "apodsourceref", "id": apodhtml.mkhtmlid("table-sr",bookid+":"+str(sil+1)) },content=nent))
         #
         nc = [ htmlelem(tag="span",attr={ "class": "apodsourceshead" },content="Sources:"), htmlelem(tag="ul",attr={ "class": "apodsourceslist" },content=uli) ]
         hw.write(htmlelem(tag="div",attr={ "class": "apodsources", "title": bookid },content=nc))
