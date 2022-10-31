@@ -240,8 +240,10 @@ def tablecoltohtml(dcon,tcolo,dcolo):
                 dcon.append(", ")
             if isinstance(ent,str):
                 dcon.append(ent)
-            elif isinstance(ent,int) or isinstance(ent,float):
-                dcon.append(str(ent))
+            elif isinstance(ent,int):
+                dcon.append(tablecolinttohtml(tcolo,ent))
+            elif isinstance(ent,float):
+                dcon.append(tablecolfloattohtml(tcolo,ent))
             elif not type(ent) == list:
                 print(ent)
                 raise Exception("array ent not an array")

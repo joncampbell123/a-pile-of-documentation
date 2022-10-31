@@ -31,6 +31,7 @@
 			"type": "uint_t",
 			"title": "ID",
 			"name": "midb",
+			"display": "hex",
 			"description": "Media ID byte"
 		},
 		{
