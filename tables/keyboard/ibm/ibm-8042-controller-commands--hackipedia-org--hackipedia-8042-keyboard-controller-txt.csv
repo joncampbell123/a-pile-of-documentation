@@ -1,4 +1,4 @@
-cmdbyte,params,command,comments
+cmdbyte,params,command,comments,system
 0x20-0x3F,,Read byte from 8042 RAM. Byte index is low 5 bits of command,Byte 0 (command 0x20) is also known as the Command Byte
 0x60-0x7F,nn,Write byte nn to 8042 RAM. Byte index is low 5 bits of command,Byte 0 (command 0x60) is also known as the Command Byte
 0x90-0x9F,,Write bottom 4 bits of command to bottom 4 bits of the Output port,Bit 0 must be set or you may cause a hung condition where the CPU is stuck in a reset state
@@ -13,7 +13,7 @@ cmdbyte,params,command,comments
 0xD0,,Read Output Port
 0xD1,nn,Write nn to Outport Port
 0xD4,nn,Send command to PS/2 mouse
-0xDD,,Disable A20 line,
-0xDF,,Enable A20 line,
+0xDD,,Disable A20 line,,"HP Vectra"
+0xDF,,Enable A20 line,,"HP Vectra"
 0xF0-0xFF,,Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port. Bit 0 is tied to the reset line on the CPU and command FEh is used to reset the CPU.
 

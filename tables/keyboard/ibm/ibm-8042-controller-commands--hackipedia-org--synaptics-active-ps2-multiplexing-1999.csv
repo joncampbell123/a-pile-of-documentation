@@ -4,7 +4,7 @@ cmdbyte,params,command,comments,system
 0xA8,,Enable AUX Port
 0xA9,,Test AUX Port,"The Test AUX Port command in Multiplexed mode returns a one-byte response in the range 00h to 04h just as it would in Legacy mode. However, it is undefined whether or not A9h causes the KBC to revert to Legacy mode; if not, it is undefined which port (if any) is actually tested"
 0xAA,,Self Test,"The KBC Self Test command always causes the KBC to revert to Legacy mode before executing the self-test"
-0xD3,,Force AUX Output,"The Force AUX Output command operates in largely the same way in
+0xD3,nn,Force AUX Output,"The Force AUX Output command operates in largely the same way in
 Multiplexed mode as in Legacy mode. The argument byte is echoed back as if received from AUX port #0, i.e., with Source = ‘00’, AUX = ‘1’, OBF = ‘1’, and Error = ‘0’"
 0xD4,nn,Send command o PS/2 mouse,"This command always causes the KBC to revert to Legacy mode; once in Legacy mode, the D4h command is processed as usual"
 0x20,,Read Command Byte,"Does not revert multiplexed mode"
