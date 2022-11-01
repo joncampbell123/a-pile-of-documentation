@@ -633,6 +633,12 @@ def deduptable(obj):
         # ignore any column not provided by both tables in order to allow tables to add to separate
         # columns without causing multiple entries
         for coli in range(0,len(tcols)):
+            tcl = tcols[coli]
+            # presence merge, if present and set to False, disables merge combining columns across tables.
+            # in that case, the column if not provided by the table is treated as the default value being present.
+            if "presence merge" in tcl and tcl["presence merge"] == False:
+                srow["columns present"][coli] = buildrow["columns present"][coli] = True
+            #
             spr = srow["columns present"][coli]
             bpr = buildrow["columns present"][coli]
             if not (spr == True and bpr == True):

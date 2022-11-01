@@ -30,6 +30,8 @@
 		{
 			"type": "string",
 			"case insensitive": true,
+			"presence merge": false,
+			"default": "",
 			"name": "system",
 			"title": "System",
 			"nowrap": true
