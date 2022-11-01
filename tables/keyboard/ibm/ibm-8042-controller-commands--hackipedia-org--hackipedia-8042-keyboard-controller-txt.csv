@@ -13,7 +13,7 @@ cmdbyte,params,command,comments
 0xD0,,Read Output Port
 0xD1,nn,Write nn to Outport Port
 0xD4,nn,Send command to PS/2 mouse
-0xDD,,Disable A20 line,Vectra PC
-0xDF,,Enable A20 line,Vectra PC
+0xDD,,Disable A20 line,
+0xDF,,Enable A20 line,
 0xF0-0xFF,,Pulse bits of Output Port low for 6 microseconds. Each zero bit in the command corresponds to the pin on the Output Port. Bit 0 is tied to the reset line on the CPU and command FEh is used to reset the CPU.
 
