@@ -30,6 +30,13 @@
 		{
 			"type": "string",
 			"case insensitive": true,
+			"name": "system",
+			"title": "System",
+			"nowrap": true
+		},
+		{
+			"type": "string",
+			"case insensitive": true,
 			"combine different": true,
 			"name": "command",
 			"title": "Command",
