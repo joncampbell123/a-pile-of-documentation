@@ -115,6 +115,12 @@ td.nowrap {
 	text-decoration: none;
 }
 
+.apodsourceidxref {
+	color: #0000DF;
+	font-weight: 300;
+	text-decoration: none;
+}
+
 a.apodsourcepreftitle {
 	color: black;
 	font-weight: 300;
