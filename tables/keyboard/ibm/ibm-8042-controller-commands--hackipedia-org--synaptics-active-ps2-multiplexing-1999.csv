@@ -1,4 +1,4 @@
-cmdbyte,params,command,comments
+cmdbyte,params,command,comments,system
 0xA6,,Enable password,"This command inhibits most KBC operations until a password is typed on the keyboard. In systems with Active Multiplexing, the password inhibits all the AUX devices in the obvious way"
 0xA7,,Disable AUX Port
 0xA8,,Enable AUX Port
@@ -9,4 +9,5 @@ Multiplexed mode as in Legacy mode. The argument byte is echoed back as if recei
 0xD4,nn,Send command o PS/2 mouse,"This command always causes the KBC to revert to Legacy mode; once in Legacy mode, the D4h command is processed as usual"
 0x20,,Read Command Byte,"Does not revert multiplexed mode"
 0x60,nn,Write Command Byte,"Does not revert multiplexed mode"
+0x90-0x93,,Routing prefix,"Low 2 bits of command select AUX port #0 to #3 to route to","Synaptics multiplexer"
 
