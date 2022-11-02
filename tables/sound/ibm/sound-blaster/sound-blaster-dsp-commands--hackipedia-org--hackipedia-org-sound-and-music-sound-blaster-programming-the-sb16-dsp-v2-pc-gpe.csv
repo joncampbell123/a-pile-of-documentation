@@ -4,6 +4,6 @@ command,param,dspver,card,effect,comments
 0xD5,,4.0+,,Pause 16-bit DMA,"SB16"
 0xD6,,4.0+,,Continue 16-bit DMA,"SB16"
 0xD9,,4.0+,,Exit 16-bit auto-init DMA block after end of current block,"SB16: This is a way to finish the current DMA block if programmed auto-init"
-0xDA,,4.0+,,Exit 8-bit auto-init DMA block after end of current block,"SB16: This is a way to finish the current DMA block if programmed auto-init"
-0xE1,,2.0+,,Get DSP version number,"Issue this command, then read back two bytes which are the major, minor version of the DSP"
+0xDA,,2.0+,,Exit 8-bit auto-init DMA block after end of current block,"SB16: This is a way to finish the current DMA block if programmed auto-init"
+0xE1,,1.0+,,Get DSP version number,"Issue this command, then read back two bytes which are the major, minor version of the DSP"
 0xB0-0xCF,mode lo hi,4.0+,,16-bit DMA,"Length of DSP block in samples (not bytes!) is in lo,hi as (length - 1)\nCommand byte bit 4: 1=8-bit PCM 0=16-bit PCM\nCommand byte bit 3: 1=record 0=playback\nCommand byte bit 2: 1=auto-init 0=single-cycle\nCommand byte bit 1: 1=FIFO on 0=FIFO off\nCommand byte bit 0: Always zero\nMode byte bits 7-6: Always zero\nMode byte bit 5: 1=stereo 0=mono\nMode byte bit 4: 1=signed PCM 0=unsigned PCM\nMode byte bit 3-0: Always zero\n\nCommon commands:\nB8h = 16-bit single cycle input\nB0h = 16-bit single cycle output\nBEh = 16-bit auto-initialized input\nB6h = 16-bit auto-initialized output\nC8h = 8-bit single cycle input\nC0h = 8-bit single cycle output\nCEh = 8-bit auto-initialized input\nC6h = 8-bit auto-initialized output"
