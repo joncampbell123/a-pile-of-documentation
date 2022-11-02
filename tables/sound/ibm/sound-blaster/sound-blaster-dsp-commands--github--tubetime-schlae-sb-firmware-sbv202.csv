@@ -19,4 +19,6 @@ command,param,dspver,card,effect,comments
 0x36,,2.0+,,cmd_midi_read_write_poll,"sbv202.asm: DSP reset will cancel the MIDI command without clearing DSP state.\nInternal DSP firmware handles 0x30-0x33 and 0x34-0x37 using the same processing loop that changes behavior slightly based on bits in the command byte."
 0x37,,2.0+,,cmd_midi_read_write_poll,"sbv202.asm: DSP reset will cancel the MIDI command without clearing DSP state.\nInternal DSP firmware handles 0x30-0x33 and 0x34-0x37 using the same processing loop that changes behavior slightly based on bits in the command byte."
 0x38-0x3F,,2.0,Sound Blaster 2.0,cmd_midi_write_poll,"DSP command 38h, and aliases due to processing at do_midi_cmd (sbv202.asm) when bit 3 set"
+0x40-0x47,tc,2.0,Sound Blaster 2.0,cmdg_setup_e,"DSP command 40h, and aliases due to processing at cmdg_setup_e (sbv202.asm) when bit 3 clear"
+0x48-0x4F,lo hi,2.0,Sound Blaster 2.0,cmd_set_dma_block_size,"DSP command 48h, and aliases due to processing at cmdg_setup_e (sbv202.asm) when bit 3 set"
 
