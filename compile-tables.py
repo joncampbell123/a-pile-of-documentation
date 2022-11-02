@@ -253,6 +253,7 @@ def tablerowrangeproccol(tablecols,drowobj,coli):
                             ndr = drowobj.copy() # Remember, Python assignment is pass by reference!
                             ndr["data"] = drow.copy() # and this code is going to duplicate the row and modify it
                             ndr["data"][coli] = [ ent.copy() ] # funny things happen to the rows if we do not do this
+                            # TODO: Recurse into this function given drowobj=ndr and coli=coli+1 so secondary columns can expand too. When the need arises.
                             r.append(ndr)
                         return r
     #
