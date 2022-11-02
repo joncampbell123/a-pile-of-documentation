@@ -1,4 +1,7 @@
 command,param,dspver,card,effect,comments
+0x00-0x03,,2.0,Sound Blaster 2.0,No op,"Command group 0 (status) according to sbv202.asm which does nothing but return to command processing, if bit 2 and 3 are clear."
+0x04-0x07,,2.0,Sound Blaster 2.0,Return status register,"Undocumented command, returns status register (sbv202.asm), if bit 2 set, bit 3 clear."
+0x08-0x0F,,2.0,Sound Blaster 2.0,cmd_halt,"Undocumented command at cmd_halt (sbv202.asm), if bit 3 is set. Puts the DSP into an infinite loop."
 0x10-0x13,nn,2.0,Sound Blaster 2.0,cmd_dac_direct,"DSP command 10h, and aliases that exist due to processing at cmdg_dac_e (sbv202.asm) when neither bit 2 or 3 are set in the command"
 0x14-0x15,lo hi,2.0,Sound Blaster 2.0,cmd_dac_dma,"DSP command 14h, and aliases that exist due to processing at cmdg_dac_e (sbv202.asm) when bit 2 set, bit 3 clear, in the command\nNote that there is code in vanilla DOSBox that acknowledges this alias that is used in one DOS game known as 'Wari'"
 0x18-0x19 0x1C-0x1D,,2.0,Sound Blaster 2.0,cmd_dac_autoinit,"DSP command 1Ch, and aliases that exist due to processing at cmdg_dac_e (sbv202.asm) when bit 3 is set, then at X078e when bit 1 is clear"
