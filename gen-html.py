@@ -132,6 +132,8 @@ def genfrag_sourceinfo(bookid,ji):
     genfrag_sinfo_row(hw,"ID:",bookid,rowattr={ "class": "apodsourceid" })
     if "type" in ji:
         genfrag_sinfo_row(hw,"Type:",ji["type"],rowattr={ "class": "apodsourcetype" })
+    if "source json file" in ji:
+        genfrag_sinfo_row(hw,"JSON:",ji["source json file"],rowattr={ "class": "apodsourcejsonfile" })
     if "title" in ji:
         genfrag_sinfo_row(hw,"Title:",ji["title"],rowattr={ "class": "apodsourcetitle" })
     if "url" in ji:
@@ -446,15 +448,23 @@ def genfrag_table(bookid,ji):
                             l.append(htmlelem(tag="span",attr={ "class": "apodsourceprefpage" },content=("(page "+str(pref["page"])+")")))
                     if not l == None:
                         nent.append(htmlelem(tag="br"))
-                        nent.append(htmlelem(tag="div",attr={ "class": "apodsourcepref" },content=l))
+                        nent.append(htmlelem(tag="span",attr={ "class": "apodsourcepref" },content=l))
             #
             if "notes" in src:
                 nent.append(htmlelem(tag="br"))
                 nent.append(htmlelem(tag="span",content=[ "Notes: ", src["notes"] ]))
             #
+            if "source json file" in sel:
+                nent.append(htmlelem(tag="br"))
+                nent.append(htmlelem(tag="span",content=[ "JSON: ", sel["source json file"] ]))
+            #
             uli.append(htmlelem(tag="li",attr={ "class": "apodsourceref", "id": apodhtml.mkhtmlid("table-sr",bookid+":"+str(sil+1)) },content=nent))
         #
         nc = [ htmlelem(tag="span",attr={ "class": "apodsourceshead" },content="Sources:"), htmlelem(tag="ul",attr={ "class": "apodsourceslist" },content=uli) ]
+        hw.write(htmlelem(tag="div",attr={ "class": "apodsources", "title": bookid },content=nc))
+    if "source json file" in ji:
+        uli = [ htmlelem(tag="li",content=ji["source json file"]) ]
+        nc = [ htmlelem(tag="span",attr={ "class": "apodsourcejsonfile" },content="JSON:"), htmlelem(tag="ul",attr={ "class": "apodsourceslist" },content=uli) ]
         hw.write(htmlelem(tag="div",attr={ "class": "apodsources", "title": bookid },content=nc))
     r = hw.get()
     return r
