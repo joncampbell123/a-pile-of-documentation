@@ -13,7 +13,8 @@
 		"DSP commands derived from sbv202.asm are based on careful study of the source code and aliases of DSP commands that result from the way they are processed.",
 		"Notes for those studying the code (sbv202.asm) who may be overly assustomed to x86 assembly language: jb/jnb in 8051 assembly language is a branch on whether or not a bit is set/not set. It is not a JB (branch if below) like 8088 asm.",
 		"The sbv202.asm based entries list only those commands that are either alises of existing commands or undocumented commands",
-		"The quirks noted in sbv202.asm may exist in other pre-SB16 revisions of Sound Blaster hardware. Testing is needed to update the DSP verions listed in this table."
+		"The quirks noted in sbv202.asm may exist in other pre-SB16 revisions of Sound Blaster hardware. Testing is needed to update the DSP verions listed in this table.",
+		"Sound Blaster 2.0 DSP cold boot state (according to sbv202.asm):\nDAC output = 0x80\nTime constant = 0x9C\nDSP DMA ID = 0xAA 0x96\nDMA block size = 0x7FF (0x800 samples)\nStatus register = 0x00"
 	],
 	"table in csv": true
 }
