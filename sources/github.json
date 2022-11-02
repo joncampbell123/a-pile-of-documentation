@@ -1,0 +1,9 @@
+{
+	"type": "website",
+	"schema": {
+		"version": 1
+	},
+	"id": "github",
+	"title": "GitHub",
+	"url": "http://github.com"
+}

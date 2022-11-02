@@ -1,0 +1,4 @@
+command,param,dspver,card,effect,comments
+0x10-0x13,nn,2.0,Sound Blaster 2.0,cmd_dac_direct,"DSP command 10h, and aliases that exist due to processing at cmdg_dac_e (sbv202.asm) when neither bit 2 or 3 are set in the command"
+0x14-0x15,lo hi,2.0,Sound Blaster 2.0,cmd_dac_dma,"DSP command 14h, and aliases that exist due to processing at cmdg_dac_e (sbv202.asm) when bit 2 set, bit 3 clear, in the command\nNote that there is code in vanilla DOSBox that acknowledges this alias that is used in one DOS game known as 'Wari'"
+
