@@ -32,6 +32,15 @@
 		},
 		{
 			"type": "string",
+			"name": "dspver",
+			"title": "DSP",
+			"required": true,
+			"nowrap": true,
+			"presence merge": false,
+			"description": "DSP version minimum or range"
+		},
+		{
+			"type": "string",
 			"case insensitive": true,
 			"name": "card",
 			"title": "Card",
