@@ -39,5 +39,7 @@ command,param,dspver,card,effect,comments
 0xDA-0xDB,,2.0,Sound Blaster 2.0,Exit auto-init DMA operation (cmd_exit_autoinit),"Alias of command 0xDA (sbv202.asm)"
 0xD0-0xD1,,2.0,Sound Blaster 2.0,Enable speaker (cmd_speaker_en_dis),"Alias of command 0xD1 (sbv202.asm)"
 0xD2-0xD3,,2.0,Sound Blaster 2.0,Disable speaker (cmd_speaker_en_dis),"Alias of command 0xD3 (sbv202.asm)"
-
+0xE8-0xEF,,2.0,Sound Blaster 2.0,Read test register (cmd_read_test_reg),"Read test register and aliases (sbv202.asm) when bit 3 is set"
+0xE4-0xE7,nn,2.0,Sound Blaster 2.0,Write test register (cmd_write_test_reg),"Write test register and aliases (sbv202.asm) when bit 3 clear and bit 2 set"
+0xE3,,2.0,Sound Blaster 2.0,Firmware validation check (cmd_dsp_dma_id),"Alias of command 0xE2 (sbv202.asm) when bits 3 and 2 clear and bit 1 set"
 0xE2,nn,2.0+,,Firmware validation check (cmd_dsp_dma_id),"Undocumented (sbv202.asm). nn is a challenge byte, which is then combined with the dsp_dma_id bytes and returned via DMA.\nOn DSP reset:\n\ndsp_dma_id0 = 0xAA\ndsp_dma_id1 = 0x96\n\nThen:\n\ndsp_dma_id0 += dsp_dma_id1 XOR nn\nrotate dsp_dma_id1 2 bits to the right\n\nAfter this calculation, dsp_dma_id0 is sent to the host over DMA.\nIn addition to validating that it is Creative hardware, or a clone that supports this command, this command is also handy for testing whether the DMA channel to the card is working as expected.\n\nThis DSP command may also work on Sound Blaster Pro and even SB16. It is unknown whether DSP 1.xx implements this command."
