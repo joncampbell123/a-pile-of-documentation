@@ -50,5 +50,5 @@ command,param,dspver,card,effect,comments
 0xF3,,2.0,Sound Blaster 2.0,Force interrupt (cmd_force_interrupt),"Alias of command 0xF2 (sbv202.asm)"
 0xF2,,1.0+,,Force interrupt,"Causes the DSP to signal an interrupt. This can be used to check that the interrupt associated with the card works properly and is the correct one."
 0xF1,,2.0,Sound Blaster 2.0,Get auxiliary status (cmd_aux_status),"Undocumented (sbv202.asm).\nOn the SB 2.0 the bits are assigned as follows:\nBit 7: 1=Mailbox data available for the 8051 to read\nBit 6: 1=Mailbox data available for the PC to read\nBit 5: Analog comparator bit for recording modes\nBit 4:1 reserved\nBit 0: 1=speaker muted 0=speaker enabled"
-0xF0,,1.0-2.xx,,Sine generator (cmd_sine_gen),"Undocumented (sbv202.asm). Causes the DSP to play a 64-sample sine wave sample stored in ROM"
+0xF0,,1.0-3.xx,,Sine generator (cmd_sine_gen),"Undocumented (sbv202.asm). Causes the DSP to play a 64-sample sine wave sample stored in ROM"
 
