@@ -241,6 +241,27 @@ def tablerowtodatatype(tablecols,drow,ji):
         #
         drow[coli] = tablecolxlate(tablecols[coli],drow[coli])
 
+def tablerowrangeproccol(tablecols,drowobj,coli):
+    if "data" in drowobj:
+        drow = drowobj["data"]
+        if "is array" in tablecols[coli] and tablecols[coli]["is array"] == True:
+            if "is range" in tablecols[coli] and tablecols[coli]["is range"] == True:
+                if "range as row" in tablecols[coli] and tablecols[coli]["range as row"] == True:
+                    if type(drow[coli]) == list:
+                        r = [ ]
+                        for ent in drow[coli]:
+                            ndr = drowobj.copy() # Remember, Python assignment is pass by reference!
+                            ndr["data"] = drow.copy() # and this code is going to duplicate the row and modify it
+                            ndr["data"][coli] = [ ent.copy() ] # funny things happen to the rows if we do not do this
+                            r.append(ndr)
+                        return r
+    #
+    return [ drowobj ]
+
+def tablerowrangeproc(tablecols,drow):
+    r = tablerowrangeproccol(tablecols,drow,0)
+    return r
+
 def procconttenttable(scan,obj):
     if not "path" in scan:
         raise Exception("What?")
@@ -483,8 +504,9 @@ def procconttenttable(scan,obj):
                 drow[dcoli] = data
             #
             tablerowtodatatype(basetablecols,drow,ji)
+            drowar = tablerowrangeproc(basetablecols,drowobj)
             #
-            rows.append(drowobj)
+            rows += drowar
     #
     ji["source json file"] = path
     for what in ["schema","table in csv","table","table columns","base definition","table column array separator","table column range separator"]:
