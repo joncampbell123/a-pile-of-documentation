@@ -21,4 +21,7 @@ command,param,dspver,card,effect,comments
 0x38-0x3F,,2.0,Sound Blaster 2.0,cmd_midi_write_poll,"DSP command 38h, and aliases due to processing at do_midi_cmd (sbv202.asm) when bit 3 set"
 0x40-0x47,tc,2.0,Sound Blaster 2.0,cmdg_setup_e,"DSP command 40h, and aliases due to processing at cmdg_setup_e (sbv202.asm) when bit 3 clear"
 0x48-0x4F,lo hi,2.0,Sound Blaster 2.0,cmd_set_dma_block_size,"DSP command 48h, and aliases due to processing at cmdg_setup_e (sbv202.asm) when bit 3 set"
+0x50 0x52 0x54 0x56,,2.0,Sound Blaster 2.0,Stop SRAM playback (cmdg_ram_playback_e),"Undocumented, part of the SRAM playback group (sbv202.asm), when bit 0 and 3 are clear"
+0x51 0x53 0x55 0x57,,2.0,Sound Blaster 2.0,Play samples in SRAM (cmd_ram_playback),"Undocumented, part of the SRAM playback group (sbv202.asm), when bit 0 set, bit 3 clear"
+0x58-0x5F,nrs lcl lch un sample...,2.0,Sound Blaster 2.0,Load data into SRAM (cmd_ram_load),"Undocumented, part of the SRAM playback group (sbv202.asm), when bit 3 set\nnrs = Number of RAM samples times two\nPlayback loop count (16-bit) = lcl lch\nun = Unused?\nsample... = zero or more sample bytes to load according to nrs"
 
