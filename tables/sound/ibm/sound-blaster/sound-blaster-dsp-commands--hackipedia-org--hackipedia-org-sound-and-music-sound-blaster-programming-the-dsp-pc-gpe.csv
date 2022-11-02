@@ -11,4 +11,4 @@ command,param,card,effect,comments
 0x16,lo hi,,2-bit ADPCM playback,"lo hi = 16-bit little Endian value containing (length of DMA block - 1)"
 0x17,lo hi,,2-bit ADPCM playback with reference byte,"lo hi = 16-bit little Endian value containing (length of DMA block - 1)\nFirst byte is 8-bit PCM reference byte"
 0x24,lo hi,,8-bit DMA record,"lo hi = 16-bit little Endian value containing (length of DMA block - 1)"
-0x40,tc,,Set Time Constant,"Time constant determines the playback rate of audio.\nComputed as 256 - 1000000 / frequency. A side effect is that it is impossible to precisely represent standard frequencies like 11025Hz this way.\n\nThe lowest sample rate possible this way is 3906Hz (256 - 1000000/3096 = 0x00), the highest is 1MHz (256 - 1000000/1000000 = 256 - 1 = 0xFF) although for obvious reasons the DSP caps the sample rate at what it can support."
+0x40,tc,,Set Time Constant,"Time constant determines the playback rate of audio.\nComputed as 256 - 1000000 / frequency."
