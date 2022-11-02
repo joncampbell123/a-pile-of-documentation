@@ -1,4 +1,7 @@
 command,param,dspver,card,effect,comments
 0x10-0x13,nn,2.0,Sound Blaster 2.0,cmd_dac_direct,"DSP command 10h, and aliases that exist due to processing at cmdg_dac_e (sbv202.asm) when neither bit 2 or 3 are set in the command"
 0x14-0x15,lo hi,2.0,Sound Blaster 2.0,cmd_dac_dma,"DSP command 14h, and aliases that exist due to processing at cmdg_dac_e (sbv202.asm) when bit 2 set, bit 3 clear, in the command\nNote that there is code in vanilla DOSBox that acknowledges this alias that is used in one DOS game known as 'Wari'"
+0x18-0x19 0x1C-0x1D,,2.0,Sound Blaster 2.0,cmd_dac_autoinit,"DSP command 1Ch, and aliases that exist due to processing at cmdg_dac_e (sbv202.asm) when bit 3 is set, then at X078e when bit 1 is clear"
+0x1A 0x1E,,2.0,Sound Blaster 2.0,cmd_dac_dma_use_adpcm_2,"DSP command 1Fh, and aliases, at cmd_dac_dma_use_adpcm_2 (sbv202.asm) when bit 3 and 1 are set. This undocumented version does not read a reference byte"
+0x1B 0x1F,,2.0,Sound Blaster 2.0,cmd_dac_dma_use_adpcm_2,"DSP command 1Fh, and aliases, at cmd_dac_dma_use_adpcm_2 (sbv202.asm) when bit 3 and 1 are set."
 

@@ -17,7 +17,7 @@
 			"is array": true,
 			"is range": true,
 			"nowrap": true,
-			"array separator": " ",
+			"array separator": "\n",
 			"description": "Initial byte of DSP command"
 		},
 		{
