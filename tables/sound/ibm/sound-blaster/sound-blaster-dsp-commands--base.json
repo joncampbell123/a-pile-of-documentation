@@ -1,0 +1,60 @@
+{
+	"table": "Sound Blaster DSP commands",
+	"id": "sound-blaster-dsp-commands",
+	"combinable": true,
+	"description": "DSP commands, sent to SB_BASE+C",
+	"base definition": true,
+	"schema": {
+		"version": 1
+	},
+	"table columns": [
+		{
+			"type": "uint8_t",
+			"display": "hex",
+			"name": "command",
+			"title": "DSP command",
+			"required": true,
+			"is array": true,
+			"nowrap": true,
+			"array separator": " ",
+			"description": "Initial byte of DSP command"
+		},
+		{
+			"type": "uint8_t",
+			"display": "hex",
+			"name": "param",
+			"title": "Parameters",
+			"required": true,
+			"is array": true,
+			"nowrap": true,
+			"array separator": " ",
+			"description": "Additional bytes following DSP command"
+		},
+		{
+			"type": "string",
+			"case insensitive": true,
+			"name": "card",
+			"title": "Card",
+			"required": true,
+			"nowrap": true,
+			"presence merge": false,
+			"description": "Specific to version or clone"
+		},
+		{
+			"type": "string",
+			"case insensitive": true,
+			"combine different": true,
+			"name": "effect",
+			"title": "Effect",
+			"description": "What the command does"
+		},
+		{
+			"type": "string",
+			"case insensitive": true,
+			"combine different": true,
+			"name": "comments",
+			"title": "Comments",
+			"description": "Additional comments"
+		}
+	]
+}
