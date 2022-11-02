@@ -557,11 +557,11 @@ def rowcolsortfilter(tcol,col):
                 col = sp
     if tcol["type"] == "float":
         col = tablecolxlate(tcol,col)
-        if isinstance(col,str) and (col == "-" or col == "nn" or col == "n/a" or col == "N/A"): # we allow "-" "N/A" etc
+        if isinstance(col,str): # we allow "-" "N/A" etc
             col = 99e99 # it has to be made into a float for comparison, Python will not compare str vs int. Make it an int so - often follows values
     if tcol["type"] == "uint8_t" or tcol["type"] == "uint_t":
         col = tablecolxlate(tcol,col)
-        if isinstance(col,str) and (col == "-" or col == "nn" or col == "n/a" or col == "N/A"): # we allow "-" "N/A" etc
+        if isinstance(col,str): # we allow "-" "N/A" etc
             col = 999999999 # it has to be made into an integer for comparison, Python will not compare str vs int. Make it an int so - often follows values
     return col
 
