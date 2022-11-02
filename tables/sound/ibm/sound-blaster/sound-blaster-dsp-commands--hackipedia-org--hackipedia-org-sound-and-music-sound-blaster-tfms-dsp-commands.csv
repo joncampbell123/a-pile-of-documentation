@@ -6,4 +6,6 @@ command,param,dspver,card,effect,comments
 0xF2,,1.0+,,"IRQ Request, 8-bit","Triggers 8-bit interrupt."
 0xF1,,3.xx,Sound Blaster Pro,"Retrieves auxiliary information about pending DSP operations.\nBit 7: ???\nBit 6: DSPC 02Dh-02Fh (SB1.x) ???\nBit 5: DSPC 020h-02Fh (SB1.x) ???\nBit 4: Reserved (1)\nBit 3: Stereo Input Mode (1=Stereo)\nBit 2: DSPC 0ACh ???\nBit 1: Reserved (1)\nBit 0: Speaker Status (0=enabled)"
 0xF0,,1.0-3.xx,,Sine Generator,"Diagnostic peak-to-peak sine wave generator."
+0xE8,,2.0,Sound Blaster 2.0,Read Test Register,"Reads diagnostic register, and return it"
+0xE4,nn,2.0,Sound Blaster 2.0,Write Test Register,"Write Test Register"
 
