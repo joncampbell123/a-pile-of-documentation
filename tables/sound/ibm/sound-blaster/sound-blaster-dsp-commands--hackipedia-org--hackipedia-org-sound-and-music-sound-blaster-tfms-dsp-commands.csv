@@ -36,4 +36,12 @@ command,param,dspver,card,effect,comments
 0x45,,4.0+,"Continue Auto-Initialize DMA, 8-bit","Continues a halted auto-initialized 8-bit DMA operation."
 0x41,hi lo,4.0+,,"Set Sample Rate","Sets sample rate (in HZ)"
 0x40,tc,1.0+,,"Set Time Constant","Sets sample rate through internal I/O transfer timer.\n\nTimeConstant = 256 - (1000000 / (SampleChannels * SampleRate))"
+0x38,nn,1.0+,,"MIDI Write Poll","Writes MIDI code."
+0x37,,2.0+,,"MIDI Read Timestamp Interrupt + Write Poll (UART)","Enables UART mode with interrupt, where all DSP writes are interpreted as MIDI codes and interrupts are generated when a timestamped MIDI code is to be read.\n\nDisable UART mode with DSP reset.\nWrite buffer status must still be checked.\nSoundBlasters buffer up to 64bytes of MIDI data."
+0x35,,2.0+,,"MIDI Read Interrupt + Write Poll (UART)","Enables UART mode with interrupt, where all DSP writes are interpreted as MIDI codes and interrupts are generated when a MIDI code is to be read.\n\nDisable UART mode with DSP reset.\nWrite buffer status must still be checked.\nSoundBlasters buffer up to 64bytes of MIDI data."
+0x34,,2.0+,,"MIDI Read Poll + Write Poll (UART)","Enables UART mode, where all DSP read/writes are interpreted as MIDI codes.\n\nSend MIDI Read Poll + Write Poll (UART) command (034h).\nSend and receive MIDI codes.\nReset DSP to terminate"
+0x33,,1.0+,,"MIDI Read Timestamp Interrupt","Generates interrupt when MIDI code is available, includes timestamp.\n\nTimestamp if 24-bit value containing the time since the last MIDI command in milliseconds.\nSoundBlasters buffer up to 64bytes of MIDI data."
+0x32,,1.0+,,"MIDI Read Timestamp Poll","Reads MIDI code with timestamp.\nRead timestamp and MIDI code when available"
+0x31,,1.0+,,"MIDI Read Interrupt","Generates interrupt when MIDI code is available."
+0x30,,1.0+,,"MIDI Read Poll","Reads MIDI code."
 
