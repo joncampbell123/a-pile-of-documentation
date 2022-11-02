@@ -8,4 +8,10 @@ command,param,dspver,card,effect,comments
 0xF0,,1.0-3.xx,,Sine Generator,"Diagnostic peak-to-peak sine wave generator."
 0xE8,,2.0,Sound Blaster 2.0,Read Test Register,"Reads diagnostic register, and return it"
 0xE4,nn,2.0,Sound Blaster 2.0,Write Test Register,"Write Test Register"
+0xE3,,3.0+,,DSP Copyright,"Reads DSP copyright string. Read bytes from DSP until you get a zero byte. Result is an ASCIIZ copyright string."
+0xE1,,1.0+,,DSP Version,"Determines DSP major and minor version. Read major, minor from DSP.\nSoundBlaster 1.0 = 1.?? (1.05???)\nSoundBlaster 1.5 = 1.?? (1.05???)\nSoundBlaster 2.0 = 2.xx (2.01)\nSoundBlaster Pro = 3.00 (???)\nSoundBlaster Pro 2 = 3.01+ (3.01, 3.02)\nSoundBlaster 16 = 4.0x (4.04, 4.05)\nSoundBlaster 16 SCSI-2 = 4.11 (4.11)\nSoundBlaster AWE32 = 4.12+ (4.12)"
+0xE0,nn,2.0,Sound Blaster 2.0,DSP Identification,"Returns bitwise NOT of data byte.\nResults reliable only after DSP reset on early models."
+0xDA,,2.0+,,"Exit Auto-Initialize DMA Operation, 8-bit","Terminates auto-initialized 8-bit DMA operations after current block."
+0xD9,,4.0+,,"Exit Auto-Initialize DMA Operation, 16-bit","Terminates auto-initialized 16-bit DMA operation after current block."
+0xD8,,2.0+,,"Speaker Status","Determines current status of speaker. Returned byte is enabled=0xFF, disabled=0x00"
 
