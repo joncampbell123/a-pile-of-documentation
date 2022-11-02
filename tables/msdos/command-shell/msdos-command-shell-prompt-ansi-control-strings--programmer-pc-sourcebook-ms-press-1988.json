@@ -115,12 +115,6 @@
 			"Erase from cursor to end of line, including cursor position"
 		],
 		[
-			["ESC","[","R"],
-			["ESC","[","#;#","R"],
-			"",
-			"Report cursor position through standard input"
-		],
-		[
 			["ESC","[","6","n"],
 			["ESC","[","6","n"],
 			"",
