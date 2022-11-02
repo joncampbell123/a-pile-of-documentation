@@ -68,5 +68,8 @@
 			"title": "Comments",
 			"description": "Additional comments"
 		}
+	],
+	"notes": [
+		"SB_BASE refers to a base I/O port configured by the card, which is a multiple of 0x10 and between 0x210 and 0x260 inclusive, or on some cards a multiple of 0x20 between 0x220 and 0x260 inclusive."
 	]
 }
