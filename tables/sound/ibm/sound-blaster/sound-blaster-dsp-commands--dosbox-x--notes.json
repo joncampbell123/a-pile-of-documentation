@@ -1,0 +1,12 @@
+{
+	"id": "sound-blaster-dsp-commands",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"id": "dosbox-x",
+		"type": "website"
+	},
+	"csv interpret newline": true,
+	"table in csv": true
+}
