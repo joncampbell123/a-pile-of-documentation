@@ -439,6 +439,12 @@ def procconttenttable(scan,obj):
                 ji["table column array separator"] = " " # default separate by spaces
             if not "table column range separator" in ji:
                 ji["table column range separator"] = "-" # default A-B range
+            # if told to, the strings extracted from CSV should be scanned to convert "\n" to an actual newline since CSV columns cannot hold a newline
+            if "csv interpret newline" in ji and ji["csv interpret newline"]:
+                for row in c["rows"]:
+                    for coli in range(0,len(row)):
+                        row[coli] = re.sub(r"\\n","\n",row[coli])
+            #
             ji["table"] = c["rows"]
     #
     if "table" in ji:
