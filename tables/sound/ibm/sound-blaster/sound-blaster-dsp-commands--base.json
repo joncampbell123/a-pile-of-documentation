@@ -15,6 +15,7 @@
 			"title": "DSP command",
 			"required": true,
 			"is array": true,
+			"is range": true,
 			"nowrap": true,
 			"array separator": " ",
 			"description": "Initial byte of DSP command"
@@ -26,6 +27,7 @@
 			"title": "Parameters",
 			"required": true,
 			"is array": true,
+			"is range": true,
 			"nowrap": true,
 			"array separator": " ",
 			"description": "Additional bytes following DSP command"

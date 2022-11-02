@@ -226,7 +226,7 @@ def hexg(x):
 def tablecolinttohtml(tcolo,dcolo):
     if type(dcolo) == list:
         return str(dcolo)
-    if "display" in tcolo and tcolo["display"] == "hex":
+    if "display" in tcolo and tcolo["display"] == "hex" and isinstance(dcolo,int):
         if tcolo["type"] == "uint8_t":
             return hex8(dcolo)
         return hexg(dcolo)
