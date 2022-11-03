@@ -16,6 +16,6 @@ command,param,dspver,card,effect,comments
 0x08,par,4.0+,"Sound Blaster 16","ASP/CSP get ???","par = 0x03: Return ASP version"
 0x0E,par val,4.0+,"Sound Blaster 16","ASP/CSP set register","par = 0x83 AND (mode & 0x88) = 0x88: Write val byte to ASP/CSP RAM. Memory address will reset or increment according to mode byte."
 0x0F,par,4.0+,"Sound Blaster 16","ASP/CSP get register","par = 0x83 AND (mode & 0x88) = 0x88: Read val byte from ASP/CSP RAM. Memory address will reset or increment according to mode byte.\npar = 0x83 AND (mode & 0x88) != 0x88: Read chip version ID"
-0xF9,memaddr,4.0+,"Sound Blaster 16","Read 8051 memory","Read one byte from the DSP 8051 memory at address memaddr"
-0xFA,memaddr val,4.0+,"Sound Blaster 16","Write 8051 memory","Write one byte to the DSP 8051 memory at address memaddr, value val"
+0xF9,memaddr,4.0+,"Sound Blaster 16","Read 8051 memory","Read one byte from the DSP's internal 8051 processor memory at address memaddr"
+0xFA,memaddr val,4.0+,"Sound Blaster 16","Write 8051 memory","Write one byte to the DSP's internal 8051 processor memory at address memaddr, value val"
 
