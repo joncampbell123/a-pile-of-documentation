@@ -47,4 +47,7 @@ command,param,dspver,card,effect,comments
 0x2C,,2.0+,,"Auto-Initialize DMA ADC, 8-bit","Initiates auto-initialize 8-bit DMA transfer (record)\nSupports up to 23KHz (11.5KHz stereo).\nExit auto-initialized mode by programming single-cycle DMA output or with Exit Auto-Initialize DMA Operation, 8-bit (0DAh)."
 0x28,,3.xx,Sound Blaster Pro,"Direct ADC, 8-bit (Burst)","After this point, every read grabs a sample from the ADC. Terminate operation with DSP reset."
 0x24,lo hi,1.0+,,"DMA ADC, 8-bit","Initiates 8-bit DMA transfer (record)."
+0x20,,1.0+,,"Direct ADC, 8-bit","Inputs single sample. Read sample from DSP"
+0x1F,,2.0+,,"Auto-Initialize DMA DAC, 2-bit ADPCM Reference","Initiates auto-initialize 2-bit ADPCM DMA transfer with reference byte."
+0x1C,,2.0+,,"Initiates auto-initialize 8-bit DMA transfer.","Supports up to 23KHz (11.5KHz stereo)"
 
