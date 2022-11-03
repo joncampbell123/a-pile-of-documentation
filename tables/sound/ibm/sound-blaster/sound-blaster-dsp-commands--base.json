@@ -34,6 +34,18 @@
 			"description": "Additional bytes following DSP command"
 		},
 		{
+			"type": "uint8_t",
+			"display": "hex",
+			"name": "return",
+			"title": "Returns",
+			"required": true,
+			"is array": true,
+			"is range": true,
+			"nowrap": true,
+			"array separator": " ",
+			"description": "Bytes returned by the DSP command"
+		},
+		{
 			"type": "string",
 			"name": "dspver",
 			"title": "DSP",
