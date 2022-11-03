@@ -53,4 +53,6 @@ command,param,dspver,card,effect,comments
 0xDF,nn,,"ESS AudioDrive","ESS488 command compatibility","ES488 command not supported by ES1868. Use mixer registers instead."
 0xE1,,1.0+,,"Return version number high","ESS1868: high (3), followed by version number low (1). This indicates Sound Blaster Pro compatibility."
 0xE7,,,"ESS AudioDrive","ES1868 Identification bytes","Returns ES1868 Identification bytes: 68h 8xh, where x is the version code. Sound cards not using an ES1868 will either ignore this command or perform an unknown function, in which case the sound card should be reset after this command is used. The version code, x, is less than 8 for the ES688, and greater than or equal to 8 for the ES1868."
+0xF2,,1.0+,,"Generate an interrupt for test purposes",""
+0xFD,,,"ESS AudioDrive","Force power-down","Forces power-down. Software or hardware reset. Required for wake-up."
 
