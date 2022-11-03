@@ -43,7 +43,7 @@ command,param,dspver,card,effect,comments
 0xA6,,,"ESS AudioDrive","Unspecified (Extended register)",""
 0xA7,,,"ESS AudioDrive","Unspecified (Extended register)",""
 0xA8,,,"ESS AudioDrive","Unspecified (Extended register)",""
-0xA9,,,"ESS AudioDrive","Mic Preamp (Extended register)","Bit 7-3: Reserved\nBit 2: Enable Mic Preamp\nBit 1-0: Reserved\n\nAll other bits must first be read and preserved when writing to this register."
+0xA9,,,"ESS AudioDrive (ES1868)","Mic Preamp (Extended register)","Bit 7-3: Reserved\nBit 2: Enable Mic Preamp\nBit 1-0: Reserved\n\nAll other bits must first be read and preserved when writing to this register."
 0xAA,,,"ESS AudioDrive","Unspecified (Extended register)",""
 0xAB,,,"ESS AudioDrive","Unspecified (Extended register)",""
 0xAC,,,"ESS AudioDrive","Unspecified (Extended register)",""
