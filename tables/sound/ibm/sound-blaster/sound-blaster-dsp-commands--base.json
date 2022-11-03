@@ -43,6 +43,7 @@
 			"is range": true,
 			"nowrap": true,
 			"array separator": " ",
+			"presence merge": false,
 			"description": "Bytes returned by the DSP command"
 		},
 		{
