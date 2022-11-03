@@ -3,7 +3,7 @@ command,param,dspver,card,effect,comments
 0x40,tc,1.0+,,Set Time Constant,"Time constant determines the playback rate of audio.\nComputed as 256 - 1000000 / frequency."
 0x41,hi lo,3.5+,"SC400 / Gallant SC-6000","Set Output Samplerate","The SC-6000 card emulates Sound Blaster Pro but also implements a subset of SB16 commands. 3.5 is the default DSP version of the card."
 0x42,hi lo,3.5+,"SC400 / Gallant SC-6000","Set Input Samplerate","The SC-6000 card emulates Sound Blaster Pro but also implements a subset of SB16 commands. 3.5 is the default DSP version of the card."
-0xB6 0xBE 0xC6 0xCE,mode lo hi,3.5+,"SC400 / Gallant SC-6000","The command and format are the same as SB16, except only these specific commands are recognized by the card","The SC-6000 card emulates Sound Blaster Pro but also implements a subset of SB16 commands. 3.5 is the default DSP version of the card."
+0xB6 0xBE 0xC6 0xCE,mode lo hi,3.5+,"SC400 / Gallant SC-6000","Sound Blaster 16 playback command","The command and format are the same as SB16, except only these specific commands are recognized by the card\nThe SC-6000 card emulates Sound Blaster Pro but also implements a subset of SB16 commands. 3.5 is the default DSP version of the card."
 0xE1,,1.0+,,Get DSP Version,"SC-4000 cards report version 3.5 by default (Sound Blaster Pro) even though they also implement a subset of SB16 DSP commands. DSP version can be changed by an undocumented DSP command."
 0xE3,,3.xx+,,DSP Copyright,"SC-4000 cards return a copyright string of 'SC-6000' aka Gallant SC-6000 instead of the standard Creative string."
 0x88,,,"SC400 / Gallant SC-6000","Unknown command","SC400 TESTSC.EXE and the Windows drivers issue this command. What it does is unknown at this time."
