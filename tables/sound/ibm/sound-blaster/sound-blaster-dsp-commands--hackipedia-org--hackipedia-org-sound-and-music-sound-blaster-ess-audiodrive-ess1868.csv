@@ -66,7 +66,7 @@ command,param,dspver,card,effect,comments
 0xBD,,,"ESS AudioDrive","Unspecified (Extended register)",""
 0xBE,,,"ESS AudioDrive","Unspecified (Extended register)",""
 0xBF,,,"ESS AudioDrive","Unspecified (Extended register)",""
-0xC0,nn,,"ESS AudioDrive","Read ESS extended register","Read from register specified by nn, where nn is a value from 0xA0-0xBF inclusive corresponding to an ESS register"
+0xC0,nn,,"ESS AudioDrive","Read ESS extended register","Read from register specified by nn, where nn is a value from 0xA0-0xBF inclusive corresponding to an extended ESS register"
 0xC1,,,"ESS AudioDrive","Resume after suspend",""
 0xC6,,,"ESS AudioDrive","Enable ES1868 Extension commands Axh, Bxh. Must be issued after every reset.",""
 0xC7,,,"ESS AudioDrive","Disable ES1868 Extension commands Axh, Bxh.",""
