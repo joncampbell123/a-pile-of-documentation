@@ -1,0 +1,80 @@
+{
+	"table": "Sound Blaster Mixer Registers",
+	"id": "sound-blaster-mixer-registers",
+	"combinable": true,
+	"description": "Mixer registers, accessible at SB_BASE+4 and SB_BASE+5",
+	"base definition": true,
+	"schema": {
+		"version": 1
+	},
+	"table columns": [
+		{
+			"type": "uint8_t",
+			"display": "hex",
+			"name": "register",
+			"title": "Register",
+			"required": true,
+			"is array": true,
+			"is range": true,
+			"nowrap": true,
+			"range as row": true,
+			"array separator": "\n",
+			"description": "Mixer register index"
+		},
+		{
+			"type": "string",
+			"name": "rw",
+			"title": "R/W",
+			"required": true,
+			"is array": true,
+			"is range": true,
+			"nowrap": true,
+			"array separator": " ",
+			"presence merge": false,
+			"description": "Read, write, or read and write"
+		},
+		{
+			"type": "string",
+			"case insensitive": true,
+			"name": "mixer",
+			"title": "Mixer",
+			"required": true,
+			"nowrap": true,
+			"presence merge": false,
+			"description": "Specific to mixer chipset"
+		},
+		{
+			"type": "string",
+			"case insensitive": true,
+			"name": "card",
+			"title": "Card",
+			"required": true,
+			"nowrap": true,
+			"presence merge": false,
+			"description": "Specific to version or clone"
+		},
+		{
+			"type": "string",
+			"case insensitive": true,
+			"combine different": true,
+			"name": "content",
+			"title": "Contents",
+			"description": "Register contents"
+		},
+		{
+			"type": "string",
+			"case insensitive": true,
+			"combine different": true,
+			"name": "comments",
+			"title": "Comments",
+			"description": "Additional comments"
+		}
+	],
+	"notes": [
+		"SB_BASE refers to a base I/O port configured by the card, which is a multiple of 0x10 and between 0x210 and 0x260 inclusive, or on some cards a multiple of 0x20 between 0x220 and 0x260 inclusive.",
+		"Card is marked / General to indicate the card in question is the minimum card and generally implemented",
+		"Mixer chipset: CT1335 (Sound Blaster 2.0 CD interface card)",
+		"Mixer chipset: CT1345 (Sound Blaster Pro)",
+		"Mixer chipset: CT1745 (Sound Blaster 16)"
+	]
+}
