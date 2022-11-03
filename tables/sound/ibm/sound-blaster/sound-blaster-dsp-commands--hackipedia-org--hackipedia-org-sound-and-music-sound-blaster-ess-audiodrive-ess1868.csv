@@ -66,26 +66,26 @@ command,param,dspver,card,effect,comments,return
 0xBD,nn,,"ESS AudioDrive (ES1868)","Self-Timed Power-Down","If nn is nonzero, hardware will automatically power down after nn * 8 seconds.\nIf nn is zero, self-timed power-down is disabled"
 0xBE,,,"ESS AudioDrive","Unspecified (Extended register)",""
 0xBF,,,"ESS AudioDrive","Unspecified (Extended register)",""
-0xC0,nn,,"ESS AudioDrive","Read ESS extended register","Read from register specified by nn, where nn is a value from 0xA0-0xBF inclusive corresponding to an extended ESS register"
+0xC0,nn,,"ESS AudioDrive","Read ESS extended register","Read from register specified by nn, where nn is a value from 0xA0-0xBF inclusive corresponding to an extended ESS register",val
 0xC1,,,"ESS AudioDrive","Resume after suspend",""
 0xC6,,,"ESS AudioDrive","Enable ES1868 Extension commands Axh, Bxh. Must be issued after every reset.",""
 0xC7,,,"ESS AudioDrive","Disable ES1868 Extension commands Axh, Bxh.",""
-0xCE,,,"ESS AudioDrive","Read GPO0/1 Power Management register",""
+0xCE,,,"ESS AudioDrive","Read GPO0/1 Power Management register","",nn
 0xCF,nn,,"ESS AudioDrive","Write GPO/1 Power Management register",""
 0xD0,,1.0+,,"Pause DMA","Internal FIFO operations will continue until the FIFO is empty (DAC transfer) or full (ADC transfer). It is not necessary to use this command to stop DMA if the transfer is completed normally and the end-of-DMA interrupt is generated."
 0xD1,,1.0+,,"Enable voice DAC input to mixer.",""
 0xD3,,1.0+,,"Disable voice DAC input to mixer.",""
 0xD4,,1.0+,,"Continue DMA after command D0h.",""
-0xD5,,,"ESS AudioDrive","ESS488 command compatibility","For compatibility with the ES488, always returns “1”."
+0xD5,,,"ESS AudioDrive","ESS488 command compatibility","For compatibility with the ES488, always returns “1”.",nn
 0xD6,,,"ESS AudioDrive","ESS488 command compatibility","ES488 command not supported by ES1868. Use mixer registers instead."
 0xD7,nn,,"ESS AudioDrive","ESS488 command compatibility","ES488 command not supported by ES1868. Use mixer registers instead."
-0xD8,,1.0+,,"Return voice DAC enable status","0=disabled 0xFF=enabled"
-0xDC,,,"ESS AudioDrive","Return current input gain, 0-15, (valid during 16-bit ADC and 8-bit “high speed mode” ADC).",""
+0xD8,,2.0+,,"Return voice DAC enable status","0=disabled 0xFF=enabled",nn
+0xDC,,,"ESS AudioDrive","Return current input gain, 0-15, (valid during 16-bit ADC and 8-bit “high speed mode” ADC).","",nn
 0xDD,nn,,"ESS AudioDrive","Write current input gain, 0-15, (valid during 16-bit ADC and 8-bit “high speed mode” ADC).",""
 0xDE,,,"ESS AudioDrive","ESS488 command compatibility","ES488 command not supported by ES1868. Use mixer registers instead."
 0xDF,nn,,"ESS AudioDrive","ESS488 command compatibility","ES488 command not supported by ES1868. Use mixer registers instead."
-0xE1,,1.0+,,"Return version number high","ESS1868: high (3), followed by version number low (1). This indicates Sound Blaster Pro compatibility."
-0xE7,,,"ESS AudioDrive","ES1868 Identification bytes","Returns ES1868 Identification bytes: 68h 8xh, where x is the version code. Sound cards not using an ES1868 will either ignore this command or perform an unknown function, in which case the sound card should be reset after this command is used. The version code, x, is less than 8 for the ES688, and greater than or equal to 8 for the ES1868."
+0xE1,,1.0+,,"Return version number high","ESS1868: high (3), followed by version number low (1). This indicates Sound Blaster Pro compatibility.",hi lo
+0xE7,,,"ESS AudioDrive","ES1868 Identification bytes","Returns ES1868 Identification bytes: 68h 8xh, where x is the version code. Sound cards not using an ES1868 will either ignore this command or perform an unknown function, in which case the sound card should be reset after this command is used. The version code, x, is less than 8 for the ES688, and greater than or equal to 8 for the ES1868.",id1 id2
 0xF2,,1.0+,,"Generate an interrupt for test purposes",""
 0xFD,,,"ESS AudioDrive","Force power-down","Forces power-down. Software or hardware reset. Required for wake-up."
 

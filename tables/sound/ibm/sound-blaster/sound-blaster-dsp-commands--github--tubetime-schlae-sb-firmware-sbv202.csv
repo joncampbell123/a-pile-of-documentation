@@ -35,20 +35,20 @@ command,param,dspver,card,effect,comments,return
 0x9B 0x9D 0x9F,,2.0,Sound Blaster 2.0,High speed auto-init recording (cmdg_hs_e),"Alias of command 0x99 (sbv202.asm) when bit 3 is set. The command sets a flag indicating high speed mode, which affects how the timer interrupt within the DSP handles recording."
 0x60-0x6F 0xA0-0xAF 0xB0-0xBF 0xC0-0xCF,,2.0,Sound Blaster 2.0,Unimplemented (cmdg_invalid),"Command does nothing (sbv202.asm), groups 6, A, B, and C not implemented.\nHowever the 8051 assembly listing seems to imply a firmware bug where, if the sound card is playing audio, nothing happens, but if the sound card is not playing audio, execution continues into group 0 and handled as if command 0x00-0x0F which suggests that sending 68h, A8h, B8h, or C8h when idle should halt the DSP."
 0xD4-0xD7 0xDC-0xDF,,2.0,Sound Blaster 2.0,Continue DMA operation (cmd_dma_continue),"Alias of command 0xD4 (sbv202.asm) when bit 2 is set"
-0xD8-0xD9,,2.0,Sound Blaster 2.0,Speaker status (cmd_spk_stat),"Alias of command 0xD8 (sbv202.asm) when bit 2 is not set and bit 3 is set"
+0xD8-0xD9,,2.0,Sound Blaster 2.0,Speaker status (cmd_spk_stat),"Alias of command 0xD8 (sbv202.asm) when bit 2 is not set and bit 3 is set",nn
 0xDA-0xDB,,2.0,Sound Blaster 2.0,Exit auto-init DMA operation (cmd_exit_autoinit),"Alias of command 0xDA (sbv202.asm)"
 0xD0-0xD1,,2.0,Sound Blaster 2.0,Enable speaker (cmd_speaker_en_dis),"Alias of command 0xD1 (sbv202.asm)"
 0xD2-0xD3,,2.0,Sound Blaster 2.0,Disable speaker (cmd_speaker_en_dis),"Alias of command 0xD3 (sbv202.asm)"
-0xE8-0xEF,,2.0,Sound Blaster 2.0,Read test register (cmd_read_test_reg),"Read test register and aliases (sbv202.asm) when bit 3 is set"
+0xE8-0xEF,,2.0,Sound Blaster 2.0,Read test register (cmd_read_test_reg),"Read test register and aliases (sbv202.asm) when bit 3 is set",nn
 0xE4-0xE7,nn,2.0,Sound Blaster 2.0,Write test register (cmd_write_test_reg),"Write test register and aliases (sbv202.asm) when bit 3 clear and bit 2 set"
-0xE3,,2.0,Sound Blaster 2.0,Firmware validation check (cmd_dsp_dma_id),"Alias of command 0xE2 (sbv202.asm) when bits 3 and 2 clear and bit 1 set"
+0xE3,nn,2.0,Sound Blaster 2.0,Firmware validation check (cmd_dsp_dma_id),"Alias of command 0xE2 (sbv202.asm) when bits 3 and 2 clear and bit 1 set"
 0xE2,nn,2.0+,,Firmware validation check (cmd_dsp_dma_id),"Undocumented (sbv202.asm). nn is a challenge byte, which is then combined with the dsp_dma_id bytes and returned via DMA.\nOn DSP reset:\n\ndsp_dma_id0 = 0xAA\ndsp_dma_id1 = 0x96\n\nThen:\n\ndsp_dma_id0 += dsp_dma_id1 XOR nn\nrotate dsp_dma_id1 2 bits to the right\n\nAfter this calculation, dsp_dma_id0 is sent to the host over DMA.\nIn addition to validating that it is Creative hardware, or a clone that supports this command, this command is also handy for testing whether the DMA channel to the card is working as expected.\n\nThis DSP command may also work on Sound Blaster Pro and even SB16. It is unknown whether DSP 1.xx implements this command."
-0xE1,,1.0+,,Get DSP version number,"cmd_dsp_version"
-0xE0,nn,2.0,Sound Blaster 2.0,DSP identification (cmd_ident_e),"Undocumented (sbv202.asm), accepts byte nn, inverts all 8 bits, returns result which is equiv. (nn ^ 0xFF)"
-0xF8-0xFF,,2.0,Sound Blaster 2.0,SRAM test (cmd_sram_test),"Undocumented (sbv202.asm). Tests SRAM by writing and verifying 0xAA, then 0x55, to every byte from 0x7F to (wraparound) 0x00. Returns 0 for success or the byte that failed"
-0xF4-0xF7,,2.0,Sound Blaster 2.0,Perform ROM checksum (cmd_checksum),"Undocumented (sbv202.asm). Computes 16-bit checksum (addition) from DSP memory address 0x0000h to 0x1000. May contain bug, see sbv202.asm for details"
+0xE1,,1.0+,,Get DSP version number,"cmd_dsp_version",hi lo
+0xE0,nn,2.0,Sound Blaster 2.0,DSP identification (cmd_ident_e),"Undocumented (sbv202.asm), accepts byte nn, inverts all 8 bits, returns result which is equiv. (nn ^ 0xFF)",cmpnn
+0xF8-0xFF,,2.0,Sound Blaster 2.0,SRAM test (cmd_sram_test),"Undocumented (sbv202.asm). Tests SRAM by writing and verifying 0xAA, then 0x55, to every byte from 0x7F to (wraparound) 0x00. Returns 0 for success or the byte that failed",result
+0xF4-0xF7,,2.0,Sound Blaster 2.0,Perform ROM checksum (cmd_checksum),"Undocumented (sbv202.asm). Computes 16-bit checksum (addition) from DSP memory address 0x0000h to 0x1000. May contain bug, see sbv202.asm for details",hi lo
 0xF3,,2.0,Sound Blaster 2.0,Force interrupt (cmd_force_interrupt),"Alias of command 0xF2 (sbv202.asm)"
 0xF2,,1.0+,,Force interrupt,"Causes the DSP to signal an interrupt. This can be used to check that the interrupt associated with the card works properly and is the correct one."
-0xF1,,2.0,Sound Blaster 2.0,Get auxiliary status (cmd_aux_status),"Undocumented (sbv202.asm).\nOn the SB 2.0 the bits are assigned as follows:\nBit 7: 1=Mailbox data available for the 8051 to read\nBit 6: 1=Mailbox data available for the PC to read\nBit 5: Analog comparator bit for recording modes\nBit 4:1 reserved\nBit 0: 1=speaker muted 0=speaker enabled"
+0xF1,,2.0,Sound Blaster 2.0,Get auxiliary status (cmd_aux_status),"Undocumented (sbv202.asm).\nOn the SB 2.0 the bits are assigned as follows:\nBit 7: 1=Mailbox data available for the 8051 to read\nBit 6: 1=Mailbox data available for the PC to read\nBit 5: Analog comparator bit for recording modes\nBit 4:1 reserved\nBit 0: 1=speaker muted 0=speaker enabled",status
 0xF0,,1.0-3.xx,,Sine generator (cmd_sine_gen),"Undocumented (sbv202.asm). Causes the DSP to play a 64-sample sine wave sample stored in ROM"
 

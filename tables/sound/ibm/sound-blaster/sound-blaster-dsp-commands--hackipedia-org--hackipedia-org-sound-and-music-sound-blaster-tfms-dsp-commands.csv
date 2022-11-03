@@ -1,19 +1,19 @@
 command,param,dspver,card,effect,comments,return
-0xFD,,4.0,Sound Blaster 16,DSP Command Status,"Retrieves most recently successful DSP command.\nCommand does not support all valid DSP commands, but most."
-0xFC,,4.0,Sound Blaster 16,DSP Auxiliary Status,"Retrieves auxiliary information about pending DMA operations.\nBit 7: ???\nBit 6: ???\nBit 5: ???\nBit 4: Auto-init DMA, 16-bit (1=Active)\nBit 3: ???\nBit 2: Auto-init DMA, 8-bit (1=Active)\nBit 1: DAC/ADC DMA (1=synchronous)\nBit 0: ???"
-0xFB,,4.0,Sound Blaster 16,DSP Status,"Retrieves information about pending DSP operations.\nBit 7: Time constant (1=modified)\nBit 6: DSPC 04Fh ???\nBit 5: ???\nBit 4: Virtual Speaker (1=active)\nBit 3: DMA ADC, 16-bit (1=active)\nBit 2: DMA DAC, 16-bit (1=active)\nBit 1: DMA ADC, 8-bit (1=active)\nBit 0: DMA DAC, 8-bit (1=active)"
+0xFD,,4.0,Sound Blaster 16,DSP Command Status,"Retrieves most recently successful DSP command.\nCommand does not support all valid DSP commands, but most.",status
+0xFC,,4.0,Sound Blaster 16,DSP Auxiliary Status,"Retrieves auxiliary information about pending DMA operations.\nBit 7: ???\nBit 6: ???\nBit 5: ???\nBit 4: Auto-init DMA, 16-bit (1=Active)\nBit 3: ???\nBit 2: Auto-init DMA, 8-bit (1=Active)\nBit 1: DAC/ADC DMA (1=synchronous)\nBit 0: ???",status
+0xFB,,4.0,Sound Blaster 16,DSP Status,"Retrieves information about pending DSP operations.\nBit 7: Time constant (1=modified)\nBit 6: DSPC 04Fh ???\nBit 5: ???\nBit 4: Virtual Speaker (1=active)\nBit 3: DMA ADC, 16-bit (1=active)\nBit 2: DMA DAC, 16-bit (1=active)\nBit 1: DMA ADC, 8-bit (1=active)\nBit 0: DMA DAC, 8-bit (1=active)",status
 0xF3,,4.0+,,"IRQ Request, 16-bit","Triggers 16-bit interrupt."
 0xF2,,1.0+,,"IRQ Request, 8-bit","Triggers 8-bit interrupt."
-0xF1,,3.xx,Sound Blaster Pro,"Retrieves auxiliary information about pending DSP operations.\nBit 7: ???\nBit 6: DSPC 02Dh-02Fh (SB1.x) ???\nBit 5: DSPC 020h-02Fh (SB1.x) ???\nBit 4: Reserved (1)\nBit 3: Stereo Input Mode (1=Stereo)\nBit 2: DSPC 0ACh ???\nBit 1: Reserved (1)\nBit 0: Speaker Status (0=enabled)"
+0xF1,,3.xx,Sound Blaster Pro,"DSP Auxiliary Status","Retrieves auxiliary information about pending DSP operations.\nBit 7: ???\nBit 6: DSPC 02Dh-02Fh (SB1.x) ???\nBit 5: DSPC 020h-02Fh (SB1.x) ???\nBit 4: Reserved (1)\nBit 3: Stereo Input Mode (1=Stereo)\nBit 2: DSPC 0ACh ???\nBit 1: Reserved (1)\nBit 0: Speaker Status (0=enabled)",status
 0xF0,,1.0-3.xx,,Sine Generator,"Diagnostic peak-to-peak sine wave generator."
-0xE8,,2.0,Sound Blaster 2.0,Read Test Register,"Reads diagnostic register, and return it"
+0xE8,,2.0,Sound Blaster 2.0,Read Test Register,"Reads diagnostic register, and return it",nn
 0xE4,nn,2.0,Sound Blaster 2.0,Write Test Register,"Write Test Register"
-0xE3,,3.0+,,DSP Copyright,"Reads DSP copyright string. Read bytes from DSP until you get a zero byte. Result is an ASCIIZ copyright string."
-0xE1,,1.0+,,DSP Version,"Determines DSP major and minor version. Read major, minor from DSP.\nSoundBlaster 1.0 = 1.?? (1.05???)\nSoundBlaster 1.5 = 1.?? (1.05???)\nSoundBlaster 2.0 = 2.xx (2.01)\nSoundBlaster Pro = 3.00 (???)\nSoundBlaster Pro 2 = 3.01+ (3.01, 3.02)\nSoundBlaster 16 = 4.0x (4.04, 4.05)\nSoundBlaster 16 SCSI-2 = 4.11 (4.11)\nSoundBlaster AWE32 = 4.12+ (4.12)"
-0xE0,nn,2.0,Sound Blaster 2.0,DSP Identification,"Returns bitwise NOT of data byte.\nResults reliable only after DSP reset on early models."
+0xE3,,3.0+,,DSP Copyright,"Reads DSP copyright string. Read bytes from DSP until you get a zero byte. Result is an ASCIIZ copyright string.",nn... 0
+0xE1,,1.0+,,DSP Version,"Determines DSP major and minor version. Read major, minor from DSP.\nSoundBlaster 1.0 = 1.?? (1.05???)\nSoundBlaster 1.5 = 1.?? (1.05???)\nSoundBlaster 2.0 = 2.xx (2.01)\nSoundBlaster Pro = 3.00 (???)\nSoundBlaster Pro 2 = 3.01+ (3.01, 3.02)\nSoundBlaster 16 = 4.0x (4.04, 4.05)\nSoundBlaster 16 SCSI-2 = 4.11 (4.11)\nSoundBlaster AWE32 = 4.12+ (4.12)",hi lo
+0xE0,nn,2.0,Sound Blaster 2.0,DSP Identification,"Returns bitwise NOT of data byte.\nResults reliable only after DSP reset on early models.",cmpnn
 0xDA,,2.0+,,"Exit Auto-Initialize DMA Operation, 8-bit","Terminates auto-initialized 8-bit DMA operations after current block."
 0xD9,,4.0+,,"Exit Auto-Initialize DMA Operation, 16-bit","Terminates auto-initialized 16-bit DMA operation after current block."
-0xD8,,2.0+,,"Speaker Status","Determines current status of speaker. Returned byte is enabled=0xFF, disabled=0x00"
+0xD8,,2.0+,,"Speaker Status","Determines current status of speaker. Returned byte is enabled=0xFF, disabled=0x00",nn
 0xD6,,4.0+,,"Continue DMA Operation, 16-bit","Continues any halted 16-bit DMA operation."
 0xD5,,4.0+,,"Halt DMA Operation, 16-bit","Pauses any 16-bit DMA operation."
 0xD4,,1.0+,,"Continue DMA Operation, 8-bit","Continues a halted 8-bit single-cycle DMA operation."

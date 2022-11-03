@@ -45,8 +45,8 @@ Unlike the Time Constant, there is no need to pre-multiply the sampling rate by 
 0xD4,,1.0+,,Continue 8-bit DMA mode digitized sound I/O,"Resumes the DMA transfer paused by command D0h, 'Pause 8-bit DMA mode digitized sound I/O'. Applicable to both single-cycle and auto-init DMA modes."
 0xD5,,4.0+,,Pause 16-bit DMA mode digitized sound I/O,"This acts on I/O initiated by command Bxh. Applicable to both single-cycle and auto-init DMA modes."
 0xD6,,4.0+,,Continue 16-bit DMA mode digitized sound I/O,"This acts on I/O initiated by command Bxh. Applicable to both single-cycle and auto-init DMA modes."
-0xD8,,2.0+,,Get speaker status,"Returns the digitized sound output speaker status. After sending this command, read back a byte from the DSP. FFh indicates the speaker is on, 00h that it's off."
+0xD8,,2.0+,,Get speaker status,"Returns the digitized sound output speaker status. After sending this command, read back a byte from the DSP. FFh indicates the speaker is on, 00h that it's off.",nn
 0xD9,,4.0+,,Exit 16-bit auto-init DMA mode digitized sound I/O,"Exits at the end of the current 16-bit auto-init DMA block transfer, and terminates the I/O process."
 0xDA,,2.0+,,Exit 8-bit auto-init DMA mode digitized sound I/O,"Exits at the end of the current 8-bit auto-init DMA block transfer, and terminates the I/O process."
-0xE1,,1.0+,,Get DSP version number,"After sending this command, read back two bytes from the DSP. The first byte is the major version number and the second byte is the minor version number."
+0xE1,,1.0+,,Get DSP version number,"After sending this command, read back two bytes from the DSP. The first byte is the major version number and the second byte is the minor version number.",hi lo
 
