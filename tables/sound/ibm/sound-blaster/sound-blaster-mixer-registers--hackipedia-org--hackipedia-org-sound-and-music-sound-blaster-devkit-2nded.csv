@@ -1,3 +1,7 @@
 register,rw,mixer,card,content,comments
 0x00,W,"","","Reset Mixer","Write any 8-bit value to this register to reset the mixer chip. After a reset, all the registers will be restored to their default values."
+0x02,R/W,"CT1335","Sound Blaster 2.0","Master volume","Bits 3-1: Master volume\n\n3 bits, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 4 ⇒ – 11 dB."
+0x06,R/W,"CT1335","Sound Blaster 2.0","MIDI volume","Bits 3-1: MIDI volume\n\n3 bits, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 4 ⇒ – 11 dB."
+0x08,R/W,"CT1335","Sound Blaster 2.0","CD volume","Bits 3-1: CD volume\n\n3 bits, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 0 ⇒ – 46 dB."
+0x0A,R/W,"CT1335","Sound Blaster 2.0","Voice volume","Bits 2-1: Voice volume\n\n2 bits, giving 4 levels.\n0 to 3 ⇒ – 46 dB to 0 dB, in approximate 7 dB steps.\nDefault is 0 ⇒ – 46 dB."
 
