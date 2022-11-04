@@ -37,4 +37,9 @@ register,rw,mixer,card,content,comments
 0x3C,R/W,"CT1745","Sound Blaster 16","Output mixer switches","Bits 7-5: Reserved\nBit 4: Line L\nBit 3: Line R\nBit 2: CD L\nBit 1: CD R\nBit 0: Mic\n\nDefault is Line L=1, Line R=1, CD L=1, CD R=1, Mic=1"
 0x3D,R/W,"CT1745","Sound Blaster 16","Input Mixer L switches","Bit 7: Reserved\nBit 6: MIDI L\nBit 5: MIDI R\nBit 4: Line L\nBit 3: Line R\nBit 2: CD L\nBit 1: CD R\nBit 0: Mic\n\nDefault is MIDI L=0, MIDI R=0, Line L=1, Line R=0, CD L=1, CD R=0, Mic=1"
 0x3E,R/W,"CT1745","Sound Blaster 16","Input Mixer R switches","Bit 7: Reserved\nBit 6: MIDI L\nBit 5: MIDI R\nBit 4: Line L\nBit 3: Line R\nBit 2: CD L\nBit 1: CD R\nBit 0: Mic\n\nDefault is MIDI L=0, MIDI R=0, Line L=0, Line R=1, CD L=0, CD R=1, Mic=1"
+0x3F,R/W,"CT1745","Sound Blaster 16","Input Gain L","Bits 7-6: Input Gain L\n\n2 bits per channel, giving 4 levels.\n0 to 3 ⇒ 0 dB to 18 dB, in 6 dB steps.\nDefault is 0 ⇒ 0 dB."
+0x40,R/W,"CT1745","Sound Blaster 16","Input Gain R","Bits 7-6: Input Gain R\n\n2 bits per channel, giving 4 levels.\n0 to 3 ⇒ 0 dB to 18 dB, in 6 dB steps.\nDefault is 0 ⇒ 0 dB."
+0x41,R/W,"CT1745","Sound Blaster 16","Output Gain L","Bits 7-6: Output Gain L\n\n2 bits per channel, giving 4 levels.\n0 to 3 ⇒ 0 dB to 18 dB, in 6 dB steps.\nDefault is 0 ⇒ 0 dB."
+0x42,R/W,"CT1745","Sound Blaster 16","Output Gain R","Bits 7-6: Output Gain R\n\n2 bits per channel, giving 4 levels.\n0 to 3 ⇒ 0 dB to 18 dB, in 6 dB steps.\nDefault is 0 ⇒ 0 dB."
+0x43,R/W,"CT1745","Sound Blaster 16","AGC","Bit 0: Mic AGC\n\n0 ⇒ AGC on (default).\n1 ⇒ Fixed gain of 20 dB."
 
