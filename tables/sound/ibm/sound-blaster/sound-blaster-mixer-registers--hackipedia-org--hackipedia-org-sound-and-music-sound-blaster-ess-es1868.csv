@@ -27,9 +27,9 @@ register,rw,mixer,card,content,comments
 0x60,R/W,"","ESS AudioDrive","Left Master Volume Counter Value","(ES1868)\nBit 7: Reserved(0)\nBit 6: 1: MUTE\nBits 5-0: Left master volume"
 0x62,R/W,"","ESS AudioDrive","Right Master Volume Counter Value","(ES1868)\nBit 7: Reserved(0)\nBit 6: 1: MUTE\nBits 5-0: Right master volume"
 0x64,R/W,"","ESS AudioDrive","Master Volume Control","(ES1868)\nBit 6 MPU-401 int mask: This bit is AND'ed with the MPU-401 interrupt request. If it is low, the MPU-401 interrupt request stays low. This bit is cleared by hardware reset.\nBit 4 Read-only HMV int request: Read only interrupt request from hardware volume event.\nBit 1 HMV int mask: This bit is AND'ed with the hardware volume interrupt request before being OR'd with the first channel audio interrupt request. If this bit is low, the hardware volume interrupt request does not get OR'd with the first channel audio interrupt request. This bit is cleared by hardware reset.\nBit 0 Disable SB Pro master vol control: When low, a write to the Sound Blaster Pro master volume register will be translated into a write to the hardware master volume counters, Mixer registers 60h and 62h. If high, the Sound Blaster Pro master volume registers are, in effect, read-only. This bit is cleared by hardware reset."
-0x66,R/W,"","ESS AudioDrive","",""
-0x74,R/W,"","ESS AudioDrive","",""
-0x76,R/W,"","ESS AudioDrive","",""
+0x66,R/W,"","ESS AudioDrive","Clear Hardware Volume Interrupt Request","(ES1868) Any write to this register resets the hardware volume interrupt request."
+0x74,R/W,"","ESS AudioDrive","Second DMA Transfer Count Reload Register","(ES1868) 2’s complement transfer count - low byte"
+0x76,R/W,"","ESS AudioDrive","Second DMA Transfer Count Reload Register","(ES1868) 2’s complement transfer count - high byte"
 0x78,R/W,"","ESS AudioDrive","",""
 0x7A,R/W,"","ESS AudioDrive","",""
 
