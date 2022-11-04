@@ -16,3 +16,18 @@ register,rw,mixer,card,content,comments
 0x38,R/W,"","ESS AudioDrive","CD volume","(ES1868) Full access version of register 0x28\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
 0x3E,R/W,"","ESS AudioDrive","Line volume","(ES1868) Full access version of register 0x2E\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
 
+0x40,R,"","ESS AudioDrive","ES1868 identification value",""
+0x42,R/W,"","ESS AudioDrive","Serial Mode Input Control","(ES1868)\nBit 7: Input override\n1 = IS1/IS0 and INPUT VOLUME replace normal values as programmed by the system application when the ES1868 is in Serial Mode. Note input volume is mono, and both channels will get this value.\n0 = IS1/IS0 and INPUT VOLUME are unchanged during Serial Mode.\nBit 6: Mic 0 dB\n1 = the 26 dB microphone preamp is bypassed during Serial Mode (if bit 7 is high)\nBits 5-4: IS1:IS0\nIS1/IS0 select the input source during Serial Mode (if bit 7 is high). These values override the normal mixer settings as shown in the following: 0=Line 1=AuxA (CD) 2=Mic 3=Mixer\nBits 3-0: Input volume\nInput volume. If bit 7 is high during Serial Mode, this value overrides the input volume settings set via command B4h."
+0x44,R/W,"","ESS AudioDrive","",""
+0x46,R/W,"","ESS AudioDrive","",""
+0x48,R/W,"","ESS AudioDrive","",""
+0x4C,R/W,"","ESS AudioDrive","",""
+0x4E,R/W,"","ESS AudioDrive","",""
+
+0x64,R/W,"","ESS AudioDrive","",""
+0x66,R/W,"","ESS AudioDrive","",""
+0x74,R/W,"","ESS AudioDrive","",""
+0x76,R/W,"","ESS AudioDrive","",""
+0x78,R/W,"","ESS AudioDrive","",""
+0x7A,R/W,"","ESS AudioDrive","",""
+
