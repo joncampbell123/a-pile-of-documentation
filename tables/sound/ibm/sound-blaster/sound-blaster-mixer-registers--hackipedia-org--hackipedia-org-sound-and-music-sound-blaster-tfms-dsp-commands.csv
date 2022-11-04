@@ -30,4 +30,9 @@ register,rw,mixer,card,content,comments
 0x40,R/W,"","","Input Gain Control Right","Bits 7-6 (SB16): Right Input Gain Control (2^x)\nBits 5-0 (SB16): Reserved(0)\n\nDEFAULT: N/A, 000h"
 0x41,R/W,"","","Output Gain Control Left","Bits 7-6 (SB16): Left Output Gain Control (2^x)\nBits 5-0 (SB16): Reserved(0)\n\nDEFAULT: N/A, 000h"
 0x42,R/W,"","","Output Gain Control Right","Bits 7-6 (SB16): Right Output Gain Control (2^x)\nBits 5-0 (SB16): Reserved(0)\n\nDEFAULT: N/A, 000h"
+0x43,R/W,"","","Automatic Gain Control (AGC)","Bits 7-1 (SB16): Reserved(0)\nBit 0 (SB16): Automatic Gain Control (1 = Enable)\n\nDEFAULT: N/A, 000h\n\nAutomatic Gain Control automatically maximizes input signal strength."
+0x44,R/W,"","","Treble Left","Bits 7-4 (SB16): Treble Left (2dB, -14dB to 14dB)\nBits 3-0 (SB16): Reserved(0)\n\nDEFAULT: N/A, 080h"
+0x45,R/W,"","","Treble Right","Bits 7-4 (SB16): Treble Right (2dB, -14dB to 14dB)\nBits 3-0 (SB16): Reserved(0)\n\nDEFAULT: N/A, 080h"
+0x46,R/W,"","","Bass Left","Bits 7-4 (SB16): Bass Left (2dB, -14dB to 14dB)\nBits 3-0 (SB16): Reserved(0)\n\nDEFAULT: N/A, 080h"
+0x47,R/W,"","","Bass Right","Bits 7-4 (SB16): Bass Right (2dB, -14dB to 14dB)\nBits 3-0 (SB16): Reserved(0)\n\nDEFAULT: N/A, 080h"
 
