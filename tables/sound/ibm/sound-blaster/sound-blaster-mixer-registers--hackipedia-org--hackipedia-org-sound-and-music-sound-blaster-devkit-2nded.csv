@@ -42,4 +42,8 @@ register,rw,mixer,card,content,comments
 0x41,R/W,"CT1745","Sound Blaster 16","Output Gain L","Bits 7-6: Output Gain L\n\n2 bits per channel, giving 4 levels.\n0 to 3 ⇒ 0 dB to 18 dB, in 6 dB steps.\nDefault is 0 ⇒ 0 dB."
 0x42,R/W,"CT1745","Sound Blaster 16","Output Gain R","Bits 7-6: Output Gain R\n\n2 bits per channel, giving 4 levels.\n0 to 3 ⇒ 0 dB to 18 dB, in 6 dB steps.\nDefault is 0 ⇒ 0 dB."
 0x43,R/W,"CT1745","Sound Blaster 16","AGC","Bit 0: Mic AGC\n\n0 ⇒ AGC on (default).\n1 ⇒ Fixed gain of 20 dB."
+0x44,R/W,"CT1745","Sound Blaster 16","Treble L","Bits 7-4: Treble L\n\n4 bits per channel, giving 16 levels.\n0 to 7 ⇒ – 14 dB to 0 dB, in 2 dB steps.\n8 to 15 ⇒ 0 dB to 14 dB, in 2 dB steps.\nDefault is 8 ⇒ 0 dB."
+0x45,R/W,"CT1745","Sound Blaster 16","Treble R","Bits 7-4: Treble R\n\n4 bits per channel, giving 16 levels.\n0 to 7 ⇒ – 14 dB to 0 dB, in 2 dB steps.\n8 to 15 ⇒ 0 dB to 14 dB, in 2 dB steps.\nDefault is 8 ⇒ 0 dB."
+0x46,R/W,"CT1745","Sound Blaster 16","Bass L","Bits 7-4: Bass L\n\n4 bits per channel, giving 16 levels.\n0 to 7 ⇒ – 14 dB to 0 dB, in 2 dB steps.\n8 to 15 ⇒ 0 dB to 14 dB, in 2 dB steps.\nDefault is 8 ⇒ 0 dB."
+0x47,R/W,"CT1745","Sound Blaster 16","Bass R","Bits 7-4: Bass R\n\n4 bits per channel, giving 16 levels.\n0 to 7 ⇒ – 14 dB to 0 dB, in 2 dB steps.\n8 to 15 ⇒ 0 dB to 14 dB, in 2 dB steps.\nDefault is 8 ⇒ 0 dB."
 
