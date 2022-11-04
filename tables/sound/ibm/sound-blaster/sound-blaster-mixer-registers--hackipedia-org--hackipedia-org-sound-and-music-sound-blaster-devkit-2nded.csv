@@ -33,4 +33,8 @@ register,rw,mixer,card,content,comments
 0x38,R/W,"CT1745","Sound Blaster 16","Line volume L","Bits 7-3: Line volume L\n5 bits per channel, giving 32 levels.\n0 to 31 ⇒ – 62 dB to 0 dB, in 2 dB steps.\nDefault is 0 ⇒ – 62 dB."
 0x39,R/W,"CT1745","Sound Blaster 16","Line volume R","Bits 7-3: Line volume R\n5 bits per channel, giving 32 levels.\n0 to 31 ⇒ – 62 dB to 0 dB, in 2 dB steps.\nDefault is 0 ⇒ – 62 dB."
 0x3A,R/W,"CT1745","Sound Blaster 16","Mic volume","Bits 7-3: Mic volume\n5 bits per channel, giving 32 levels.\n0 to 31 ⇒ – 62 dB to 0 dB, in 2 dB steps.\nDefault is 0 ⇒ – 62 dB."
+0x3B,R/W,"CT1745","Sound Blaster 16","PC Speaker volume","Bits 7-6: PC Speaker volume\n2 bits, giving 4 levels.\n0 to 3 ⇒ – 18 dB to 0 dB, in 6 dB steps.\nDefault is 0 ⇒ – 18 dB."
+0x3C,R/W,"CT1745","Sound Blaster 16","Output mixer switches","Bits 7-5: Reserved\nBit 4: Line L\nBit 3: Line R\nBit 2: CD L\nBit 1: CD R\nBit 0: Mic\n\nDefault is Line L=1, Line R=1, CD L=1, CD R=1, Mic=1"
+0x3D,R/W,"CT1745","Sound Blaster 16","Input Mixer L switches","Bit 7: Reserved\nBit 6: MIDI L\nBit 5: MIDI R\nBit 4: Line L\nBit 3: Line R\nBit 2: CD L\nBit 1: CD R\nBit 0: Mic\n\nDefault is MIDI L=0, MIDI R=0, Line L=1, Line R=0, CD L=1, CD R=0, Mic=1"
+0x3E,R/W,"CT1745","Sound Blaster 16","Input Mixer R switches","Bit 7: Reserved\nBit 6: MIDI L\nBit 5: MIDI R\nBit 4: Line L\nBit 3: Line R\nBit 2: CD L\nBit 1: CD R\nBit 0: Mic\n\nDefault is MIDI L=0, MIDI R=0, Line L=0, Line R=1, CD L=0, CD R=1, Mic=1"
 
