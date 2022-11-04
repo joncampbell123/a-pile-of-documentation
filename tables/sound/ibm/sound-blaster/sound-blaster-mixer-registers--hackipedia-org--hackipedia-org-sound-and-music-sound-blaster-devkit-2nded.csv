@@ -1,0 +1,3 @@
+register,rw,mixer,card,content,comments
+0x00,W,"","","Reset Mixer","Write any 8-bit value to this register to reset the mixer chip. After a reset, all the registers will be restored to their default values."
+
