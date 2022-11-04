@@ -3,5 +3,10 @@ register,rw,mixer,card,content,comments
 0x02,R/W,"CT1335","Sound Blaster 2.0","Master volume","Bits 3-1: Master volume\n\n3 bits, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 4 ⇒ – 11 dB."
 0x06,R/W,"CT1335","Sound Blaster 2.0","MIDI volume","Bits 3-1: MIDI volume\n\n3 bits, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 4 ⇒ – 11 dB."
 0x08,R/W,"CT1335","Sound Blaster 2.0","CD volume","Bits 3-1: CD volume\n\n3 bits, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 0 ⇒ – 46 dB."
-0x0A,R/W,"CT1335","Sound Blaster 2.0","Voice volume","Bits 2-1: Voice volume\n\n2 bits, giving 4 levels.\n0 to 3 ⇒ – 46 dB to 0 dB, in approximate 7 dB steps.\nDefault is 0 ⇒ – 46 dB."
+0x0A,R/W,"","","Voice volume","Bits 2-1 (SB2.0): Voice volume\n\n2 bits, giving 4 levels.\n0 to 3 ⇒ – 46 dB to 0 dB, in approximate 7 dB steps.\nDefault is 0 ⇒ – 46 dB."
+
+0x00,W,"","","Reset Mixer","Write any 8-bit value to this register to reset the mixer chip. After a reset, all the registers will be restored to their default values."
+0x04,R/W,"","","Voice volume","Bits 7-5 (SBPro): Voice volume L\nBits 3-1 (SBPro): Voice volume R\n\n3 bits per channel, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 4 ⇒ – 11 dB."
+0x0A,R/W,"","","Mic volume","Bits 2-1 (SBPro): Mic volume\n\n2 bits, giving 4 levels.\n0 to 3 ⇒ – 46 dB to 0 dB, in approximate 7 dB steps.\nDefault is 0 ⇒ – 46 dB."
+0x0C,R/W,"","","Input Source / Low-Pass Filter / Input Filter","Bit 5: Input Filter\nInput filter off switch.\n0 ⇒ Input filter on, pass through low-pass filter.\n1 ⇒ Input filter off, bypass low-pass filter.\nDefault is 0 ⇒ Input filter on.\n\nBit 3: Low-Pass Filter\nLow-pass input filter. It is only effective when the Input Filter switch is on.\n0 ⇒ 3.2 kHz low-pass filter.\n1 ⇒ 8.8 kHz low-pass filter.\nDefault is 0 ⇒ 3.2 kHz low-pass filter.\n\nBits 2-1: Input Source\nSet these two bits to one of the following values to select the input source.\n0 or 2 ⇒ Microphone source.\n1 ⇒ CD source.\n3 ⇒ Line-in source.\nDefault is 0 ⇒ Microphone."
 
