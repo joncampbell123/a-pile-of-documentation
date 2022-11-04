@@ -1,0 +1,11 @@
+register,rw,mixer,card,content,comments
+0x00,W,"","","Data Reset","Writing any value to this register will reset the mixer to default values."
+0x04,R/W,"","","Voice Volume Register","This register provides 8 steps of voice volume control each for the right and left channels.\n\nDefault = 99H"
+0x0A,R/W,"","","Microphone Mixing Register","(CS4232) This register provides 4 steps of microphone mix control\nBits 7-4: Voice volume left\nBits 3-0: Voice volume right"
+0x0C,R/W,"","","Input Control Register","(CS4232) This register selects the input source to the ADC.\nD2,D1:\n00b - Microphone\n01b - CD Audio\n10b - Microphone\n11b - Line In"
+0x0E,R/W,"","","Output Control Register","(CS4232) Bit 1: VSTC:\n0 - Mono Mode\n1 - Stereo Mode"
+0x22,R/W,"","","Master Volume Register","(CS4232) This register provides 8 steps of master volume control each for the right and left channels.\nBits 7-4: Master volume left\nBits 3-0: Master volume right"
+0x26,R/W,"","","FM Volume Register","(CS4232) This register provides 8 steps of master volume control each for the right and left channels.\nBits 7-4: FM volume left\nBits 3-0: FM volume right"
+0x28,R/W,"","","CD Volume Register","(CS4232) This register provides 8 steps of master volume control each for the right and left channels.\nBits 7-4: CD volume left\nBits 3-0: CD volume right"
+0x2E,R/W,"","","Line Volume Register","(CS4232) This register provides 8 steps of master volume control each for the right and left channels.\nBits 7-4: Line volume left\nBits 3-0: Line volume right"
+
