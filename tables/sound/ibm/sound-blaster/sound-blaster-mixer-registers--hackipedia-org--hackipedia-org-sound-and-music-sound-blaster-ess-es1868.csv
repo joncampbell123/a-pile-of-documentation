@@ -8,3 +8,11 @@ register,rw,mixer,card,content,comments
 0x28,R/W,"","","CD volume","(ES1868) Backwards compatible register. Bits 3 and 0 are stuck on (1) on read and zeroed on write to internal state. See ESS1868 notes and register 38h."
 0x2E,R/W,"","","Line volume","(ES1868) Backwards compatible register. Bits 3 and 0 are stuck on (1) on read and zeroed on write to internal state. See ESS1868 notes and register 3Eh."
 
+0x14,R/W,"","ESS AudioDrive","Voice volume","(ES1868) Full access version of register 0x04\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
+0x1A,R/W,"","ESS AudioDrive","Mic volume","(ES1868) Full access version of register 0x0A\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
+0x1C,R/W,"","ESS AudioDrive","Input Source","(ES1868) Full access version of register 0x0C\nBits 2-0: Input source 0,1,4,5 aka binary x0x = Microphone (default) 2 = CD (Aux) Input 6 = Line input 7 = Mixer\n\nRegister 0x0A on write translates D2:D1 from 0,1,2,3 to 0x00,0x55,0xAA,0xFF\nRegister 0x0A on read returns bits 3:2 of this register (top 2 bits of mic right volume) in bits 2:1 of result with bit 0 == 0"
+0x32,R/W,"","ESS AudioDrive","Master volume","(ES1868) Full access version of register 0x22\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
+0x36,R/W,"","ESS AudioDrive","MIDI volume","(ES1868) Full access version of register 0x26\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
+0x38,R/W,"","ESS AudioDrive","CD volume","(ES1868) Full access version of register 0x28\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
+0x3E,R/W,"","ESS AudioDrive","Line volume","(ES1868) Full access version of register 0x2E\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
+
