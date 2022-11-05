@@ -319,8 +319,12 @@ def genfrag_table(bookid,ji):
                 #
                 if type(dcolo) == dict:
                     if "type" in dcolo and dcolo["type"] == "multiple" and "values" in dcolo and type(dcolo["values"]) == list:
+                        count = 0
                         for val in dcolo["values"]:
                             if "value" in val:
+                                if count > 0:
+                                    dcon.append(htmlelem(tag="div",attr={ "style": "height: 1px; border-bottom: 1px dotted black;; margin-top: 0.25em; margin-bottom: 0.25em;" },content=""))
+                                #
                                 sdcon = [ ]
                                 tablecoltohtml(sdcon,tcolo,val["value"])
                                 if "source index" in val:
@@ -333,6 +337,7 @@ def genfrag_table(bookid,ji):
                                         iddisp = "["+str(sidx+1)+"]";
                                         sdcon.append(htmlelem(tag="sup",content=htmlelem(tag="a",attr={ "href": "#"+idname, "class": "apodsourceidxref" },content=iddisp)))
                                 dcon.append(htmlelem(tag="div",content=sdcon))
+                                count = count + 1
                 else:
                     tablecoltohtml(dcon,tcolo,dcolo)
                 hw.write(htmlelem(tag="td",attr=attr,content=dcon))
