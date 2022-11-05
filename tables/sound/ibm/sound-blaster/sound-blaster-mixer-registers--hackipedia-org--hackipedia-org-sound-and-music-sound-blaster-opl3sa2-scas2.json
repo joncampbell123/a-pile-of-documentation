@@ -1,0 +1,16 @@
+{
+	"id": "sound-blaster-mixer-registers",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"id": "hackipedia-org",
+		"type": "website",
+		"url": "http://hackipedia.org/browse.cgi/Computer/Platform/PC%2c%20IBM%20compatible/Sound%20and%20Music/Creative%20Labs/Sound%20Blaster/OPL3%2dSAx%20%28compatible%29/YMF711%20OPL3%2dSA2%20OPL3%20Single%2dchip%20Audio%20System%202%2epdf"
+	},
+	"csv interpret newline": true,
+	"notes": [
+		"(OPL3-SA2) Sound Blaster Pro mixer register emulation includes some bits that are stored but ignored, and volume registers that are applied to actual internal registers on write, but read back will return what was written to the Pro registers, meaning that actual mixer state may differ from what a DOS program may read from SB Pro registers"
+	],
+	"table in csv": true
+}
