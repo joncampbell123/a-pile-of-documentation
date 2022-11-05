@@ -28,4 +28,13 @@ command,param,dspver,card,effect,comments,return
 0x91,,2.01-3.xx,,"8bit high-speed single-cycle DMA mode digitized sound output","(OPL3-SAx) Supported"
 0x98,,2.01-3.xx,,"8bit high-speed auto-init DMA mode digitized sound input","(OPL3-SAx) Supported, no effect"
 0x99,,2.01-3.xx,,"8bit high-speed single-cycle DMA mode digitized sound input","(OPL3-SAx) Supported, no effect"
+0xA0,,3.xx,,"Set input mode to mono","(OPL3-SAx) Supported, no effect"
+0xA8,,3.xx,,"Set input mode to stereo","(OPL3-SAx) Supported, no effect"
+0xD0,,1.0+,,"Pause 8bit DMA mode digitized sound I/O","(OPL3-SAx) Supported"
+0xD1,,1.0+,,"Turn on speaker","(OPL3-SAx) Supported, no effect"
+0xD3,,1.0+,,"Turn off speaker","(OPL3-SAx) Supported, no effect"
+0xD4,,1.0+,,"Continue 8bit DMA mode digitized sound I/O","(OPL3-SAx) Supported"
+0xD8,,2.0+,,"Get speaker status","(OPL3-SAx) Supported, no effect",nn
+0xDA,,2.0+,,"Exit 8bit auto-init DMA mode digitized sound I/O","(OPL3-SAx) Supported"
+0xE1,,1.0+,,"Get DSP version number","(OPL3-SAx) Supported",hi lo
 
