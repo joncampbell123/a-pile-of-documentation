@@ -8,4 +8,12 @@ command,param,dspver,card,effect,comments,return
 0x20,,1.0+,,"8bit direct mode single byte digitized sound input","(OPL3-SAx) Supported, no effect",sample
 0x24,lo hi,1.0+,,"8bit single-cycle DMA mode digitized sound input","(OPL3-SAx) Supported, no effect"
 0x2C,,2.0+,,"8bit auto-init DMA mode digitized sound input","(OPL3-SAx) Supported, no effect"
+0x30,,1.0+,,"Polling mode MIDI input","(OPL3-SAx) Supported, no effect",midibyte
+0x31,,1.0+,,"Interrupt mode MIDI input","(OPL3-SAx) Supported, no effect"
+0x34,,2.0+,,"UART polling mode MIDI I/O","(OPL3-SAx) Supported, no effect"
+0x35,,2.0+,,"UART interrupt mode MIDI I/O","(OPL3-SAx) Supported, no effect"
+0x36,,2.0+,,"UART polling mode MIDI I/O with time stamping","(OPL3-SAx) Supported, no effect"
+0x37,,2.0+,,"UART interrupt mode MIDI I/O with time stamping","(OPL3-SAx) Supported, no effect"
+0x38,nn,1.0+,,"MIDI output","(OPL3-SAx) Supported, no effect"
+0x40,nn,1.0+,,"Set digitized sound transfer Time Constant","(OPL3-SAx) Supported"
 
