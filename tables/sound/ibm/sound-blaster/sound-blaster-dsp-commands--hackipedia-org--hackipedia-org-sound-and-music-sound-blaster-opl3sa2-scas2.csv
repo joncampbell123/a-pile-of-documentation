@@ -1,0 +1,11 @@
+command,param,dspver,card,effect,comments,return
+0x10,nn,1.0+,,"8bit direct mode digitized sound I/O output","(OPL3-SAx) Supported"
+0x14,lo hi,1.0+,,"8bit single-cycle DMA mode digitized sound output","(OPL3-SAx) Supported"
+0x16,lo hi,1.0+,,"8bit to 2bit ADPCM single-cycle DMA mode digitized sound output","(OPL3-SAx) Supported, no effect"
+0x17,lo hi,1.0+,,"8bit to 2bit ADPCM single-cycle DMA mode digitized sound output with ref. byte","(OPL3-SAx) Supported, no effect"
+0x1C,,2.0+,,"8bit auto-init DMA mode digitized sound output","(OPL3-SAx) Supported"
+0x1F,,2.0+,,"8bit to 2bit ADPCM auto-init DMA mode digitized sound output with ref byte","(OPL3-SAx) Supported, no effect"
+0x20,,1.0+,,"8bit direct mode single byte digitized sound input","(OPL3-SAx) Supported, no effect",sample
+0x24,lo hi,1.0+,,"8bit single-cycle DMA mode digitized sound input","(OPL3-SAx) Supported, no effect"
+0x2C,,2.0+,,"8bit auto-init DMA mode digitized sound input","(OPL3-SAx) Supported, no effect"
+
