@@ -20,3 +20,6 @@ register,rw,mixer,card,content,comments
 
 0x48,R/W,"","ESS AudioDrive","Serial Mode Miscellaneous Control","(ES1946)\nBits 7-5: Reserved(0)\nBit 4: ES689/ES69x interface enable: 1 = Enable ES689/ES69x serial interface to use the music DAC. MCLK must also go high at least once every 20 μsecs or the DAC will revert to FM. The mixer volume for the music DAC is controller by mixer register 36h. 0 = Disable ES689/ES69x serial interface.\nBits 3-0: Reserved(0)"
 
+0x50,R/W,"","ESS AudioDrive (ES1946)","3-D Enable and Mode","(ES1946)\nBits 7-4: Reserved(0)\nBit 3 Enable 3-D: 1 = Enable 3-D effect. This bit is ignored if the record monitor is enabled, register A8h bit 3. 0 = Disable 3-D effect (effect unit bypassed).\nBit 2 Reset: 1 = Release from reset. 0 = Reset 3-D effect.\nBit 1: Reserved(1)\nBit 0: Reserved(0)\n\n3-D effect uses Spatializer® VBX™ technology, provided by Desper Products, Inc., a subsidiary of Spatializer Audio Laboratories, Inc."
+0x52,R/W,"","ESS AudioDrive (ES1946)","3-D Level","(ES1946)\nBits 7-6: Reserved(0)\nBits 5-0 3-D level: 0 is minimum effect; 3Fh is maximum effect.\n\n3-D effect uses Spatializer® VBX™ technology, provided by Desper Products, Inc., a subsidiary of Spatializer Audio Laboratories, Inc. Reset to zero by hardware reset."
+
