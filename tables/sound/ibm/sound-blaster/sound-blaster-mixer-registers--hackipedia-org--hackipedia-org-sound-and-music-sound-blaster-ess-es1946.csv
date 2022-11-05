@@ -1,0 +1,22 @@
+register,rw,mixer,card,content,comments
+0x00,W,"","","Reset","To reset the registers to initial conditions, write any value to mixer address 0: Write 0 to 2x4h (set mixer address to 0) Write 0 to 2x5h (write 0 to address 0 to reset mixer)"
+0x04,R/W,"","","Voice volume","(ES1946) Backwards compatible 3-bit register. Bits 3 and 0 are stuck on (1) on read and zeroed on write to internal state. See ESS1868 notes and register 14h."
+0x0A,R/W,"","","Mic volume","(ES1946) Backwards compatible 2-bit register (L and R). Bit 0 is stuck on (1) on read and zeroed on write to internal state. See ESS1868 notes and register 1Ah."
+0x0C,R/W,"","","Input Source","(ES1946) Backwards compatible input source register. Bit 0 is zeroed on write to internal state. See ESS1868 notes and register 1Ch."
+0x22,R/W,"","","Master volume","(ES1946) Backwards compatible register. Bits 3 and 0 are stuck on (1) on read and zeroed on write to internal state. See ESS1868 notes and register 32h."
+0x26,R/W,"","","MIDI volume","(ES1946) Backwards compatible register. Bits 3 and 0 are stuck on (1) on read and zeroed on write to internal state. See ESS1868 notes and register 36h."
+0x28,R/W,"","","CD volume","(ES1946) Backwards compatible register. Bits 3 and 0 are stuck on (1) on read and zeroed on write to internal state. See ESS1868 notes and register 38h."
+0x2E,R/W,"","","Line volume","(ES1946) Backwards compatible register. Bits 3 and 0 are stuck on (1) on read and zeroed on write to internal state. See ESS1868 notes and register 3Eh."
+
+0x14,R/W,"","ESS AudioDrive","Voice volume","(ES1946) Full access version of register 0x04\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
+0x1A,R/W,"","ESS AudioDrive","Mic volume","(ES1946) Full access version of register 0x0A\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
+0x1C,R/W,"","ESS AudioDrive","Input Source","(ES1946) Full access version of register 0x0C\nBits 2-0: Input source 0,1,4,5 aka binary x0x = Microphone (default) 2 = CD (Aux) Input 6 = Line input 7 = Mixer\n\nRegister 0x0A on write translates D2:D1 from 0,1,2,3 to 0x00,0x55,0xAA,0xFF\nRegister 0x0A on read returns bits 3:2 of this register (top 2 bits of mic right volume) in bits 2:1 of result with bit 0 == 0"
+0x32,R/W,"","ESS AudioDrive","Master volume","(ES1946) Full access version of register 0x22\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
+0x36,R/W,"","ESS AudioDrive","FM volume","(ES1946) Full access version of register 0x26\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
+0x38,R/W,"","ESS AudioDrive","AuxA (CD) volume","(ES1946) Full access version of register 0x28\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
+0x3A,R/W,"","ESS AudioDrive","AuxB volume","(ES1946) Full access version of register 0x28\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
+0x3C,R/W,"","ESS AudioDrive","PC speaker volume","(ES1946) Full access version of register 0x28\nBits 2-0: Level bits"
+0x3E,R/W,"","ESS AudioDrive","Line volume","(ES1946) Full access version of register 0x2E\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
+
+0x48,R/W,"","ESS AudioDrive","Serial Mode Miscellaneous Control","(ES1946)\nBits 7-5: Reserved(0)\nBit 4: ES689/ES69x interface enable: 1 = Enable ES689/ES69x serial interface to use the music DAC. MCLK must also go high at least once every 20 μsecs or the DAC will revert to FM. The mixer volume for the music DAC is controller by mixer register 36h. 0 = Disable ES689/ES69x serial interface.\nBits 3-0: Reserved(0)"
+
