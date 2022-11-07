@@ -28,106 +28,16 @@ def sources_load(sources,source_id):
         return sources[source_id]
     return None
 
-class htmlelem:
-    tag = None # string
-    attr = None # object (dict) key=string, value=string
-    content = None # binary
-    def __init__(self,tag,attr={ },content=None):
-        self.content = self.encodecontent(content)
-        self.attr = attr
-        self.tag = tag
-    def encodecontent(self,content):
-        if isinstance(content,list):
-            r = b""
-            for cent in content:
-                r += self.encodecontent(cent)
-            return r
-        else:
-            if not content == None and isinstance(content,str):
-                return apodhtml.htmlescape(content).encode('UTF-8')
-            elif isinstance(content,htmlelem): # we allow tags within tags here
-                return content.gettag()
-            else:
-                return content
-    def opentag(self):
-        return b"<"+self.tagcontent()+b">"
-    def closetag(self):
-        return b"</"+self.tag.encode('UTF-8')+b">"
-    def octag(self):
-        return b"<"+self.tagcontent()+b" />"
-    def tagcontent(self):
-        r = self.tag.encode('UTF-8')
-        if not self.attr == None and type(self.attr) == dict and len(self.attr) > 0:
-            for key in self.attr:
-                val = self.attr[key]
-                r += b" "+key.encode('UTF-8')
-                if not val == None:
-                    r += b"=\""+apodhtml.htmlescape(val).encode('UTF-8')+b"\""
-        return r
-    def gettag(self):
-        # NTS: Mozilla Firefox seems to have a problem with <a id="blah" />, it seems to format
-        #      the DOM as if everything following it is contained within the anchor element.
-        #      The fact that the tag is self-closing seems lost on Mozilla.
-        if not self.content == None or self.tag.lower() == "a":
-            r = self.opentag()
-            if not self.content == None:
-                r += self.content
-            r += self.closetag()
-            return r
-        else:
-            return self.octag()
-
-class htmlwriter:
-    content = None
-    stack = None
-    def __init__(self):
-        self.content = None
-        self.stack = [ ]
-    def out(self,x):
-        if self.content == None:
-            self.content = b""
-        self.content += x
-    def topelemopen(self):
-        if len(self.stack) > 0 and self.stack[-1].content == None:
-            self.stack[-1].content = b""
-            self.out(self.stack[-1].opentag())
-    def topelemclose(self):
-        if len(self.stack) > 0:
-            if self.stack[-1].content == None:
-                self.out(self.stack[-1].octag())
-            else:
-                self.out(self.stack[-1].closetag())
-    def write(self,whtmlelem):
-        self.topelemopen()
-        self.out(whtmlelem.gettag())
-    def get(self):
-        if len(self.stack) > 0:
-            raise Exception("Attempt to render HTML without closing all tags with end()")
-        if not self.content == None:
-            r = self.content
-        else:
-            r = b""
-        self.content = None
-        return r
-    def begin(self,htmlelem):
-        self.topelemopen()
-        self.stack.append(htmlelem)
-    def end(self):
-        if len(self.stack) == 0:
-            raise Exception("HTML end with nothing left")
-        self.topelemclose()
-        self.stack.pop()
-
 def genfrag_sinfo_row(hw,name,value,rowattr={}):
-    hw.begin(htmlelem(tag="tr",attr=rowattr))
-    hw.write(htmlelem(tag="td",content=name))
-    hw.write(htmlelem(tag="td",content=value))
+    hw.begin(apodhtml.htmlelem(tag="tr",attr=rowattr))
+    hw.write(apodhtml.htmlelem(tag="td",content=name))
+    hw.write(apodhtml.htmlelem(tag="td",content=value))
     hw.end() # tr
 
 def genfrag_sourceinfo(bookid,ji):
-    hw = htmlwriter()
-    hw.write(htmlelem(tag="a",attr={ "id": apodhtml.mkhtmlid("source",bookid) }))
-    hw.begin(htmlelem(tag="table",attr={ "class": "apodsource" }))
+    hw = apodhtml.htmlwriter()
+    hw.write(apodhtml.htmlelem(tag="a",attr={ "id": apodhtml.mkhtmlid("source",bookid) }))
+    hw.begin(apodhtml.htmlelem(tag="table",attr={ "class": "apodsource" }))
     #
     genfrag_sinfo_row(hw,"ID:",bookid,rowattr={ "class": "apodsourceid" })
     if "type" in ji:
@@ -137,7 +47,7 @@ def genfrag_sourceinfo(bookid,ji):
     if "title" in ji:
         genfrag_sinfo_row(hw,"Title:",ji["title"],rowattr={ "class": "apodsourcetitle" })
     if "url" in ji:
-        ahref = htmlelem(tag="a",content=ji["url"],attr={ "target": "_blank", "href": ji["url"] })
+        ahref = apodhtml.htmlelem(tag="a",content=ji["url"],attr={ "target": "_blank", "href": ji["url"] })
         genfrag_sinfo_row(hw,"URL:",ahref,rowattr={ "class": "apodsourceurl" })
     if "author" in ji:
         genfrag_sinfo_row(hw,"Author:",ji["author"],rowattr={ "class": "apodsourceauthor" })
@@ -166,7 +76,7 @@ def genfrag_sourcetoc(bookid,ji):
         toc = ji["table of contents"]
         if "toc list" in toc:
             toclist = toc["toc list"]
-            hw = htmlwriter()
+            hw = apodhtml.htmlwriter()
             curlev = 0
             for tlent in toclist:
                 if "path" in tlent and "title" in tlent and "depth" in tlent:
@@ -177,7 +87,7 @@ def genfrag_sourcetoc(bookid,ji):
                     if tldpth > (curlev+1):
                         raise Exception("Unexpected jump in depth")
                     if curlev < tldpth:
-                        hw.begin(htmlelem(tag='ul',attr={ "class": "apodsourcetoclist" }))
+                        hw.begin(apodhtml.htmlelem(tag='ul',attr={ "class": "apodsourcetoclist" }))
                         curlev = curlev + 1
                     else:
                         while curlev > tldpth:
@@ -185,12 +95,12 @@ def genfrag_sourcetoc(bookid,ji):
                             curlev = curlev - 1
                     if not curlev == tldpth:
                         raise Exception("Depth mismatch")
-                    c = [ htmlelem(tag='span',attr={ "class": "apodsourcetoclistenttitle" },content=tletit) ]
+                    c = [ apodhtml.htmlelem(tag='span',attr={ "class": "apodsourcetoclistenttitle" },content=tletit) ]
                     if not lookup == None:
                         if "page" in lookup:
                             c.append(" ")
-                            c.append(htmlelem(tag='span',attr={ "class": "apodsourcetoclistentpagenumber" },content=("(page "+str(lookup["page"])+")")))
-                    hw.write(htmlelem(tag='li',attr={ "class": "apodsourcetoclistent", "id": apodhtml.mkhtmlid("source",bookid,tlepth) },content=c))
+                            c.append(apodhtml.htmlelem(tag='span',attr={ "class": "apodsourcetoclistentpagenumber" },content=("(page "+str(lookup["page"])+")")))
+                    hw.write(apodhtml.htmlelem(tag='li',attr={ "class": "apodsourcetoclistent", "id": apodhtml.mkhtmlid("source",bookid,tlepth) },content=c))
             #
             while curlev > 0:
                 hw.end() # ul
@@ -267,9 +177,9 @@ def tablecoltohtml(dcon,tcolo,dcolo):
                 print(ent)
                 raise Exception("array ent not an array")
             elif len(ent) == 1:
-                dcon.append(htmlelem(tag="span",content=tablecolinttohtml(tcolo,ent[0])))
+                dcon.append(apodhtml.htmlelem(tag="span",content=tablecolinttohtml(tcolo,ent[0])))
             elif len(ent) == 2:
-                dcon.append(htmlelem(tag="span",content=(tablecolinttohtml(tcolo,ent[0])+"-"+tablecolinttohtml(tcolo,ent[1]))))
+                dcon.append(apodhtml.htmlelem(tag="span",content=(tablecolinttohtml(tcolo,ent[0])+"-"+tablecolinttohtml(tcolo,ent[1]))))
             else:
                 print(ent)
                 raise Exception("array ent is array with wrong number of elements")
@@ -288,26 +198,26 @@ def tablecoltohtml(dcon,tcolo,dcolo):
         dcon.append(tablecolfloattohtml(tcolo,dcolo))
 
 def genfrag_table(bookid,ji):
-    hw = htmlwriter()
-    hw.write(htmlelem(tag="a",attr={ "id": apodhtml.mkhtmlid("table",bookid) }))
-    hw.write(htmlelem(tag="div",attr={ "class": "apodtitle", "title": bookid },content=ji["table"]))
+    hw = apodhtml.htmlwriter()
+    hw.write(apodhtml.htmlelem(tag="a",attr={ "id": apodhtml.mkhtmlid("table",bookid) }))
+    hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apodtitle", "title": bookid },content=ji["table"]))
     if "description" in ji:
-        hw.write(htmlelem(tag="div",attr={ "class": "apoddescription" },content=ji["description"]))
+        hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apoddescription" },content=ji["description"]))
     if "table columns" in ji and "rows" in ji:
-        hw.begin(htmlelem(tag="table",attr={ "class": "apodtable" }))
+        hw.begin(apodhtml.htmlelem(tag="table",attr={ "class": "apodtable" }))
         # header
-        hw.begin(htmlelem(tag="tr",attr={ "class": "apodtablehead" }))
+        hw.begin(apodhtml.htmlelem(tag="tr",attr={ "class": "apodtablehead" }))
         for colo in ji["table columns"]:
             title = ""
             if "title" in colo:
                 title = colo["title"]
-            hw.write(htmlelem(tag="th",content=title))
+            hw.write(apodhtml.htmlelem(tag="th",content=title))
         hw.end() # th
         # rows
         for rowo in ji["rows"]:
             if not "data" in rowo:
                 continue
-            hw.begin(htmlelem(tag="tr",attr={ "class": "apodtablerow" }))
+            hw.begin(apodhtml.htmlelem(tag="tr",attr={ "class": "apodtablerow" }))
             for coli in range(0,len(rowo["data"])):
                 attr = { }
                 tcolo = ji["table columns"][coli]
@@ -323,7 +233,7 @@ def genfrag_table(bookid,ji):
                         for val in dcolo["values"]:
                             if "value" in val:
                                 if count > 0:
-                                    dcon.append(htmlelem(tag="div",attr={ "style": "height: 1px; border-bottom: 1px dotted black;; margin-top: 0.25em; margin-bottom: 0.25em;" },content=""))
+                                    dcon.append(apodhtml.htmlelem(tag="div",attr={ "style": "height: 1px; border-bottom: 1px dotted black;; margin-top: 0.25em; margin-bottom: 0.25em;" },content=""))
                                 #
                                 sdcon = [ ]
                                 tablecoltohtml(sdcon,tcolo,val["value"])
@@ -335,12 +245,12 @@ def genfrag_table(bookid,ji):
                                     for sidx in slist:
                                         idname = apodhtml.mkhtmlid("table-sr",bookid+":"+str(sidx+1))
                                         iddisp = "["+str(sidx+1)+"]";
-                                        sdcon.append(htmlelem(tag="sup",content=htmlelem(tag="a",attr={ "href": "#"+idname, "class": "apodsourceidxref" },content=iddisp)))
-                                dcon.append(htmlelem(tag="div",content=sdcon))
+                                        sdcon.append(apodhtml.htmlelem(tag="sup",content=apodhtml.htmlelem(tag="a",attr={ "href": "#"+idname, "class": "apodsourceidxref" },content=iddisp)))
+                                dcon.append(apodhtml.htmlelem(tag="div",content=sdcon))
                                 count = count + 1
                 else:
                     tablecoltohtml(dcon,tcolo,dcolo)
-                hw.write(htmlelem(tag="td",attr=attr,content=dcon))
+                hw.write(apodhtml.htmlelem(tag="td",attr=attr,content=dcon))
             hw.end() # tr
         # end
         hw.end() # table
@@ -354,10 +264,10 @@ def genfrag_table(bookid,ji):
             if "description" in colo:
                 desc = colo["description"]
             if not title == "" and not desc == "":
-                uli.append(htmlelem(tag="li",content=[ htmlelem(tag="b",content=title), ": ", htmlelem(tag="span",content=desc) ]))
+                uli.append(apodhtml.htmlelem(tag="li",content=[ apodhtml.htmlelem(tag="b",content=title), ": ", apodhtml.htmlelem(tag="span",content=desc) ]))
         if len(uli) > 0:
-            nc = [ htmlelem(tag="span",attr={ "class": "apodnoteshead" },content="Columns:"), htmlelem(tag="ul",attr={ "class": "apodnoteslist" },content=uli) ]
-            hw.write(htmlelem(tag="div",attr={ "class": "apodnotes" },content=nc))
+            nc = [ apodhtml.htmlelem(tag="span",attr={ "class": "apodnoteshead" },content="Columns:"), apodhtml.htmlelem(tag="ul",attr={ "class": "apodnoteslist" },content=uli) ]
+            hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apodnotes" },content=nc))
         #
     #
     uli = [ ]
@@ -366,7 +276,7 @@ def genfrag_table(bookid,ji):
         if not type(nl) == list:
             nl = [ nl ]
         for nent in nl:
-            uli.append(htmlelem(tag="li",content=nent))
+            uli.append(apodhtml.htmlelem(tag="li",content=nent))
     if "sources" in ji:
         sl = ji["sources"]
         for se in sl:
@@ -375,10 +285,10 @@ def genfrag_table(bookid,ji):
                 if not type(nl) == list:
                     nl = [ nl ]
                 for nent in nl:
-                    uli.append(htmlelem(tag="li",content=nent))
+                    uli.append(apodhtml.htmlelem(tag="li",content=nent))
     if len(uli) > 0:
-        nc = [ htmlelem(tag="span",attr={ "class": "apodnoteshead" },content="Notes:"), htmlelem(tag="ul",attr={ "class": "apodnoteslist" },content=uli) ]
-        hw.write(htmlelem(tag="div",attr={ "class": "apodnotes", "title": bookid },content=nc))
+        nc = [ apodhtml.htmlelem(tag="span",attr={ "class": "apodnoteshead" },content="Notes:"), apodhtml.htmlelem(tag="ul",attr={ "class": "apodnoteslist" },content=uli) ]
+        hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apodnotes", "title": bookid },content=nc))
     #
     if "sources" in ji:
         uli = [ ]
@@ -431,7 +341,7 @@ def genfrag_table(bookid,ji):
                 l += copyright
             nent.append(l)
             #
-            nent.append(htmlelem(tag="sup",content=htmlelem(tag="a",attr={ "href": ("sources-"+src["id"]+".html"), "class": "apodsourceidx" },content=("["+str(sil+1)+"]"))))
+            nent.append(apodhtml.htmlelem(tag="sup",content=apodhtml.htmlelem(tag="a",attr={ "href": ("sources-"+src["id"]+".html"), "class": "apodsourceidx" },content=("["+str(sil+1)+"]"))))
             #
             url = None
             if "url" in sref:
@@ -439,8 +349,8 @@ def genfrag_table(bookid,ji):
             if "url" in src:
                 url = src["url"]
             if not url == None and not url == "":
-                nent.append(htmlelem(tag="br"))
-                nent.append(htmlelem(tag="a",attr={ "class": "apodsourceurl", "target": "_blank", "href": url },content=apodhtml.unescapeurl(url)))
+                nent.append(apodhtml.htmlelem(tag="br"))
+                nent.append(apodhtml.htmlelem(tag="a",attr={ "class": "apodsourceurl", "target": "_blank", "href": url },content=apodhtml.unescapeurl(url)))
             #
             where = None
             if "where" in src:
@@ -456,33 +366,33 @@ def genfrag_table(bookid,ji):
                                 l.append(", ")
                             srctref = "sources-"+src["id"]+".html"
                             srctref += "#" + apodhtml.mkhtmlid("source",src["id"],path)
-                            l.append(htmlelem(tag="span",content='"'))
-                            l.append(htmlelem(tag="a",attr={ "class": "apodsourcepreftitle", "href": srctref },content=pref["title"]))
-                            l.append(htmlelem(tag="span",content='"'))
+                            l.append(apodhtml.htmlelem(tag="span",content='"'))
+                            l.append(apodhtml.htmlelem(tag="a",attr={ "class": "apodsourcepreftitle", "href": srctref },content=pref["title"]))
+                            l.append(apodhtml.htmlelem(tag="span",content='"'))
                         if "page" in pref:
                             if not len(l) == 0:
                                 l.append(", ")
-                            l.append(htmlelem(tag="span",attr={ "class": "apodsourceprefpage" },content=("(page "+str(pref["page"])+")")))
+                            l.append(apodhtml.htmlelem(tag="span",attr={ "class": "apodsourceprefpage" },content=("(page "+str(pref["page"])+")")))
                     if not l == None:
-                        nent.append(htmlelem(tag="br"))
-                        nent.append(htmlelem(tag="span",attr={ "class": "apodsourcepref" },content=l))
+                        nent.append(apodhtml.htmlelem(tag="br"))
+                        nent.append(apodhtml.htmlelem(tag="span",attr={ "class": "apodsourcepref" },content=l))
             #
             if "notes" in src:
-                nent.append(htmlelem(tag="br"))
-                nent.append(htmlelem(tag="span",content=[ "Notes: ", src["notes"] ]))
+                nent.append(apodhtml.htmlelem(tag="br"))
+                nent.append(apodhtml.htmlelem(tag="span",content=[ "Notes: ", src["notes"] ]))
             #
             if "source json file" in sel:
-                nent.append(htmlelem(tag="br"))
-                nent.append(htmlelem(tag="span",content=[ "JSON: ", sel["source json file"] ]))
+                nent.append(apodhtml.htmlelem(tag="br"))
+                nent.append(apodhtml.htmlelem(tag="span",content=[ "JSON: ", sel["source json file"] ]))
             #
-            uli.append(htmlelem(tag="li",attr={ "class": "apodsourceref", "id": apodhtml.mkhtmlid("table-sr",bookid+":"+str(sil+1)) },content=nent))
+            uli.append(apodhtml.htmlelem(tag="li",attr={ "class": "apodsourceref", "id": apodhtml.mkhtmlid("table-sr",bookid+":"+str(sil+1)) },content=nent))
         #
-        nc = [ htmlelem(tag="span",attr={ "class": "apodsourceshead" },content="Sources:"), htmlelem(tag="ul",attr={ "class": "apodsourceslist" },content=uli) ]
-        hw.write(htmlelem(tag="div",attr={ "class": "apodsources", "title": bookid },content=nc))
+        nc = [ apodhtml.htmlelem(tag="span",attr={ "class": "apodsourceshead" },content="Sources:"), apodhtml.htmlelem(tag="ul",attr={ "class": "apodsourceslist" },content=uli) ]
+        hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apodsources", "title": bookid },content=nc))
     if "source json file" in ji:
-        uli = [ htmlelem(tag="li",content=ji["source json file"]) ]
-        nc = [ htmlelem(tag="span",attr={ "class": "apodsourcejsonfile" },content="JSON:"), htmlelem(tag="ul",attr={ "class": "apodsourceslist" },content=uli) ]
-        hw.write(htmlelem(tag="div",attr={ "class": "apodsources", "title": bookid },content=nc))
+        uli = [ apodhtml.htmlelem(tag="li",content=ji["source json file"]) ]
+        nc = [ apodhtml.htmlelem(tag="span",attr={ "class": "apodsourcejsonfile" },content="JSON:"), apodhtml.htmlelem(tag="ul",attr={ "class": "apodsourceslist" },content=uli) ]
+        hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apodsources", "title": bookid },content=nc))
     r = hw.get()
     return r
 
@@ -602,9 +512,9 @@ writewhole_endhead(f)
 writewhole_beginbody(f)
 #
 for sobj in sourceproclist:
-    hw = htmlwriter()
-    le = htmlelem(tag="a",attr={ "href": ("sources-"+sobj["id"]+".html"), "title": sobj["id"], "class": "apodsourceslisttitle" },content=sobj["title"])
-    hw.write(htmlelem(tag="div",attr={ "class": "apodsourceslistent" },content=le))
+    hw = apodhtml.htmlwriter()
+    le = apodhtml.htmlelem(tag="a",attr={ "href": ("sources-"+sobj["id"]+".html"), "title": sobj["id"], "class": "apodsourceslisttitle" },content=sobj["title"])
+    hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apodsourceslistent" },content=le))
     f.write(hw.get())
 writewhole_endbody(f)
 f.close()
@@ -618,9 +528,9 @@ writewhole_endhead(f)
 writewhole_beginbody(f)
 #
 for sobj in tableproclist:
-    hw = htmlwriter()
-    le = htmlelem(tag="a",attr={ "href": ("tables-"+sobj["id"]+".html"), "title": sobj["id"], "class": "apodtableslisttitle" },content=sobj["title"])
-    hw.write(htmlelem(tag="div",attr={ "class": "apodtableslistent" },content=le))
+    hw = apodhtml.htmlwriter()
+    le = apodhtml.htmlelem(tag="a",attr={ "href": ("tables-"+sobj["id"]+".html"), "title": sobj["id"], "class": "apodtableslisttitle" },content=sobj["title"])
+    hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apodtableslistent" },content=le))
     f.write(hw.get())
 writewhole_endbody(f)
 f.close()
