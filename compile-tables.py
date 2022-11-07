@@ -65,12 +65,13 @@ def get_base_tables():
     g = glob.glob("tables/**/base.json",recursive=True)
     for path in g:
         pp = pathlib.PurePath(path)
-        if len(pp.parts) < 1:
+        if len(pp.parts) < 2:
             raise Exception("What?")
         if not pp.parts[-1] == "base.json":
             raise Exception("What?")
         basepath = str(pp.parent)
-        tablescanret.append({ "base path": basepath, "base json path": path })
+        idmustmatch = str(pp.parts[-2])
+        tablescanret.append({ "base path": basepath, "base json path": path, "id must match": idmustmatch })
     #
     return tablescanret
 
@@ -81,7 +82,12 @@ def proccontenttables(scan):
     for path in g:
         if path == scan["base json path"]:
             continue
-        ret.append({ "path": path })
+        pp = pathlib.PurePath(path)
+        if len(pp.parts) < 2:
+            raise Exception("What?")
+        basepath = str(pp.parent)
+        idmustmatch = str(pp.parts[-2])
+        ret.append({ "base path": basepath, "path": path, "id must match": idmustmatch })
     #
     return ret
 
@@ -93,6 +99,8 @@ def procbasetable(scan,obj):
     ji = obj["ji"] = apodjson.load_json(path)
     if not "id" in ji:
         raise Exception("Table in "+path+" does not have an ID")
+    if not ji["id"] == scan["id must match"]:
+        raise Exception("File name "+path+" parent directory name does not match id")
     if not "base definition" in ji:
         raise Exception("Table "+ji["id"]+" does not indicate base definition, but has --base.json extension")
     if not ji["base definition"] == True:
@@ -267,6 +275,8 @@ def procconttenttable(scan,obj):
     ji = apodjson.load_json(path)
     if not "id" in ji:
         raise Exception("Table in "+path+" does not have an ID")
+    if not ji["id"] == scan["id must match"]:
+        raise Exception("File name "+path+" parent directory name does not match id")
     if "base definition" in ji:
         if ji["base definition"] == True:
             raise Exception("Table "+ji["id"]+" is base definition, but does not have --base.json extension")
