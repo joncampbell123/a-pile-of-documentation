@@ -742,11 +742,8 @@ def deduptable(obj):
     #
     table["rows"] = nrows
 
-# get a list of tables to process
-tablescan = get_base_tables()
-
-# process base descriptions
-for scan in tablescan:
+# process tables
+for scan in get_base_tables():
     obj = { }
     # process base table
     procbasetable(scan,obj)
