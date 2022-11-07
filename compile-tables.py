@@ -315,7 +315,7 @@ def procconttenttable(scan,obj):
         if "type" in sourceref and not source_type == None:
             if not sourceref["type"] == source_type:
                 raise Exception("Table "+ji["id"]+" source "+source_id+" type mismatch")
-    #
+    # scan and match source ref to table of contents of source: look up the key JSON objects we need
     toc = None
     toc_refby = None
     toc_contents = None
@@ -337,7 +337,7 @@ def procconttenttable(scan,obj):
                 toc_refby = toc["reference by"]
                 if not type(toc_refby) == dict:
                     raise Exception("Table "+ji["id"]+" source "+source_id+" table of contents reference by not object")
-    #
+    # scan and match source ref to table of contents of source: take the source ref info and match against table of contents and gen lookup tables
     if not source_id == None and not source_obj == None and not sourceref == None:
         if "where" in source_obj:
             where = source_obj["where"]
