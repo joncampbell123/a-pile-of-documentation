@@ -227,29 +227,7 @@ def genfrag_table(bookid,ji):
                 if "nowrap" in tcolo and tcolo["nowrap"] == True:
                     attr["class"] = "nowrap"
                 #
-                if type(dcolo) == dict:
-                    if "type" in dcolo and dcolo["type"] == "multiple" and "values" in dcolo and type(dcolo["values"]) == list:
-                        count = 0
-                        for val in dcolo["values"]:
-                            if "value" in val:
-                                if count > 0:
-                                    dcon.append(apodhtml.htmlelem(tag="div",attr={ "style": "height: 1px; border-bottom: 1px dotted black;; margin-top: 0.25em; margin-bottom: 0.25em;" },content=""))
-                                #
-                                sdcon = [ ]
-                                tablecoltohtml(sdcon,tcolo,val["value"])
-                                if "source index" in val:
-                                    slist = val["source index"].copy()
-                                    if not type(slist) == list:
-                                        slist = [ slist ]
-                                    slist.sort()
-                                    for sidx in slist:
-                                        idname = apodhtml.mkhtmlid("table-sr",bookid+":"+str(sidx+1))
-                                        iddisp = "["+str(sidx+1)+"]";
-                                        sdcon.append(apodhtml.htmlelem(tag="sup",content=apodhtml.htmlelem(tag="a",attr={ "href": "#"+idname, "class": "apodsourceidxref" },content=iddisp)))
-                                dcon.append(apodhtml.htmlelem(tag="div",content=sdcon))
-                                count = count + 1
-                else:
-                    tablecoltohtml(dcon,tcolo,dcolo)
+                tablecoltohtml(dcon,tcolo,dcolo)
                 hw.write(apodhtml.htmlelem(tag="td",attr=attr,content=dcon))
             hw.end() # tr
         # end
