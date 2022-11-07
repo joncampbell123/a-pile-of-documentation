@@ -59,91 +59,6 @@ if not os.path.exists("compiled"):
 if not os.path.exists("compiled/tables"):
     os.mkdir("compiled/tables")
 
-def get_base_tables():
-    tablescanret = [ ]
-    #
-    g = glob.glob("tables/**/base.json",recursive=True)
-    for path in g:
-        pp = pathlib.PurePath(path)
-        if len(pp.parts) < 2:
-            raise Exception("What?")
-        if not pp.parts[-1] == "base.json":
-            raise Exception("What?")
-        basepath = str(pp.parent)
-        idmustmatch = str(pp.parts[-2])
-        tablescanret.append({ "base path": basepath, "base json path": path, "id must match": idmustmatch })
-    #
-    return tablescanret
-
-def proccontenttables(scan):
-    ret = [ ]
-    #
-    g = glob.glob(scan["base path"]+"/*.json",recursive=True)
-    for path in g:
-        if path == scan["base json path"]:
-            continue
-        pp = pathlib.PurePath(path)
-        if len(pp.parts) < 2:
-            raise Exception("What?")
-        basepath = str(pp.parent)
-        idmustmatch = str(pp.parts[-2])
-        ret.append({ "base path": basepath, "path": path, "id must match": idmustmatch, "file name": str(pp.name) })
-    #
-    return ret
-
-def procbasetable(scan,obj):
-    path = scan["base json path"]
-    #
-    if "ji" in obj:
-        raise Exception("What??")
-    ji = obj["ji"] = apodjson.load_json(path)
-    if not "id" in ji:
-        raise Exception("Table in "+path+" does not have an ID")
-    if not ji["id"] == scan["id must match"]:
-        raise Exception("File name "+path+" parent directory name does not match id")
-    if not "base definition" in ji:
-        raise Exception("Table "+ji["id"]+" does not indicate base definition, but has --base.json extension")
-    if not ji["base definition"] == True:
-        raise Exception("Table "+ji["id"]+" is not base definition, but has --base.json extension")
-    # our JSON has schema version numbers now, because in the future we may have to make
-    # some changes
-    if not "schema" in ji:
-        raise Exception("Table "+ji["id"]+" has no schema information")
-    if not "version" in ji["schema"]:
-        raise Exception("Table "+ji["id"]+" has no schema version")
-    ver = ji["schema"]["version"]
-    if ver < 1 or ver > 1:
-        raise Exception("Table "+ji["id"]+" is using unsupported schema "+str(ver))
-    # table column name to index lookup
-    if "table columns" in ji:
-        tablecols = ji["table columns"]
-        if not type(tablecols) == list:
-            raise Exception("Table "+ji["id"]+" columns not an array")
-        refby = { }
-        for coli in range(0,len(tablecols)):
-            col = tablecols[coli]
-            if not type(col) == dict:
-                raise Exception("Table "+ji["id"]+" column "+str(coli)+" not an object")
-            if not "name" in col:
-                raise Exception("Table "+ji["id"]+" column "+str(coli)+" has no name")
-            colname = col["name"]
-            if colname in refby:
-                raise Exception("Table "+ji["id"]+" column "+str(coli)+" name "+colname+" already exists")
-            refby[colname] = coli
-        #
-        ji["table name to column"] = refby
-    else:
-        raise Exception("Table "+ji["id"]+" has no columns defined")
-    #
-    for what in ["base definition"]:
-        if what in ji:
-            del ji[what]
-    #
-    ji["schema"]["compiled version"] = 1
-    ji["source json file"] = path
-    ji["sources"] = [ ]
-    ji["rows"] = [ ]
-
 def xlatebool(column,data):
     if data == None or data == "":
         return False
@@ -220,6 +135,91 @@ def chartoregex(x):
         return "\\" + x
     return x
 
+def get_base_tables():
+    tablescanret = [ ]
+    #
+    g = glob.glob("tables/**/base.json",recursive=True)
+    for path in g:
+        pp = pathlib.PurePath(path)
+        if len(pp.parts) < 2:
+            raise Exception("What?")
+        if not pp.parts[-1] == "base.json":
+            raise Exception("What?")
+        basepath = str(pp.parent)
+        idmustmatch = str(pp.parts[-2])
+        tablescanret.append({ "base path": basepath, "base json path": path, "id must match": idmustmatch })
+    #
+    return tablescanret
+
+def get_content_tables(scan):
+    ret = [ ]
+    #
+    g = glob.glob(scan["base path"]+"/*.json",recursive=True)
+    for path in g:
+        if path == scan["base json path"]:
+            continue
+        pp = pathlib.PurePath(path)
+        if len(pp.parts) < 2:
+            raise Exception("What?")
+        basepath = str(pp.parent)
+        idmustmatch = str(pp.parts[-2])
+        ret.append({ "base path": basepath, "path": path, "id must match": idmustmatch, "file name": str(pp.name) })
+    #
+    return ret
+
+def procbasetable(scan,obj):
+    path = scan["base json path"]
+    #
+    if "ji" in obj:
+        raise Exception("What??")
+    ji = obj["ji"] = apodjson.load_json(path)
+    if not "id" in ji:
+        raise Exception("Table in "+path+" does not have an ID")
+    if not ji["id"] == scan["id must match"]:
+        raise Exception("File name "+path+" parent directory name does not match id")
+    if not "base definition" in ji:
+        raise Exception("Table "+ji["id"]+" does not indicate base definition, but has base.json name "+path)
+    if not ji["base definition"] == True:
+        raise Exception("Table "+ji["id"]+" is not base definition, but has base.json name "+path)
+    # our JSON has schema version numbers now, because in the future we may have to make some changes
+    if not "schema" in ji:
+        raise Exception("Table "+ji["id"]+" has no schema information")
+    if not "version" in ji["schema"]:
+        raise Exception("Table "+ji["id"]+" has no schema version")
+    ver = ji["schema"]["version"]
+    if ver < 1 or ver > 1:
+        raise Exception("Table "+ji["id"]+" is using unsupported schema "+str(ver))
+    # table column name to index lookup
+    if "table columns" in ji:
+        tablecols = ji["table columns"]
+        if not type(tablecols) == list:
+            raise Exception("Table "+ji["id"]+" columns not an array")
+        refby = { }
+        for coli in range(0,len(tablecols)):
+            col = tablecols[coli]
+            if not type(col) == dict:
+                raise Exception("Table "+ji["id"]+" column "+str(coli)+" not an object")
+            if not "name" in col:
+                raise Exception("Table "+ji["id"]+" column "+str(coli)+" has no name")
+            colname = col["name"]
+            if colname in refby:
+                raise Exception("Table "+ji["id"]+" column "+str(coli)+" name "+colname+" already exists")
+            refby[colname] = coli
+        #
+        ji["table name to column"] = refby
+    else:
+        raise Exception("Table "+ji["id"]+" has no columns defined")
+    # before putting out the final JSON delete certain values
+    for what in ["base definition"]:
+        if what in ji:
+            del ji[what]
+    # add notes to JSON, indicating schema compiled version, source JSON
+    ji["schema"]["compiled version"] = 1
+    ji["source json file"] = path
+    # add sources and rows objects for content tables
+    ji["sources"] = [ ]
+    ji["rows"] = [ ]
+
 def tablerowtodatatype(tablecols,drow,ji):
     for coli in range(0,len(tablecols)):
         if coli >= len(drow):
@@ -264,7 +264,7 @@ def tablerowrangeproc(tablecols,drow):
     r = tablerowrangeproccol(tablecols,drow,0)
     return r
 
-def procconttenttable(scan,obj):
+def proc_content_table(scan,obj):
     if not "path" in scan:
         raise Exception("What?")
     path = scan["path"]
@@ -750,9 +750,8 @@ for scan in tablescan:
     obj = { }
     #
     procbasetable(scan,obj)
-    contentscan = proccontenttables(scan)
-    for content in contentscan:
-        procconttenttable(content,obj)
+    for content in get_content_tables(scan):
+        proc_content_table(content,obj)
     sorttable(obj)
     deduptable(obj)
     #
