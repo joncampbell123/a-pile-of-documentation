@@ -87,7 +87,7 @@ def proccontenttables(scan):
             raise Exception("What?")
         basepath = str(pp.parent)
         idmustmatch = str(pp.parts[-2])
-        ret.append({ "base path": basepath, "path": path, "id must match": idmustmatch })
+        ret.append({ "base path": basepath, "path": path, "id must match": idmustmatch, "file name": str(pp.name) })
     #
     return ret
 
@@ -304,6 +304,11 @@ def procconttenttable(scan,obj):
             source_type = source_obj["type"]
     # does the source exist?
     if not source_id == None:
+        # the file name must start with the source ID--this is a way to maintain sanity
+        fn = scan["file name"]
+        if not fn[0:len(source_id)+1] == (source_id+".") and not fn[0:len(source_id)+2] == (source_id+"--"):
+            raise Exception("File name "+path+" refers to source "+source_id+" and must start with source ID")
+        #
         sourceref = sources_load(sources,source_id)
         if sourceref == None:
             raise Exception("Table "+ji["id"]+" no such source "+source_id)
