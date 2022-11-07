@@ -440,6 +440,7 @@ def procconttenttable(scan,obj):
     nametocol = table["table name to column"]
     src_cols_present = [ False ] * len(basetablecols)
     rows = table["rows"]
+    # some tables store their rows and columns in .csv files
     if not "table" in ji and "table in csv" in ji:
         if ji["table in csv"] == True:
             csv_path = path[0:len(path)-5] + ".csv" # replace .json with .csv
