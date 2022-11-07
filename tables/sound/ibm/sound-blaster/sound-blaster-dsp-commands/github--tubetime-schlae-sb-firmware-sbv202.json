@@ -8,7 +8,6 @@
 		"type": "website",
 		"url": "https://github.com/schlae/sb-firmware/blob/master/sbv202.asm"
 	},
-	"csv interpret newline": true,
 	"notes": [
 		"DSP commands derived from sbv202.asm are based on careful study of the source code and aliases of DSP commands that result from the way they are processed.",
 		"Notes for those studying the code (sbv202.asm) who may be overly assustomed to x86 assembly language: jb/jnb in 8051 assembly language is a branch on whether or not a bit is set/not set. It is not a JB (branch if below) like 8088 asm.",

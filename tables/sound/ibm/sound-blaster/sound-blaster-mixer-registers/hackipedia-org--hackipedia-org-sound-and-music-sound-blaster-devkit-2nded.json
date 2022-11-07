@@ -8,7 +8,6 @@
 		"type": "website",
 		"url": "http://hackipedia.org/browse.cgi/Computer/Platform/PC%2c%20IBM%20compatible/Sound%20and%20Music/Creative%20Labs/Sound%20Blaster/Sound%20Blaster%20Series%20Developer%20Kit%2c%20Second%20Edition%2epdf"
 	},
-	"csv interpret newline": true,
 	"notes": [
 		"The low-pass filter is used to filter off high-frequency signals during recording to achieve better recording quality. As a general guide, use the 3.2 kHz filter for mono recording with sampling rates below 18 kHz; use the 8.8 kHz filter for mono recording with sampling rates between 18 kHz to 36 kHz. Turn off both filters for mono recording with sampling rates above 36 kHz, or for any stereo recording.",
 		"When recording in mono, note that samples will only be taken from the left input mixer. So, if a mono recording of a stereo source is desired, the switches controlled by registers 0x3D and 0x3E must be manipulated to enable both channels of a stereo source to be mixed together first into the left input mixer before being sampled."

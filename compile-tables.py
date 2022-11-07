@@ -451,9 +451,7 @@ def procconttenttable(scan,obj):
                 ji["table column range separator"] = "-" # default A-B range
             # if told to, the strings extracted from CSV should be scanned to convert "\n" to an actual newline since CSV columns cannot hold a newline
             if "csv interpret newline" in ji and ji["csv interpret newline"]:
-                for row in c["rows"]:
-                    for coli in range(0,len(row)):
-                        row[coli] = re.sub(r"\\n","\n",row[coli])
+                raise Exception("csv interpret newline deprecated in "+path)
             #
             ji["table"] = c["rows"]
     #
@@ -594,6 +592,7 @@ def tablerowsort(tcols,row):
     return r
 
 def sorttable(obj):
+    # must have been assembled from all tables first
     if not "ji" in obj:
         raise Exception("What?")
     table = obj["ji"]

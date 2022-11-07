@@ -21,6 +21,5 @@
 		"Sound Blaster 16 undocumented commands 45h and 47h (continue auto-init DMA) set the auto-init mode in playback, but as noted from real hardware testing, do not automatically resume playback if it has stopped.",
 		"Some Creative SB16 drivers, especially later drivers for Windows 95/98, like to use the 8051 read/write commands to verify it is talking to genuine Creative hardware. The driver will issue specific commands and use the read/write functions to verify specific bytes change as expected. It will also query the ASP/CSP chip in a specific manner."
 	],
-	"csv interpret newline": true,
 	"table in csv": true
 }

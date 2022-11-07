@@ -8,7 +8,6 @@
 		"type": "website",
 		"url": "https://github.com/torvalds/linux/blob/master/sound/isa/sc6000.c"
 	},
-	"csv interpret newline": true,
 	"notes": [
 		"Commands are interpreted both from this Linux source and from the behavior of the SC400 drivers in DOS/Windows 3.1 in DOSBox-X"
 	],
