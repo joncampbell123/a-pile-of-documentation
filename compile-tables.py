@@ -204,7 +204,7 @@ def tablecolxlate(column,data):
     #
     if data == None or data == "":
         if "default" in column:
-            return column["default"]
+            data = column["default"]
     if column["type"] == "bool":
         return xlatebool(column,data)
     if column["type"] == "uint8_t" or column["type"] == "uint_t":
