@@ -61,10 +61,6 @@ if not os.path.exists("compiled/tables"):
 
 def get_base_tables():
     tablescanret = [ ]
-    # what to port
-    g = glob.glob("tables/**/*--base.json",recursive=True)
-    for path in g:
-        print("Yet to port: "+str(path))
     #
     g = glob.glob("tables/**/base.json",recursive=True)
     for path in g:
