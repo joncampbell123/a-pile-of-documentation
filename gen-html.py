@@ -212,7 +212,12 @@ def genfrag_table(bookid,ji):
             if "title" in colo:
                 title = colo["title"]
             hw.write(apodhtml.htmlelem(tag="th",content=title))
+        #
         hw.end() # th
+        # which column to attach source ref to? default: last column
+        refcolidx = len(ji["table columns"]) - 1
+        if "source refs on column" in ji:
+            refcolidx = ji["source refs on column"]
         # rows
         for rowo in ji["rows"]:
             if not "data" in rowo:
@@ -228,7 +233,14 @@ def genfrag_table(bookid,ji):
                     attr["class"] = "nowrap"
                 #
                 tablecoltohtml(dcon,tcolo,dcolo)
+                # if this is the column to emit references, do it, but only if not all sources agree
+                if coli == refcolidx:
+                    if "source index" in rowo and not len(rowo["source index"]) == len(ji["sources"]):
+                        for sil in rowo["source index"]:
+                            dcon.append(apodhtml.htmlelem(tag="sup",content=apodhtml.htmlelem(tag="a",attr={ "href": ("#"+apodhtml.mkhtmlid("table-sr",bookid+":"+str(sil+1))), "class": "apodsourceidxref" },content=("["+str(sil+1)+"]"))))
+                #
                 hw.write(apodhtml.htmlelem(tag="td",attr=attr,content=dcon))
+            #
             hw.end() # tr
         # end
         hw.end() # table

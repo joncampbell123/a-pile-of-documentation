@@ -69,6 +69,7 @@
 			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
+			"list source refs": true,
 			"name": "effect",
 			"title": "Effect",
 			"description": "What the command does"

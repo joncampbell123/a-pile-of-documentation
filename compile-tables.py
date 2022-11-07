@@ -205,6 +205,8 @@ def procbasetable(scan,obj):
             if colname in refby:
                 raise Exception("Table "+ji["id"]+" column "+str(coli)+" name "+colname+" already exists")
             refby[colname] = coli
+            if "list source refs" in col:
+                ji["source refs on column"] = coli
         #
         ji["table name to column"] = refby
     else:

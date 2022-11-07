@@ -41,6 +41,7 @@
 			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
+			"list source refs": true,
 			"name": "command",
 			"title": "Command",
 			"required": true

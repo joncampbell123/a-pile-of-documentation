@@ -18,6 +18,7 @@
 		{
 			"type": "string",
 			"case insensitive": true,
+			"list source refs": true,
 			"column": "keycombo",
 			"title": "Char name",
 			"required": true,

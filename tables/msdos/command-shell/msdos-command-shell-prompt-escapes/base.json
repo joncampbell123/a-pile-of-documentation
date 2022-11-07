@@ -18,6 +18,7 @@
 			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
+			"list source refs": true,
 			"title": "Displays as",
 			"name": "displayas"
 		},
