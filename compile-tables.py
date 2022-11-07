@@ -748,13 +748,15 @@ tablescan = get_base_tables()
 # process base descriptions
 for scan in tablescan:
     obj = { }
-    #
+    # process base table
     procbasetable(scan,obj)
+    # then process content tables and add to base table rows
     for content in get_content_tables(scan):
         proc_content_table(content,obj)
+    # sort rows and dedup rows
     sorttable(obj)
     deduptable(obj)
-    #
+    # write compiled JSON to file
     ji = obj["ji"]
     apodjson.write_json("compiled/tables/"+ji["id"]+".json",ji);
 
