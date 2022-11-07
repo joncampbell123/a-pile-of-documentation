@@ -61,12 +61,15 @@ if not os.path.exists("compiled/tables"):
 
 def get_base_tables():
     tablescanret = [ ]
-    g = glob.glob("tables/**/*--base.json",recursive=True)
+    #
+    g = glob.glob("tables/**/base.json",recursive=True)
     for path in g:
-        basepath = str(path)
-        if not basepath[-11:] == "--base.json":
-            raise Exception("What??")
-        basepath = basepath[0:len(basepath)-11]
+        pp = pathlib.PurePath(path)
+        if len(pp.parts) < 1:
+            raise Exception("What?")
+        if not pp.parts[-1] == "base.json":
+            raise Exception("What?")
+        basepath = str(pp.parent)
         tablescanret.append({ "base path": basepath, "base json path": path })
     #
     return tablescanret
@@ -74,7 +77,7 @@ def get_base_tables():
 def proccontenttables(scan):
     ret = [ ]
     #
-    g = glob.glob(scan["base path"]+"--*.json",recursive=True)
+    g = glob.glob(scan["base path"]+"/*.json",recursive=True)
     for path in g:
         if path == scan["base json path"]:
             continue
@@ -84,12 +87,6 @@ def proccontenttables(scan):
 
 def procbasetable(scan,obj):
     path = scan["base json path"]
-    pathelem = path.split('/')
-    if len(pathelem) < 1:
-        raise Exception("What??")
-    basename = pathelem[-1] # the last element
-    if basename == None or basename == "":
-        raise Exception("What??")
     #
     if "ji" in obj:
         raise Exception("What??")
@@ -100,10 +97,6 @@ def procbasetable(scan,obj):
         raise Exception("Table "+ji["id"]+" does not indicate base definition, but has --base.json extension")
     if not ji["base definition"] == True:
         raise Exception("Table "+ji["id"]+" is not base definition, but has --base.json extension")
-    # the "id" must match the file name because that's the only way we can keep our sanity
-    # maintaining this collection.
-    if not basename == (ji["id"] + "--base.json"):
-        raise Exception("Table "+ji["id"]+" id does not match filename "+basename)
     # our JSON has schema version numbers now, because in the future we may have to make
     # some changes
     if not "schema" in ji:
@@ -270,14 +263,6 @@ def procconttenttable(scan,obj):
     if not "ji" in obj:
         raise Exception("What?")
     table = obj["ji"]
-    pathelem = path.split('/')
-    if len(pathelem) < 1:
-        raise Exception("What??")
-    basename = pathelem[-1] # the last element
-    if basename == None or basename == "":
-        raise Exception("What??")
-    if len(basename) >= 11 and basename[-11:] == "--base.json":
-        raise Exception("What??")
     #
     ji = apodjson.load_json(path)
     if not "id" in ji:
@@ -285,10 +270,6 @@ def procconttenttable(scan,obj):
     if "base definition" in ji:
         if ji["base definition"] == True:
             raise Exception("Table "+ji["id"]+" is base definition, but does not have --base.json extension")
-    # the "id" must match the file name because that's the only way we can keep our sanity
-    # maintaining this collection.
-    if not basename[0:len(ji["id"])+2] == (ji["id"] + "--"):
-        raise Exception("Table "+ji["id"]+" id does not match filename "+basename)
     # our JSON has schema version numbers now, because in the future we may have to make
     # some changes
     if not "schema" in ji:
@@ -311,16 +292,8 @@ def procconttenttable(scan,obj):
             source_id = source_obj["id"]
         if "type" in source_obj:
             source_type = source_obj["type"]
-    # source id must be in file name along with table id. sorry, this is how we maintain sanity.
+    # does the source exist?
     if not source_id == None:
-        cut = len(ji["id"])+2+len(source_id)
-        match = ji["id"] + "--" + source_id
-        if len(basename) >= (cut+2) and basename[cut+2:2] == "--":
-            match = match + "--"
-            cut = cut + 2
-        if not basename[0:cut] == match:
-            raise Exception("Table "+ji["id"]+" id and source "+source_id+" id does not match filename "+basename)
-        # does the source exist?
         sourceref = sources_load(sources,source_id)
         if sourceref == None:
             raise Exception("Table "+ji["id"]+" no such source "+source_id)
