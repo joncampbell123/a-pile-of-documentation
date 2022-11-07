@@ -214,6 +214,10 @@ def genfrag_table(bookid,ji):
             hw.write(apodhtml.htmlelem(tag="th",content=title))
         #
         hw.end() # th
+        # which column to attach tags to? default: last column
+        tagcolidx = len(ji["table columns"]) - 1
+        if "tags on column" in ji:
+            tagcolidx = ji["tags on column"]
         # which column to attach source ref to? default: last column
         refcolidx = len(ji["table columns"]) - 1
         if "source refs on column" in ji:
@@ -231,6 +235,12 @@ def genfrag_table(bookid,ji):
                 #
                 if "nowrap" in tcolo and tcolo["nowrap"] == True:
                     attr["class"] = "nowrap"
+                #
+                if coli == tagcolidx:
+                    for sil in rowo["source index"]:
+                        sref = ji["sources"][sil]
+                        if "entry tag" in sref:
+                            dcon.append(apodhtml.htmlelem(tag="span",attr={ "class": "apodenttag" },content=("("+sref["entry tag"]+") ")))
                 #
                 tablecoltohtml(dcon,tcolo,dcolo)
                 # if this is the column to emit references, do it, but only if not all sources agree
@@ -275,7 +285,11 @@ def genfrag_table(bookid,ji):
                 if not type(nl) == list:
                     nl = [ nl ]
                 for nent in nl:
-                    uli.append(apodhtml.htmlelem(tag="li",content=nent))
+                    ncon = [ ]
+                    if "entry tag" in se:
+                        ncon.append(apodhtml.htmlelem(tag="span",attr={ "class": "apodenttag" },content=("("+se["entry tag"]+") ")))
+                    ncon.append(nent)
+                    uli.append(apodhtml.htmlelem(tag="li",content=ncon))
     if len(uli) > 0:
         nc = [ apodhtml.htmlelem(tag="span",attr={ "class": "apodnoteshead" },content="Notes:"), apodhtml.htmlelem(tag="ul",attr={ "class": "apodnoteslist" },content=uli) ]
         hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apodnotes", "title": bookid },content=nc))

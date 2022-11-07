@@ -140,3 +140,10 @@ li.apodsourceref:target {
 	font-weight: 300;
 }
 
+.apodenttag {
+	color: #007F7F;
+	font-weight: 300;
+	font-style: none;
+	font-size: 0.8em;
+}
+

@@ -58,6 +58,7 @@
 			"case insensitive": true,
 			"combine different": true,
 			"list source refs": true,
+			"list entry tags": true,
 			"name": "content",
 			"title": "Contents",
 			"description": "Register contents"
