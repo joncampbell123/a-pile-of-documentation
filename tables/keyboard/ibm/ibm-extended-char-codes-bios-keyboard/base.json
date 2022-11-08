@@ -29,6 +29,7 @@
 			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
+			"list source refs": true,
 			"name": "comments",
 			"title": "Comments",
 			"description": "Additional comments"
