@@ -726,6 +726,9 @@ def deduptable(obj):
             bpr = buildrow["columns present"][coli]
             if not (spr == True and bpr == True):
                 srowcmp[coli] = browcmp[coli] = None
+            # anything marked combine different is ignored at this stage
+            if "combine different" in tcols[coli] and tcols[coli]["combine different"] == True:
+                srowcmp[coli] = browcmp[coli] = None
         #
         if srowcmp == browcmp:
             duplicate = True
@@ -737,6 +740,8 @@ def deduptable(obj):
                         buildrow["columns present"][coli] = True
                         browdat[coli] = srowdat[coli]
                         continue
+                if tcols[coli]["compiled format"] == "array/combined":
+                    browdat[coli] += srowdat[coli]
             #
             buildrow["source index"] += srow["source index"]
         else:
