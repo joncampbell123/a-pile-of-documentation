@@ -207,6 +207,20 @@ def procbasetable(scan,obj):
             refby[colname] = coli
             if "list source refs" in col:
                 ji["source refs on column"] = coli
+            # we tell through the output how to interpret things
+            col["compiled format"] = "normal" # "" True False int
+            if "is array" in col and col["is array"] == True:
+                col["compiled format"] = "array" # [ 2 4 6 8 10 ] = 2 4 6 8 10
+                if "is range" in col and col["is range"] == True:
+                    col["compiled format"] = "array/range" # [ [ 4 ] [ 5 ] [ 7 8 ] [ 9 ] [ 12 14 ] ] = 4 5 7-8 9 12-14
+            if "with formatting" in col and col["with formatting"] == True:
+                if not col["type"] == "string" or not col["compiled format"] == "normal":
+                    raise Exception(path+" column "+colname+" only strings can be used with formatting")
+                col["compiled format:array/formatting"] = col["compiled format"]
+                col["compiled format"] = "array/formatting" # [ { "type": "text", content: "text content" }, { "type": "linebreak" }, { "type": "text", "bold": true, "content": "bold text" }, ... ]
+            if "combine different" in col and col["combine different"] == True:
+                col["compiled format:array/combined"] = col["compiled format"]
+                col["compiled format"] = "array/combined" # [ { "source index": 4, "value": [ [ 4 ] [ 5 ] [ 7 8 ] [ 9 ] ] } ] where format within array/combined == "array/range"
         #
         ji["table name to column"] = refby
     else:
