@@ -26,7 +26,7 @@ cmdbyte,params,command,comments,system,returns,__suppress
 0xA4,,Check if password installed,"MCA systems: Return 0xF1 if no password, 0xFA if password installed. Some systems without passwords always return 0xF1",,nn,"SUPPRESS(PICKTHIS=command)"
 0xA4,,Write Clock Low,,"ISA/EISA AMIBIOS"
 0xA4,,Toggle speed,,"Compaq BIOS"
-0xA5,nn...,Load password,"Load a password by writing a NUL-terminated string to port 60h. String is in scancode format.","SUPPRESS(PICKTHIS=command)"
+0xA5,nn...,Load password,"Load a password by writing a NUL-terminated string to port 60h. String is in scancode format.",,,"SUPPRESS(PICKTHIS=command)"
 0xA5,,Write Clock High,,"ISA/EISA AMIBIOS"
 0xA5,,Special read of P2,"Read of P2 with bits 4 and 5 replaced","Compaq BIOS",nn
 0xA6,,Check password,"MCA systems: When a password is installed: Checks password by matching keystrokes with the stored password. Enable keyboard upon successful match",,,"SUPPRESS(PICKTHIS=command)"
