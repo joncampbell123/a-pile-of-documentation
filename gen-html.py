@@ -151,10 +151,8 @@ def tablecolbooltohtml(tcolo,dcolo):
 # dcon = array of elements to write
 # tcolo = column table info
 # dcolo = column
-def tablecoltohtml(dcon,tcolo,dcolo):
-    if isinstance(dcolo,str):
-        dcon.append(dcolo)
-    elif "is array" in tcolo and tcolo["is array"] == True:
+def tablecoltohtml(dcon,tcolo,dcolo,compiled_format):
+    if compiled_format == "array" or compiled_format == "array/range":
         if not type(dcolo) == list:
             raise Exception("array column not array")
         # each array of the element is an array containing a single value,
@@ -178,24 +176,31 @@ def tablecoltohtml(dcon,tcolo,dcolo):
                 raise Exception("array ent not an array")
             elif len(ent) == 1:
                 dcon.append(apodhtml.htmlelem(tag="span",content=tablecolinttohtml(tcolo,ent[0])))
-            elif len(ent) == 2:
+            elif len(ent) == 2 and compiled_format == "array/range":
                 dcon.append(apodhtml.htmlelem(tag="span",content=(tablecolinttohtml(tcolo,ent[0])+"-"+tablecolinttohtml(tcolo,ent[1]))))
             else:
                 print(ent)
                 raise Exception("array ent is array with wrong number of elements")
             entc = entc + 1
-    elif tcolo["type"] == "bool":
-        if isinstance(dcolo,bool):
-            dcon.append(tablecolbooltohtml(tcolo,dcolo==True))
-        elif isinstance(dcolo,int):
-            dcon.append(tablecolbooltohtml(tcolo,dcolo>0))
-        else:
-            print(dcolo)
-            raise Exception("unexpected data type for bool")
-    elif tcolo["type"] == "uint8_t" or tcolo["type"] == "uint_t":
-        dcon.append(tablecolinttohtml(tcolo,dcolo))
-    elif tcolo["type"] == "float":
-        dcon.append(tablecolfloattohtml(tcolo,dcolo))
+    elif compiled_format == "normal":
+        if isinstance(dcolo,str):
+            dcon.append(dcolo)
+        elif tcolo["type"] == "bool":
+            if isinstance(dcolo,bool):
+                dcon.append(tablecolbooltohtml(tcolo,dcolo==True))
+            elif isinstance(dcolo,int):
+                dcon.append(tablecolbooltohtml(tcolo,dcolo>0))
+            else:
+                print(dcolo)
+                raise Exception("unexpected data type for bool")
+        elif tcolo["type"] == "uint8_t" or tcolo["type"] == "uint_t":
+            dcon.append(tablecolinttohtml(tcolo,dcolo))
+        elif tcolo["type"] == "float":
+            dcon.append(tablecolfloattohtml(tcolo,dcolo))
+    elif compiled_format == "array/combined":
+        raise Exception("Calling function is supposed to take care of array/combined (BUG)")
+    else:
+        print("Warning: Unsupported compiled format "+compiled_format)
 
 def genfrag_table(bookid,ji):
     hw = apodhtml.htmlwriter()
@@ -236,13 +241,23 @@ def genfrag_table(bookid,ji):
                 if "nowrap" in tcolo and tcolo["nowrap"] == True:
                     attr["class"] = "nowrap"
                 #
-                if coli == tagcolidx:
-                    for sil in rowo["source index"]:
-                        sref = ji["sources"][sil]
-                        if "entry tag" in sref:
-                            dcon.append(apodhtml.htmlelem(tag="span",attr={ "class": "apodenttag" },content=("("+sref["entry tag"]+") ")))
-                #
-                tablecoltohtml(dcon,tcolo,dcolo)
+                if tcolo["compiled format"] == "array/combined":
+                    for combent in dcolo: # require value and source index or else fault!
+                        if coli == tagcolidx or len(combent["source index"]) > 1:
+                            for sil in combent["source index"]:
+                                sref = ji["sources"][sil]
+                                if "entry tag" in sref:
+                                    dcon.append(apodhtml.htmlelem(tag="span",attr={ "class": "apodenttag" },content=("("+sref["entry tag"]+") ")))
+                        #
+                        tablecoltohtml(dcon,tcolo,combent["value"],tcolo["compiled format:array/combined"])
+                else:
+                    if coli == tagcolidx:
+                        for sil in rowo["source index"]:
+                            sref = ji["sources"][sil]
+                            if "entry tag" in sref:
+                                dcon.append(apodhtml.htmlelem(tag="span",attr={ "class": "apodenttag" },content=("("+sref["entry tag"]+") ")))
+                    #
+                    tablecoltohtml(dcon,tcolo,dcolo,tcolo["compiled format"])
                 # if this is the column to emit references, do it, but only if not all sources agree
                 if coli == refcolidx:
                     if "source index" in rowo and not len(rowo["source index"]) == len(ji["sources"]):
