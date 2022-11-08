@@ -516,11 +516,9 @@ def proc_content_table(scan,obj):
                         else:
                             nob[ent.lower()] = True
                     special["suppress"] = nob
-            else:
-                special["suppress"] = { }
             #
             drowobj = { "columns present": src_cols_present.copy() }
-            if not special == False and type(special) == dict:
+            if not special == False and type(special) == dict and len(special) > 0:
                 drowobj["special"] = special
             # the code below will append to sources, so the index to list is the length of the list NOW before appending
             if not source_obj == None:
@@ -540,7 +538,7 @@ def proc_content_table(scan,obj):
             tablerowtodatatype(basetablecols,drow,ji)
             drowar = tablerowrangeproc(basetablecols,drowobj)
             # SUPPRESS(ALL) means do not include the table at all
-            if "all" in special["suppress"]:
+            if "suppress" in special and "all" in special["suppress"]:
                 if not "suppressed" in table:
                     table["suppressed"] = [ ]
                 table["suppressed"].append(drowar)
