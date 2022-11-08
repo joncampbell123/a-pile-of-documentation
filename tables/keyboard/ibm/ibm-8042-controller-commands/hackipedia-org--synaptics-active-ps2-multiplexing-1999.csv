@@ -8,5 +8,5 @@ cmdbyte,params,command,comments,system,returns
 0xD4,nn,Send command to PS/2 mouse,"This command always causes the KBC to revert to Legacy mode; once in Legacy mode, the D4h command is processed as usual"
 0x20,,Read Command Byte,"Does not revert multiplexed mode",,nn
 0x60,nn,Write Command Byte,"Does not revert multiplexed mode"
-0x90-0x93,,Routing prefix,"Low 2 bits of command select AUX port #0 to #3 to route to","Synaptics multiplexer"
+0x90-0x93,nn,Routing prefix,"Low 2 bits of command select AUX port #0 to #3 to route to","Synaptics multiplexer"
 
