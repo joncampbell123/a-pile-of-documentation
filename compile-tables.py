@@ -696,7 +696,11 @@ def tablearraycombinedcoldedup(tcol,col):
     pv = { }
     r = [ ]
     for v in col:
-        if not tablearraycombinedcoldedupsort(tcol,pv) == tablearraycombinedcoldedupsort(tcol,v):
+        pvds = tablearraycombinedcoldedupsort(tcol,pv)
+        vds = tablearraycombinedcoldedupsort(tcol,v)
+        if vds == [ '' ] or vds == [ ]: # ignore empty columns
+            continue
+        if not pvds == vds:
             r.append(v)
             lmv = v
         else:
