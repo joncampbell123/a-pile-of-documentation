@@ -26,8 +26,6 @@
 			"name": "rw",
 			"title": "R/W",
 			"required": true,
-			"is array": true,
-			"is range": true,
 			"nowrap": true,
 			"array separator": " ",
 			"presence merge": false,
