@@ -258,10 +258,12 @@ def tablerowtodatatypecol(tcol,dcol,ji,compiled_format):
                     dcol[doli] = re.split(chartoregex(ji["table column range separator"]),dcol[doli])
                     if len(dcol[doli]) > 2:
                         raise Exception("Range with more than 2 values")
-            #
-            dcol = tablecolxlate(tcol,dcol)
+            return tablecolxlate(tcol,dcol)
     #
-    return dcol
+    if compiled_format == "normal":
+            return tablecolxlate(tcol,dcol)
+    #
+    raise Exception("table col unknown compiled format "+compiled_format)
 
 def tablerowtodatatype(tablecols,drow,ji):
     for coli in range(0,len(tablecols)):
