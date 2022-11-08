@@ -27,7 +27,6 @@
 		{
 			"type": "string",
 			"case insensitive": true,
-			"combine different": true,
 			"column": "comment",
 			"name": "character",
 			"title": "Character"
