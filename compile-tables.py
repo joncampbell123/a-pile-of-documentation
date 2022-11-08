@@ -237,9 +237,12 @@ def procbasetable(scan,obj):
     ji["sources"] = [ ]
     ji["rows"] = [ ]
 
-def tablerowtodatatypecol(tcol,dcol,ji,compiled_format):
+def tablerowtodatatypecol(tcol,dcol,ji,compiled_format,drowobj):
     if compiled_format == "array/combined":
-        return [ { "source index": [ ji["source index"] ], "value": tablerowtodatatypecol(tcol,dcol,ji,tcol["compiled format:array/combined"]) } ]
+        r = { "source index": [ ji["source index"] ], "value": tablerowtodatatypecol(tcol,dcol,ji,tcol["compiled format:array/combined"],drowobj), "special": { } }
+        if "special" in drowobj:
+            r["special"] = drowobj["special"]
+        return [ r ]
     if compiled_format == "array/formatting":
         raise Exception("Not yet supported")
     #
@@ -265,10 +268,10 @@ def tablerowtodatatypecol(tcol,dcol,ji,compiled_format):
     #
     raise Exception("table col unknown compiled format "+compiled_format)
 
-def tablerowtodatatype(tablecols,drow,ji):
+def tablerowtodatatype(tablecols,drow,ji,drowobj):
     for coli in range(0,len(tablecols)):
         if coli < len(drow):
-            drow[coli] = tablerowtodatatypecol(tablecols[coli],drow[coli],ji,tablecols[coli]["compiled format"])
+            drow[coli] = tablerowtodatatypecol(tablecols[coli],drow[coli],ji,tablecols[coli]["compiled format"],drowobj)
 
 def tablerowrangeproccol(tablecols,drowobj,coli):
     if "data" in drowobj:
@@ -536,18 +539,25 @@ def proc_content_table(scan,obj):
             if "suppress" in special:
                 x = re.match(r'^SUPPRESS\(([^.\]]*)\)$',special["suppress"])
                 if not x == None and len(x.groups()) > 0:
-                    nob = { }
-                    for ent in re.split(r'\|',x.group(1)):
-                        ei = ent.find("=")
-                        if ei >= 0:
-                            nob[ent[0:ei].lower()] = ent[ei+1:]
-                        else:
-                            nob[ent.lower()] = True
-                    special["suppress"] = nob
+                    special["suppress"] = x.group(1)
+                #
+                nob = { }
+                for ent in re.split(r'\|',special["suppress"]):
+                    if ent == "":
+                        continue
+                    ei = ent.find("=")
+                    if ei >= 0:
+                        nval = re.split(r',',ent[ei+1:])
+                        if len(nval) < 2:
+                            nval = nval[0]
+                        nob[ent[0:ei].lower()] = nval
+                    else:
+                        nob[ent.lower()] = True
+                #
+                special["suppress"] = nob
             #
             drowobj = { "columns present": src_cols_present.copy() }
-            if not special == False and type(special) == dict and len(special) > 0:
-                drowobj["special"] = special
+            drowobj["special"] = special
             # the code below will append to sources, so the index to list is the length of the list NOW before appending
             if not source_obj == None:
                 drowobj["source index"] = source_index
@@ -563,7 +573,8 @@ def proc_content_table(scan,obj):
                 dcoli = remapfromsrc[scoli]
                 drow[dcoli] = data
             #
-            tablerowtodatatype(basetablecols,drow,ji)
+            tablerowtodatatype(basetablecols,drow,ji,drowobj)
+            #
             drowar = tablerowrangeproc(basetablecols,drowobj)
             # SUPPRESS(ALL) means do not include the table at all
             if "suppress" in special and "all" in special["suppress"]:
@@ -688,7 +699,68 @@ def tablearraycombinedcoldedupsort(tcol,colent):
             r.append(ve)
     return r
 
+def tablearraycombinedcoldedupmergespecial(lmv,v):
+    if not "special" in lmv:
+        lmv["special"] = { }
+    if not "suppress" in lmv["special"]:
+        lmv["special"]["suppress"] = { }
+    if not "special" in lmv:
+        v["special"] = { }
+    if not "suppress" in v["special"]:
+        v["special"]["suppress"] = { }
+    for sv in v["special"]["suppress"]:
+        if sv in lmv["special"]["suppress"]:
+            if not lmv["special"]["suppress"][sv] == v["special"]["suppress"][sv]:
+                print(lmv["special"]["suppress"][sv])
+                print(v["special"]["suppress"][sv])
+                raise Exception("Conflicting suppress spec")
+        else:
+            lmv["special"]["suppress"][sv] = v["special"]["suppress"][sv]
+
+def col_proc_pickone_spec(tcol,col):
+    pick = None
+    rejcol = [ ]
+    pickcol = [ ]
+    for cent in col:
+        if not "special" in cent:
+            rejcol.append(cent)
+            continue
+        spec = cent["special"]
+        if not "suppress" in spec:
+            rejcol.append(cent)
+            continue
+        supp = spec["suppress"]
+        if len(supp) == 0:
+            rejcol.append(cent)
+            continue
+        reject = True
+        if "pickthis" in supp:
+            pl = supp["pickthis"]
+            if not type(pl) == list:
+                pl = [ pl ]
+            for plent in pl:
+                if plent == tcol["name"]:
+                    reject = False
+                    if pick == None:
+                        pick = plent
+                        pickcol.append(cent)
+                    elif pick == plent:
+                        pickcol.append(cent)
+                    else:
+                        raise Exception("Conflicting pickthis spec vs "+plent)
+        if reject == True:
+            rejcol.append(cent)
+    if not pick == None:
+        col = pickcol
+        col[0]["rejected pickone"] = rejcol
+        for r in rejcol:
+            col[0]["source index"] += r["source index"]
+    #
+    return col
+
 def tablearraycombinedcoldedup(tcol,col):
+    # any suppress pickone specs?
+    col = col_proc_pickone_spec(tcol,col)
     # sort the column values
     col.sort(key=lambda x: tablearraycombinedcoldedupsort(tcol,x))
     # then scan and dedup
@@ -705,6 +777,7 @@ def tablearraycombinedcoldedup(tcol,col):
             lmv = v
         else:
             lmv["source index"] += v["source index"]
+            tablearraycombinedcoldedupmergespecial(lmv,v)
         pv = v
     col = r
     # sort source indexes
@@ -812,6 +885,20 @@ def deduptable(obj):
         for coli in range(0,len(tcols)):
             if tcols[coli]["compiled format"] == "array/combined":
                 row["data"][coli] = tablearraycombinedcoldedup(tcols[coli],row["data"][coli])
+                for colent in row["data"][coli]:
+                    if "special" in colent:
+                        if "suppress" in colent["special"]:
+                            if len(colent["special"]["suppress"]) == 0:
+                                del colent["special"]["suppress"]
+                        if len(colent["special"]) == 0:
+                                del colent["special"]
+        #
+        if "special" in row:
+            if "suppress" in row["special"]:
+                if len(row["special"]["suppress"]) == 0:
+                    del row["special"]["suppress"]
+            if len(row["special"]) == 0:
+                del row["special"]
     #
     table["rows"] = nrows
 

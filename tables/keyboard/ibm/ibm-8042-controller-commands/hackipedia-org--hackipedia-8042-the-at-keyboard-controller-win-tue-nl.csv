@@ -1,10 +1,10 @@
-cmdbyte,params,command,comments,system,returns
-0x20,,Read keyboard controller command byte,,,nn
-0x60,nn,Write keyboard controller command byte,
-0xAA,,Self test,,,nn
-0xAB,,Interface test,,,nn
-0xAD,,Disable keyboard,
-0xAE,,Enable keyboard,
+cmdbyte,params,command,comments,system,returns,__suppress
+0x20,,Read keyboard controller command byte,,,nn,SUPPRESS(PICKTHIS=command)
+0x60,nn,Write keyboard controller command byte,,,,"SUPPRESS(PICKTHIS=command)"
+0xAA,,Self test,,,nn,"SUPPRESS(PICKTHIS=command)"
+0xAB,,Interface test,,,nn,"SUPPRESS(PICKTHIS=command)"
+0xAD,,Disable keyboard,,,,"SUPPRESS(PICKTHIS=command)"
+0xAE,,Enable keyboard,,,,"SUPPRESS(PICKTHIS=command)"
 0xC0,,Read input port,,,nn
 0xD0,,Read output port,,,nn
 0xD1,nn,Write output port,
@@ -12,52 +12,52 @@ cmdbyte,params,command,comments,system,returns
 0xFE,,System reset,
 0xA7,,Disable mouse port,
 0xA8,,Enable mouse port,
-0xA9,,Test mouse port,,,nn
+0xA9,,Test mouse port,,,nn,"SUPPRESS(PICKTHIS=command)"
 0xD4,nn,Write to mouse,
 0x00-0x1F,,Read keyboard controller RAM,"Possible alias of 0x20-0x3F reportedly on AMIBIOS",,nn
-0x20-0x3F,,Read keyboard controller RAM,"May not be supported",,nn
+0x20-0x3F,,Read keyboard controller RAM,"May not be supported",,nn,"SUPPRESS(PICKTHIS=command)"
 0x40-0x5F,nn,Write keyboard controller RAM,"Possible alias of 0x40-0x5F reportedly on AMIBIOS",
-0x60-0x7F,nn,Write keyboard controller RAM,"May not be supported",
-0x90-0x93,nn,Synaptics multiplexer prefix,"The next byte to port 60h or 64h is routed to one of four aux devices selected by bits 1-0 of this command. Conflicts with VIA VT82C42 commands",Synaptics multiplexer
+0x60-0x7F,nn,Write keyboard controller RAM,"May not be supported",,,"SUPPRESS(PICKTHIS=command)"
+0x90-0x93,nn,Synaptics multiplexer prefix,"The next byte to port 60h or 64h is routed to one of four aux devices selected by bits 1-0 of this command. Conflicts with VIA VT82C42 commands",Synaptics multiplexer,,"SUPPRESS(PICKTHIS=command)"
 0x90-0x9F,,Write low 4 bits to Port13-Port10,"VIA VT82C42","VIA VT82C42"
 0xA0,,Read copyright,"A copyright string terminated by NUL, or perhaps just NUL, is returned through port 60h. May be ignored",,nn...
 0xA1,,Read controller firmware version,"If supported, returns a single ASCII byte",,nn
 0xA2-0xA3,,Switch speed,"Bit 0 of the command is used to 0=Reset or 1=set keyboard controller lines P22 P23 1=high or 0=low, for speed switching via the keyboard controller after which controller will send one garbage byte","ISA/EISA AMIBIOS",nn
-0xA4,,Check if password installed,"MCA systems: Return 0xF1 if no password, 0xFA if password installed. Some systems without passwords always return 0xF1",,nn
+0xA4,,Check if password installed,"MCA systems: Return 0xF1 if no password, 0xFA if password installed. Some systems without passwords always return 0xF1",,nn,"SUPPRESS(PICKTHIS=command)"
 0xA4,,Write Clock Low,,"ISA/EISA AMIBIOS"
 0xA4,,Toggle speed,,"Compaq BIOS"
-0xA5,nn...,Load password,"Load a password by writing a NUL-terminated string to port 60h. String is in scancode format."
+0xA5,nn...,Load password,"Load a password by writing a NUL-terminated string to port 60h. String is in scancode format.","SUPPRESS(PICKTHIS=command)"
 0xA5,,Write Clock High,,"ISA/EISA AMIBIOS"
 0xA5,,Special read of P2,"Read of P2 with bits 4 and 5 replaced","Compaq BIOS",nn
-0xA6,,Check password,"MCA systems: When a password is installed: Checks password by matching keystrokes with the stored password. Enable keyboard upon successful match"
+0xA6,,Check password,"MCA systems: When a password is installed: Checks password by matching keystrokes with the stored password. Enable keyboard upon successful match",,,"SUPPRESS(PICKTHIS=command)"
 0xA6,,Read Clock,"Return a byte 0=low 1=high","ISA/EISA AMIBIOS",nn
 0xA7,,Disable mouse port
 0xA7,,Write Cache Bad,,"ISA/EISA AMIBIOS"
 0xA8,,Enable mouse port
 0xA8,,Write Cache Good,,"ISA/EISA AMIBIOS"
-0xA9,,Test mouse port,,,nn
+0xA9,,Test mouse port,,,nn,"SUPPRESS(PICKTHIS=command)"
 0xA9,,Read Cache Bad Or Good,,"ISA/EISA AMIBIOS",nn
-0xAA,,Self test,,,nn
-0xAB,,Interface test,,,nn
+0xAA,,Self test,,,nn,"SUPPRESS(PICKTHIS=command)"
+0xAB,,Interface test,,,nn,"SUPPRESS(PICKTHIS=command)"
 0xAC,,Diagnostic dump,"Return 16 bytes of RAM, output and input ports and program status word",,nn...
-0xAD,,Disable keyboard
-0xAE,,Enable keyboard
+0xAD,,Disable keyboard,,,,"SUPPRESS(PICKTHIS=command)"
+0xAE,,Enable keyboard,,,,"SUPPRESS(PICKTHIS=command)"
 0xAF,,Read keyboard version,,"Award BIOS, VIA",nn
 0xB0-0xB5 0xB8-0xBD,,Reset/set keyboard controller line,"Bit 3 is used: 1=Set 0=Reset a line 1=high 0=low, command selects between P10,P11,P12,P13,P22,P23. Responds with one garbage byte","AMI BIOS",nn
 0xB0-0xB7 0xB8-0xBF,,Reset/set keyboard controller line,"Bit 3 is used: Write 1=1 0=0 to one of P10,P11,P12,P13,P22,P23,P14,P15 according to command","VIA BIOS",nn
 0xC0,,Read input port,,,nn
-0xC1,,"Continuous input port poll, low","Continuously copy bits 3-0 of the input port to be read from port 64h until another keyboard command",,nn
-0xC2,,"Continuous input port poll, high","Continuously copy bits 7-4 of the input port to be read from port 64h until another keyboard command",,nn
+0xC1,,"Continuous input port poll, low","Continuously copy bits 3-0 of the input port to be read from port 64h until another keyboard command",,nn,"SUPPRESS(PICKTHIS=command)"
+0xC2,,"Continuous input port poll, high","Continuously copy bits 7-4 of the input port to be read from port 64h until another keyboard command",,nn,"SUPPRESS(PICKTHIS=command)"
 0xC8,,Unblock keyboard controller lines P22 and P23,"allow command D1h to change P22 and P23","ISA/EISA AMIBIOS"
 0xC9,,Block keyboard controller lines P22 and P23,"prevent command D1h from changing P22 and P23","ISA/EISA AMIBIOS"
 0xCA,,Read keyboard controller mode,"Read keyboard controller mode to bit 0 of port 60h 0=ISA (AT) 1=PS/2 (MCA)","AMI BIOS, VIA",nn
 0xCB,,Write keyboard controller mode,"Write keyboard controller through bit 0, 0=ISA (AT) 1=PS/2 (MCA). You should first read with CAh and modify before writing with CBh","AMI BIOS, VIA"
 0xD0,,Read output port,,,nn
-0xD1,nn,Write output port
-0xD2,nn,Write keyboard output buffer,"Byte written is returned as if originating from a device"
-0xD3,nn,Write mouse output buffer,"Byte written is returned as if originating from a device"
-0xD4,nn,Write to mouse
-0xDD,,Disable A20 address line,,"HP Vectra"
-0xDF,,Enable A20 address line,,"HP Vectra"
+0xD1,nn,Write output port,,,,"SUPPRESS(PICKTHIS=command)"
+0xD2,nn,Write keyboard output buffer,"Byte written is returned as if originating from a device",,,"SUPPRESS(PICKTHIS=command)"
+0xD3,nn,Write mouse output buffer,"Byte written is returned as if originating from a device",,,"SUPPRESS(PICKTHIS=command)"
+0xD4,nn,Write to mouse,,,,"SUPPRESS(PICKTHIS=command)"
+0xDD,,Disable A20 address line,,"HP Vectra",,"SUPPRESS(PICKTHIS=command)"
+0xDF,,Enable A20 address line,,"HP Vectra",,"SUPPRESS(PICKTHIS=command)"
 0xF0-0xFF,,Pulse output bit,"Each zero bit represents a corresponding output port bit to pulse low. The most commonly used command in this range is FEh to reset the CPU"
 
