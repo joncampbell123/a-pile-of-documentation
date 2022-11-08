@@ -193,6 +193,7 @@ def procbasetable(scan,obj):
     if "table columns" in ji:
         tablecols = ji["table columns"]
         if not type(tablecols) == list:
+            print(tablecols)
             raise Exception("Table "+ji["id"]+" columns not an array")
         refby = { }
         for coli in range(0,len(tablecols)):
@@ -236,27 +237,36 @@ def procbasetable(scan,obj):
     ji["sources"] = [ ]
     ji["rows"] = [ ]
 
+def tablerowtodatatypecol(tcol,dcol,ji,compiled_format):
+    if compiled_format == "array/combined":
+        return [ { "source index": [ ji["source index"] ], "value": tablerowtodatatypecol(tcol,dcol,ji,tcol["compiled format:array/combined"]) } ]
+    if compiled_format == "array/formatting":
+        raise Exception("Not yet supported")
+    #
+    if compiled_format == "array" or compiled_format == "array/range":
+        if "is array" in tcol and tcol["is array"] == True:
+            if not type(dcol) == list:
+                if isinstance(dcol,str) and "table column array separator" in ji and isinstance(ji["table column array separator"],str):
+                    if dcol == "":
+                        dcol = [ ]
+                    else:
+                        dcol = re.split(chartoregex(ji["table column array separator"]),dcol)
+                else:
+                    dcol = [ dcol ]
+            if "is range" in tcol and tcol["is range"] == True and type(dcol) == list:
+                for doli in range(0,len(dcol)):
+                    dcol[doli] = re.split(chartoregex(ji["table column range separator"]),dcol[doli])
+                    if len(dcol[doli]) > 2:
+                        raise Exception("Range with more than 2 values")
+            #
+            dcol = tablecolxlate(tcol,dcol)
+    #
+    return dcol
+
 def tablerowtodatatype(tablecols,drow,ji):
     for coli in range(0,len(tablecols)):
-        if coli >= len(drow):
-            break
-        #
-        if "is array" in tablecols[coli] and tablecols[coli]["is array"] == True and not type(drow[coli]) == list:
-            if isinstance(drow[coli],str) and "table column array separator" in ji and isinstance(ji["table column array separator"],str):
-                if drow[coli] == "":
-                    drow[coli] = [ ]
-                else:
-                    drow[coli] = re.split(chartoregex(ji["table column array separator"]),drow[coli])
-            else:
-                drow[coli] = [ drow[coli] ]
-            #
-            if "is range" in tablecols[coli] and tablecols[coli]["is range"] == True and type(drow[coli]) == list:
-                for doli in range(0,len(drow[coli])):
-                    drow[coli][doli] = re.split(chartoregex(ji["table column range separator"]),drow[coli][doli])
-                    if len(drow[coli][doli]) > 2:
-                        raise Exception("Range with more than 2 values")
-        #
-        drow[coli] = tablecolxlate(tablecols[coli],drow[coli])
+        if coli < len(drow):
+            drow[coli] = tablerowtodatatypecol(tablecols[coli],drow[coli],ji,tablecols[coli]["compiled format"])
 
 def tablerowrangeproccol(tablecols,drowobj,coli):
     if "data" in drowobj:
@@ -312,6 +322,8 @@ def proc_content_table(scan,obj):
     sourceref = None
     source_id = None
     source_type = None
+    source_index = len(table["sources"]);
+    ji["source index"] = source_index
     if "source" in ji:
         source_obj = ji["source"]
         if "id" in source_obj:
@@ -536,7 +548,7 @@ def proc_content_table(scan,obj):
                 drowobj["special"] = special
             # the code below will append to sources, so the index to list is the length of the list NOW before appending
             if not source_obj == None:
-                drowobj["source index"] = len(table["sources"])
+                drowobj["source index"] = source_index
             #
             drow = drowobj["data"] = [ "" ] * len(basetablecols)
             #
@@ -564,9 +576,7 @@ def proc_content_table(scan,obj):
     for what in ["schema","table in csv","table","table special","table columns","base definition","table column array separator","table column range separator"]:
         if what in ji:
             del ji[what]
-    if not source_obj == None:
-        ji["source index"] = len(table["sources"])
-        table["sources"].append(ji)
+    table["sources"].append(ji)
 
 def bytes_from_base_suffix(base_n,unit_n):
     unit_n = unit_n.lower()
@@ -598,6 +608,11 @@ def strtol_bytes(col):
     return col
 
 def rowcolsortfilter(tcol,col):
+    if type(col) == dict:
+        r = [ ]
+        if "value" in col:
+            r = [ rowcolsortfilter(tcol,col["value"]) ]
+        return r
     if type(col) == list:
         r = [ ]
         for scol in col:
