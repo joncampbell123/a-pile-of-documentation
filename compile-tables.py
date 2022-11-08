@@ -447,12 +447,31 @@ def proc_content_table(scan,obj):
         if ji["table in csv"] == True:
             csv_path = path[0:len(path)-5] + ".csv" # replace .json with .csv
             c = load_csv(csv_path)
-            ji["table columns"] = c["columnnames"]
+            ji["table columns"] = [ ]
+            for col in c["columnnames"]:
+                if col[0:2] == "__": # special columns
+                    continue
+                ji["table columns"].append(col)
             if not "table column array separator" in ji:
                 ji["table column array separator"] = " " # default separate by spaces
             if not "table column range separator" in ji:
                 ji["table column range separator"] = "-" # default A-B range
-            ji["table"] = c["rows"]
+            ji["table"] = [ ]
+            ji["table special"] = [ ]
+            for row in c["rows"]:
+                nr = [ ]
+                ns = { }
+                for coli in range(0,len(c["columnnames"])):
+                    col = c["columnnames"][coli]
+                    if coli < len(row):
+                        if col[0:2] == "__": # special columns contain information
+                            ns[col[2:]] = row[coli]
+                        else:
+                            nr.append(row[coli])
+                ji["table"].append(nr)
+                if len(ns) == 0:
+                    ns = False
+                ji["table special"].append(ns)
     #
     if "table" in ji:
         if "table columns" in ji:
@@ -461,6 +480,10 @@ def proc_content_table(scan,obj):
             src_columns = [ ]
             for ent in basetablecols:
                 src_columns.append(ent["name"])
+        if "table special" in ji:
+            src_special = ji["table special"]
+        else:
+            src_special = [ ]
         src_rows = ji["table"]
         if not type(src_columns) == list or not type(src_rows) == list:
             raise Exception("Table "+ji["id"]+" source "+source_id+" table columns or table rows not an array")
@@ -472,8 +495,33 @@ def proc_content_table(scan,obj):
             else:
                 raise Exception("No such column "+col) # TODO: we could just add the column dynamically in the future...
         ji["source columns present"] = src_cols_present.copy()
-        for row in src_rows:
+        for rowi in range(0,len(src_rows)):
+            row = src_rows[rowi]
+            special = { }
+            if rowi < len(src_special):
+                special = src_special[rowi]
+                if special == False:
+                    special = { }
+            # TODO: allow JSON encoded table rows to indicate special info
+            #
+            # translation: the SUPPRESS() syntax is just there to make sure it doesn't get accidentally interpreted as data, unwrap it
+            if "suppress" in special:
+                x = re.match(r'^SUPPRESS\(([^.\]]*)\)$',special["suppress"])
+                if not x == None and len(x.groups()) > 0:
+                    nob = { }
+                    for ent in re.split(r'\|',x.group(1)):
+                        ei = ent.find("=")
+                        if ei >= 0:
+                            nob[ent[0:ei].lower()] = ent[ei+1:]
+                        else:
+                            nob[ent.lower()] = True
+                    special["suppress"] = nob
+            else:
+                special["suppress"] = { }
+            #
             drowobj = { "columns present": src_cols_present.copy() }
+            if not special == False and type(special) == dict:
+                drowobj["special"] = special
             # the code below will append to sources, so the index to list is the length of the list NOW before appending
             if not source_obj == None:
                 drowobj["source index"] = len(table["sources"])
@@ -491,11 +539,17 @@ def proc_content_table(scan,obj):
             #
             tablerowtodatatype(basetablecols,drow,ji)
             drowar = tablerowrangeproc(basetablecols,drowobj)
+            # SUPPRESS(ALL) means do not include the table at all
+            if "all" in special["suppress"]:
+                if not "suppressed" in table:
+                    table["suppressed"] = [ ]
+                table["suppressed"].append(drowar)
+                continue
             #
             rows += drowar
     #
     ji["source json file"] = path
-    for what in ["schema","table in csv","table","table columns","base definition","table column array separator","table column range separator"]:
+    for what in ["schema","table in csv","table","table special","table columns","base definition","table column array separator","table column range separator"]:
         if what in ji:
             del ji[what]
     if not source_obj == None:
