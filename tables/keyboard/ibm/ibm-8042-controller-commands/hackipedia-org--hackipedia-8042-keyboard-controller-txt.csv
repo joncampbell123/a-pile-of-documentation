@@ -1,16 +1,16 @@
-cmdbyte,params,command,comments,system
-0x20-0x3F,,Read byte from 8042 RAM. Byte index is low 5 bits of command,Byte 0 (command 0x20) is also known as the Command Byte
-0x60-0x7F,nn,Write byte nn to 8042 RAM. Byte index is low 5 bits of command,Byte 0 (command 0x60) is also known as the Command Byte
+cmdbyte,params,command,comments,system,returns
+0x20-0x3F,,Read byte from 8042 RAM. Byte index is low 5 bits of command,Byte 0 (command 0x20) is also known as the Command Byte,,nn
+0x60-0x7F,nn,Write byte nn to 8042 RAM. Byte index is low 5 bits of command,Byte 0 (command 0x60) is also known as the Command Byte,,
 0x90-0x9F,,Write bottom 4 bits of command to bottom 4 bits of the Output port,Bit 0 must be set or you may cause a hung condition where the CPU is stuck in a reset state
 0xA7,,Disable PS/2 mouse port
 0xA8,,Enable PS/2 mouse port
-0xA9,,Self-test mouse interface and return result byte
-0xAA,,Self-test 8042. Return 55h if success or FCh if failure
-0xAB,,Self-test keyboard interface and return result byte
+0xA9,,Self-test mouse interface and return result byte,,,nn
+0xAA,,Self-test 8042. Return 55h if success or FCh if failure,,,nn
+0xAB,,Self-test keyboard interface and return result byte,,,nn
 0xAD,,Disable keyboard,Sets bit 4 of Command Byte to inhibit keyboard
 0xAE,,Enable keyboard,Clears bit 4 of Command Byte
-0xC0,,Read Input Port
-0xD0,,Read Output Port
+0xC0,,Read Input Port,,,nn
+0xD0,,Read Output Port,,,nn
 0xD1,nn,Write nn to Outport Port
 0xD4,nn,Send command to PS/2 mouse
 0xDD,,Disable A20 line,,"HP Vectra"

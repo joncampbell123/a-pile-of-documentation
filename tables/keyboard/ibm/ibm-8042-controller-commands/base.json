@@ -29,6 +29,15 @@
 			"description": "Command parameters"
 		},
 		{
+			"type": "uint8_t",
+			"display": "hex",
+			"name": "returns",
+			"title": "Returns",
+			"required": true,
+			"is array": true,
+			"description": "Command returns"
+		},
+		{
 			"type": "string",
 			"case insensitive": true,
 			"presence merge": false,

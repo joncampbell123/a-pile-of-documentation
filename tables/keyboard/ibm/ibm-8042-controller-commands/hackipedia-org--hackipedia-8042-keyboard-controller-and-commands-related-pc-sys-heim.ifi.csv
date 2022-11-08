@@ -1,25 +1,25 @@
-cmdbyte,params,command,comments,__suppress
-0x20,,Read 8042 Command Byte,,SUPPRESS(ALL)
-0x60,nn,Write 8042 Command Byte,,SUPPRESS(ALL)
-0xA4,,Password Installed Test,Returns data. 0xFA=password installed 0xF1=no password,
-0xA5,nn...,Load Security: bytes written to port 60h will be read until a null (0) is found,"nn... means one or more bytes with last byte 0",SUPPRESS(ALL)
+cmdbyte,params,command,comments,__suppress,returns
+0x20,,Read 8042 Command Byte,,SUPPRESS(ALL),nn
+0x60,nn,Write 8042 Command Byte,,SUPPRESS(ALL),
+0xA4,,Password Installed Test,Returns data. 0xFA=password installed 0xF1=no password,,nn
+0xA5,nn...,Load Security: bytes written to port 60h will be read until a null (0) is found,"nn... means one or more bytes with last byte 0",SUPPRESS(ALL),,
 0xA6,,Enable Security,"Works only if a password is already loaded",SUPPRESS(ALL)
 0xA7,,Disable Auxiliary Interface,"sets bit 5 of the command register"
 0xA8,,Enable Auxiliary Interface,"clears bit 5 of the command register"
-0xA9,,Auxiliary Interface Test
-0xAA,,Self Test,Result 55h=OK
-0xAB,,Keyboard Interface Test
-0xAC,,Diagnostic Dump,"Sends 16 bytes of the 8042's RAM, current input port state,current output port state, and 8042 program status port to port 60h in scan code format"
+0xA9,,Auxiliary Interface Test,,,nn
+0xAA,,Self Test,Result 55h=OK,,nn
+0xAB,,Keyboard Interface Test,,,nn
+0xAC,,Diagnostic Dump,"Sends 16 bytes of the 8042's RAM, current input port state,current output port state, and 8042 program status port to port 60h in scan code format",,nn...
 0xAD,,Disable Keyboard Interface,"sets bit 4 of the command register",SUPPRESS(ALL)
 0xAE,,Enable Keyboard Interface,"clears bit 4 of the command register",SUPPRESS(ALL)
-0xC0,,Read Input Port
-0xC1,,Poll Input Port Low Bits,"Bits 0-3 of port 1 placed in status bits 4-7",SUPPRESS(ALL)
-0xC2,,Poll Input Port High Bits,"Bits 4-7 of port 1 placed in status bits 4-7",SUPPRESS(ALL)
-0xD0,,Read Output Port
+0xC0,,Read Input Port,,,nn
+0xC1,,Poll Input Port Low Bits,"Bits 0-3 of port 1 placed in status bits 4-7",SUPPRESS(ALL),nn
+0xC2,,Poll Input Port High Bits,"Bits 4-7 of port 1 placed in status bits 4-7",SUPPRESS(ALL),nn
+0xD0,,Read Output Port,,,nn
 0xD1,nn,Write Output Port,"Next byte written to 60h is placed in 8042 output port. Note that on PCs, bit 0 is tied to the reset pin of the CPU"
 0xD2,nn,Write Keyboard Output Register,"On PS/2 systems the next data byte written to port 60h is written back to output as if initiated by a device and invokes interrupt if enabled"
 0xD3,nn,Write Auxiliary Output Register,"On PS/2 systems the next data byte written to port 60h is written back to output as if initiated by a device and invokes interrupt if enabled"
 0xD4,nn,Write Auxiliary Device,"On PS/2 systems the next byte is sent to the auxiliary device"
-0xE0,,Read Test Inputs,"8042 reads it's T0 and T1 inputs, data is placed in output register. Bit 0 is T0 (keyboard clock), bit 1 is T1 (keyboard data)"
+0xE0,,Read Test Inputs,"8042 reads it's T0 and T1 inputs, data is placed in output register. Bit 0 is T0 (keyboard clock), bit 1 is T1 (keyboard data)",,nn
 0xF0-0xFF,,Pulse Output Port,"Bits 0-3 of the 8042 output port can be pulsed low for as long as 6ms. Bits 0-3 of the command byte indicate which bits (set to 0) are to be pulsed. The most common use of this command is 0xFE to reset the CPU"
 
