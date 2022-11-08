@@ -674,6 +674,45 @@ def sorttable(obj):
             optRev=True
     rows.sort(key=lambda x: tablerowsort(tcols,x),reverse=optRev)
 
+def tablearraycombinedcoldedupsort(tcol,colent):
+    r = [ ]
+    if "value" in colent:
+        v = colent["value"]
+        if not type(v) == list:
+            v = [ v ]
+        for ve in v:
+            if "case insensitive" in tcol and tcol["case insensitive"] == True and isinstance(ve,str):
+                ve = ve.lower()
+            r.append(ve)
+    return r
+
+def tablearraycombinedcoldedup(tcol,col):
+    # sort the column values
+    col.sort(key=lambda x: tablearraycombinedcoldedupsort(tcol,x))
+    # then scan and dedup
+    lmv = { }
+    pv = { }
+    r = [ ]
+    for v in col:
+        if not tablearraycombinedcoldedupsort(tcol,pv) == tablearraycombinedcoldedupsort(tcol,v):
+            r.append(v)
+            lmv = v
+        else:
+            lmv["source index"] += v["source index"]
+        pv = v
+    col = r
+    # sort source indexes
+    for cv in col:
+        cv["source index"].sort()
+        pv = -1
+        nv = [ ]
+        for v in cv["source index"]:
+            if not pv == v:
+                nv.append(v)
+            pv = v
+        cv["source index"] = nv
+    return col
+
 def deduptable(obj):
     # must have been handled with sorttable first!
     if not "ji" in obj:
@@ -763,6 +802,10 @@ def deduptable(obj):
         row["source index"] = nsi
         # also clear temp stuff
         del row["columns present"]
+        # array/combined too
+        for coli in range(0,len(tcols)):
+            if tcols[coli]["compiled format"] == "array/combined":
+                row["data"][coli] = tablearraycombinedcoldedup(tcols[coli],row["data"][coli])
     #
     table["rows"] = nrows
 
