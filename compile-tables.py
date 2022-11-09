@@ -242,6 +242,8 @@ def tablerowtodatatypecol(tcol,dcol,ji,compiled_format,drowobj):
         r = { "source index": [ ji["source index"] ], "value": tablerowtodatatypecol(tcol,dcol,ji,tcol["compiled format:array/combined"],drowobj), "special": { } }
         if "special" in drowobj:
             r["special"] = drowobj["special"]
+        if "entry tags" in drowobj:
+            r["entry tags"] = drowobj["entry tags"].copy()
         return [ r ]
     if compiled_format == "array/formatting":
         raise Exception("Not yet supported")
@@ -572,6 +574,11 @@ def proc_content_table(scan,obj):
             #
             drowobj = { "columns present": src_cols_present.copy() }
             drowobj["special"] = special
+            drowobj["entry tags"] = { }
+            if "entry tag" in ji:
+                drowobj["entry tags"][ji["entry tag"]] = { }
+            if len(drowobj["entry tags"]) == 0: # nothing there?
+                drowobj["entry tags"][""] = { } # signify no entry tag
             # the code below will append to sources, so the index to list is the length of the list NOW before appending
             if not source_obj == None:
                 drowobj["source index"] = source_index
@@ -769,6 +776,8 @@ def col_proc_pickone_spec(tcol,col):
         col[0]["rejected pickone"] = rejcol
         for r in rejcol:
             col[0]["source index"] += r["source index"]
+            for key in r["entry tags"]:
+                col[0]["entry tags"][key] = r["entry tags"][key]
     #
     return col
 
@@ -807,20 +816,28 @@ def tablearraycombinedcoldedup(tcol,col,table):
     pv = { }
     r = [ ]
     pending_source_index = [ ]
+    pending_entry_tags = { }
     for v in col:
         pvds = tablearraycombinedcoldedupsort(tcol,pv)
         vds = tablearraycombinedcoldedupsort(tcol,v)
         if vds == [ '' ] or vds == [ ]: # ignore empty columns
             if "suppressed:this" in v:
                 pending_source_index += v["source index"]
+                for key in v["entry tags"]:
+                    pending_entry_tags[key] = v["entry tags"][key]
             continue
         if not pvds == vds:
             r.append(v)
             lmv = v
             v["source index"] += pending_source_index
             pending_source_index = [ ]
+            for key in pending_entry_tags:
+                v["entry tags"][key] = pending_entry_tags[key]
+            pending_entry_tags = { }
         else:
             lmv["source index"] += v["source index"]
+            for key in v["entry tags"]:
+                lmv["entry tags"][key] = v["entry tags"][key]
             tablearraycombinedcoldedupmergespecial(lmv,v)
         pv = v
     col = r
@@ -906,6 +923,8 @@ def deduptable(obj):
                     browdat[coli] += srowdat[coli]
             #
             buildrow["source index"] += srow["source index"]
+            for key in srow["entry tags"]:
+                buildrow["entry tags"][key] = srow["entry tags"][key]
         else:
             buildrow = srow
             nrows.append(buildrow)

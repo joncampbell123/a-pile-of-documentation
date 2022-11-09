@@ -249,20 +249,28 @@ def genfrag_table(bookid,ji):
                         #
                         tablecoltohtml(dcon,tcolo,combent["value"],tcolo["compiled format:array/combined"])
                         #
+                        tg = [ ]
+                        if coli == tagcolidx or len(dcolo) > 1:
+                            plus = False
+                            keyord = list(combent["entry tags"].keys())
+                            keyord.sort(key=lambda x: x.lower())
+                            for key in keyord:
+                                if key == "": # used to indicate data without a tag
+                                    plus = True
+                                else:
+                                    tg += ["(", key, ")"]
+                        if len(tg) > 0:
+                            if plus == True:
+                                tg += ["+"]
+                            dcon.append(apodhtml.htmlelem(tag="sup",attr={ "class": "apodenttag" },content=tg))
+                        #
                         for sil in combent["source index"]:
                             tg = [ ]
                             if coli == refcolidx or len(dcolo) > 1:
                                 # if this is the column to emit references, do it, but only if not all sources agree
                                 if "source index" in combent and not len(combent["source index"]) == len(ji["sources"]):
-                                    tg += str(sil+1)
-                            if coli == tagcolidx or len(dcolo) > 1:
-                                sref = ji["sources"][sil]
-                                if "entry tag" in sref:
-                                    if len(tg) > 0:
-                                        tg += [ " " ]
-                                    tg += [ apodhtml.htmlelem(tag="span",attr={ "class": "apodenttag" },content=("("+sref["entry tag"]+")")) ]
+                                    tg += ["[", str(sil+1), "]"]
                             if len(tg) > 0:
-                                tg = ["["] + tg + ["]"]
                                 dcon.append(apodhtml.htmlelem(tag="sup",content=apodhtml.htmlelem(tag="a",attr={ "href": ("#"+apodhtml.mkhtmlid("table-sr",bookid+":"+str(sil+1))), "class": "apodsourceidxref" },content=tg)))
                         #
                         combentcount = combentcount + 1
