@@ -514,7 +514,7 @@ def proc_content_table(scan,obj):
         if "table special" in ji:
             src_special = ji["table special"]
         else:
-            src_special = [ ]
+            src_special = ji["table special"] = [ ]
         src_rows = ji["table"]
         if not type(src_columns) == list or not type(src_rows) == list:
             raise Exception("Table "+ji["id"]+" source "+source_id+" table columns or table rows not an array")
@@ -528,6 +528,20 @@ def proc_content_table(scan,obj):
         ji["source columns present"] = src_cols_present.copy()
         for rowi in range(0,len(src_rows)):
             row = src_rows[rowi]
+            #
+            while len(row) > 0:
+                chki = len(row) - 1
+                chko = row[chki]
+                if type(chko) == dict:
+                    if "special" in chko:
+                        spsh = chko["special"]
+                        row.pop()
+                        while len(src_special) <= rowi:
+                            src_special.append(False)
+                        src_special[rowi] = spsh
+                        continue
+                break
+            #
             special = { }
             if rowi < len(src_special):
                 special = src_special[rowi]
