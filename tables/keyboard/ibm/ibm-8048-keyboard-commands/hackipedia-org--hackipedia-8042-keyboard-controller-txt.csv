@@ -4,9 +4,9 @@ cmdbyte,params,command,comments,__suppress
 0xF0,nn,"Select scancode set","Keyboard responds with current set if nn == 0, or 1-3 sets the scancode set"
 0xF2,,"Read ID","Keyboard responds with ACK (FAh) and two optional ID bytes"
 0xF3,nn,"Set typematic (auto-repeat) rate/delay","Bits 6:5 specify delay, bits 4:0 specify rate"
-0xF4,,"Clears output buffer, enables keyboard",SUPPRESS(PICKTHIS=command)
-0xF5,,"Disables keyboard, resets to defaults",SUPPRESS(PICKTHIS=command)
-0xF6,,"Sets keyboard default typematic rate/delay and selects scancode set 2",SUPPRESS(PICKTHIS=command)
+0xF4,,"Clears output buffer, enables keyboard",,SUPPRESS(PICKTHIS=command)
+0xF5,,"Disables keyboard, resets to defaults",,SUPPRESS(PICKTHIS=command)
+0xF6,,"Sets keyboard default typematic rate/delay and selects scancode set 2",,SUPPRESS(PICKTHIS=command)
 0xF7,,"Make all keys make/typematic (auto-repeat; no break)","Only with scancode Set 3"
 0xF8,,"Make all keys make/break (no typematic)","Only with scancode Set 3"
 0xF9,,"Make all keys make-only (no typematic or break)","Only with scancode Set 3"
