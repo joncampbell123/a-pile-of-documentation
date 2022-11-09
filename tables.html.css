@@ -146,5 +146,6 @@ li.apodsourceref:target {
 	font-weight: 300;
 	font-style: none;
 	font-size: 0.75em;
+	white-space: pre;
 }
 
