@@ -32,8 +32,8 @@ command,param,dspver,card,effect,comments,return
 0x75,lo hi,1.0+,,"Initiates 4-bit ADPCM DMA transfer with new reference byte. This operation uses 8-bit DMA mode.","Supports up to 12KHz on SoundBlaster 1.x"
 0x74,lo hi,1.0+,,"Initiates 4-bit ADPCM DMA transfer with accumulated reference byte. This operation uses 8-bit DMA mode.","Supports up to 12KHz on SoundBlaster 1.x"
 0x48,lo hi,2.0+,,"Set DMA Block Size","Set DMA transfer size for auto-initialize and high speed modes."
-0x47,,4.0+,"Continue Auto-Initialize DMA, 16-bit","Continues a halted auto-initialized 16-bit DMA operation."
-0x45,,4.0+,"Continue Auto-Initialize DMA, 8-bit","Continues a halted auto-initialized 8-bit DMA operation."
+0x47,,4.0+,,"Continue Auto-Initialize DMA, 16-bit","Continues a halted auto-initialized 16-bit DMA operation."
+0x45,,4.0+,,"Continue Auto-Initialize DMA, 8-bit","Continues a halted auto-initialized 8-bit DMA operation."
 0x41,hi lo,4.0+,,"Set Sample Rate","Sets sample rate (in HZ)"
 0x40,tc,1.0+,,"Set Time Constant","Sets sample rate through internal I/O transfer timer.\n\nTimeConstant = 256 - (1000000 / (SampleChannels * SampleRate))"
 0x38,nn,1.0+,,"MIDI Write Poll","Writes MIDI code."
@@ -54,6 +54,6 @@ command,param,dspver,card,effect,comments,return
 0x16,lo hi,1.0+,,"DMA DAC, 2-bit ADPCM","Initiates 2-bit ADPCM DMA transfer with accumulated reference byte. This operation uses 8-bit DMA mode."
 0x14,lo hi,1.0+,,"DMA DAC, 8-bit","Initiates 8-bit DMA transfer. Single cycle."
 0x10,nn,1.0+,,"Direct DAC, 8-bit","Outputs single sample."
-0x04,,2.0-3.xx,"Sound Blaster 2.0\nSound Blaster Pro","DSP Status","Retrieves information about pending DSP operations.\nBit 7: DMA DAC 8-bit (1=active)\nBit 6: DMA DAC 4-bit ADPCM (1=active)\nBit 5: DMA DAC 2.6-bit ADPCM (1=active)\nBit 4: DMA DAC 2-bit ADPCM (1=active)\nBit 3: Direct DAC 8-bit Burst\nBit 2: Reserved (0)\nBit 1: Stereo ADC Status (1=active)\nBit 0: Speaker status (1=active)",status
+0x04,,2.0-3.xx,"Sound Blaster 2.0","DSP Status","Retrieves information about pending DSP operations.\nBit 7: DMA DAC 8-bit (1=active)\nBit 6: DMA DAC 4-bit ADPCM (1=active)\nBit 5: DMA DAC 2.6-bit ADPCM (1=active)\nBit 4: DMA DAC 2-bit ADPCM (1=active)\nBit 3: Direct DAC 8-bit Burst\nBit 2: Reserved (0)\nBit 1: Stereo ADC Status (1=active)\nBit 0: Speaker status (1=active)",status
 0x03,,4.0+,"Sound Blaster 16","ASP Status","Read status (contents unknown)",status
 
