@@ -37,7 +37,7 @@
 		[
 			["ESC","[","f"],
 			["ESC","[","#;#","f"],
-			["1: row (1-based)","2: column (2-based)"],
+			["1: row (1-based)","2: column (1-based)"],
 			"Horizontal and vertical position (HVP)" ],
 		[
 			["ESC","[","H"],
