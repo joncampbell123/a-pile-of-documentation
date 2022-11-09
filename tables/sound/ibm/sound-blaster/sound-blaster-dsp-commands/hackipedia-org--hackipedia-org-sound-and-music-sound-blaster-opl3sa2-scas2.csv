@@ -1,9 +1,9 @@
-command,param,dspver,card,effect,comments,return
-0x10,nn,1.0+,,"8bit direct mode digitized sound I/O output","Supported"
-0x14,lo hi,1.0+,,"8bit single-cycle DMA mode digitized sound output","Supported"
+command,param,dspver,card,effect,comments,return,__suppress
+0x10,nn,1.0+,,"8bit direct mode digitized sound I/O output","Supported",,SUPPRESS(THIS=comments)
+0x14,lo hi,1.0+,,"8bit single-cycle DMA mode digitized sound output","Supported",,SUPPRESS(THIS=comments)
 0x16,lo hi,1.0+,,"8bit to 2bit ADPCM single-cycle DMA mode digitized sound output","Supported, no effect"
 0x17,lo hi,1.0+,,"8bit to 2bit ADPCM single-cycle DMA mode digitized sound output with ref. byte","Supported, no effect"
-0x1C,,2.0+,,"8bit auto-init DMA mode digitized sound output","Supported"
+0x1C,,2.0+,,"8bit auto-init DMA mode digitized sound output","Supported",,SUPPRESS(THIS=comments)
 0x1F,,2.0+,,"8bit to 2bit ADPCM auto-init DMA mode digitized sound output with ref byte","Supported, no effect"
 0x20,,1.0+,,"8bit direct mode single byte digitized sound input","Supported, no effect",sample
 0x24,lo hi,1.0+,,"8bit single-cycle DMA mode digitized sound input","Supported, no effect"
@@ -15,26 +15,26 @@ command,param,dspver,card,effect,comments,return
 0x36,,2.0+,,"UART polling mode MIDI I/O with time stamping","Supported, no effect"
 0x37,,2.0+,,"UART interrupt mode MIDI I/O with time stamping","Supported, no effect"
 0x38,nn,1.0+,,"MIDI output","Supported, no effect"
-0x40,nn,1.0+,,"Set digitized sound transfer Time Constant","Supported"
-0x48,lo hi,2.0+,,"Set DSP block transfer size","Supported"
-0x74,lo hi,1.0+,,"8bit to 4bit ADPCM single-cycle DMA mode digitized sound output","Supported"
-0x75,lo hi,1.0+,,"8bit to 4bit ADPCM single-cycle DMA mode digitized sound output with ref. byte","Supported"
+0x40,nn,1.0+,,"Set digitized sound transfer Time Constant","Supported",,SUPPRESS(THIS=comments)
+0x48,lo hi,2.0+,,"Set DSP block transfer size","Supported",,SUPPRESS(THIS=comments)
+0x74,lo hi,1.0+,,"8bit to 4bit ADPCM single-cycle DMA mode digitized sound output","Supported",,SUPPRESS(THIS=comments)
+0x75,lo hi,1.0+,,"8bit to 4bit ADPCM single-cycle DMA mode digitized sound output with ref. byte","Supported",,SUPPRESS(THIS=comments)
 0x76,lo hi,1.0+,,"8bit to 3bit ADPCM single-cycle DMA mode digitized sound output","Supported, no effect"
 0x77,lo hi,1.0+,,"8bit to 3bit ADPCM single-cycle DMA mode digitized sound output with ref. byte","Supported, no effect"
-0x7D,,2.0+,,"8bit to 4bit ADPCM auto-init DMA mode digitized sound output with ref. byte","Supported"
+0x7D,,2.0+,,"8bit to 4bit ADPCM auto-init DMA mode digitized sound output with ref. byte","Supported",,SUPPRESS(THIS=comments)
 0x7F,,2.0+,,"8bit to 3bit ADPCM auto-init DMA mode digitized sound output with ref. byte","Supported, no effect"
-0x80,lo hi,1.0+,,"Pause DAC for a duration","Supported"
-0x90,,2.01-3.xx,,"8bit high-speed auto-init DMA mode digitized sound output","Supported"
-0x91,,2.01-3.xx,,"8bit high-speed single-cycle DMA mode digitized sound output","Supported"
+0x80,lo hi,1.0+,,"Pause DAC for a duration","Supported",,SUPPRESS(THIS=comments)
+0x90,,2.01-3.xx,,"8bit high-speed auto-init DMA mode digitized sound output","Supported",,SUPPRESS(THIS=comments)
+0x91,,2.01-3.xx,,"8bit high-speed single-cycle DMA mode digitized sound output","Supported",,SUPPRESS(THIS=comments)
 0x98,,2.01-3.xx,,"8bit high-speed auto-init DMA mode digitized sound input","Supported, no effect"
 0x99,,2.01-3.xx,,"8bit high-speed single-cycle DMA mode digitized sound input","Supported, no effect"
 0xA0,,3.xx,,"Set input mode to mono","Supported, no effect"
 0xA8,,3.xx,,"Set input mode to stereo","Supported, no effect"
-0xD0,,1.0+,,"Pause 8bit DMA mode digitized sound I/O","Supported"
+0xD0,,1.0+,,"Pause 8bit DMA mode digitized sound I/O","Supported",,SUPPRESS(THIS=comments)
 0xD1,,1.0+,,"Turn on speaker","Supported, no effect"
 0xD3,,1.0+,,"Turn off speaker","Supported, no effect"
-0xD4,,1.0+,,"Continue 8bit DMA mode digitized sound I/O","Supported"
+0xD4,,1.0+,,"Continue 8bit DMA mode digitized sound I/O","Supported",,SUPPRESS(THIS=comments)
 0xD8,,2.0+,,"Get speaker status","Supported, no effect",nn
-0xDA,,2.0+,,"Exit 8bit auto-init DMA mode digitized sound I/O","Supported"
-0xE1,,1.0+,,"Get DSP version number","Supported",hi lo
+0xDA,,2.0+,,"Exit 8bit auto-init DMA mode digitized sound I/O","Supported",,SUPPRESS(THIS=comments)
+0xE1,,1.0+,,"Get DSP version number","Supported",hi lo,SUPPRESS(THIS=comments)
 

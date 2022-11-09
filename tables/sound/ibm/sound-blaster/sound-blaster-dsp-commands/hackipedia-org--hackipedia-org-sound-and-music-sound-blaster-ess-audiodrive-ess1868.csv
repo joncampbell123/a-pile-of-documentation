@@ -1,5 +1,5 @@
-command,param,dspver,card,effect,comments,return
-0x10,nn,1.0+,,"Direct write 8-bit DAC","Data is 8-bit unsigned format."
+command,param,dspver,card,effect,comments,return,__suppress
+0x10,nn,1.0+,,"Direct write 8-bit DAC","Data is 8-bit unsigned format.",,SUPPRESS(THIS=comments)
 0x11,lo hi,,"ESS AudioDrive","Direct write 16-bit DAC","Data is 16-bit unsigned format, first low byte then high byte."
 0x14,lo hi,1.0+,,"Start normal mode DMA for 8-bit DAC transfer","Data is transfer count - 1, least byte first. Stereo DAC transfer if stereo flag is set in Mixer register 0Eh. Maximum sample rate is 44 kHz mono, 22 kHz stereo."
 0x15,lo hi,,"ESS AudioDrive","Start normal mode DMA for 16-bit DAC transfer","Data is transfer count - 1, least byte first. Stereo DAC transfer if stereo flag is set in Mixer register 0EH. Maximum sample rate is 22 kHz mono, 11 kHz stereo."

@@ -1,4 +1,4 @@
-command,param,dspver,card,effect,comments,return
+command,param,dspver,card,effect,comments,return,__suppress
 0xFD,,4.0,Sound Blaster 16,DSP Command Status,"Retrieves most recently successful DSP command.\nCommand does not support all valid DSP commands, but most.",status
 0xFC,,4.0,Sound Blaster 16,DSP Auxiliary Status,"Retrieves auxiliary information about pending DMA operations.\nBit 7: ???\nBit 6: ???\nBit 5: ???\nBit 4: Auto-init DMA, 16-bit (1=Active)\nBit 3: ???\nBit 2: Auto-init DMA, 8-bit (1=Active)\nBit 1: DAC/ADC DMA (1=synchronous)\nBit 0: ???",status
 0xFB,,4.0,Sound Blaster 16,DSP Status,"Retrieves information about pending DSP operations.\nBit 7: Time constant (1=modified)\nBit 6: DSPC 04Fh ???\nBit 5: ???\nBit 4: Virtual Speaker (1=active)\nBit 3: DMA ADC, 16-bit (1=active)\nBit 2: DMA DAC, 16-bit (1=active)\nBit 1: DMA ADC, 8-bit (1=active)\nBit 0: DMA DAC, 8-bit (1=active)",status
@@ -47,13 +47,13 @@ command,param,dspver,card,effect,comments,return
 0x2C,,2.0+,,"Auto-Initialize DMA ADC, 8-bit","Initiates auto-initialize 8-bit DMA transfer (record)\nSupports up to 23KHz (11.5KHz stereo).\nExit auto-initialized mode by programming single-cycle DMA output or with Exit Auto-Initialize DMA Operation, 8-bit (0DAh)."
 0x28,,3.xx,Sound Blaster Pro,"Direct ADC, 8-bit (Burst)","After this point, every read grabs a sample from the ADC. Terminate operation with DSP reset."
 0x24,lo hi,1.0+,,"DMA ADC, 8-bit","Initiates 8-bit DMA transfer (record)."
-0x20,,1.0+,,"Direct ADC, 8-bit","Inputs single sample. Read sample from DSP",sample
-0x1F,,2.0+,,"Auto-Initialize DMA DAC, 2-bit ADPCM Reference","Initiates auto-initialize 2-bit ADPCM DMA transfer with reference byte."
+0x20,,1.0+,,"Direct ADC, 8-bit","Inputs single sample. Read sample from DSP",sample,SUPPRESS(THIS=comments)
+0x1F,,2.0+,,"Auto-Initialize DMA DAC, 2-bit ADPCM Reference","Initiates auto-initialize 2-bit ADPCM DMA transfer with reference byte.",,SUPPRESS(THIS=comments)
 0x1C,,2.0+,,"Initiates auto-initialize 8-bit DMA transfer.","Supports up to 23KHz (11.5KHz stereo)"
-0x17,lo hi,1.0+,,"DMA DAC, 2-bit ADPCM Reference","Initiates 2-bit ADPCM DMA transfer with new reference byte. This operation uses 8-bit DMA mode."
-0x16,lo hi,1.0+,,"DMA DAC, 2-bit ADPCM","Initiates 2-bit ADPCM DMA transfer with accumulated reference byte. This operation uses 8-bit DMA mode."
-0x14,lo hi,1.0+,,"DMA DAC, 8-bit","Initiates 8-bit DMA transfer. Single cycle."
-0x10,nn,1.0+,,"Direct DAC, 8-bit","Outputs single sample."
+0x17,lo hi,1.0+,,"DMA DAC, 2-bit ADPCM Reference","Initiates 2-bit ADPCM DMA transfer with new reference byte. This operation uses 8-bit DMA mode.",,SUPPRESS(THIS=comments)
+0x16,lo hi,1.0+,,"DMA DAC, 2-bit ADPCM","Initiates 2-bit ADPCM DMA transfer with accumulated reference byte. This operation uses 8-bit DMA mode.",,SUPPRESS(THIS=comments)
+0x14,lo hi,1.0+,,"DMA DAC, 8-bit","Initiates 8-bit DMA transfer. Single cycle.",,SUPPRESS(THIS=comments)
+0x10,nn,1.0+,,"Direct DAC, 8-bit","Outputs single sample.",,SUPPRESS(PICKTHIS=effect|THIS=comments)
 0x04,,2.0-3.xx,"Sound Blaster 2.0","DSP Status","Retrieves information about pending DSP operations.\nBit 7: DMA DAC 8-bit (1=active)\nBit 6: DMA DAC 4-bit ADPCM (1=active)\nBit 5: DMA DAC 2.6-bit ADPCM (1=active)\nBit 4: DMA DAC 2-bit ADPCM (1=active)\nBit 3: Direct DAC 8-bit Burst\nBit 2: Reserved (0)\nBit 1: Stereo ADC Status (1=active)\nBit 0: Speaker status (1=active)",status
 0x03,,4.0+,"Sound Blaster 16","ASP Status","Read status (contents unknown)",status
 
