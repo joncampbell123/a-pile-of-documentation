@@ -120,6 +120,7 @@ td.nowrap {
 	font-weight: 300;
 	text-decoration: none;
 	font-size: 0.9em;
+	white-space: pre;
 }
 
 a.apodsourcepreftitle {

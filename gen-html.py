@@ -268,6 +268,7 @@ def genfrag_table(bookid,ji):
                         combentcount = combentcount + 1
                 else:
                     tablecoltohtml(dcon,tcolo,dcolo,tcolo["compiled format"])
+                    # TODO: Update to support array/combined
                     #
                     if coli == tagcolidx:
                         for sil in rowo["source index"]:
