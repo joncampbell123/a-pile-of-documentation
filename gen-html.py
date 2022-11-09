@@ -247,13 +247,13 @@ def genfrag_table(bookid,ji):
                         if combentcount > 0: # TODO: Obey the "array separator" spec in the table whether the table should separate by space or a line break
                             dcon.append(apodhtml.htmlelem(tag="div",attr={ "style": "height: 0.5em;" },content="")) # space them out vertically so they are not jumbled
                         #
+                        tablecoltohtml(dcon,tcolo,combent["value"],tcolo["compiled format:array/combined"])
+                        #
                         if coli == tagcolidx or len(dcolo) > 1:
                             for sil in combent["source index"]:
                                 sref = ji["sources"][sil]
                                 if "entry tag" in sref:
-                                    dcon.append(apodhtml.htmlelem(tag="span",attr={ "class": "apodenttag" },content=("("+sref["entry tag"]+") ")))
-                        #
-                        tablecoltohtml(dcon,tcolo,combent["value"],tcolo["compiled format:array/combined"])
+                                    dcon.append(apodhtml.htmlelem(tag="span",attr={ "class": "apodenttag" },content=(" ("+sref["entry tag"]+")")))
                         # if this is the column to emit references, do it, but only if not all sources agree
                         if coli == refcolidx or len(dcolo) > 1:
                             if "source index" in combent and not len(combent["source index"]) == len(ji["sources"]):
@@ -262,13 +262,13 @@ def genfrag_table(bookid,ji):
                         #
                         combentcount = combentcount + 1
                 else:
+                    tablecoltohtml(dcon,tcolo,dcolo,tcolo["compiled format"])
+                    #
                     if coli == tagcolidx:
                         for sil in rowo["source index"]:
                             sref = ji["sources"][sil]
                             if "entry tag" in sref:
-                                dcon.append(apodhtml.htmlelem(tag="span",attr={ "class": "apodenttag" },content=("("+sref["entry tag"]+") ")))
-                    #
-                    tablecoltohtml(dcon,tcolo,dcolo,tcolo["compiled format"])
+                                dcon.append(apodhtml.htmlelem(tag="span",attr={ "class": "apodenttag" },content=(" ("+sref["entry tag"]+")")))
                     # if this is the column to emit references, do it, but only if not all sources agree
                     if coli == refcolidx:
                         if "source index" in rowo and not len(rowo["source index"]) == len(ji["sources"]):
