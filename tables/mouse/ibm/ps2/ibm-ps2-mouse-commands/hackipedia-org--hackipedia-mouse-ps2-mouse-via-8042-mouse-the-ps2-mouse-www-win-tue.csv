@@ -1,4 +1,4 @@
-cmdbyte,params,command,comments
+cmdbyte,params,command,comments,__suppress
 0xD0,,Read extended ID,"Read up to 256 bytes"
 0xD1-0xDF,,Vendor unique commands
 0xD1,,Logitech PS/2++ command,"This command was to be used, followed by an arbitrary data sequence. Now replaced by the sliced commands using e8."
@@ -13,11 +13,11 @@ cmdbyte,params,command,comments
 0xEC,,Clear echo mode
 0xEE,,Set echo mode
 0xF0,,Set remote mode
-0xF2,,Read mouse id,"This command reads a 1-byte mouse ID"
-0xF3,nn,Set mouse sample rate,"Set mouse sample rate in Hz. If the given sampling rate is acceptable the ACK is fa. Otherwise the NACK is fe, and the host can correct. If it is incorrect again fc is sent. Correct values are, e.g., 10, 20, 40, 60, 80, 100, 200."
+0xF2,,Read mouse id,"This command reads a 1-byte mouse ID",SUPPRESS(THIS=command)
+0xF3,nn,Set mouse sample rate,"Set mouse sample rate in Hz. If the given sampling rate is acceptable the ACK is fa. Otherwise the NACK is fe, and the host can correct. If it is incorrect again fc is sent. Correct values are, e.g., 10, 20, 40, 60, 80, 100, 200.",SUPPRESS(THIS=command)
 0xF4,,Mouse enable
 0xF5,,Mouse disable
 0xF6,,Set defaults
 0xFE,,Resend
-0xFF,,Mouse reset
+0xFF,,Mouse reset,,SUPPRESS(THIS=command)
 

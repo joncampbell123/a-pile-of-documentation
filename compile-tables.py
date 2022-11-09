@@ -758,23 +758,53 @@ def col_proc_pickone_spec(tcol,col):
     #
     return col
 
-def tablearraycombinedcoldedup(tcol,col):
+def col_proc_this_spec(tcol,col,table):
+    for cent in col:
+        if not "special" in cent:
+            continue
+        spec = cent["special"]
+        if not "suppress" in spec:
+            continue
+        supp = spec["suppress"]
+        if len(supp) == 0:
+            continue
+        reject = True
+        if "this" in supp:
+            pl = supp["this"]
+            if not type(pl) == list:
+                pl = [ pl ]
+            for plent in pl:
+                if plent == tcol["name"]:
+                    if plent in table["table name to column"]:
+                        dcoli = table["table name to column"][plent]
+                        if "value" in cent:
+                            cent["suppressed:this"] = True
+                            cent["value"] = ""
+
+def tablearraycombinedcoldedup(tcol,col,table):
     # any suppress pickone specs?
     col = col_proc_pickone_spec(tcol,col)
+    # SUPPRESS(THIS=...)
+    col_proc_this_spec(tcol,col,table)
     # sort the column values
     col.sort(key=lambda x: tablearraycombinedcoldedupsort(tcol,x))
     # then scan and dedup
     lmv = { }
     pv = { }
     r = [ ]
+    pending_source_index = [ ]
     for v in col:
         pvds = tablearraycombinedcoldedupsort(tcol,pv)
         vds = tablearraycombinedcoldedupsort(tcol,v)
         if vds == [ '' ] or vds == [ ]: # ignore empty columns
+            if "suppressed:this" in v:
+                pending_source_index += v["source index"]
             continue
         if not pvds == vds:
             r.append(v)
             lmv = v
+            v["source index"] += pending_source_index
+            pending_source_index = [ ]
         else:
             lmv["source index"] += v["source index"]
             tablearraycombinedcoldedupmergespecial(lmv,v)
@@ -884,7 +914,7 @@ def deduptable(obj):
         # array/combined too
         for coli in range(0,len(tcols)):
             if tcols[coli]["compiled format"] == "array/combined":
-                row["data"][coli] = tablearraycombinedcoldedup(tcols[coli],row["data"][coli])
+                row["data"][coli] = tablearraycombinedcoldedup(tcols[coli],row["data"][coli],table)
                 for colent in row["data"][coli]:
                     if "special" in colent:
                         if "suppress" in colent["special"]:
