@@ -1,4 +1,4 @@
-register,rw,mixer,card,content,comments
+register,rw,mixer,card,content,comments,__suppress
 0x00,W,"","","Reset","To reset the registers to initial conditions, write any value to mixer address 0: Write 0 to 2x4h (set mixer address to 0) Write 0 to 2x5h (write 0 to address 0 to reset mixer)"
 0x04,R/W,"","","Voice volume","Backwards compatible 3-bit register. Bits 3 and 0 are stuck on (1) on read and zeroed on write to internal state. See datasheet notes and register 14h."
 0x0A,R/W,"","","Mic volume","Backwards compatible 2-bit register (L and R). Bit 0 is stuck on (1) on read and zeroed on write to internal state. See datasheet notes and register 1Ah."
@@ -13,7 +13,7 @@ register,rw,mixer,card,content,comments
 0x1C,R/W,"","ESS AudioDrive","Input Source","Full access version of register 0x0C\nBits 2-0: Input source 0,1,4,5 aka binary x0x = Microphone (default) 2 = CD (Aux) Input 6 = Line input 7 = Mixer\n\nRegister 0x0A on write translates D2:D1 from 0,1,2,3 to 0x00,0x55,0xAA,0xFF\nRegister 0x0A on read returns bits 3:2 of this register (top 2 bits of mic right volume) in bits 2:1 of result with bit 0 == 0"
 0x32,R/W,"","ESS AudioDrive","Master volume","Full access version of register 0x22\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
 0x36,R/W,"","ESS AudioDrive","MIDI volume","Full access version of register 0x26\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
-0x38,R/W,"","ESS AudioDrive","CD volume","Full access version of register 0x28\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
+0x38,R/W,"","ESS AudioDrive","CD volume","Full access version of register 0x28\nBits 7-4: Left level bits\nBits 3-0: Right level bits",SUPPRESS(THIS=content)
 0x3E,R/W,"","ESS AudioDrive","Line volume","Full access version of register 0x2E\nBits 7-4: Left level bits\nBits 3-0: Right level bits"
 
 0x40,R,"","ESS AudioDrive","ES1868 identification value",""
@@ -27,7 +27,7 @@ register,rw,mixer,card,content,comments
 0x60,R/W,"","ESS AudioDrive","Left Master Volume Counter Value","Bit 7: Reserved(0)\nBit 6: 1: MUTE\nBits 5-0: Left master volume"
 0x62,R/W,"","ESS AudioDrive","Right Master Volume Counter Value","Bit 7: Reserved(0)\nBit 6: 1: MUTE\nBits 5-0: Right master volume"
 0x64,R/W,"","ESS AudioDrive","Master Volume Control","Bit 6 MPU-401 int mask: This bit is AND'ed with the MPU-401 interrupt request. If it is low, the MPU-401 interrupt request stays low. This bit is cleared by hardware reset.\nBit 4 Read-only HMV int request: Read only interrupt request from hardware volume event.\nBit 1 HMV int mask: This bit is AND'ed with the hardware volume interrupt request before being OR'd with the first channel audio interrupt request. If this bit is low, the hardware volume interrupt request does not get OR'd with the first channel audio interrupt request. This bit is cleared by hardware reset.\nBit 0 Disable SB Pro master vol control: When low, a write to the Sound Blaster Pro master volume register will be translated into a write to the hardware master volume counters, Mixer registers 60h and 62h. If high, the Sound Blaster Pro master volume registers are, in effect, read-only. This bit is cleared by hardware reset."
-0x66,R/W,"","ESS AudioDrive","Clear Hardware Volume Interrupt Request","Any write to this register resets the hardware volume interrupt request."
+0x66,R/W,"","ESS AudioDrive","Clear Hardware Volume Interrupt Request","Any write to this register resets the hardware volume interrupt request.",SUPPRESS(THIS=content)
 0x74,R/W,"","ESS AudioDrive","Second DMA Transfer Count Reload Register","2’s complement transfer count - low byte"
 0x76,R/W,"","ESS AudioDrive","Second DMA Transfer Count Reload Register","2’s complement transfer count - high byte"
 0x78,R/W,"","ESS AudioDrive","Second DMA Control","Bits 7-6:\n0=0 0 Single Transfer: 1 DACK per DRQ\n1=0 1 Demand Transfer: 2 DACKs per DRQ\n2=1 0 Demand Transfer: 4 DACKs per DRQ\n3=1 1 Demand Transfer: 8 DACKs per DRQ\nBit 5: Reserved(0)\nBit 4:\n1 = Auto-initialize mode. After the transfer counter rolls over to 0, it is automatically reloaded and DMA continues. The second channel interrupt flag will be set high.\n0 = Normal mode. After the transfer counter rolls over to 0, it is reloaded but DMA stops. Bit 1 of this register is cleared. The second channel interrupt flag will be set high.\nBits 3-2: Reserved(0)\nBit 1: When high, second channel DMA is enabled. This bit is cleared when the transfer counter rolls over to 0 if not in auto-initialize mode.\nBit 0: When high, full-duplex mode is enabled. The left channel is used for recording, and the right channel is used for playback."
