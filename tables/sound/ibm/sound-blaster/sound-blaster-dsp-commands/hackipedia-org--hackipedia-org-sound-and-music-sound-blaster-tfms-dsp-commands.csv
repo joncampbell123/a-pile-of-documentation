@@ -10,7 +10,7 @@ command,param,dspver,card,effect,comments,return,__suppress
 0xE4,nn,2.0,Sound Blaster 2.0,Write Test Register,"Write Test Register"
 0xE3,,3.0+,,DSP Copyright,"Reads DSP copyright string. Read bytes from DSP until you get a zero byte. Result is an ASCIIZ copyright string.",nn... 0
 0xE1,,1.0+,,DSP Version,"Determines DSP major and minor version. Read major, minor from DSP.\nSoundBlaster 1.0 = 1.?? (1.05???)\nSoundBlaster 1.5 = 1.?? (1.05???)\nSoundBlaster 2.0 = 2.xx (2.01)\nSoundBlaster Pro = 3.00 (???)\nSoundBlaster Pro 2 = 3.01+ (3.01, 3.02)\nSoundBlaster 16 = 4.0x (4.04, 4.05)\nSoundBlaster 16 SCSI-2 = 4.11 (4.11)\nSoundBlaster AWE32 = 4.12+ (4.12)",hi lo
-0xE0,nn,2.0,Sound Blaster 2.0,DSP Identification,"Returns bitwise NOT of data byte.\nResults reliable only after DSP reset on early models.",cmpnn
+0xE0,nn,2.0,Sound Blaster 2.0,DSP Identification,"Returns bitwise NOT of data byte.\nResults reliable only after DSP reset on early models.",cmpnn,SUPPRESS(PICKTHIS=effect)
 0xDA,,2.0+,,"Exit Auto-Initialize DMA Operation, 8-bit","Terminates auto-initialized 8-bit DMA operations after current block."
 0xD9,,4.0+,,"Exit Auto-Initialize DMA Operation, 16-bit","Terminates auto-initialized 16-bit DMA operation after current block."
 0xD8,,2.0+,,"Speaker Status","Determines current status of speaker. Returned byte is enabled=0xFF, disabled=0x00",nn
@@ -47,7 +47,7 @@ command,param,dspver,card,effect,comments,return,__suppress
 0x2C,,2.0+,,"Auto-Initialize DMA ADC, 8-bit","Initiates auto-initialize 8-bit DMA transfer (record)\nSupports up to 23KHz (11.5KHz stereo).\nExit auto-initialized mode by programming single-cycle DMA output or with Exit Auto-Initialize DMA Operation, 8-bit (0DAh)."
 0x28,,3.xx,Sound Blaster Pro,"Direct ADC, 8-bit (Burst)","After this point, every read grabs a sample from the ADC. Terminate operation with DSP reset."
 0x24,lo hi,1.0+,,"DMA ADC, 8-bit","Initiates 8-bit DMA transfer (record)."
-0x20,,1.0+,,"Direct ADC, 8-bit","Inputs single sample. Read sample from DSP",sample,SUPPRESS(THIS=comments)
+0x20,,1.0+,,"Direct ADC, 8-bit","Inputs single sample. Read sample from DSP",sample,SUPPRESS(PICKTHIS=effect|THIS=comments)
 0x1F,,2.0+,,"Auto-Initialize DMA DAC, 2-bit ADPCM Reference","Initiates auto-initialize 2-bit ADPCM DMA transfer with reference byte.",,SUPPRESS(THIS=comments)
 0x1C,,2.0+,,"Initiates auto-initialize 8-bit DMA transfer.","Supports up to 23KHz (11.5KHz stereo)"
 0x17,lo hi,1.0+,,"DMA DAC, 2-bit ADPCM Reference","Initiates 2-bit ADPCM DMA transfer with new reference byte. This operation uses 8-bit DMA mode.",,SUPPRESS(THIS=comments)
