@@ -203,8 +203,8 @@ def tablecoltohtml(dcon,tcolo,dcolo,compiled_format):
         print("Warning: Unsupported compiled format "+compiled_format)
 
 def genfrag_table(bookid,ji):
-    def genhtmlentrytags(subdcon,combent,combenttags):
-        if coli == tagcolidx or (type(dcolo) == list and len(dcolo) > 1): # <- CHECK: So apparently the parent function vars are accessible to this subfunction?
+    def genhtmlentrytags(coli,colidx,subdcon,combent,combenttags,compiled_format):
+        if coli == colidx or (compiled_format == "array/combined" and type(dcolo) == list and len(dcolo) > 1):
             tg = [ ]
             plus = False
             keyord = list(combenttags.keys())
@@ -219,10 +219,10 @@ def genfrag_table(bookid,ji):
                     tg += ["+"]
             subdcon.append(apodhtml.htmlelem(tag="sup",attr={ "class": "apodenttag" },content=tg))
     #
-    def genhtmlsourceindex(subdcon,ji,combent,combentsi):
-        for sil in combentsi: # <- CHECK: So apparently the parent function vars are accessible to this subfunction?
+    def genhtmlsourceindex(coli,colidx,subdcon,ji,combent,combentsi,compiled_format):
+        for sil in combentsi:
             tg = [ ]
-            if coli == refcolidx or (type(dcolo) == list and len(dcolo) > 1):
+            if coli == colidx or (compiled_format == "array/combined" and type(dcolo) == list and len(dcolo) > 1):
                 # if this is the column to emit references, do it, but only if not all sources agree
                 if "source index" in combent and not len(combent["source index"]) == len(ji["sources"]):
                     tg += ["[", str(sil+1), "]"]
@@ -276,15 +276,15 @@ def genfrag_table(bookid,ji):
                         subdcon = [ ]
                         #
                         tablecoltohtml(subdcon,tcolo,combent["value"],tcolo["compiled format:array/combined"])
-                        genhtmlentrytags(subdcon=subdcon,combent=combent,combenttags=combent["entry tags"])
-                        genhtmlsourceindex(subdcon=subdcon,ji=ji,combent=combent,combentsi=combent["source index"])
+                        genhtmlentrytags(coli=coli,colidx=tagcolidx,subdcon=subdcon,combent=combent,combenttags=combent["entry tags"],compiled_format=tcolo["compiled format"])
+                        genhtmlsourceindex(coli=coli,colidx=refcolidx,subdcon=subdcon,ji=ji,combent=combent,combentsi=combent["source index"],compiled_format=tcolo["compiled format"])
                         #
                         dcon.append(apodhtml.htmlelem(tag="div",attr={ "class": "apodarrcmbent" },content=subdcon))
                         combentcount = combentcount + 1
                 else:
                     tablecoltohtml(dcon,tcolo,dcolo,tcolo["compiled format"])
-                    genhtmlentrytags(subdcon=dcon,combent=rowo,combenttags=rowo["entry tags"])
-                    genhtmlsourceindex(subdcon=dcon,ji=ji,combent=rowo,combentsi=rowo["source index"])
+                    genhtmlentrytags(coli=coli,colidx=tagcolidx,subdcon=dcon,combent=rowo,combenttags=rowo["entry tags"],compiled_format=tcolo["compiled format"])
+                    genhtmlsourceindex(coli=coli,colidx=refcolidx,subdcon=dcon,ji=ji,combent=rowo,combentsi=rowo["source index"],compiled_format=tcolo["compiled format"])
                 #
                 hw.write(apodhtml.htmlelem(tag="td",attr=attr,content=dcon))
             #
