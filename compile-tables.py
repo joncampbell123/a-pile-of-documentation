@@ -805,6 +805,11 @@ def col_proc_this_spec(tcol,col,table):
                             cent["value"] = ""
 
 def tablearraycombinedcoldedup(tcol,col,table):
+    def addit(dest_index,source_index,dest_entry_tags,source_entry_tags):
+        dest_index += source_index
+        for key in source_entry_tags:
+            dest_entry_tags[key] = source_entry_tags[key]
+
     # any suppress pickone specs?
     col = col_proc_pickone_spec(tcol,col)
     # SUPPRESS(THIS=...)
@@ -822,24 +827,24 @@ def tablearraycombinedcoldedup(tcol,col,table):
         vds = tablearraycombinedcoldedupsort(tcol,v)
         if vds == [ '' ] or vds == [ ]: # ignore empty columns
             if "suppressed:this" in v:
-                pending_source_index += v["source index"]
-                for key in v["entry tags"]:
-                    pending_entry_tags[key] = v["entry tags"][key]
+                addit(dest_index=pending_source_index,source_index=v["source index"],dest_entry_tags=pending_entry_tags,source_entry_tags=v["entry tags"])
             continue
         if not pvds == vds:
             r.append(v)
             lmv = v
-            v["source index"] += pending_source_index
+            addit(dest_index=v["source index"],source_index=pending_source_index,dest_entry_tags=v["entry tags"],source_entry_tags=pending_entry_tags)
             pending_source_index = [ ]
-            for key in pending_entry_tags:
-                v["entry tags"][key] = pending_entry_tags[key]
             pending_entry_tags = { }
         else:
-            lmv["source index"] += v["source index"]
-            for key in v["entry tags"]:
-                lmv["entry tags"][key] = v["entry tags"][key]
+            addit(dest_index=lmv["source index"],source_index=v["source index"],dest_entry_tags=lmv["entry tags"],source_entry_tags=v["entry tags"])
             tablearraycombinedcoldedupmergespecial(lmv,v)
         pv = v
+    #
+    if len(lmv) > 0:
+        addit(dest_index=lmv["source index"],source_index=pending_source_index,dest_entry_tags=lmv["entry tags"],source_entry_tags=pending_entry_tags)
+        pending_source_index = [ ]
+        pending_entry_tags = { }
+    #
     col = r
     # sort source indexes
     for cv in col:
