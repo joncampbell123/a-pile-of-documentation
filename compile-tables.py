@@ -260,6 +260,45 @@ class strscan:
     def eof(self):
         return self.strpos >= len(self.strval)
 
+def stringtoformattedtokcurly(tcol,sit,ji,drowobj):
+    # "{" was already read
+    obj = { }
+    txt = ""
+    depth = 1
+    while True:
+        c = sit.get()
+        if c == None:
+            break
+        elif c == "\\":
+            txt += c
+            c = sit.get()
+        elif c == "{":
+            depth = depth + 1
+        elif c == "}":
+            depth = depth - 1
+            if depth <= 0:
+                break
+        #
+        if not c == None:
+            txt += c
+    # txt = tag:data
+    # or
+    # txt = tag
+    tag = txt
+    text = None
+    try:
+        x = tag.index(":")
+        text = tag[x+1:]
+        tag = tag[0:x]
+    except ValueError:
+        True
+    #
+    obj["type"] = tag
+    if not text == None:
+        obj["sub"] = stringtoformatted(tcol,text,ji,tcol["compiled format:array/formatting"],drowobj)
+    #
+    return obj
+
 def stringtoformattedtok(tcol,sit,ji,drowobj):
     if sit.eof():
         return None
@@ -271,17 +310,20 @@ def stringtoformattedtok(tcol,sit,ji,drowobj):
         if c == "n":
             obj["text"] = "\n"
             obj["type"] = "text"
-        elif c == "\\":
-            obj["text"] = "\\"
+        elif c == "\\" or c == "{" or c == "}":
+            obj["text"] = c
             obj["type"] = "text"
         else:
             raise Exception("Unknown \\escape "+c+" followed by '"+sit.peek(64)+"'")
+    elif sit.peek() == "{":
+        sit.next()
+        obj = stringtoformattedtokcurly(tcol,sit,ji,drowobj)
     else:
         obj["text"] = ""
         obj["type"] = "text"
         while True:
             c = sit.peek()
-            if c == None or c == "\\":
+            if c == None or c == "\\" or c == "{":
                 break
             obj["text"] += c
             sit.next()

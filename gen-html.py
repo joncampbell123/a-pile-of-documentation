@@ -205,6 +205,36 @@ def tablecoltohtml(dcon,tcolo,dcolo,compiled_format):
         for ent in dcolo:
             if ent["type"] == "text":
                 tablecoltohtml(dcon,tcolo,ent["text"],tcolo["compiled format:array/formatting"])
+            elif ent["type"] == "bold":
+                for subi in ent["sub"]:
+                    subdcon = [ ]
+                    tablecoltohtml(subdcon,tcolo,[ subi ],compiled_format)
+                    dcon.append(apodhtml.htmlelem(tag="b",content=subdcon))
+            elif ent["type"] == "italic":
+                for subi in ent["sub"]:
+                    subdcon = [ ]
+                    tablecoltohtml(subdcon,tcolo,[ subi ],compiled_format)
+                    dcon.append(apodhtml.htmlelem(tag="i",content=subdcon))
+            elif ent["type"] == "underline":
+                for subi in ent["sub"]:
+                    subdcon = [ ]
+                    tablecoltohtml(subdcon,tcolo,[ subi ],compiled_format)
+                    dcon.append(apodhtml.htmlelem(tag="u",content=subdcon))
+            elif ent["type"] == "strikethrough":
+                for subi in ent["sub"]:
+                    subdcon = [ ]
+                    tablecoltohtml(subdcon,tcolo,[ subi ],compiled_format)
+                    dcon.append(apodhtml.htmlelem(tag="s",content=subdcon))
+            elif ent["type"] == "superscript":
+                for subi in ent["sub"]:
+                    subdcon = [ ]
+                    tablecoltohtml(subdcon,tcolo,[ subi ],compiled_format)
+                    dcon.append(apodhtml.htmlelem(tag="sup",content=subdcon))
+            elif ent["type"] == "subscript":
+                for subi in ent["sub"]:
+                    subdcon = [ ]
+                    tablecoltohtml(subdcon,tcolo,[ subi ],compiled_format)
+                    dcon.append(apodhtml.htmlelem(tag="sub",content=subdcon))
             else:
                 print(ent)
                 raise Exception("Unknown formatting obj")
