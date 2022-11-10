@@ -237,6 +237,75 @@ def procbasetable(scan,obj):
     ji["sources"] = [ ]
     ji["rows"] = [ ]
 
+class strscan:
+    strval = None
+    strpos = None
+    def __init__(self,strval):
+        self.strval = strval
+        self.strpos = 0
+    def reset(self):
+        self.strpos = 0
+    def peek(self,l=1):
+        if self.strpos < len(self.strval):
+            return self.strval[self.strpos:self.strpos+l]
+        return None
+    def next(self,l=1):
+        self.strpos = self.strpos + l
+        if self.strpos > len(self.strval):
+            self.strpos = len(self.strval)
+    def get(self,l=1):
+        c = self.peek(l)
+        self.next(l)
+        return c
+    def eof(self):
+        return self.strpos >= len(self.strval)
+
+def stringtoformattedtok(tcol,sit,ji,drowobj):
+    if sit.eof():
+        return None
+    obj = { }
+    #
+    if sit.peek() == "\\":
+        sit.next()
+        c = sit.get()
+        if c == "n":
+            obj["text"] = "\n"
+            obj["type"] = "text"
+        elif c == "\\":
+            obj["text"] = "\\"
+            obj["type"] = "text"
+        else:
+            raise Exception("Unknown \\escape "+c+" followed by '"+sit.peek(64)+"'")
+    else:
+        obj["text"] = ""
+        obj["type"] = "text"
+        while True:
+            c = sit.peek()
+            if c == None or c == "\\":
+                break
+            obj["text"] += c
+            sit.next()
+    #
+    return obj
+
+def stringtoformatted(tcol,dcol,ji,compiled_format,drowobj):
+    if not compiled_format == "normal":
+        raise Exception("With formatting only for strings")
+    #
+    r = [ ]
+    sit = strscan(dcol)
+    while True:
+        obj = stringtoformattedtok(tcol,sit,ji,drowobj)
+        if obj == None:
+            break
+        #
+        if obj["type"] == "text" and len(r) > 0 and r[-1]["type"] == "text":
+            r[-1]["text"] += obj["text"]
+        else:
+            r.append(obj)
+    #
+    return r
+
 def tablerowtodatatypecol(tcol,dcol,ji,compiled_format,drowobj):
     if compiled_format == "array/combined":
         r = { "source index": [ ji["source index"] ], "value": tablerowtodatatypecol(tcol,dcol,ji,tcol["compiled format:array/combined"],drowobj), "special": { } }
@@ -246,7 +315,7 @@ def tablerowtodatatypecol(tcol,dcol,ji,compiled_format,drowobj):
             r["entry tags"] = drowobj["entry tags"].copy()
         return [ r ]
     if compiled_format == "array/formatting":
-        raise Exception("Not yet supported")
+        return stringtoformatted(tcol,dcol,ji,tcol["compiled format:array/formatting"],drowobj)
     #
     if compiled_format == "array" or compiled_format == "array/range":
         if "is array" in tcol and tcol["is array"] == True:
@@ -715,8 +784,15 @@ def tablearraycombinedcoldedupsort(tcol,colent):
         if not type(v) == list:
             v = [ v ]
         for ve in v:
+            if type(ve) == dict:
+                if "text" in ve:
+                    ve = ve["text"]
+                else:
+                    ve = ""
+            #
             if "case insensitive" in tcol and tcol["case insensitive"] == True and isinstance(ve,str):
                 ve = ve.lower()
+            #
             r.append(ve)
     return r
 

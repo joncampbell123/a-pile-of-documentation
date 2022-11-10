@@ -199,6 +199,15 @@ def tablecoltohtml(dcon,tcolo,dcolo,compiled_format):
             dcon.append(tablecolfloattohtml(tcolo,dcolo))
     elif compiled_format == "array/combined":
         raise Exception("Calling function is supposed to take care of array/combined (BUG)")
+    elif compiled_format == "array/formatting":
+        if not type(dcolo) == list:
+            raise Exception("formatting not array")
+        for ent in dcolo:
+            if ent["type"] == "text":
+                tablecoltohtml(dcon,tcolo,ent["text"],tcolo["compiled format:array/formatting"])
+            else:
+                print(ent)
+                raise Exception("Unknown formatting obj")
     else:
         print("Warning: Unsupported compiled format "+compiled_format)
 
