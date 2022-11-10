@@ -276,15 +276,15 @@ def genfrag_table(bookid,ji):
                         subdcon = [ ]
                         #
                         tablecoltohtml(subdcon,tcolo,combent["value"],tcolo["compiled format:array/combined"])
-                        genhtmlentrytags(subdcon,combent,combent["entry tags"])
-                        genhtmlsourceindex(subdcon,ji,combent,combent["source index"])
+                        genhtmlentrytags(subdcon=subdcon,combent=combent,combenttags=combent["entry tags"])
+                        genhtmlsourceindex(subdcon=subdcon,ji=ji,combent=combent,combentsi=combent["source index"])
                         #
                         dcon.append(apodhtml.htmlelem(tag="div",attr={ "class": "apodarrcmbent" },content=subdcon))
                         combentcount = combentcount + 1
                 else:
                     tablecoltohtml(dcon,tcolo,dcolo,tcolo["compiled format"])
-                    genhtmlentrytags(dcon,rowo,rowo["entry tags"])
-                    genhtmlsourceindex(dcon,ji,rowo,rowo["source index"])
+                    genhtmlentrytags(subdcon=dcon,combent=rowo,combenttags=rowo["entry tags"])
+                    genhtmlsourceindex(subdcon=dcon,ji=ji,combent=rowo,combentsi=rowo["source index"])
                 #
                 hw.write(apodhtml.htmlelem(tag="td",attr=attr,content=dcon))
             #
