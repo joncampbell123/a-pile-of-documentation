@@ -1,3 +1,3 @@
 command,param,dspver,card,effect,comments
-0xA8,,,"ESS AudioDrive","Analog Control (Extended register)","Bits 7-5: Reserved (0)\nBit 4: Reserved (1)\nBit 3: Record monitor enable - 1 = Enable record monitor 0 = Disable record monitor.\nBit 2: Reserved (0)\nBits 1-0: Stereo/mono select - 0=Reserved 1=Stereo 2=Mono 3=Reserved"
-0xBD,,,"ESS AudioDrive","Unspecified (Extended register)",""
+0xA8,nn,,"ESS AudioDrive","Analog Control (Extended register)","Bits 7-5: Reserved (0)\nBit 4: Reserved (1)\nBit 3: Record monitor enable - 1 = Enable record monitor 0 = Disable record monitor.\nBit 2: Reserved (0)\nBits 1-0: Stereo/mono select - 0=Reserved 1=Stereo 2=Mono 3=Reserved"
+0xBD,nn,,"ESS AudioDrive","Unspecified (Extended register)",""
