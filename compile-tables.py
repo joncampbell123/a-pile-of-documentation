@@ -278,6 +278,7 @@ def formattedsplitnv(text):
             else:
                 r[name] = value
         except ValueError:
+            print("Warning: splitnv name='"+name+"' with no value which may be a comma that needs escaping")
             True
     return r
 
