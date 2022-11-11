@@ -1,0 +1,16 @@
+{
+	"id": "cp858",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"type": "website",
+		"id": "wikipedia",
+		"url": "https://en.wikipedia.org/wiki/Code_page_858"
+	},
+	"table in csv": true,
+	"notes": [
+		"NTS: The unicode CP850.TXT file does not provide chars 0-31 because it maps them instead as ASCII control codes. Code page 858 replaces one char with the Euro (€) sign. Unicode.org does not provide a CP858.TXT.",
+		"The names are filled in from the first 32 entries of CP850.TXT, Wikipedia does not list them itself"
+	]
+}
