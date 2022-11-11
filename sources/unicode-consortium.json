@@ -1,0 +1,9 @@
+{
+	"type": "website",
+	"schema": {
+		"version": 1
+	},
+	"id": "unicode-consortium",
+	"title": "Unicode Consortium",
+	"url": "https://unicode.org"
+}

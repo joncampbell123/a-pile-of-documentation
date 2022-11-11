@@ -27,8 +27,6 @@ try:
 except StopIteration:
     True
 
-print(sfile)
-print(dfile)
 if sfile == None or dfile == None:
     raise Exception("Source and dest files must be specified with --in <file> and --out <file>")
 
