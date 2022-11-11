@@ -182,7 +182,7 @@ def tablecolbitfieldtohtml(dcon,tcolo,ent,compiled_format):
             if not bmax == bent["max"] or not bmin == bent["min"]:
                 raise Exception("Error in bitdisplay vs bitfields")
             #
-            attr = { }
+            attr = { "class": "apodbitfieldtablecol" }
             if (bmax-bmin) > 0:
                 attr["colspan"] = str(bmax+1-bmin)
             #
