@@ -156,3 +156,7 @@ li.apodsourceref:target {
 	background: #EFEFEF;
 }
 
+span.fmtmonospace {
+	font-family: 'Lucida Console', monospace;
+}
+

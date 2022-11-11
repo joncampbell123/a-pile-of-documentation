@@ -260,6 +260,34 @@ class strscan:
     def eof(self):
         return self.strpos >= len(self.strval)
 
+def formattedsplitnv(text):
+    r = { }
+    for rent in re.split(r'(?<!\\),',text): # split by , but not \, so commas are possible
+        rent = re.sub(r'\\,',',',rent)
+        name = rent
+        value = ""
+        try:
+            i = name.index('=')
+            value = name[i+1:]
+            name = name[0:i]
+            if name == "":
+                continue
+            if name in r:
+                r[name] = [ r[name] ]
+                r[name].append(value)
+            else:
+                r[name] = value
+        except ValueError:
+            True
+    return r
+
+def formattedweblink(obj,tcol,splitnv,ji,compiled_format,drowobj):
+    if not "url" in splitnv:
+        raise Exception("weblink requires URL")
+    if not "text" in splitnv:
+        splitnv["text"] = splitnv["url"]
+    obj["info"] = splitnv
+
 def stringtoformattedtokcurly(tcol,sit,ji,drowobj):
     # "{" was already read
     obj = { }
@@ -295,7 +323,10 @@ def stringtoformattedtokcurly(tcol,sit,ji,drowobj):
     #
     obj["type"] = tag
     if not text == None:
-        obj["sub"] = stringtoformatted(tcol,text,ji,tcol["compiled format:array/formatting"],drowobj)
+        if tag == "weblink":
+            formattedweblink(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
+        else:
+            obj["sub"] = stringtoformatted(tcol,text,ji,tcol["compiled format:array/formatting"],drowobj)
     #
     return obj
 

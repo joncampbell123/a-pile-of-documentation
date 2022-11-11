@@ -235,6 +235,15 @@ def tablecoltohtml(dcon,tcolo,dcolo,compiled_format):
                     subdcon = [ ]
                     tablecoltohtml(subdcon,tcolo,[ subi ],compiled_format)
                     dcon.append(apodhtml.htmlelem(tag="sub",content=subdcon))
+            elif ent["type"] == "monospace":
+                for subi in ent["sub"]:
+                    subdcon = [ ]
+                    tablecoltohtml(subdcon,tcolo,[ subi ],compiled_format)
+                    dcon.append(apodhtml.htmlelem(tag="span",attr={ "class": "fmtmonospace" },content=subdcon))
+            elif ent["type"] == "weblink":
+                nfo = ent["info"]
+                if "url" in nfo:
+                    dcon.append(apodhtml.htmlelem(tag="a",attr={ "href": nfo["url"], "target": "_blank" },content=nfo["text"]))
             else:
                 print(ent)
                 raise Exception("Unknown formatting obj")
