@@ -1,12 +1,12 @@
 register,rw,mixer,card,content,comments,__suppress
 0x00,W,"","","Reset Mixer","Write any 8-bit value to this register to reset the mixer chip. After a reset, all the registers will be restored to their default values.",SUPPRESS(PICKTHIS=content)
-0x02,R/W,"CT1335","Sound Blaster 2.0","Master volume","Bits 3-1: Master volume\n\n3 bits, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 4 ⇒ – 11 dB."
+0x02,R/W,"CT1335","Sound Blaster 2.0","Master volume","{bitfield:bits=8,bit[3:1]=Master volume}3 bits, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 4 ⇒ – 11 dB."
 0x06,R/W,"CT1335","Sound Blaster 2.0","MIDI volume","Bits 3-1: MIDI volume\n\n3 bits, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 4 ⇒ – 11 dB."
 0x08,R/W,"CT1335","Sound Blaster 2.0","CD volume","Bits 3-1: CD volume\n\n3 bits, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 0 ⇒ – 46 dB."
 0x0A,R/W,"","","Voice volume","Bits 2-1 (SB2.0): Voice volume\n\n2 bits, giving 4 levels.\n0 to 3 ⇒ – 46 dB to 0 dB, in approximate 7 dB steps.\nDefault is 0 ⇒ – 46 dB."
 
 0x00,W,"","","Reset Mixer","Write any 8-bit value to this register to reset the mixer chip. After a reset, all the registers will be restored to their default values."
-0x04,R/W,"","","Voice volume","Bits 7-5 (SBPro): Voice volume L\nBits 3-1 (SBPro): Voice volume R\n\n3 bits per channel, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 4 ⇒ – 11 dB.",SUPPRESS(PICKTHIS=content)
+0x04,R/W,"","","Voice volume","SBPro:\n{bitfield:bit[7:5]=Voice volume L,bit[4]=Reserved(1),bit[3:1]=Voice volume R,bit[0]=Reserved(1)}3 bits per channel, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 4 ⇒ – 11 dB.",SUPPRESS(PICKTHIS=content)
 0x0A,R/W,"","","Mic volume","Bits 2-1 (SBPro): Mic volume\n\n2 bits, giving 4 levels.\n0 to 3 ⇒ – 46 dB to 0 dB, in approximate 7 dB steps.\nDefault is 0 ⇒ – 46 dB.",SUPPRESS(PICKTHIS=content)
 0x0C,R/W,"","","Input Source / Low-Pass Filter / Input Filter","Bit 5: Input Filter\nInput filter off switch.\n0 ⇒ Input filter on, pass through low-pass filter.\n1 ⇒ Input filter off, bypass low-pass filter.\nDefault is 0 ⇒ Input filter on.\n\nBit 3: Low-Pass Filter\nLow-pass input filter. It is only effective when the Input Filter switch is on.\n0 ⇒ 3.2 kHz low-pass filter.\n1 ⇒ 8.8 kHz low-pass filter.\nDefault is 0 ⇒ 3.2 kHz low-pass filter.\n\nBits 2-1: Input Source\nSet these two bits to one of the following values to select the input source.\n0 or 2 ⇒ Microphone source.\n1 ⇒ CD source.\n3 ⇒ Line-in source.\nDefault is 0 ⇒ Microphone.",SUPPRESS(PICKTHIS=content)
 0x0E,R/W,"","","Output Filter / Stereo Switch","Bit 5: Output Filter\nOutput filter off switch.\n0 ⇒ Output filter on, output through low-pass filter.\n1 ⇒ Output filter off, bypass the low-pass filter\nDefault is 0 ⇒ Output filter on.\n\nBit 1: Stereo Switch\nDigitized sound data stereo output switch.\nThis must be switched back to default as soon as stereo output is done.\n0 ⇒ mono output.\n1 ⇒ stereo output.\nDefault is 0 ⇒ mono output.\n\nTurn off the filter for high sampling rates or stereo output.",SUPPRESS(PICKTHIS=content)
@@ -16,7 +16,7 @@ register,rw,mixer,card,content,comments,__suppress
 0x2E,R/W,"","","Line volume","Bits 7-5: Line volume L\nBits 3-1: Line volume R\n3 bits per channel, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 4 ⇒ – 11 dB.",SUPPRESS(PICKTHIS=content)
 
 0x00,W,"","","Reset Mixer","Write any 8-bit value to this register to reset the mixer chip. After a reset, all the registers will be restored to their default values."
-0x04,R/W,"","","Voice volume","Bits 7-4 (SB16): Voice volume L\nBits 3-0 (SB16): Voice volume R\n\n4 bits per channel, giving 16 levels.\n0 to 15 ⇒ – 60 dB to 0 dB, in 4 dB steps.\nDefault is 12 ⇒ – 12 dB."
+0x04,R/W,"","","Voice volume","SB16\n{bitfield:bit[7:4]=Voice volume L,bit[3:0]=Voice volume R}4 bits per channel, giving 16 levels.\n0 to 15 ⇒ – 60 dB to 0 dB, in 4 dB steps.\nDefault is 12 ⇒ – 12 dB."
 0x0A,R/W,"","","Mic volume","Bits 2-0 (SB16): Mic volume\n\n3 bits, giving 8 levels.\n0 to 7 ⇒ – 42 dB to 0 dB, in 6 dB steps.\nDefault is 0 ⇒ – 48 dB."
 0x22,R/W,"","","Master volume","Bits 7-4: Master volume L\nBits 3-0: Master volume R\n\n4 bits per channel, giving 16 levels.\n0 to 15 ⇒ – 60 dB to 0 dB, in 4 dB steps.\nDefault is 12 ⇒ – 12 dB."
 0x26,R/W,"","","MIDI volume","Bits 7-4: MIDI volume L\nBits 3-0: MIDI volume R\n\n4 bits per channel, giving 16 levels.\n0 to 15 ⇒ – 60 dB to 0 dB, in 4 dB steps.\nDefault is 12 ⇒ – 12 dB."

@@ -334,6 +334,15 @@ def formattedbitfield(obj,tcol,splitnv,ji,compiled_format,drowobj):
                 bitr[bit] = bfi
             obj["bitfields"].append(bitobj)
     #
+    if "bits" in splitnv:
+        bitcount = int(splitnv["bits"])
+        if bitmax < (bitcount-1):
+            bitmax = (bitcount-1)
+        while len(bitr) <= bitmax:
+            bitr.append(False)
+        while len(bits) <= bitmax:
+            bits.append(None)
+    #
     obj["bitdisplay"] = [ ]
     obj["display order"] = "msbfirst"
     for bit in range(bitmin,bitmax+1):
