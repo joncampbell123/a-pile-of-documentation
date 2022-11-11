@@ -859,6 +859,19 @@ def sorttable(obj):
             optRev=True
     rows.sort(key=lambda x: tablerowsort(tcols,x),reverse=optRev)
 
+def tablearraycombinedcoldedupsortfmt(ve):
+    if "text" in ve:
+        return ve["text"]
+    if "sub" in ve:
+        r = ""
+        for subi in ve["sub"]:
+            r += tablearraycombinedcoldedupsortfmt(subi)
+        return r
+    if "info" in ve:
+        if "text" in ve["info"]:
+            return ve["info"]["text"]
+    return ""
+
 def tablearraycombinedcoldedupsort(tcol,colent):
     r = [ ]
     if "value" in colent:
@@ -867,10 +880,7 @@ def tablearraycombinedcoldedupsort(tcol,colent):
             v = [ v ]
         for ve in v:
             if type(ve) == dict:
-                if "text" in ve:
-                    ve = ve["text"]
-                else:
-                    ve = ""
+                ve = tablearraycombinedcoldedupsortfmt(ve)
             #
             if "case insensitive" in tcol and tcol["case insensitive"] == True and isinstance(ve,str):
                 ve = ve.lower()
