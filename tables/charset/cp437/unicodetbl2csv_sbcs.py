@@ -2,9 +2,35 @@
 
 import os
 import re
+import sys
 
-sfile = "CP437.TXT"
-dfile = "unicode-consortium--cp437.csv"
+sfile = None
+dfile = None
+
+ai = iter(sys.argv)
+# first one is the name of the Python script
+next(ai)
+# parse
+try:
+    while True:
+        a = next(ai)
+        if a[0:2] == "--":
+            what = a[2:]
+            if what == "in":
+                sfile = next(ai)
+            elif what == "out":
+                dfile = next(ai)
+            else:
+                raise Exception("Unexpected switch "+what)
+        else:
+            raise Exception("Unexpected arg "+a)
+except StopIteration:
+    True
+
+print(sfile)
+print(dfile)
+if sfile == None or dfile == None:
+    raise Exception("Source and dest files must be specified with --in <file> and --out <file>")
 
 s = open(sfile,"r",encoding="ascii")
 d = open(dfile,"w",encoding="utf-8")
