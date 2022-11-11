@@ -1,3 +1,3 @@
 command,param,dspver,card,effect,comments
-0xA8,nn,,"ESS AudioDrive","Analog Control (Extended register)","Bits 7-5: Reserved (0)\nBit 4: Reserved (1)\nBit 3: Record monitor enable - 1 = Enable record monitor 0 = Disable record monitor.\nBit 2: Reserved (0)\nBits 1-0: Stereo/mono select - 0=Reserved 1=Stereo 2=Mono 3=Reserved"
+0xA8,nn,,"ESS AudioDrive","Analog Control (Extended register)","{bitfield:bit[7:5]=Reserved (0),bit[4]=Reserved (1),bit[3]=Record monitor enable\n\n1 = Enable record monitor\n0 = Disable record monitor.,bit[2]=Reserved (0),bit[1:0]=Stereo/mono select\n\n0=Reserved 1=Stereo 2=Mono 3=Reserved}When programming the FIFO for DMA playback modify only bits 1:0. When programming the FIFO for DMA Record modify only bits 3, 1, and 0. Read this register first to preserve the remaining bits."
 0xBD,nn,,"ESS AudioDrive","Unspecified (Extended register)",""
