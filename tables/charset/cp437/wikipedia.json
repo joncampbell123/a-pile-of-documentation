@@ -1,0 +1,15 @@
+{
+	"id": "cp437",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"type": "website",
+		"id": "wikipedia",
+		"url": "https://en.wikipedia.org/wiki/Code_page_437"
+	},
+	"table in csv": true,
+	"notes": [
+		"NTS: The unicode CP437.TXT file does not provide these chars because it maps them instead as ASCII control codes"
+	]
+}
