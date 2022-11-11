@@ -295,6 +295,50 @@ def formattedlink(obj,tcol,splitnv,ji,compiled_format,drowobj):
         splitnv["text"] = splitnv["id"]
     obj["info"] = splitnv
 
+def formattedbitfield(obj,tcol,splitnv,ji,compiled_format,drowobj):
+    obj["fields"] = splitnv
+    bitmax = -1
+    bitmin = 0
+    bits = [ ] # index = bit number for checking
+    bitr = [ ] # bit index -> entry index
+    obj["bitfields"] = [ ]
+    for key in splitnv:
+        x = re.match(r'bit\[(\d+(:\d+){0,1})]',key)
+        if not x == None:
+            bittxt = x.group(1) # 4 1 4 or 6:5 4:2 7:0 etc
+            try:
+                i = bittxt.index(':')
+                bmin = bittxt[i+1:]
+                bmax = bittxt[0:i]
+                bmin = int(bmin)
+                bmax = int(bmax)
+                if bmin > bmax:
+                    bmin,bmax = bmax,bmin # Pythonic swap syntax
+            except ValueError:
+                bmin = bmax = int(bittxt)
+            #
+            bitobj = { "min": bmin, "max": bmax, "value": splitnv[key] }
+            bfi = len(obj["bitfields"])
+            if bitmax < bmax:
+                bitmax = bmax
+            while len(bitr) <= bmax:
+                bitr.append(False)
+            while len(bits) <= bmax:
+                bits.append(None)
+            for bit in range(bmin,bmax+1):
+                if not bits[bit] == None:
+                    raise Exception("Overlapping bit field")
+                bits[bit] = True
+                bitr[bit] = bfi
+            obj["bitfields"].append(bitobj)
+    #
+    obj["bitdisplay"] = [ ]
+    obj["display order"] = "msbfirst"
+    for bit in range(bitmin,bitmax+1):
+        obj["bitdisplay"].append(bitr[bit])
+    #
+    obj["bitrange"] = { "min": bitmin, "max": bitmax, "bits": (bitmax+1-bitmin) }
+
 def stringtoformattedtokcurly(tcol,sit,ji,drowobj):
     # "{" was already read
     obj = { }
@@ -334,6 +378,8 @@ def stringtoformattedtokcurly(tcol,sit,ji,drowobj):
             formattedweblink(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
         elif tag == "link":
             formattedlink(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
+        elif tag == "bitfield":
+            formattedbitfield(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
         else:
             obj["sub"] = stringtoformatted(tcol,text,ji,tcol["compiled format:array/formatting"],drowobj)
     #
@@ -870,6 +916,12 @@ def tablearraycombinedcoldedupsortfmt(ve):
     if "info" in ve:
         if "text" in ve["info"]:
             return ve["info"]["text"]
+    if "fields" in ve:
+        r = ""
+        for key in ve["fields"]:
+            r += key
+            r += ve["fields"][key]
+        return r
     return ""
 
 def tablearraycombinedcoldedupsort(tcol,colent):
