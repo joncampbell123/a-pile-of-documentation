@@ -148,6 +148,51 @@ def tablecolbooltohtml(tcolo,dcolo):
     else:
         return ""
 
+def tablecolbitfieldtohtml(dcon,tcolo,ent,compiled_format):
+    fieldarr = ent["bitfields"]
+    fielddsp = ent["bitdisplay"]
+    brange = ent["bitrange"]
+    #
+    trs = [ ]
+    th = [ ]
+    for bit in range(brange["max"],brange["min"]-1,-1):
+        th.append(apodhtml.htmlelem(tag="th",content=("Bit "+str(bit))))
+    trs.append(apodhtml.htmlelem(tag="tr",attr={ "class": "apodbitfieldtablehead" },content=th))
+    #
+    pbr = -1
+    bit = brange["max"]
+    bitcol = bit # HTML table column
+    tr = [ ]
+    while bit >= brange["min"]:
+        br = fielddsp[bit]
+        bent = fieldarr[br]
+        bmax = bmin = bit
+        bit = bit - 1
+        while bit >= brange["min"] and type(fielddsp[bit]) == type(br) and fielddsp[bit] == br:
+            bmin = bit
+            bit = bit - 1
+        #
+        if type(br) == bool and br == False: # nothing in this part
+            attr = { "class": "apodbitfieldtablenodef" }
+            if (bmax-bmin) > 0:
+                attr["colspan"] = str(bmax+1-bmin)
+            #
+            tr.append(apodhtml.htmlelem(tag="td",attr=attr))
+        else: # content as normal
+            if not bmax == bent["max"] or not bmin == bent["min"]:
+                raise Exception("Error in bitdisplay vs bitfields")
+            #
+            attr = { }
+            if (bmax-bmin) > 0:
+                attr["colspan"] = str(bmax+1-bmin)
+            #
+            val = bent["value"] # TODO: With formatting?
+            tr.append(apodhtml.htmlelem(tag="td",attr=attr,content=val))
+    #
+    trs.append(apodhtml.htmlelem(tag="tr",attr={ "class": "apodbitfieldtablerow" },content=tr))
+    #
+    dcon.append(apodhtml.htmlelem(tag="table",attr={ "class": "apodbitfieldtable", "width": "100%" },content=trs))
+
 # dcon = array of elements to write
 # tcolo = column table info
 # dcolo = column
@@ -255,6 +300,8 @@ def tablecoltohtml(dcon,tcolo,dcolo,compiled_format):
                 else:
                     print(ent)
                     raise Exception("Missing type in link")
+            elif ent["type"] == "bitfield":
+                tablecolbitfieldtohtml(dcon,tcolo,ent,compiled_format)
             else:
                 print(ent)
                 raise Exception("Unknown formatting obj")

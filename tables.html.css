@@ -84,11 +84,11 @@ table.apodtable {
 	text-align: left;
 }
 
-tr.apodtablehead th {
+tr.apodtablehead > th {
 	background-color: #DFDFDF;
 }
 
-tr.apodtablehead th,td {
+tr.apodtablehead > th,td {
 	font-weight: 900;
 	padding: 0.1em;
 	border-right: 1px solid black;
@@ -99,7 +99,7 @@ tr.apodtablehead th,td {
 	vertical-align: top;
 }
 
-tr.apodtablerow th,td {
+tr.apodtablerow > th,td {
 	font-weight: 300;
 	white-space: pre-wrap;
 	vertical-align: top;
@@ -158,5 +158,43 @@ li.apodsourceref:target {
 
 span.fmtmonospace {
 	font-family: 'Lucida Console', monospace;
+}
+
+.apodbitfieldtablehead > th {
+	background-color: #DFDFDF;
+}
+
+.apodbitfieldtablehead > td,th {
+	font-weight: 900;
+	padding: 0.1em;
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	vertical-align: top;
+	white-space: pre;
+}
+
+.apodbitfieldtable {
+	border: 1px solid black;
+	border-right: none;
+	border-bottom: none;
+	font-size: 10px;
+	margin: 0px;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	border-spacing: 0px;
+	text-align: left;
+}
+
+.apodbitfieldtablerow {
+	font-weight: 300;
+	white-space: pre-wrap;
+	vertical-align: top;
+	font-size: 0.9em;
+}
+
+.apodbitfieldtablenodef {
+	background-color: #7F7F7F;
 }
 
