@@ -6,6 +6,7 @@
 	"schema": {
 		"version": 1
 	},
+	"list source refs": false,
 	"table columns": [
 		{
 			"type": "uint8_t",
@@ -17,7 +18,6 @@
 		{
 			"type": "string",
 			"case insensitive": true,
-			"list source refs": true,
 			"title": "Char name",
 			"required": true,
 			"name": "name"
