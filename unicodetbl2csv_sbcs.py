@@ -45,20 +45,28 @@ for line in s:
     # if they replace tab with spaces
     x = line.split('\t')
     # [ inbyte outchar #name ]
+    # [ inbyte "     " #UNDEFINED ]
     if len(x) == 2:
         x.append("#")
     if len(x) < 3:
         continue
     if x[2][0] == '#':
         x[2] = x[2][1:]
-    inbyte = int(x[0],base=16)
-    outchar = int(x[1],base=16)
     name = x[2]
+    inbyte = int(x[0],base=16)
     if inbyte < 0x20: # the Wikipedia list takes care of this case, the list treats this range as ASCII control chars
         continue
-    outcharstr = chr(outchar)
-    if outcharstr == "\"":
-        outcharstr = "\"\"" # escape for CSV
+    if re.match(r'^ *$',x[1]):
+        outchar = "--"
+        outcharstr = ""
+        if name == "UNDEFINED":
+            name = "--"
+    else:
+        outchar = int(x[1],base=16)
+        outcharstr = chr(outchar)
+        if outcharstr == "\"":
+            outcharstr = "\"\"" # escape for CSV
+    #
     print(hex(inbyte)+",\""+name+"\",\""+outcharstr+"\",",file=d)
 
 s.close()
