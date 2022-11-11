@@ -244,6 +244,17 @@ def tablecoltohtml(dcon,tcolo,dcolo,compiled_format):
                 nfo = ent["info"]
                 if "url" in nfo:
                     dcon.append(apodhtml.htmlelem(tag="a",attr={ "href": nfo["url"], "target": "_blank" },content=nfo["text"]))
+            elif ent["type"] == "link":
+                nfo = ent["info"]
+                if "type" in nfo:
+                    if nfo["type"] == "table":
+                        dcon.append(apodhtml.htmlelem(tag="a",attr={ "href": ("tables-"+nfo["id"]+".html") },content=nfo["text"]))
+                    else:
+                        print(ent)
+                        raise Exception("Unknown link type "+nfo["type"])
+                else:
+                    print(ent)
+                    raise Exception("Missing type in link")
             else:
                 print(ent)
                 raise Exception("Unknown formatting obj")

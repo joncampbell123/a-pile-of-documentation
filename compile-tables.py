@@ -288,6 +288,13 @@ def formattedweblink(obj,tcol,splitnv,ji,compiled_format,drowobj):
         splitnv["text"] = splitnv["url"]
     obj["info"] = splitnv
 
+def formattedlink(obj,tcol,splitnv,ji,compiled_format,drowobj):
+    if not "type" in splitnv:
+        raise Exception("link type missing")
+    if not "text" in splitnv:
+        splitnv["text"] = splitnv["id"]
+    obj["info"] = splitnv
+
 def stringtoformattedtokcurly(tcol,sit,ji,drowobj):
     # "{" was already read
     obj = { }
@@ -325,6 +332,8 @@ def stringtoformattedtokcurly(tcol,sit,ji,drowobj):
     if not text == None:
         if tag == "weblink":
             formattedweblink(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
+        elif tag == "link":
+            formattedlink(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
         else:
             obj["sub"] = stringtoformatted(tcol,text,ji,tcol["compiled format:array/formatting"],drowobj)
     #
