@@ -54,6 +54,6 @@ command,param,dspver,card,effect,comments,return,__suppress
 0x16,lo hi,1.0+,,"DMA DAC, 2-bit ADPCM","Initiates 2-bit ADPCM DMA transfer with accumulated reference byte. This operation uses 8-bit DMA mode.",,SUPPRESS(THIS=comments)
 0x14,lo hi,1.0+,,"DMA DAC, 8-bit","Initiates 8-bit DMA transfer. Single cycle.",,SUPPRESS(THIS=comments)
 0x10,nn,1.0+,,"Direct DAC, 8-bit","Outputs single sample.",,SUPPRESS(PICKTHIS=effect|THIS=comments)
-0x04,,2.0-3.xx,"Sound Blaster 2.0","DSP Status","Retrieves information about pending DSP operations.\nBit 7: DMA DAC 8-bit (1=active)\nBit 6: DMA DAC 4-bit ADPCM (1=active)\nBit 5: DMA DAC 2.6-bit ADPCM (1=active)\nBit 4: DMA DAC 2-bit ADPCM (1=active)\nBit 3: Direct DAC 8-bit Burst\nBit 2: Reserved (0)\nBit 1: Stereo ADC Status (1=active)\nBit 0: Speaker status (1=active)",status
+0x04,,2.0-3.xx,"Sound Blaster 2.0","DSP Status","Retrieves information about pending DSP operations.\n{bitfield:bit[7]=DMA DAC 8-bit (1=active),bit[6]=DMA DAC 4-bit ADPCM (1=active),bit[5]=DMA DAC 2.6-bit ADPCM (1=active),bit[4]=DMA DAC 2-bit ADPCM (1=active),bit[3]=Direct DAC 8-bit Burst,bit[2]=Reserved (0),bit[1]=Stereo ADC Status (1=active),bit[0]=Speaker status (1=active)}",status
 0x03,,4.0+,"Sound Blaster 16","ASP Status","Read status (contents unknown)",status
 
