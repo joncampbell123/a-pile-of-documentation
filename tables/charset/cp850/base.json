@@ -1,5 +1,5 @@
 {
-	"table": "Code Page 850 (IBM PC)",
+	"table": "Code Page 850 (DOS Latin 1)",
 	"id": "cp850",
 	"combinable": true,
 	"base definition": true,
