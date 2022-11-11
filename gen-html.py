@@ -156,6 +156,12 @@ def fmtstr(fmt,v):
         while len(v) < 2:
             v = "0"+v
         return "0x"+v
+    elif re.match(r'^bin\d+$',fmt):
+        sz = int(fmt[3:])
+        v = bin(v)[2:]
+        while len(v) < sz:
+            v = "0"+v
+        return "0b"+v
     else:
         return str(v)
 
