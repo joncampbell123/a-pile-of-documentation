@@ -37,6 +37,8 @@ print("charcode,name,character,comments",file=d)
 
 for line in s:
     line = line.strip()
+    if len(line) == 0:
+        continue
     if line[0] == '#':
         continue
     # ex: "0x02	0x0002	#START OF TEXT"

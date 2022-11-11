@@ -1,0 +1,12 @@
+{
+	"id": "macroman",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"type": "website",
+		"id": "unicode-consortium",
+		"url": "https://www.unicode.org/Public/MAPPINGS/VENDORS/APPLE/ROMAN.TXT"
+	},
+	"table in csv": true
+}

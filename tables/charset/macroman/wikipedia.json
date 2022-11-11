@@ -1,0 +1,14 @@
+{
+	"id": "macroman",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"type": "website",
+		"id": "wikipedia",
+		"url": "https://en.wikipedia.org/wiki/Mac_OS_Roman"
+	},
+	"table in csv": true,
+	"notes": [
+	]
+}
