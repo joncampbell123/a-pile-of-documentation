@@ -30,7 +30,7 @@ except StopIteration:
 if sfile == None or dfile == None:
     raise Exception("Source and dest files must be specified with --in <file> and --out <file>")
 
-s = open(sfile,"r",encoding="ascii")
+s = open(sfile,"r",encoding="utf-8")
 d = open(dfile,"w",encoding="utf-8")
 
 print("charcode,name,character,comments",file=d)
@@ -50,6 +50,10 @@ for line in s:
         x.append("#")
     if len(x) < 3:
         continue
+    if len(x) > 3 and x[2] == "#": # 8859-1.TXT
+        x[2] = x[3]
+        del x[3]
+        print(x)
     if x[2][0] == '#':
         x[2] = x[2][1:]
     name = x[2]

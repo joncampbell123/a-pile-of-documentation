@@ -1,0 +1,14 @@
+{
+	"id": "iso8859-1",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"type": "website",
+		"id": "wikipedia",
+		"url": "https://en.wikipedia.org/wiki/ISO/IEC_8859-1"
+	},
+	"table in csv": true,
+	"notes": [
+	]
+}
