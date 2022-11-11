@@ -10,6 +10,7 @@
 	},
 	"table in csv": true,
 	"notes": [
-		"NTS: The unicode CP437.TXT file does not provide these chars because it maps them instead as ASCII control codes"
+		"NTS: The unicode CP437.TXT file does not provide these chars because it maps them instead as ASCII control codes",
+		"The names are filled in from the first 32 entries of CP437.TXT, Wikipedia does not list them itself"
 	]
 }
