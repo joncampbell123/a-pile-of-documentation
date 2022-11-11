@@ -262,9 +262,45 @@ class strscan:
         return self.strpos >= len(self.strval)
 
 def formattedsplitnv(text):
+    #
+    def splitup(text):
+        r = [ ]
+        i = iter(text)
+        try:
+            depth = 0
+            accum = ""
+            while True:
+                c = next(i)
+                if c == "{":
+                    depth += 1
+                    accum += c
+                elif c == "}":
+                    if depth > 0:
+                        depth -= 1
+                    accum += c
+                elif c == "\\":
+                    c = next(i)
+                    if c == ",":
+                        accum += c
+                    elif c == "n":
+                        accum += "\n"
+                    else:
+                        accum += "\\" + c
+                elif c == "," and depth == 0:
+                    r.append(accum)
+                    accum = ""
+                else:
+                    accum += c
+        except StopIteration:
+            True
+        #
+        if len(accum) > 0:
+            r.append(accum)
+        #
+        return r
+    #
     r = { }
-    for rent in re.split(r'(?<!\\),',text): # split by , but not \, so commas are possible
-        rent = re.sub(r'\\,',',',rent)
+    for rent in splitup(text):
         name = rent
         value = ""
         try:
@@ -296,6 +332,30 @@ def formattedlink(obj,tcol,splitnv,ji,compiled_format,drowobj):
     if not "text" in splitnv:
         splitnv["text"] = splitnv["id"]
     obj["info"] = splitnv
+
+def formattedenum(obj,tcol,splitnv,ji,compiled_format,drowobj):
+    obj["fields"] = splitnv
+    vals = [ ]
+    for key in splitnv:
+        if re.match(r'^(0x[0-9a-fA-F]+|[0-9]+)$',key):
+            kv = xlateuint({"type":"uint_t"},key)
+            vals.append({ "min": kv, "max": kv, "value": stringtoformatted(tcol,splitnv[key],ji,compiled_format,drowobj) })
+        elif re.match(r'^(0x[0-9a-fA-F]+|[0-9]+)-(0x[0-9a-fA-F]+|[0-9]+)$',key):
+            keysp = re.split(r'-',key)
+            kvmin = xlateuint({"type":"uint_t"},keysp[0])
+            kvmax = xlateuint({"type":"uint_t"},keysp[1])
+            if kvmax < kvmin:
+                kvmin,kvmax = kvmax,kvmin # Pythonic swap
+            vals.append({ "min": kvmin, "max": kvmax, "value": stringtoformatted(tcol,splitnv[key],ji,compiled_format,drowobj) })
+    #
+    vals.sort(key=lambda x: x["min"])
+    obj["enum"] = vals
+    obj["format"] = "dec"
+    obj["columns"] = 1
+    if "columns" in splitnv:
+        obj["columns"] = int(splitnv["columns"])
+    if "format" in splitnv:
+        obj["format"] = splitnv["format"]
 
 def formattedbitfield(obj,tcol,splitnv,ji,compiled_format,drowobj):
     obj["fields"] = splitnv
@@ -391,6 +451,8 @@ def stringtoformattedtokcurly(tcol,sit,ji,drowobj):
             formattedlink(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
         elif tag == "bitfield":
             formattedbitfield(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
+        elif tag == "enum":
+            formattedenum(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
         else:
             obj["sub"] = stringtoformatted(tcol,text,ji,tcol["compiled format:array/formatting"],drowobj)
     #

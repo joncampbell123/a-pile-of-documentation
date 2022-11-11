@@ -148,6 +148,57 @@ def tablecolbooltohtml(tcolo,dcolo):
     else:
         return ""
 
+def fmtstr(fmt,v):
+    if fmt == "hex":
+        return hex(v)
+    elif fmt == "hex8":
+        v = hex(v)[2:]
+        while len(v) < 2:
+            v = "0"+v
+        return "0x"+v
+    else:
+        return str(v)
+
+def tablecolenumtohtml(dcon,tcolo,ent,compiled_format):
+    trs = [ ]
+    columns = 1
+    fmt = "dec"
+    if "format" in ent:
+        fmt = ent["format"]
+    if "columns" in ent:
+        columns = ent["columns"]
+    col = 0
+    row = 0
+    enum = ent["enum"]
+    for ent in enum:
+        minv = ent["min"]
+        maxv = ent["max"]
+        #
+        if col == 0:
+            tr = [ ]
+        #
+        if minv == maxv:
+            valstr = fmtstr(fmt,minv)
+        else:
+            valstr = fmtstr(fmt,minv)+" - "+fmtstr(fmt,maxv)
+        tr.append(apodhtml.htmlelem(tag="td",attr={ "class": "apodenumtablecolidx" },content=valstr))
+        #
+        subdcon = [ ]
+        tablecoltohtml(subdcon,tcolo,ent["value"],compiled_format)
+        tr.append(apodhtml.htmlelem(tag="td",attr={ },content=subdcon))
+        #
+        col += 1
+        if col >= columns:
+            trs.append(apodhtml.htmlelem(tag="tr",attr={ "class": "apodenumtablerow" },content=tr))
+            tr = [ ]
+            row += 1
+            col = 0
+    #
+    if col > 0:
+        trs.append(apodhtml.htmlelem(tag="tr",attr={ "class": "apodenumtablerow" },content=tr))
+    #
+    dcon.append(apodhtml.htmlelem(tag="table",attr={ "class": "apodenumtable", "width": "100%" },content=trs))
+
 def tablecolbitfieldtohtml(dcon,tcolo,ent,compiled_format):
     fieldarr = ent["bitfields"]
     fielddsp = ent["bitdisplay"]
@@ -303,6 +354,8 @@ def tablecoltohtml(dcon,tcolo,dcolo,compiled_format):
                     raise Exception("Missing type in link")
             elif ent["type"] == "bitfield":
                 tablecolbitfieldtohtml(dcon,tcolo,ent,compiled_format)
+            elif ent["type"] == "enum":
+                tablecolenumtohtml(dcon,tcolo,ent,compiled_format)
             else:
                 print(ent)
                 raise Exception("Unknown formatting obj")
