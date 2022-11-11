@@ -22,7 +22,7 @@
 			["ESC","[","h"],
 			["ESC","[","=","#","h"],
 			["1: display mode"],
-			"Set display mode (see 'ANSI.SYS screen modes')"
+			"Set display mode (see '{link:type=table,id=msdos-command-shell-prompt-ansi-control-strings-screen-modes,text=ANSI.SYS screen modes}')"
 		],
 		[
 			["ESC","[","j"],
@@ -40,7 +40,7 @@
 			["ESC","[","l"],
 			["ESC","[","=","#","l"],
 			["1: display mode"],
-			"Reset display mode (see 'ANSI.SYS screen modes')"
+			"Reset display mode (see '{link:type=table,id=msdos-command-shell-prompt-ansi-control-strings-screen-modes,text=ANSI.SYS screen modes}')"
 		],
 		[
 			["ESC","[","m"],

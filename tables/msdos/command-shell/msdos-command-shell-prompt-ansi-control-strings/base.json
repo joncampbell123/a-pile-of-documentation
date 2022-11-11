@@ -42,6 +42,7 @@
 			"title": "Function",
 			"case insensitive": true,
 			"combine different": true,
+			"with formatting": true,
 			"name": "function"
 		}
 	]
