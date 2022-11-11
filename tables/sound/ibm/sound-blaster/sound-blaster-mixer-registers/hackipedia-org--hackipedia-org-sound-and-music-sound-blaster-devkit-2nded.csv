@@ -3,7 +3,7 @@ register,rw,mixer,card,content,comments,__suppress
 0x02,R/W,"CT1335","Sound Blaster 2.0","Master volume","{bitfield:bits=8,bit[3:1]=Master volume}3 bits, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 4 ⇒ – 11 dB."
 0x06,R/W,"CT1335","Sound Blaster 2.0","MIDI volume","{bitfield:bits=8,bit[3:1]=MIDI volume}3 bits, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 4 ⇒ – 11 dB."
 0x08,R/W,"CT1335","Sound Blaster 2.0","CD volume","{bitfield:bits=8,bit[3:1]=CD volume}3 bits, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 0 ⇒ – 46 dB."
-0x0A,R/W,"","","Voice volume","{bitfield:bits=8,bit[2:1]=Voice volume}2 bits, giving 4 levels.\n0 to 3 ⇒ – 46 dB to 0 dB, in approximate 7 dB steps.\nDefault is 0 ⇒ – 46 dB."
+0x0A,R/W,"","","Voice volume","{bitfield:bits=8,bit[2:1]=Voice volume}2 bits, giving 4 levels.\n0 to 3 ⇒ – 46 dB to 0 dB, in approximate 7 dB steps.\nDefault is 0 ⇒ – 46 dB.",SUPPRESS(THIS=comments)
 
 0x00,W,"","","Reset Mixer","Write any 8-bit value to this register to reset the mixer chip. After a reset, all the registers will be restored to their default values."
 0x04,R/W,"","","Voice volume","SBPro:\n{bitfield:bit[7:5]=Voice volume L,bit[4]=Reserved(1),bit[3:1]=Voice volume R,bit[0]=Reserved(1)}3 bits per channel, giving 8 levels.\n0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps.\nDefault is 4 ⇒ – 11 dB.",SUPPRESS(PICKTHIS=content)
