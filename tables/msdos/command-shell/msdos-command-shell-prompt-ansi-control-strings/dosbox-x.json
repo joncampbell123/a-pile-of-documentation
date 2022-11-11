@@ -14,14 +14,14 @@
 			["ESC","[",">","h"],
 			["ESC","[",">","#","h"],
 			["1: function"],
-			"NEC PC-98 MS-DOS screen functions (see 'NEC PC-98 screen mode functions')",
+			"NEC PC-98 MS-DOS screen functions (see '{link:type=table,id=msdos-command-shell-prompt-ansi-control-strings-nec-pc98-screen-modes,text=NEC PC-98 screen mode functions}')",
 			{ "special": { "suppress": "PICKTHIS=ansiparam" } }
 		],
 		[
 			["ESC","[",">","l"],
 			["ESC","[",">","#","l"],
 			["1: function"],
-			"NEC PC-98 MS-DOS screen functions (see 'NEC PC-98 screen mode functions')",
+			"NEC PC-98 MS-DOS screen functions (see '{link:type=table,id=msdos-command-shell-prompt-ansi-control-strings-nec-pc98-screen-modes,text=NEC PC-98 screen mode functions}')",
 			{ "special": { "suppress": "PICKTHIS=ansiparam" } }
 		],
 		[
