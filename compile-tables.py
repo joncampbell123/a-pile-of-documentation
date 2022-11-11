@@ -154,7 +154,8 @@ def get_base_tables():
 def get_content_tables(scan):
     ret = [ ]
     #
-    g = glob.glob(scan["base path"]+"/*.json",recursive=True)
+    g = list(glob.glob(scan["base path"]+"/*.json",recursive=True))
+    g.sort(key=lambda x: x.lower())
     for path in g:
         if path == scan["base json path"]:
             continue
