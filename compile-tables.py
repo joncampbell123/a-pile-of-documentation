@@ -317,7 +317,7 @@ def formattedbitfield(obj,tcol,splitnv,ji,compiled_format,drowobj):
             except ValueError:
                 bmin = bmax = int(bittxt)
             #
-            bitobj = { "min": bmin, "max": bmax, "value": splitnv[key] }
+            bitobj = { "min": bmin, "max": bmax, "value": stringtoformatted(tcol,splitnv[key],ji,compiled_format,drowobj) }
             bfi = len(obj["bitfields"])
             if bitmax < bmax:
                 bitmax = bmax

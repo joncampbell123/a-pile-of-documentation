@@ -186,8 +186,9 @@ def tablecolbitfieldtohtml(dcon,tcolo,ent,compiled_format):
             if (bmax-bmin) > 0:
                 attr["colspan"] = str(bmax+1-bmin)
             #
-            val = bent["value"] # TODO: With formatting?
-            tr.append(apodhtml.htmlelem(tag="td",attr=attr,content=val))
+            subdcon = [ ]
+            tablecoltohtml(subdcon,tcolo,bent["value"],compiled_format)
+            tr.append(apodhtml.htmlelem(tag="td",attr=attr,content=subdcon))
     #
     trs.append(apodhtml.htmlelem(tag="tr",attr={ "class": "apodbitfieldtablerow" },content=tr))
     #
