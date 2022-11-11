@@ -1,10 +1,10 @@
 command,param,dspver,card,effect,comments,return,__suppress
 0xFD,,4.0,Sound Blaster 16,DSP Command Status,"Retrieves most recently successful DSP command.\nCommand does not support all valid DSP commands, but most.",status
-0xFC,,4.0,Sound Blaster 16,DSP Auxiliary Status,"Retrieves auxiliary information about pending DMA operations.\nBit 7: ???\nBit 6: ???\nBit 5: ???\nBit 4: Auto-init DMA, 16-bit (1=Active)\nBit 3: ???\nBit 2: Auto-init DMA, 8-bit (1=Active)\nBit 1: DAC/ADC DMA (1=synchronous)\nBit 0: ???",status
-0xFB,,4.0,Sound Blaster 16,DSP Status,"Retrieves information about pending DSP operations.\nBit 7: Time constant (1=modified)\nBit 6: DSPC 04Fh ???\nBit 5: ???\nBit 4: Virtual Speaker (1=active)\nBit 3: DMA ADC, 16-bit (1=active)\nBit 2: DMA DAC, 16-bit (1=active)\nBit 1: DMA ADC, 8-bit (1=active)\nBit 0: DMA DAC, 8-bit (1=active)",status
+0xFC,,4.0,Sound Blaster 16,DSP Auxiliary Status,"Retrieves auxiliary information about pending DMA operations.\n{bitfield:bit[7]=???,bit[6]=???,bit[5]=???,bit[4]=Auto-init DMA, 16-bit (1=Active),bit[3]=???,bit[2]=Auto-init DMA, 8-bit (1=Active),bit[1]=DAC/ADC DMA (1=synchronous),bit[0]=???}",status
+0xFB,,4.0,Sound Blaster 16,DSP Status,"Retrieves information about pending DSP operations.\n{bitfield:bit[7]=Time constant (1=modified),bit[6]=DSPC 04Fh ???,bit[5]=???,bit[4]=Virtual Speaker (1=active),bit[3]=DMA ADC\, 16-bit (1=active),bit[2]=DMA DAC\, 16-bit (1=active),bit[1]=DMA ADC\, 8-bit (1=active),bit[0]=DMA DAC\, 8-bit (1=active)}",status
 0xF3,,4.0+,,"IRQ Request, 16-bit","Triggers 16-bit interrupt."
 0xF2,,1.0+,,"IRQ Request, 8-bit","Triggers 8-bit interrupt.",,SUPPRESS(PICKTHIS=effect)
-0xF1,,3.xx,Sound Blaster Pro,"DSP Auxiliary Status","Retrieves auxiliary information about pending DSP operations.\nBit 7: ???\nBit 6: DSPC 02Dh-02Fh (SB1.x) ???\nBit 5: DSPC 020h-02Fh (SB1.x) ???\nBit 4: Reserved (1)\nBit 3: Stereo Input Mode (1=Stereo)\nBit 2: DSPC 0ACh ???\nBit 1: Reserved (1)\nBit 0: Speaker Status (0=enabled)",status
+0xF1,,3.xx,Sound Blaster Pro,"DSP Auxiliary Status","Retrieves auxiliary information about pending DSP operations.\n{bitfield:bit[7]=???,bit[6]=DSPC 02Dh-02Fh (SB1.x) ???,bit[5]=DSPC 020h-02Fh (SB1.x) ???,bit[4]=Reserved (1),bit[3]=Stereo Input Mode (1=Stereo),bit[2]=DSPC 0ACh ???,bit[1]=Reserved (1),bit[0]=Speaker Status (0=enabled)}",status
 0xF0,,1.0-3.xx,,Sine Generator,"Diagnostic peak-to-peak sine wave generator."
 0xE8,,2.0,Sound Blaster 2.0,Read Test Register,"Reads diagnostic register, and return it",nn
 0xE4,nn,2.0,Sound Blaster 2.0,Write Test Register,"Write Test Register"
