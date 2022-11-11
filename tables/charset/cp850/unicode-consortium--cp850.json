@@ -1,0 +1,12 @@
+{
+	"id": "cp850",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"type": "website",
+		"id": "unicode-consortium",
+		"url": "https://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/PC/CP850.TXT"
+	},
+	"table in csv": true
+}
