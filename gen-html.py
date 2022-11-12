@@ -442,7 +442,7 @@ def genfrag_table(bookid,ji):
             if len(tg) > 0:
                 if plus == True:
                     tg += ["+"]
-            subdcon.append(apodhtml.htmlelem(tag="sup",attr={ "class": "apodenttag" },content=tg))
+                subdcon.append(apodhtml.htmlelem(tag="sup",attr={ "class": "apodenttag" },content=tg))
     #
     def genhtmlsourceindex(coli,colidx,subdcon,ji,combent,combentsi,compiled_format):
         for sil in combentsi:
