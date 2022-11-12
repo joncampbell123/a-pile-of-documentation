@@ -312,7 +312,8 @@ def formattedsplitnv(text):
             if name == "":
                 continue
             if name in r:
-                r[name] = [ r[name] ]
+                if not type(r[name]) == list:
+                    r[name] = [ r[name] ]
                 r[name].append(value)
             else:
                 r[name] = value
@@ -422,6 +423,29 @@ def formattedbitfield(obj,tcol,splitnv,ji,compiled_format,drowobj):
         obj["bitdisplay"].append(bitr[bit])
     #
     obj["bitrange"] = { "min": bitmin, "max": bitmax, "bits": (bitmax+1-bitmin) }
+    #
+    if "row" in splitnv:
+        rowstraw = splitnv["row"]
+        if not type(rowstraw) == list:
+            rowstraw = [ rowstraw ]
+        obj["bitrows"] = [ ]
+        for rowst in rowstraw:
+            rowobj = stringtoformatted(tcol,rowst,ji,compiled_format,drowobj)
+            if not type(rowobj) == list:
+                raise Exception("What?")
+            rowobj = rowobj[0]
+            if rowobj["type"] == "bfr":
+                if len(rowobj["bitdisplay"]) > (bitmax+1):
+                    raise Exception("Bit field subrow too large, increase bits= in parent bitfield")
+                while len(rowobj["bitdisplay"]) <= bitmax:
+                    rowobj["bitdisplay"].append(False)
+                #
+                sobj = { "bitdisplay": rowobj["bitdisplay"], "bitfields": rowobj["bitfields"] }
+                if "keyval" in rowobj:
+                    sobj["keyval"] = rowobj["keyval"]
+                obj["bitrows"].append(sobj)
+            else:
+                raise Exception("Unsupported sub-bitfield object "+rowobj["type"])
 
 def stringtoformattedtokcurly(tcol,sit,ji,drowobj):
     # "{" was already read
@@ -462,7 +486,7 @@ def stringtoformattedtokcurly(tcol,sit,ji,drowobj):
             formattedweblink(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
         elif tag == "link":
             formattedlink(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
-        elif tag == "bitfield":
+        elif tag == "bitfield" or tag == "bfr":
             formattedbitfield(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
         elif tag == "enum":
             formattedenum(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
@@ -1006,7 +1030,11 @@ def tablearraycombinedcoldedupsortfmt(ve):
         r = ""
         for key in ve["fields"]:
             r += key
-            r += ve["fields"][key]
+            if type(ve["fields"][key]) == list:
+                for x in ve["fields"][key]:
+                    r += x
+            else:
+                r += ve["fields"][key]
         return r
     return ""
 

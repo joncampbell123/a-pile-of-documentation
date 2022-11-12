@@ -247,7 +247,7 @@ def tablecolbitfieldtohtml(dcon,tcolo,ent,compiled_format):
             rowo = { "fieldarr": brow["bitfields"], "fielddsp": brow["bitdisplay"] }
             if "keyval" in brow:
                 rowo["keyval"] = brow["keyval"]
-        rows.append(rowo)
+            rows.append(rowo)
     else:
         rowo = { "fieldarr": ent["bitfields"], "fielddsp": ent["bitdisplay"] }
         if "keyval" in ent:
@@ -270,7 +270,6 @@ def tablecolbitfieldtohtml(dcon,tcolo,ent,compiled_format):
             tr.append(apodhtml.htmlelem(tag="th",attr={ "class": "apodbitfieldtablerowkey" },content=keyf))
         while bit >= brange["min"]:
             br = fielddsp[bit]
-            bent = fieldarr[br]
             bmax = bmin = bit
             bit = bit - 1
             while bit >= brange["min"] and type(fielddsp[bit]) == type(br) and fielddsp[bit] == br:
@@ -284,6 +283,7 @@ def tablecolbitfieldtohtml(dcon,tcolo,ent,compiled_format):
                 #
                 tr.append(apodhtml.htmlelem(tag="td",attr=attr))
             else: # content as normal
+                bent = fieldarr[br]
                 if not bmax == bent["max"] or not bmin == bent["min"]:
                     raise Exception("Error in bitdisplay vs bitfields")
                 #
