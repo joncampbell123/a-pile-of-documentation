@@ -288,6 +288,9 @@ def formattedsplitnv(text):
                 elif c == "\\":
                     c = next(i)
                     if c == "," and depth == 0:
+                        # convert \, to , only if not within any {...} so the user doesn't have to add a
+                        # backslash for every level something is within something, they only have to use
+                        # \, to type a comma.
                         accum += c
                     elif c == "n":
                         accum += "\n"
