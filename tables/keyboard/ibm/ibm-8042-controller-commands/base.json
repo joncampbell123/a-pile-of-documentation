@@ -59,6 +59,7 @@
 			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
+			"with formatting": true,
 			"name": "comments",
 			"title": "Comments",
 			"description": "Additional comments"
