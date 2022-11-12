@@ -30,4 +30,6 @@ cmd,params,returns,dspver,command,comments,__suppress
 0x91,,,"2.01-3.xx","8-bit high-speed single-cycle DMA mode digitized sound input","After transferring a block of data of size set by command 48h, the DSP will generate an interrupt to signal the application and exit the high-speed mode.",
 0x98,,,"2.01-3.xx","8-bit high-speed auto-init DMA mode digitized sound input","Refer to command 90h.",
 0x99,,,"2.01-3.xx","8-bit high-speed single-cycle DMA mode digitized sound input","Refer to command 91h.",
+0xA0,,,"3.xx","Set input mode to mono","The default input mode is mono.",
+0xA8,,,"3.xx","Set input mode to stereo","This command must be sent if stereo recording is desired. After recording, command A0h must be sent to set the input mode back to mono. This command no longer exists on DSP version 4.xx. Refer to commands Bxh and Cxh on stereo recording settings.",
 
