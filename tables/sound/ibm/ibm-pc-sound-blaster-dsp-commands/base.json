@@ -41,6 +41,15 @@
 		},
 		{
 			"type": "string",
+			"name": "dspver",
+			"title": "DSP ver.",
+			"nowrap": true,
+			"description": "DSP version for command",
+			"case insensitive": true,
+			"combine different": true
+		},
+		{
+			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
 			"list source refs": true,
