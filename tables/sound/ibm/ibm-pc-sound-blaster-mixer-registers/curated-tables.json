@@ -1,0 +1,9 @@
+{
+	"id": "ibm-pc-sound-blaster-mixer-registers",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+	},
+	"table in csv": true
+}

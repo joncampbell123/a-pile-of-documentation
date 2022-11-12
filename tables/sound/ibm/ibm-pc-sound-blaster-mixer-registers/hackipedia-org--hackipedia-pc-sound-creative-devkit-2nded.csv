@@ -1,0 +1,17 @@
+reg,card,effect,comments,__suppress
+0x00,,"Reset Mixer","Write any 8-bit value to this register to reset the mixer chip. After a reset, all the registers will be restored to their default values.",
+0x02,"CT1335","Master Volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1335,bit[3:1]=Master volume}}3 bits, giving 8 levels. 0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps. Default is 4 ⇒ – 11 dB.",
+0x06,"CT1335","MIDI Volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1335,bit[3:1]=MIDI volume}}3 bits, giving 8 levels. 0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps. Default is 4 ⇒ – 11 dB.",
+0x08,"CT1335","CD Volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1335,bit[3:1]=CD volume}}3 bits, giving 8 levels. 0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps. Default is 0 ⇒ – 46 dB.",
+0x0A,"CT1335","Voice volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1335,bit[2:1]=Voice volume}}2 bits, giving 4 levels. 0 to 3 ⇒ – 46 dB to 0 dB, in approximate 7 dB steps. Default is 0 ⇒ – 46 dB.",
+
+0x00,,"Reset Mixer","Write any 8-bit value to this register to reset the mixer chip. After a reset, all the registers will be restored to their default values.",
+0x04,,"Voice volume","(CT1345) 3 bits per channel, giving 8 levels. 0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps. Default is 4 ⇒ – 11 dB.",
+0x0A,,"Mic volume","(CT1345) 2 bits, giving 4 levels. 0 to 3 ⇒ – 46 dB to 0 dB, in approximate 7 dB steps. Default is 0 ⇒ – 46 dB.",
+0x0C,,"Input control","",
+0x0E,,"Output control","",
+0x22,,"Master volume","(CT1345) 3 bits per channel, giving 8 levels. 0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps. Default is 4 ⇒ – 11 dB.",
+0x26,,"MIDI volume","(CT1345) 3 bits per channel, giving 8 levels. 0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps. Default is 4 ⇒ – 11 dB.",
+0x28,,"CD volume","(CT1345) 3 bits per channel, giving 8 levels. 0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps. Default is 0 ⇒ – 46 dB.",
+0x2E,,"Line volume","(CT1345) 3 bits per channel, giving 8 levels. 0 to 7 ⇒ – 46 dB to 0 dB, in approximate 4 dB steps. Default is 0 ⇒ – 46 dB.",
+
