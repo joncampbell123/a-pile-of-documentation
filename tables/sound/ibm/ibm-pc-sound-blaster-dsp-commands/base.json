@@ -15,6 +15,7 @@
 			"is array": true,
 			"is range": true,
 			"title": "Command",
+			"nowrap": true,
 			"array separator": "\n",
 			"required": true
 		},
@@ -25,6 +26,7 @@
 			"title": "Parameters",
 			"required": true,
 			"is array": true,
+			"nowrap": true,
 			"description": "Parameters"
 		},
 		{
@@ -34,6 +36,7 @@
 			"title": "Returns",
 			"required": true,
 			"is array": true,
+			"nowrap": true,
 			"description": "Bytes returned by DSP"
 		},
 		{

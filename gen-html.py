@@ -584,8 +584,7 @@ def genfrag_table(bookid,ji):
             if not type(src) == dict:
                 raise Exception("source element source not object")
             if not "id" in src:
-                print(src)
-                raise Exception("source object, no id in "+bookid+"?")
+                continue
             sref = sources_load(sources,src["id"])
             if sref == None:
                 raise Exception("No such source "+src["id"])

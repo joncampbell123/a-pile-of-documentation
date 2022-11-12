@@ -1,0 +1,9 @@
+{
+	"id": "ibm-pc-sound-blaster-dsp-commands",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+	},
+	"table in csv": true
+}
