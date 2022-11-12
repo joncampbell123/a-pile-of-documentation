@@ -38,4 +38,13 @@ reg,card,effect,comments,__suppress
 0x3C,"CT1745","Output mixer switches","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[4]=Line L,bit[3]=Line R,bit[2]=CD L,bit[1]=CD R,bit[0]=Mic}}",
 0x3D,"CT1745","Input mixer L switches","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[6]=MIDI L,bit[5]=MIDI R,bit[4]=Line L,bit[3]=Line R,bit[2]=CD L,bit[1] = CD R,bit[0]=Mic}}",
 0x3E,"CT1745","Input mixer R switches","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[6]=MIDI L,bit[5]=MIDI R,bit[4]=Line L,bit[3]=Line R,bit[2]=CD L,bit[1] = CD R,bit[0]=Mic}}",
+0x3F,"CT1745","Input Gain L","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:6]=Input Gain L}}",
+0x40,"CT1745","Input Gain R","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:6]=Input Gain R}}",
+0x41,"CT1745","Output Gain L","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:6]=Output Gain L}}",
+0x42,"CT1745","Output Gain R","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:6]=Output Gain R}}",
+0x43,"CT1745","AGC","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[0]=AGC}}",
+0x44,"CT1745","Treble L","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:4]=Treble L}}",
+0x45,"CT1745","Treble R","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:4]=Treble R}}",
+0x46,"CT1745","Bass L","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:4]=Bass L}}",
+0x47,"CT1745","Bass R","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:4]=Bass R}}",
 
