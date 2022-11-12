@@ -35,4 +35,7 @@ reg,card,effect,comments,__suppress
 0x39,"CT1745","Line volume R","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:3]=Line volume}}",
 0x3A,"CT1745","Mic volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:3]=Mic volume}}",
 0x3B,"CT1745","PC Speaker volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:6]=PC Speaker volume}}",
+0x3C,"CT1745","Output mixer switches","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[4]=Line L,bit[3]=Line R,bit[2]=CD L,bit[1]=CD R,bit[0]=Mic}}",
+0x3D,"CT1745","Input mixer L switches","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[6]=MIDI L,bit[5]=MIDI R,bit[4]=Line L,bit[3]=Line R,bit[2]=CD L,bit[1] = CD R,bit[0]=Mic}}",
+0x3E,"CT1745","Input mixer R switches","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[6]=MIDI L,bit[5]=MIDI R,bit[4]=Line L,bit[3]=Line R,bit[2]=CD L,bit[1] = CD R,bit[0]=Mic}}",
 
