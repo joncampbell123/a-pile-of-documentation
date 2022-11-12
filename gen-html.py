@@ -447,7 +447,12 @@ def genfrag_table(bookid,ji):
     hw.write(apodhtml.htmlelem(tag="a",attr={ "id": apodhtml.mkhtmlid("table",bookid) }))
     hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apodtitle", "title": bookid },content=ji["table"]))
     if "description" in ji:
-        hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apoddescription" },content=ji["description"]))
+        if type(ji["description"]) == dict and "formatted" in ji["description"] and ji["description"]["formatted"] == True:
+            subdcon = [ ]
+            tablecoltohtml(subdcon,{"compiled format": "array/formatting", "compiled format:array/formatting": "normal" },ji["description"]["text"],"array/formatting")
+            hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apoddescription" },content=subdcon))
+        else:
+            hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apoddescription" },content=ji["description"]))
     if "table columns" in ji and "rows" in ji:
         hw.begin(apodhtml.htmlelem(tag="table",attr={ "class": "apodtable" }))
         # header

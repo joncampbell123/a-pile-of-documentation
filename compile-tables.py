@@ -239,6 +239,11 @@ def procbasetable(scan,obj):
     # add sources and rows objects for content tables
     ji["sources"] = [ ]
     ji["rows"] = [ ]
+    # allow formatted description
+    if "description" in ji:
+        if type(ji["description"]) == dict:
+            if "formatted" in ji["description"] and ji["description"]["formatted"] == True:
+                ji["description"]["text"] = stringtoformatted({ "type": "normal", "compiled format:array/formatting": "normal" },ji["description"]["text"],ji,"normal",{ })
 
 class strscan:
     strval = None
