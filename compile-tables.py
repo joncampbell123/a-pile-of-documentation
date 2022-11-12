@@ -363,6 +363,7 @@ def formattedbitfield(obj,tcol,splitnv,ji,compiled_format,drowobj):
     obj["fields"] = splitnv
     bitmax = -1
     bitmin = 0
+    colwidth = 8
     bits = [ ] # index = bit number for checking
     bitr = [ ] # bit index -> entry index
     obj["bitfields"] = [ ]
@@ -405,6 +406,12 @@ def formattedbitfield(obj,tcol,splitnv,ji,compiled_format,drowobj):
         while len(bits) <= bitmax:
             bits.append(None)
     #
+    if "bitfield colwidth" in tcol:
+        colwidth = tcol["bitfield colwidth"]
+    if "colwidth" in splitnv:
+        colwidth = int(splitnv["colwidth"])
+    #
+    obj["colwidth"] = colwidth
     obj["bitdisplay"] = [ ]
     obj["display order"] = "msbfirst"
     for bit in range(bitmin,bitmax+1):

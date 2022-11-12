@@ -206,6 +206,7 @@ def tablecolenumtohtml(dcon,tcolo,ent,compiled_format):
     dcon.append(apodhtml.htmlelem(tag="table",attr={ "class": "apodenumtable" },content=trs))
 
 def tablecolbitfieldtohtml(dcon,tcolo,ent,compiled_format):
+    colwidth = ent["colwidth"] # in em
     fieldarr = ent["bitfields"]
     fielddsp = ent["bitdisplay"]
     brange = ent["bitrange"]
@@ -249,7 +250,7 @@ def tablecolbitfieldtohtml(dcon,tcolo,ent,compiled_format):
     #
     trs.append(apodhtml.htmlelem(tag="tr",attr={ "class": "apodbitfieldtablerow" },content=tr))
     #
-    dcon.append(apodhtml.htmlelem(tag="table",attr={ "class": "apodbitfieldtable" },content=trs))
+    dcon.append(apodhtml.htmlelem(tag="table",attr={ "class": "apodbitfieldtable", "style": ("width: "+str(colwidth*(brange["max"]+1-brange["min"]))+"em;") },content=trs))
 
 # dcon = array of elements to write
 # tcolo = column table info
