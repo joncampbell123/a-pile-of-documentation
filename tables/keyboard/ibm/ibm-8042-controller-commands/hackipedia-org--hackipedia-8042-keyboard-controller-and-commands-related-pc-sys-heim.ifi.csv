@@ -21,5 +21,5 @@ cmdbyte,params,command,comments,__suppress,returns
 0xD3,nn,Write Auxiliary Output Register,"On PS/2 systems the next data byte written to port 60h is written back to output as if initiated by a device and invokes interrupt if enabled"
 0xD4,nn,Write Auxiliary Device,"On PS/2 systems the next byte is sent to the auxiliary device"
 0xE0,,Read Test Inputs,"8042 reads it's T0 and T1 inputs, data is placed in output register. Bit 0 is T0 (keyboard clock), bit 1 is T1 (keyboard data)",,nn
-0xF0-0xFF,,Pulse Output Port,"Bits 0-3 of the 8042 output port can be pulsed low for as long as 6ms. Bits 0-3 of the command byte indicate which bits (set to 0) are to be pulsed. The most common use of this command is 0xFE to reset the CPU","SUPPRESS(PICKTHIS=command)"
+0xF0-0xFF,,Pulse Output Port,"Bits 0-3 of the 8042 output port can be pulsed low for as long as 6ms. Bits 0-3 of the command byte indicate which bits (set to 0) are to be pulsed. The most common use of this command is 0xFE to reset the CPU",
 
