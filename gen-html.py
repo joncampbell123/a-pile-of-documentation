@@ -168,6 +168,9 @@ def fmtstr(fmt,v):
 def tablecolenumtohtml(dcon,tcolo,ent,compiled_format):
     trs = [ ]
     columns = 1
+    fields = { }
+    if "fields" in ent:
+        fields = ent["fields"]
     fmt = "dec"
     if "format" in ent:
         fmt = ent["format"]
@@ -176,6 +179,21 @@ def tablecolenumtohtml(dcon,tcolo,ent,compiled_format):
     col = 0
     row = 0
     enum = ent["enum"]
+    enumcount = len(enum)
+    #
+    keyf = ""
+    valf = ""
+    if "keyname" in fields:
+        keyf = fields["keyname"]
+    if "valname" in fields:
+        valf = fields["valname"]
+    if not keyf == "" or not valf == "":
+        tr = [ ]
+        for cc in range(0,min(columns,enumcount)):
+            tr.append(apodhtml.htmlelem(tag="th",content=keyf))
+            tr.append(apodhtml.htmlelem(tag="th",content=valf))
+        trs.append(apodhtml.htmlelem(tag="tr",attr={ "class": "apodenumtablerowhead" },content=tr))
+    #
     for ent in enum:
         minv = ent["min"]
         maxv = ent["max"]

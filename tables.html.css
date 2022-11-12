@@ -233,3 +233,11 @@ span.fmtmonospace {
 	background-color: #DFDFEF;
 }
 
+.apodenumtablerowhead {
+	background-color: #DFDFEF;
+	font-weight: 300;
+	white-space: pre-wrap;
+	vertical-align: top;
+	font-size: 0.9em;
+}
+
