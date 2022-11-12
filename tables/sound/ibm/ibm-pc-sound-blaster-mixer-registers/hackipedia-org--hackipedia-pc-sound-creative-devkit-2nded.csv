@@ -23,3 +23,16 @@ reg,card,effect,comments,__suppress
 0x28,,"CD volume","(CT1745) 4 bits per channel, giving 16 levels. 0 to 15 ⇒ – 60 dB to 0 dB, in 4 dB steps. Default is 0 ⇒ – 60 dB.",
 0x2E,,"Line volume","(CT1745) 4 bits per channel, giving 16 levels. 0 to 15 ⇒ – 60 dB to 0 dB, in 4 dB steps. Default is 0 ⇒ – 60 dB.",
 
+0x30,"CT1745","Master volume L","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:3]=Master volume}}",
+0x31,"CT1745","Master volume R","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:3]=Master volume}}",
+0x32,"CT1745","Voice volume L","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:3]=Voice volume}}",
+0x33,"CT1745","Voice volume R","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:3]=Voice volume}}",
+0x34,"CT1745","MIDI volume L","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:3]=MIDI volume}}",
+0x35,"CT1745","MIDI volume R","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:3]=MIDI volume}}",
+0x36,"CT1745","CD volume L","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:3]=CD volume}}",
+0x37,"CT1745","CD volume R","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:3]=CD volume}}",
+0x38,"CT1745","Line volume L","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:3]=Line volume}}",
+0x39,"CT1745","Line volume R","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:3]=Line volume}}",
+0x3A,"CT1745","Mic volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:3]=Mic volume}}",
+0x3B,"CT1745","PC Speaker volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1745,bit[7:6]=PC Speaker volume}}",
+
