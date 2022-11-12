@@ -12,4 +12,4 @@ for val in range(0,32):
     # and so on
     period = (8 + A) * (1 << B) * (1.0 / (30.0 * 8.0))
     rate = 1.0 / period
-    print(str(val)+","+("%.2f" % rate)+","+("%.2f" % (period * 1000.0)))
+    print(str(val)+","+str(rate)+","+str(period * 1000.0))

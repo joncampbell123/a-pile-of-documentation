@@ -2,7 +2,7 @@
 	"table": "IBM compatible 8048 typematic rate",
 	"id": "ibm-8048-keyboard-typematic-rate-by-value-F3",
 	"combinable": true,
-	"description": { "formatted": true, "text": "Table of typematic rate from bits 5-0 command F3h.\nOfficial IBM documentation states that bits 5-0 are split into two bitfields A and B:{bitfield:bits=8,bit[6:5]=Initial delay,bit[4:3]=B,bit[2:0]=A}Period = (8 + A) * 2{superscript:B} * 0.00417 and rate is 1 / period. Period is the amount of time between make codes." },
+	"description": { "formatted": true, "text": "Table of typematic rate from bits 5-0 {link:type=table,id=ibm-8048-keyboard-commands,text=command F3h}.\nOfficial IBM documentation states that bits 5-0 are split into two bitfields A and B:{bitfield:bits=8,bit[6:5]=Initial delay,bit[4:3]=B,bit[2:0]=A}Period = (8 + A) * 2{superscript:B} * 0.00417 and rate is 1 / period. Period is the amount of time between make codes." },
 	"base definition": true,
 	"schema": {
 		"version": 1
