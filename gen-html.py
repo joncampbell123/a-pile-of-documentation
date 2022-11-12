@@ -450,7 +450,11 @@ def genfrag_table(bookid,ji):
             if coli == colidx or (compiled_format == "array/combined" and type(dcolo) == list and len(dcolo) > 1):
                 # if this is the column to emit references, do it, but only if not all sources agree
                 if "source index" in combent and not len(combent["source index"]) == len(ji["sources"]):
-                    tg += ["[", str(sil+1), "]"]
+                    sref = ji["sources"][sil]
+                    if "do not source ref" in sref and sref["do not source ref"] == True:
+                        True
+                    else:
+                        tg += ["[", str(sil+1), "]"]
                 if len(tg) > 0:
                     subdcon.append(apodhtml.htmlelem(tag="sup",content=apodhtml.htmlelem(tag="a",attr={ "href": ("#"+apodhtml.mkhtmlid("table-sr",bookid+":"+str(sil+1))), "class": "apodsourceidxref" },content=tg)))
     #

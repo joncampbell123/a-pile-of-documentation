@@ -11,7 +11,8 @@
 	"notes": [
 		"(CT1335 mixer) Sound Blaster 2.0 CD Interface card",
 		"(CT1345 mixer) Sound Blaster Pro",
-		"(CT1745 mixer) Sound Blaster 16"
+		"(CT1745 mixer) Sound Blaster 16",
+		"Despite Sound Blaster's origins on the IBM PC platform, there also exists a Sound Blaster 16 C-Bus card for NEC PC-98 systems"
 	],
 	"table in csv": true
 }
