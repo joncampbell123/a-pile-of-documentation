@@ -10,7 +10,8 @@
 	},
 	"notes": [
 		"(CT1335 mixer) Sound Blaster 2.0 CD Interface card",
-		"(CT1345 mixer) Sound Blaster Pro"
+		"(CT1345 mixer) Sound Blaster Pro",
+		"(CT1745 mixer) Sound Blaster 16"
 	],
 	"table in csv": true
 }

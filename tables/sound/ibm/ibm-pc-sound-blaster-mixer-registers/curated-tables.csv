@@ -1,11 +1,11 @@
 reg,card,effect,comments,__suppress
-0x04,,"Voice volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1345 or compatible,bit[7:5]=Voice volume L,bit[3:1]=Voice volume R}}",
-0x22,,"Master volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1345 or compatible,bit[7:5]=Master volume L,bit[3:1]=Master volume R}}",
-0x26,,"MIDI/FM volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1345 or compatible,bit[7:5]=MIDI/FM volume L,bit[3:1]=MIDI/FM volume R}}",
-0x28,,"CD volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1345 or compatible,bit[7:5]=CD volume L,bit[3:1]=CD volume R}}",
-0x2E,,"Line volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1345 or compatible,bit[7:5]=Line volume L,bit[3:1]=Line volume R}}",
+0x04,,"Voice volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1345 or compatible,bit[7:5]=Voice volume L,bit[3:1]=Voice volume R},row={bfr:keyval=CT1745,bit[7:4]=Voice volume L,bit[3:0]=Voice volume R}}",
+0x22,,"Master volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1345 or compatible,bit[7:5]=Master volume L,bit[3:1]=Master volume R},row={bfr:keyval=CT1745,bit[7:4]=Master volume L,bit[3:0]=Master volume R}}",
+0x26,,"MIDI/FM volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1345 or compatible,bit[7:5]=MIDI/FM volume L,bit[3:1]=MIDI/FM volume R},row={bfr:keyval=CT1745,bit[7:4]=MIDI/FM volume L,bit[3:0]=MIDI/FM volume R}}",
+0x28,,"CD volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1345 or compatible,bit[7:5]=CD volume L,bit[3:1]=CD volume R},row={bfr:keyval=CT1745,bit[7:4]=CD volume L,bit[3:0]=CD volume R}}",
+0x2E,,"Line volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1345 or compatible,bit[7:5]=Line volume L,bit[3:1]=Line volume R},row={bfr:keyval=CT1745,bit[7:4]=Line volume L,bit[3:0]=Line volume R}}",
 
-0x0A,,"Mic volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1345 or compatible,bit[2:1]=Mic volume}}",
+0x0A,,"Mic volume","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1345 or compatible,bit[2:1]=Mic volume},row={bfr:keyval=CT1745,bit[2:0]=Mic volume}}",
 0x0C,,"Input control","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1345 or compatible,bit[5]=Input filter{enum:0=Input filter on\, pass through low-pass filter,1=Input filter off\, bypass low-pass filter},bit[3]=Lowpass filter{enum:0=3.2 kHz low-pass filter,1=8.8 kHz low-pass filter},bit[2:1]=Input source{enum:0=Microphone source,1=CD source,2=Microphone source,3=Line-in source}}}"
 0x0E,,"Output control","{bitfield:bits=8,keyhead=,row={bfr:keyval=CT1345 or compatible,bit[5]=Output filter{enum:0=Output filter on\, output through low-pass filter,1=Output filter off\, bypass the low-pass filter},bit[1]=Stereo Switch{enum:0=mono output,1=stereo output}}}Turn off the output filter for high sampling rates or stereo output."
 
