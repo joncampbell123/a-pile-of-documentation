@@ -15,4 +15,14 @@ cmd,params,returns,dspver,command,comments,__suppress
 0x36,,,"2.0+","UART polling mode MIDI I/O with time stamping","For time stamping mode, in-bound MIDI data is tagged with a time stamp by the DSP. The time stamp is a 3-byte quantity in units of milliseconds. The order of time stamped in-bound MIDI data is:\n\n{monospace:nTime.LowByte, nTime.MidByte, nTime.HighByte, bMidiData}\n\nRefer to command 34h on the characteristics of MIDI UART mode and on how to terminate it.",
 0x37,,,"2.0+","UART interrupt mode MIDI I/O with time stamping","After sending this command, the DSP will generate an interrupt to signal the application when there is any in-bound MIDI data. In-bound MIDI data is time stamped by the DSP. Refer to command 34h on the characteristics of MIDI UART mode and on how to terminate it. Refer to command 36h on MIDI time stamping mode.",
 0x38,nn,,"1.0+","MIDI output","Output MIDI data to the MIDI port in non-UART mode"
+0x40,nn,,"1.0+","Set digitized sound transfer Time Constant","Set the digitized sound I/O transfer Time Constant. Time Constant is the sampling rate representation used by the DSP. It is calculated as:\n\nTime Constant = 65536 - (256 000 000/(channels * sampling rate))\n\nThe channels parameter is 1 for mono, 2 for stereo. Only the high byte of the result is sent to the DSP."
+0x41,hi lo,,"4.0+","Set digitized sound output sampling rate","Valid sampling rates range from 5000 to 45 000 Hz inclusive. Unlike the Time Constant, there is no need to pre-multiply the sampling rate by two before programming the sampling rate for stereo digitized sound I/O.",
+0x42,hi lo,,"4.0+","Set digitized sound input sampling rate","Refer to command 41h.",
+0x48,lo hi,,"2.0+","Set DSP block transfer size","The DSP will generate an interrupt after transferring the block of data. wBlockSize is a word giving the number of bytes to transfer less 1. This command is used with high-speed mode and auto-init DMA mode.",
+0x74,lo hi,,"1.0+","Creative 8-bit to 4-bit ADPCM single-cycle DMA mode digitized sound output","Refer to command 16h.",
+0x75,lo hi,,"1.0+","Creative 8-bit to 4-bit ADPCM single-cycle DMA mode digitized sound output with reference byte","Refer to command 17h.",
+0x76,lo hi,,"1.0+","Creative 8-bit to 3-bit ADPCM single-cycle DMA mode digitized sound output","Refer to command 16h.",
+0x77,lo hi,,"1.0+","Creative 8-bit to 3-bit ADPCM single-cycle DMA mode digitized sound output with reference byte","Refer to command 17h.",
+0x7D,,,"2.0+","Creative 8-bit to 4-bit ADPCM auto-init DMA mode digitized sound output with reference byte","Refer to command 1Fh.",
+0x7F,,,"2.0+","Creative 8-bit to 3-bit ADPCM auto-init DMA mode digitized sound output with reference byte","Refer to command 1Fh.",
 
