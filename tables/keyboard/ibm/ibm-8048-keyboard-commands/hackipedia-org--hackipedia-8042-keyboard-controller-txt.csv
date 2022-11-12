@@ -15,5 +15,5 @@ cmdbyte,params,command,comments,__suppress
 0xFC,nn,"Make one key make/break, set 3 scan code nn","Only with scancode Set 3"
 0xFD,nn,"Make one key make-only, set 3 scan code nn","Only with scancode Set 3"
 0xFE,,"Resend previous byte","Does not resend if previous byte is FEh",SUPPRESS(THIS=command)
-0xFF,,,"Reset 8048, do power-on self-test, return test result byte",
+0xFF,,,"Reset 8048, do power-on self-test, return test {link:type=table,id=ibm-8048-keyboard-non-key-status-bytes,text=result byte}",
 

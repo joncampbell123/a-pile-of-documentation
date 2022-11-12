@@ -8,5 +8,5 @@ cmdbyte,params,command,comments,__suppress
 0xF6,,Set Default,"Resets all conditions to the power-on default state. Keyboard responds with ACK, clears output buffer, continues scanning if previously enabled"
 0xF7-0xFD,,"No-Operation","Not used by the system [at the time this IBM Technical Reference Manual was written]"
 0xFE,,Resend,"Sent when the system detects an error"
-0xFF,,Reset,"Start a program reset and keyboard internal self-test, then the keyboard responds with ACK"
+0xFF,,Reset,"Start a program reset and keyboard internal self-test, then the keyboard responds with {link:type=table,id=ibm-8048-keyboard-non-key-status-bytes,text=ACK}"
 
