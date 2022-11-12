@@ -225,50 +225,79 @@ def tablecolenumtohtml(dcon,tcolo,ent,compiled_format):
 
 def tablecolbitfieldtohtml(dcon,tcolo,ent,compiled_format):
     colwidth = ent["colwidth"] # in em
-    fieldarr = ent["bitfields"]
-    fielddsp = ent["bitdisplay"]
     brange = ent["bitrange"]
+    columns = brange["max"]+1-brange["min"]
+    keycolumn = False
+    #
+    if "keyhead" in ent:
+        keycolumn = True
+        columns += 1
     #
     trs = [ ]
     th = [ ]
+    if keycolumn:
+        th.append(apodhtml.htmlelem(tag="th",content=ent["keyhead"]))
     for bit in range(brange["max"],brange["min"]-1,-1):
         th.append(apodhtml.htmlelem(tag="th",content=("Bit "+str(bit))))
     trs.append(apodhtml.htmlelem(tag="tr",attr={ "class": "apodbitfieldtablehead" },content=th))
     #
-    pbr = -1
-    bit = brange["max"]
-    bitcol = bit # HTML table column
-    tr = [ ]
-    while bit >= brange["min"]:
-        br = fielddsp[bit]
-        bent = fieldarr[br]
-        bmax = bmin = bit
-        bit = bit - 1
-        while bit >= brange["min"] and type(fielddsp[bit]) == type(br) and fielddsp[bit] == br:
-            bmin = bit
-            bit = bit - 1
+    if "bitrows" in ent:
+        rows = [ ]
+        for brow in ent["bitrows"]:
+            rowo = { "fieldarr": brow["bitfields"], "fielddsp": brow["bitdisplay"] }
+            if "keyval" in brow:
+                rowo["keyval"] = brow["keyval"]
+        rows.append(rowo)
+    else:
+        rowo = { "fieldarr": ent["bitfields"], "fielddsp": ent["bitdisplay"] }
+        if "keyval" in ent:
+            rowo["keyval"] = ent["keyval"]
+        rows = [ rowo ]
+    #
+    for row in rows:
+        fieldarr = row["fieldarr"]
+        fielddsp = row["fielddsp"]
         #
-        if type(br) == bool and br == False: # nothing in this part
-            attr = { "class": "apodbitfieldtablenodef" }
-            if (bmax-bmin) > 0:
-                attr["colspan"] = str(bmax+1-bmin)
+        pbr = -1
+        bit = brange["max"]
+        bitcol = bit # HTML table column
+        tr = [ ]
+        if keycolumn:
+            keyf = ""
+            if "keyval" in row:
+                keyf = row["keyval"]
             #
-            tr.append(apodhtml.htmlelem(tag="td",attr=attr))
-        else: # content as normal
-            if not bmax == bent["max"] or not bmin == bent["min"]:
-                raise Exception("Error in bitdisplay vs bitfields")
+            tr.append(apodhtml.htmlelem(tag="th",attr={ "class": "apodbitfieldtablerowkey" },content=keyf))
+        while bit >= brange["min"]:
+            br = fielddsp[bit]
+            bent = fieldarr[br]
+            bmax = bmin = bit
+            bit = bit - 1
+            while bit >= brange["min"] and type(fielddsp[bit]) == type(br) and fielddsp[bit] == br:
+                bmin = bit
+                bit = bit - 1
             #
-            attr = { "class": "apodbitfieldtablecol" }
-            if (bmax-bmin) > 0:
-                attr["colspan"] = str(bmax+1-bmin)
-            #
-            subdcon = [ ]
-            tablecoltohtml(subdcon,tcolo,bent["value"],compiled_format)
-            tr.append(apodhtml.htmlelem(tag="td",attr=attr,content=subdcon))
+            if type(br) == bool and br == False: # nothing in this part
+                attr = { "class": "apodbitfieldtablenodef" }
+                if (bmax-bmin) > 0:
+                    attr["colspan"] = str(bmax+1-bmin)
+                #
+                tr.append(apodhtml.htmlelem(tag="td",attr=attr))
+            else: # content as normal
+                if not bmax == bent["max"] or not bmin == bent["min"]:
+                    raise Exception("Error in bitdisplay vs bitfields")
+                #
+                attr = { "class": "apodbitfieldtablecol" }
+                if (bmax-bmin) > 0:
+                    attr["colspan"] = str(bmax+1-bmin)
+                #
+                subdcon = [ ]
+                tablecoltohtml(subdcon,tcolo,bent["value"],compiled_format)
+                tr.append(apodhtml.htmlelem(tag="td",attr=attr,content=subdcon))
+        #
+        trs.append(apodhtml.htmlelem(tag="tr",attr={ "class": "apodbitfieldtablerow" },content=tr))
     #
-    trs.append(apodhtml.htmlelem(tag="tr",attr={ "class": "apodbitfieldtablerow" },content=tr))
-    #
-    dcon.append(apodhtml.htmlelem(tag="table",attr={ "class": "apodbitfieldtable", "style": ("width: "+str(colwidth*(brange["max"]+1-brange["min"]))+"em;") },content=trs))
+    dcon.append(apodhtml.htmlelem(tag="table",attr={ "class": "apodbitfieldtable", "style": ("width: "+str(colwidth*columns)+"em;") },content=trs))
 
 # dcon = array of elements to write
 # tcolo = column table info

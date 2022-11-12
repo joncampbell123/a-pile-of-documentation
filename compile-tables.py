@@ -397,6 +397,10 @@ def formattedbitfield(obj,tcol,splitnv,ji,compiled_format,drowobj):
                 bitr[bit] = bfi
             obj["bitfields"].append(bitobj)
     #
+    if "keyhead" in splitnv:
+        obj["keyhead"] = splitnv["keyhead"]
+    if "keyval" in splitnv:
+        obj["keyval"] = splitnv["keyval"]
     if "bits" in splitnv:
         bitcount = int(splitnv["bits"])
         if bitmax < (bitcount-1):

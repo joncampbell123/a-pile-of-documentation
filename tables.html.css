@@ -234,6 +234,10 @@ span.fmtmonospace {
 	background-color: #DFDFEF;
 }
 
+.apodbitfieldtablerowkey {
+	background-color: #DFDFDF;
+}
+
 .apodenumtablerowhead {
 	background-color: #DFDFEF;
 	font-weight: 300;
