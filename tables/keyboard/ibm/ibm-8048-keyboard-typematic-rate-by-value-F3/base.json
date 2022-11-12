@@ -22,12 +22,10 @@
 			"required": true
 		},
 		{
-			"type": "string",
-			"case insensitive": true,
-			"combine different": true,
-			"name": "comments",
-			"title": "Comments",
-			"description": "Additional comments"
+			"type": "float",
+			"name": "period",
+			"title": "Period (ms)",
+			"required": true
 		}
 	]
 }
