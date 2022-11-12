@@ -41,6 +41,14 @@
 		},
 		{
 			"type": "string",
+			"name": "card",
+			"title": "Card",
+			"nowrap": true,
+			"description": "Specific card(s) or hardware, if applicable",
+			"required": true
+		},
+		{
+			"type": "string",
 			"name": "dspver",
 			"title": "DSP ver.",
 			"nowrap": true,
@@ -53,6 +61,7 @@
 			"case insensitive": true,
 			"combine different": true,
 			"list source refs": true,
+			"description": "Name of command",
 			"name": "command",
 			"title": "Command",
 			"required": true

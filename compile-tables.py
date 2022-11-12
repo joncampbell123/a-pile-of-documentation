@@ -287,7 +287,7 @@ def formattedsplitnv(text):
                     accum += c
                 elif c == "\\":
                     c = next(i)
-                    if c == ",":
+                    if c == "," and depth == 0:
                         accum += c
                     elif c == "n":
                         accum += "\n"

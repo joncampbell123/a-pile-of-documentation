@@ -236,6 +236,7 @@ span.fmtmonospace {
 
 .apodbitfieldtablerowkey {
 	background-color: #DFDFDF;
+	white-space: pre-wrap;
 }
 
 .apodenumtablerowhead {
