@@ -10,6 +10,6 @@ for val in range(0,32):
     # 2**1 == 2        1 << 1 == 2
     # 2**2 == 4        1 << 2 == 4
     # and so on
-    period = (8 + A) * (1 << B) * (1.0 / (30.0 * 8.0))
+    period = (8 + A) * (1 << B) / (30.0 * 8.0)
     rate = 1.0 / period
     print(str(val)+","+str(rate)+","+str(period * 1000.0))
