@@ -121,8 +121,19 @@ def genfrag_source(bookid,ji):
 
 def tablecolfloattohtml(tcolo,dcolo):
     if type(dcolo) == list:
-        return str(dcolo)
-    return str(dcolo)
+        r = ""
+        for x in dcolo:
+            if not r == "":
+                r += " "
+            r += tablecolfloattohtml(tcolo,x)
+        return r
+    #
+    if "float precision digits" in tcolo:
+        digits = tcolo["float precision digits"]
+        r = (("%."+str(digits)+"f") % dcolo)
+    else:
+        r = str(dcolo)
+    return r
 
 def hex8(x):
     x = hex(x)[2:].upper() # strip off the 0x

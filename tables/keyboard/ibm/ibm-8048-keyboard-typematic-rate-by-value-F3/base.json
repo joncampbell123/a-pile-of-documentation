@@ -17,6 +17,7 @@
 		},
 		{
 			"type": "float",
+			"float precision digits": "1",
 			"name": "rate",
 			"title": "Rate",
 			"required": true
@@ -25,6 +26,7 @@
 			"type": "float",
 			"name": "period",
 			"title": "Period (ms)",
+			"float precision digits": "2",
 			"required": true
 		}
 	]
