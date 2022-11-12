@@ -12,7 +12,8 @@
 		"(CT1335 mixer) Sound Blaster 2.0 CD Interface card",
 		"(CT1345 mixer) Sound Blaster Pro",
 		"(CT1745 mixer) Sound Blaster 16",
-		"Despite Sound Blaster's origins on the IBM PC platform, there also exists a Sound Blaster 16 C-Bus card for NEC PC-98 systems"
+		"Despite Sound Blaster's origins on the IBM PC platform, there also exists a Sound Blaster 16 C-Bus card for NEC PC-98 systems",
+		"On Sound Blaster Pro, the undefined mixer bits are always (1) when read back, no matter what was written. This fact is used by some DOS programs and drivers to detect a Sound Blaster Pro and such code will fail to detect a Pro if those bits do not always read back (1). Sound Blaster 16 reclaims one reserved bit to extend the Pro compatible registers. It is not known if the CT1335 Sound Blaster 2.0 behaves the same way."
 	],
 	"table in csv": true
 }
