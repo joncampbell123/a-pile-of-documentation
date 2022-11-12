@@ -1,7 +1,7 @@
 cmdbyte,params,command,comments,__suppress
 0xED,nn,"Write LEDs","The low 3 bits control the LEDs. Bit 0 = scroll lock. Bit 1 = Num lock. Bit 2 = Caps lock",SUPPRESS(ALL)
 0xEE,,"Echo","Keyboard responds with EEh"
-0xF0,nn,"Select scancode set","Keyboard responds with current set if nn == 0, or 1-3 sets the scancode set"
+0xF0,nn,"Select scancode set","nn:{enum:0=Keyboard responds with current set,1=Scancode set 1,2=Scancode set 2,3=Scancode set 3}"
 0xF2,,"Read ID","Keyboard responds with ACK (FAh) and two optional ID bytes"
 0xF3,nn,"Set typematic (auto-repeat) rate/delay","Bits 6:5 specify delay, bits 4:0 specify rate",SUPPRESS(ALL)
 0xF4,,,"Clears output buffer, enables keyboard",,
