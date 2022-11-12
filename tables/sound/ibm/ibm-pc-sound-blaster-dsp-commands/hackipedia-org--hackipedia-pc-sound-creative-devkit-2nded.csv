@@ -25,4 +25,9 @@ cmd,params,returns,dspver,command,comments,__suppress
 0x77,lo hi,,"1.0+","Creative 8-bit to 3-bit ADPCM single-cycle DMA mode digitized sound output with reference byte","Refer to command 17h.",
 0x7D,,,"2.0+","Creative 8-bit to 4-bit ADPCM auto-init DMA mode digitized sound output with reference byte","Refer to command 1Fh.",
 0x7F,,,"2.0+","Creative 8-bit to 3-bit ADPCM auto-init DMA mode digitized sound output with reference byte","Refer to command 1Fh.",
+0x80,lo hi,,"1.0+","Pause DAC for a duration","wDuration is a word giving the duration to pause in the units of sampling period less 1. When the specified duration elapses, the DSP generates an interrupt.",
+0x90,,,"2.01-3.xx","8-bit high-speed auto-init DMA mode digitized sound output","The DSP will generate an interrupt to signal the application after transferring every Block Size of data set by command 48h. In high-speed mode, the DSP will not accept any other commands. To terminate high-speed mode, send a DSP reset command. The DSP reset command behaves differently while the DSP is in high-speed mode. It terminates high-speed mode and restores all DSP parameters to the states prior to entering the high-speed mode.",
+0x91,,,"2.01-3.xx","8-bit high-speed single-cycle DMA mode digitized sound input","After transferring a block of data of size set by command 48h, the DSP will generate an interrupt to signal the application and exit the high-speed mode.",
+0x98,,,"2.01-3.xx","8-bit high-speed auto-init DMA mode digitized sound input","Refer to command 90h.",
+0x99,,,"2.01-3.xx","8-bit high-speed single-cycle DMA mode digitized sound input","Refer to command 91h.",
 
