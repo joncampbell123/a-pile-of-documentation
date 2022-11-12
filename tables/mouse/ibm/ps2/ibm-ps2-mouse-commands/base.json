@@ -1,8 +1,8 @@
 {
-	"table": "IBM compatible PS/2 mouse commands on Synaptics touchpad devices",
-	"id": "ibm-ps2-mouse-commands-synaptics-touchpad",
+	"table": "IBM compatible PS/2 mouse commands",
+	"id": "ibm-ps2-mouse-commands",
 	"combinable": true,
-	"description": "PS/2 mouse commands, typically written to AUX on the 8042. The commands listed here are send in groups of 2 bits using commands E8h and F3h or E9h. The byte is sent as rrssttuu: E8h rr E8h ss E8h tt E8h uu followed by F3h or E9h. Each one is a value from 0 to 3. The sequence must be four E8h commands followed by F3h/E9h or it will be handled as if a normal series of Set Resolution commands.\nIf the last command is Set Sample Rate 20 (0xF3 0x14), the 8-bit value rrssttuu is instead the new mode byte.",
+	"description": "PS/2 mouse commands, typically written to AUX on the 8042",
 	"base definition": true,
 	"schema": {
 		"version": 1
@@ -15,6 +15,7 @@
 			"is array": true,
 			"is range": true,
 			"title": "Command byte",
+			"array separator": "\n",
 			"required": true
 		},
 		{
@@ -30,6 +31,7 @@
 			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
+			"list source refs": true,
 			"name": "command",
 			"title": "Command",
 			"required": true
@@ -38,6 +40,7 @@
 			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
+			"with formatting": true,
 			"name": "comments",
 			"title": "Comments",
 			"description": "Additional comments"
