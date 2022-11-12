@@ -230,6 +230,7 @@ span.fmtmonospace {
 	/* minimize width */
 	width: 1px;
 	white-space: pre;
+	font-weight: 900;
 	background-color: #DFDFEF;
 }
 
