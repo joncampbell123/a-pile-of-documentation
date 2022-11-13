@@ -9,6 +9,7 @@ import math
 import copy
 import struct
 import pathlib
+import datetime
 
 import apodtoc
 import apodjson
@@ -853,3 +854,45 @@ df = open("compiled/html/tables.css","wb")
 df.write(sf.read())
 df.close()
 sf.close()
+# index.html
+date = datetime.date.today()
+datestr = str(date.year)+"/"+str(date.month)+"/"+str(date.day)
+f = open("compiled/html/index.html","wb")
+writewhole_beginhead(f)
+f.write("<title>Main page</title>".encode('UTF-8'))
+f.write(("<link rel=\"stylesheet\" href=\"tables.css\" />").encode('UTF-8'))
+writewhole_endhead(f)
+writewhole_beginbody(f)
+hw = apodhtml.htmlwriter()
+#
+hw.write(apodhtml.htmlelem(tag="h1",content="A Pile of Documentation"))
+#
+hw.write(apodhtml.htmlelem(tag="div",content=("Release "+datestr)))
+hw.write(apodhtml.htmlelem(tag="br"))
+#
+hw.write(apodhtml.htmlelem(tag="div",content="A carefully arrange collection of technical information compiled from various sources."))
+hw.write(apodhtml.htmlelem(tag="br"))
+#
+el = [ ]
+el.append(apodhtml.htmlelem(tag="span",content="Browse: "))
+el.append(apodhtml.htmlelem(tag="a",attr={ "href": "sources.html" },content="Sources"))
+el.append(apodhtml.htmlelem(tag="span",content=" "))
+el.append(apodhtml.htmlelem(tag="a",attr={ "href": "tables.html" },content="Tables"))
+hw.write(apodhtml.htmlelem(tag="div",content=el))
+hw.write(apodhtml.htmlelem(tag="br"))
+#
+el = [ ]
+el.append(apodhtml.htmlelem(tag="span",content="Download this collection: "))
+el.append(apodhtml.htmlelem(tag="a",attr={ "href": "download.zip" },content="(ZIP)"))
+hw.write(apodhtml.htmlelem(tag="div",content=el))
+hw.write(apodhtml.htmlelem(tag="br"))
+#
+el = [ ]
+el.append(apodhtml.htmlelem(tag="span",content="Browse the source code: "))
+el.append(apodhtml.htmlelem(tag="a",attr={ "href": "https://github.com/joncampbell123/a-pile-of-documentation", "target": "_blank" },content="(GitHub)"))
+hw.write(apodhtml.htmlelem(tag="div",content=el))
+#
+f.write(hw.get())
+writewhole_endbody(f)
+f.close()
+
