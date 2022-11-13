@@ -206,7 +206,7 @@ charcode,name,character,comments
 0xed," LATIN CAPITAL LETTER I WITH GRAVE","Ì",
 0xee," LATIN CAPITAL LETTER O WITH ACUTE","Ó",
 0xef," LATIN CAPITAL LETTER O WITH CIRCUMFLEX","Ô",
-0xf0," Apple logo","",
+0xf0," Apple logo","","{image:id=macromanapple}May not render on non-Mac OS systems"
 0xf1," LATIN CAPITAL LETTER O WITH GRAVE","Ò",
 0xf2," LATIN CAPITAL LETTER U WITH ACUTE","Ú",
 0xf3," LATIN CAPITAL LETTER U WITH CIRCUMFLEX","Û",
