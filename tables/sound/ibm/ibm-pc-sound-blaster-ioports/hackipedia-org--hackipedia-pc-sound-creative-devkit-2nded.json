@@ -12,7 +12,8 @@
 		"The C/MS Music Voice ports apply only when C/MS chips are present.",
 		"FM music can also be accessed through I/O addresses 388h and 389h",
 		"Sound Blaster 1.xx and MCV (MicroChannel Version) supported base I/O ports: 210h,220h,230h,240h,250h,260h",
-		"Sound Blaster 2.0 supported base I/O ports: 220h,240h"
+		"Sound Blaster 2.0 supported base I/O ports: 220h,240h",
+		"Sound Blaster 2.0 CD Interface supported base I/O ports: 250h,260h"
 	],
 	"table in csv": true
 }

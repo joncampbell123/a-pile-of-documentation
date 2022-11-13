@@ -34,3 +34,10 @@ SB_BASE+0xC,W,Sound Blaster 2.0,"DSP Write Command/Data"
 SB_BASE+0xC,R,Sound Blaster 2.0,"DSP Write-Buffer Status"
 SB_BASE+0xE,R,Sound Blaster 2.0,"DSP Read-Buffer Status"
 
+SBCD_BASE+0x0,R/W,Sound Blaster 2.0 CD Interface,"CD-ROM Command or Data Register"
+SBCD_BASE+0x1,R,Sound Blaster 2.0 CD Interface,"CD-ROM Status Register"
+SBCD_BASE+0x2,W,Sound Blaster 2.0 CD Interface,"CD-ROM Reset Register"
+SBCD_BASE+0x3,W,Sound Blaster 2.0 CD Interface,"CD-ROM Enable Register"
+SBCD_BASE+0x4,W,Sound Blaster 2.0 CD Interface,"Mixer chip Register Address Port"
+SBCD_BASE+0x5,R/W,Sound Blaster 2.0 CD Interface,"Mixer chip Data Port"
+
