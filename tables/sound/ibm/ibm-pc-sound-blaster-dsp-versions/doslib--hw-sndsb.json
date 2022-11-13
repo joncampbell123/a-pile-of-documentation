@@ -1,0 +1,14 @@
+{
+	"id": "ibm-pc-sound-blaster-dsp-versions",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"id": "doslib",
+		"type": "website",
+		"url": "https://github.com/joncampbell123/doslib/tree/master/hw/sndsb"
+	},
+	"notes": [
+	],
+	"table in csv": true
+}
