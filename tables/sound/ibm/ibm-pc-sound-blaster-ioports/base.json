@@ -32,7 +32,6 @@
 			"title": "Card",
 			"nowrap": true,
 			"case insensitive": true,
-			"combine different": true,
 			"description": "Card or cards associated with the I/O port",
 			"required": true
 		},
