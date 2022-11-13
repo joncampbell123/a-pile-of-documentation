@@ -1,0 +1,14 @@
+{
+	"id": "ibm-pc-sound-blaster-dsp-versions",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"id": "wikipedia",
+		"type": "website",
+		"url": "https://en.wikipedia.org/wiki/Sound_Blaster"
+	},
+	"notes": [
+	],
+	"table in csv": true
+}

@@ -1,0 +1,8 @@
+major,minor,card,comments
+1,0,Sound Blaster 1.0,"Model CT1310, CT1320A, CT1320B"
+1,5,Sound Blaster 1.5,"Model CT1320C, CT1320U"
+2,0,Sound Blaster 1.x,"With DSP upgrade to 2.00"
+2,1,Sound Blaster 2.0,"Model CT1350. The maximum sampling rate was increased to 44kHz for playback, and 15kHz for record. The DSP's MIDI UART was upgraded to full-duplex and offered time stamping features"
+3,-,Sound Blaster Pro,"Model CT1330"
+3,-,Sound Blaster Pro 2,"Model CT1600"
+
