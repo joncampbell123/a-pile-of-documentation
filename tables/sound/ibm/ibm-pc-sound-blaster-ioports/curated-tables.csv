@@ -4,12 +4,12 @@ SB_BASE+0x1,W,Sound Blaster 1.xx-2.0 only,"C/MS Music Voice 1-6 Register Port",
 SB_BASE+0x2,W,Sound Blaster 1.xx-2.0 only,"C/MS Music Voice 7-12 Data Port",
 SB_BASE+0x3,W,Sound Blaster 1.xx-2.0 only,"C/MS Music Voice 7-12 Register Port",
 
-SB_BASE+0x6,W,Sound Blaster,"DSP Reset",
+SB_BASE+0x6,W,Sound Blaster,"DSP Reset","{bitfield:bits=8,bit[0]=Reset control{enum:0=Run,1=Reset}}"
 SB_BASE+0x8,R,Sound Blaster,"FM Music Status Port",
 SB_BASE+0x8,W,Sound Blaster,"FM Music Register Port",
 SB_BASE+0x9,W,Sound Blaster,"FM Music Data Port",
 SB_BASE+0xA,R,Sound Blaster,"DSP Read Data Port",
 SB_BASE+0xC,W,Sound Blaster,"DSP Write Command/Data",
-SB_BASE+0xC,R,Sound Blaster,"DSP Write-Buffer Status",
-SB_BASE+0xE,R,Sound Blaster,"DSP Read-Buffer Status",
+SB_BASE+0xC,R,Sound Blaster,"DSP Write-Buffer Status","{bitfield:bits=8,bit[7]=Status{enum:1=Busy,0=Ready}}"
+SB_BASE+0xE,R,Sound Blaster,"DSP Read-Buffer Status","{bitfield:bits=8,bit[7]=Status{enum:1=Data ready,0=No data}}"
 

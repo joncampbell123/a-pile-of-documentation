@@ -41,6 +41,7 @@
 			"title": "Description",
 			"nowrap": true,
 			"case insensitive": true,
+			"list source refs": true,
 			"description": "Description of the I/O port",
 			"required": true
 		},
