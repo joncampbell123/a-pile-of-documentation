@@ -24,8 +24,8 @@ SB_BASE+0x3,W,Sound Blaster Pro 2,"Advanced FM Music Data Port"
 SB_BASE+0x4,W,Sound Blaster Pro,"Mixer chip Register Address Port"
 SB_BASE+0x5,R/W,Sound Blaster Pro,"Mixer chip Data Port"
 
-SB_BASE+0x10,R/W,Sound Blaster Pro,"CD-ROM Command or Data Register"
-SB_BASE+0x11,R,Sound Blaster Pro,"CD-ROM Status Register"
-SB_BASE+0x12,W,Sound Blaster Pro,"CD-ROM Reset Register"
-SB_BASE+0x13,W,Sound Blaster Pro,"CD-ROM Enable Register"
+SB_BASE+0x10,R/W,"Sound Blaster Pro, Sound Blaster 16","CD-ROM Command or Data Register"
+SB_BASE+0x11,R,"Sound Blaster Pro, Sound Blaster 16","CD-ROM Status Register"
+SB_BASE+0x12,W,"Sound Blaster Pro, Sound Blaster 16","CD-ROM Reset Register"
+SB_BASE+0x13,W,"Sound Blaster Pro, Sound Blaster 16","CD-ROM Enable Register"
 
