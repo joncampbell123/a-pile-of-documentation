@@ -10,18 +10,18 @@
 	"table columns": [
 		{
 			"type": "uint8_t",
-			"display": "hex",
+			"display": "dec",
 			"name": "major",
-			"title": "Major",
+			"title": "H",
 			"required": true,
 			"nowrap": true,
 			"description": "Major byte of the DSP version"
 		},
 		{
 			"type": "uint8_t",
-			"display": "hex",
+			"display": "dec",
 			"name": "minor",
-			"title": "Minor",
+			"title": "L",
 			"required": true,
 			"nowrap": true,
 			"description": "Minor byte of the DSP version"

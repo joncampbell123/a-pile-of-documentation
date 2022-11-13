@@ -1,2 +1,10 @@
 major,minor,card,comments
+1,-,Sound Blaster 1.5,Listed by Creative as 1.xx
+1,-,Sound Blaster MCV,"Listed by Creative as 1.xx SBMCV, MicroChannel Version"
+2,0,Sound Blaster 1.5,Cards with an upgraded DSP 2.00 chip
+2,0,Sound Blaster MCV,Cards with an upgraded DSP 2.00 chip
+2,1,Sound Blaster 2.0,DSP 2.00 features with the addition of higher sample rates. Note that DSP 2.00 cannot do higher sample rates
+3,-,Sound Blaster Pro,Adds stereo
+3,-,Sound Blaster Pro MCV,"SBPRO MCV, MicroChannel Version"
+4,-,Sound Blaster 16,With or without Advanced Signal Processing
 

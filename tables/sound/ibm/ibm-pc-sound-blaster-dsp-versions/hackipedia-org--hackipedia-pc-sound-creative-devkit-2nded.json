@@ -8,5 +8,8 @@
 		"type": "website",
 		"url": "http://hackipedia.org/browse.cgi/Computer/Platform/PC%2c%20IBM%20compatible/Sound%20and%20Music/Creative%20Labs/Sound%20Blaster/Sound%20Blaster%20Series%20Developer%20Kit%2c%20Second%20Edition%2epdf"
 	},
+	"notes": [
+		"Major and minor numbers are the values returned by the DSP. When typically shown to the user, the major byte is printed in decimal and the minor byte printed with two decimal places. For example, major=2 minor=1 would be displayed as 2.01"
+	],
 	"table in csv": true
 }
