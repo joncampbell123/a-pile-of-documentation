@@ -1,0 +1,15 @@
+{
+	"id": "ibm-pc-sound-blaster-ioports",
+	"schema": {
+		"version": 1
+	},
+	"source": {
+		"id": "dosbox-x",
+		"type": "website",
+		"url": "https://github.com/joncampbell123/dosbox-x/blob/master/src/hardware/sblaster.cpp"
+	},
+	"notes": [
+		"Sound Blaster Pro and earlier cards do not always decode the least significant bit of the I/O port. Even numbered I/O ports that do not have an explicit odd numbered port will alias the even numbered port at both even and odd numbers"
+	],
+	"table in csv": true
+}

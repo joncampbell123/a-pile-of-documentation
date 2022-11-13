@@ -1,0 +1,8 @@
+port,rw,card,description,comments
+
+SB_BASE+0x7,W,Sound Blaster 1.xx-Pro 2 only,"DSP Reset (Alias of SB_BASE+0x6)",
+SB_BASE+0xB,R,Sound Blaster 1.xx-Pro 2 only,"DSP Read Data Port (Alias of SB_BASE+0xA)",
+SB_BASE+0xD,W,Sound Blaster 1.xx-Pro 2 only,"DSP Write Command/Data (Alias of SB_BASE+0xC)",
+SB_BASE+0xD,R,Sound Blaster 1.xx-Pro 2 only,"DSP Write-Buffer Status (Alias of SB_BASE+0xC)",
+SB_BASE+0xF,R,Sound Blaster 1.xx-Pro 2 only,"DSP Read-Buffer Status (Alias of SB_BASE+0xE)",
+
