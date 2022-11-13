@@ -13,7 +13,9 @@
 		"FM music can also be accessed through I/O addresses 388h and 389h",
 		"Sound Blaster 1.xx and MCV (MicroChannel Version) supported base I/O ports: 210h,220h,230h,240h,250h,260h",
 		"Sound Blaster 2.0 and Sound Blaster Pro supported base I/O ports: 220h,240h",
-		"Sound Blaster 2.0 CD Interface supported base I/O ports: 250h,260h"
+		"Sound Blaster 2.0 CD Interface supported base I/O ports: 250h,260h",
+		"Sound Blaster Pro has two versions: An original version with an OPL2, and a second version with an OPL3. Presumably the OPL3 version is also the \"Sound Blaster Pro 2\". In Creative Documentation the \"Advanced FM\" ports address the newly expanded OPL3 registers.",
+		"The card listed is generally the first card it appeared, unless explicitly listed as only occuring for that card or cards."
 	],
 	"table in csv": true
 }

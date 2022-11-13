@@ -1,8 +1,8 @@
 port,rw,card,comments
-SB_BASE+0x0,W,Sound Blaster 1.xx-2.0,"C/MS Music Voice 1-6 Data Port"
-SB_BASE+0x1,W,Sound Blaster 1.xx-2.0,"C/MS Music Voice 1-6 Register Port"
-SB_BASE+0x2,W,Sound Blaster 1.xx-2.0,"C/MS Music Voice 7-12 Data Port"
-SB_BASE+0x3,W,Sound Blaster 1.xx-2.0,"C/MS Music Voice 7-12 Register Port"
+SB_BASE+0x0,W,Sound Blaster 1.xx-2.0 only,"C/MS Music Voice 1-6 Data Port"
+SB_BASE+0x1,W,Sound Blaster 1.xx-2.0 only,"C/MS Music Voice 1-6 Register Port"
+SB_BASE+0x2,W,Sound Blaster 1.xx-2.0 only,"C/MS Music Voice 7-12 Data Port"
+SB_BASE+0x3,W,Sound Blaster 1.xx-2.0 only,"C/MS Music Voice 7-12 Register Port"
 
 SB_BASE+0x6,W,Sound Blaster,"DSP Reset"
 SB_BASE+0x8,R,Sound Blaster,"FM Music Status Port"
