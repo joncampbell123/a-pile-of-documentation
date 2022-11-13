@@ -339,6 +339,11 @@ def formattedsplitnv(text):
             True
     return r
 
+def formattedimage(obj,tcol,splitnv,ji,compiled_format,drowobj):
+    obj["info"] = splitnv
+    if "id" in splitnv:
+        obj["id"] = splitnv["id"]
+
 def formattedweblink(obj,tcol,splitnv,ji,compiled_format,drowobj):
     if not "url" in splitnv:
         raise Exception("weblink requires URL")
@@ -507,6 +512,8 @@ def stringtoformattedtokcurly(tcol,sit,ji,drowobj):
             formattedbitfield(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
         elif tag == "enum":
             formattedenum(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
+        elif tag == "image":
+            formattedimage(obj,tcol,formattedsplitnv(text),ji,tcol["compiled format:array/formatting"],drowobj)
         else:
             obj["sub"] = stringtoformatted(tcol,text,ji,tcol["compiled format:array/formatting"],drowobj)
     #

@@ -234,6 +234,25 @@ def tablecolenumtohtml(dcon,tcolo,ent,compiled_format):
     #
     dcon.append(apodhtml.htmlelem(tag="table",attr={ "class": "apodenumtable" },content=trs))
 
+def tablecolimagetohtml(dcon,tcolo,ent,compiled_format):
+    if not "id" in ent:
+        raise Exception("No ID in image ent")
+    if not ent["id"] in images:
+        raise Exception("No such image ID "+ent["id"])
+    img = images[ent["id"]]
+    if not "copied" in img:
+        img["copied"] = False
+    dname = "image-"+img["id"]+img["suffix"]
+    dpath = "compiled/html/"+dname
+    if img["copied"] == False:
+        sf = open(img["path"],"rb")
+        df = open(dpath,"wb")
+        df.write(sf.read())
+        df.close()
+        sf.close()
+        img["copied"] = True
+    dcon.append(apodhtml.htmlelem(tag="img",attr={ "src": dname }))
+
 def tablecolbitfieldtohtml(dcon,tcolo,ent,compiled_format):
     colwidth = ent["colwidth"] # in em
     brange = ent["bitrange"]
@@ -421,6 +440,8 @@ def tablecoltohtml(dcon,tcolo,dcolo,compiled_format):
                 tablecolbitfieldtohtml(dcon,tcolo,ent,compiled_format)
             elif ent["type"] == "enum":
                 tablecolenumtohtml(dcon,tcolo,ent,compiled_format)
+            elif ent["type"] == "image":
+                tablecolimagetohtml(dcon,tcolo,ent,compiled_format)
             else:
                 print(ent)
                 raise Exception("Unknown formatting obj")
@@ -729,6 +750,8 @@ def tableprocsort(x):
 
 def sourceprocsort(x):
     return [ x["title"].lower(), x["id"] ]
+
+images = apodjson.load_json("compiled/images.json")
 
 # process
 sourceproclist = [ ]
