@@ -976,7 +976,7 @@ def rowcolsortfilter(tcol,col):
                 col = strtol_bytes(col)
             if tcol["string sort"] == "numeric" or tcol["string sort"] == "mixed":
                 # it might be something like "180 KB" or "450 foo 3"
-                sp = re.split(' +',col)
+                sp = re.split('[ ,+]+',col)
                 for spi in range(0,len(sp)):
                     sp[spi] = xlateuint(tcol,sp[spi])
                 col = sp
