@@ -10,7 +10,7 @@
 	},
 	"notes": [
 		"Sound Blaster Pro and earlier cards do not always decode the least significant bit of the I/O port. Even numbered I/O ports that do not have an explicit odd numbered port will alias the even numbered port at both even and odd numbers",
-		"There is a known test case of a demo that {italic:requires} the aliased DSP write command/data port at 0x22D to work (it will hang at startup otherwise). {weblink:url=https://www.pouet.net/prod.php?which=6171,text=EMF Intro by Electromotive Force (1991)}"
+		{ "formatted": true, "text": "There is a known test case of a demo that {italic:requires} the aliased DSP write command/data port at 0x22D to work (it will hang at startup otherwise). {weblink:url=https://www.pouet.net/prod.php?which=6171,text=EMF Intro by Electromotive Force (1991)}" }
 	],
 	"table in csv": true
 }

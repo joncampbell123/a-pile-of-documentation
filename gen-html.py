@@ -427,6 +427,20 @@ def tablecoltohtml(dcon,tcolo,dcolo,compiled_format):
     else:
         print("Warning: Unsupported compiled format "+compiled_format)
 
+def str_to_content(x):
+    if type(x) == dict and "formatted" in x and x["formatted"] == True:
+        subdcon = [ ]
+        tablecoltohtml(subdcon,{"compiled format": "array/formatting", "compiled format:array/formatting": "normal" },x["text"],"array/formatting")
+        return subdcon
+    #
+    return x
+
+def description_to_content(x):
+    return str_to_content(x)
+
+def note_to_content(x):
+    return str_to_content(x)
+
 def genfrag_table(bookid,ji):
     def genhtmlentrytags(coli,colidx,subdcon,combent,combenttags,compiled_format):
         if coli == colidx or (compiled_format == "array/combined" and type(dcolo) == list and len(dcolo) > 1):
@@ -462,12 +476,7 @@ def genfrag_table(bookid,ji):
     hw.write(apodhtml.htmlelem(tag="a",attr={ "id": apodhtml.mkhtmlid("table",bookid) }))
     hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apodtitle", "title": bookid },content=ji["table"]))
     if "description" in ji:
-        if type(ji["description"]) == dict and "formatted" in ji["description"] and ji["description"]["formatted"] == True:
-            subdcon = [ ]
-            tablecoltohtml(subdcon,{"compiled format": "array/formatting", "compiled format:array/formatting": "normal" },ji["description"]["text"],"array/formatting")
-            hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apoddescription" },content=subdcon))
-        else:
-            hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apoddescription" },content=ji["description"]))
+        hw.write(apodhtml.htmlelem(tag="div",attr={ "class": "apoddescription" },content=description_to_content(ji["description"])))
     if "table columns" in ji and "rows" in ji:
         hw.begin(apodhtml.htmlelem(tag="table",attr={ "class": "apodtable" }))
         # header
@@ -547,7 +556,7 @@ def genfrag_table(bookid,ji):
         if not type(nl) == list:
             nl = [ nl ]
         for nent in nl:
-            uli.append(apodhtml.htmlelem(tag="li",content=nent))
+            uli.append(apodhtml.htmlelem(tag="li",content=note_to_content(nent)))
     if "sources" in ji:
         sl = ji["sources"]
         for se in sl:
@@ -559,7 +568,7 @@ def genfrag_table(bookid,ji):
                     ncon = [ ]
                     if "entry tag" in se:
                         ncon.append(apodhtml.htmlelem(tag="span",attr={ "class": "apodenttag" },content=("("+se["entry tag"]+") ")))
-                    ncon.append(nent)
+                    ncon.append(note_to_content(nent))
                     uli.append(apodhtml.htmlelem(tag="li",content=ncon))
     if len(uli) > 0:
         nc = [ apodhtml.htmlelem(tag="span",attr={ "class": "apodnoteshead" },content="Notes:"), apodhtml.htmlelem(tag="ul",attr={ "class": "apodnoteslist" },content=uli) ]
@@ -653,7 +662,7 @@ def genfrag_table(bookid,ji):
             #
             if "notes" in src:
                 nent.append(apodhtml.htmlelem(tag="br"))
-                nent.append(apodhtml.htmlelem(tag="span",content=[ "Notes: ", src["notes"] ]))
+                nent.append(apodhtml.htmlelem(tag="span",content=[ "Notes: ", note_to_content(src["notes"]) ]))
             #
             if "source json file" in sel:
                 nent.append(apodhtml.htmlelem(tag="br"))
