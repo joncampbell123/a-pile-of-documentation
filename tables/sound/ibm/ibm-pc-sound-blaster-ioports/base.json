@@ -2,7 +2,7 @@
 	"table": "Sound Blaster I/O ports",
 	"id": "ibm-pc-sound-blaster-ioports",
 	"combinable": true,
-	"description": "Map of I/O ports. SB_BASE refers to the base I/O port of the Sound Blaster portion. SBCD_BASE refers to base I/O port of the Sound Blaster 2.0 CD interface.",
+	"description": "Map of I/O ports. SB_BASE refers to the base I/O port of the Sound Blaster portion. SBCD_BASE refers to base I/O port of the Sound Blaster 2.0 CD interface. MPU_BASE refers to the base I/O of the MPU-401 UART",
 	"base definition": true,
 	"schema": {
 		"version": 1

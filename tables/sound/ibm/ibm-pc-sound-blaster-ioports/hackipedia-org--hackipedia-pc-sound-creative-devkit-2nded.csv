@@ -29,3 +29,7 @@ SB_BASE+0x11,R,"Sound Blaster Pro, Sound Blaster 16","CD-ROM Status Register"
 SB_BASE+0x12,W,"Sound Blaster Pro, Sound Blaster 16","CD-ROM Reset Register"
 SB_BASE+0x13,W,"Sound Blaster Pro, Sound Blaster 16","CD-ROM Enable Register"
 
+MPU_BASE+0x0,R/W,"Sound Blaster 16","MPU-401 Data Port"
+MPU_BASE+0x1,R,"Sound Blaster 16","MPU-401 Status Port"
+MPU_BASE+0x1,W,"Sound Blaster 16","MPU-401 Command Port"
+
