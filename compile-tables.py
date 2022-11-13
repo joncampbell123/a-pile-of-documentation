@@ -168,6 +168,10 @@ def get_content_tables(scan):
     #
     return ret
 
+def check_formatting(nent):
+    if "formatted" in nent and nent["formatted"] == True:
+        nent["text"] = stringtoformatted({ "type": "normal", "compiled format:array/formatting": "normal" },nent["text"],ji,"normal",{ })
+
 def procbasetable(scan,obj):
     path = scan["base json path"]
     #
@@ -241,15 +245,12 @@ def procbasetable(scan,obj):
     ji["rows"] = [ ]
     # allow formatted description
     if "description" in ji:
-        if type(ji["description"]) == dict:
-            if "formatted" in ji["description"] and ji["description"]["formatted"] == True:
-                ji["description"]["text"] = stringtoformatted({ "type": "normal", "compiled format:array/formatting": "normal" },ji["description"]["text"],ji,"normal",{ })
+        check_formatting(ji["description"])
     # allow formatted notes
     if "notes" in ji:
         if type(ji["notes"]) == list:
             for nent in ji["notes"]:
-                if "formatted" in nent and nent["formatted"] == True:
-                    nent["text"] = stringtoformatted({ "type": "normal", "compiled format:array/formatting": "normal" },nent["text"],ji,"normal",{ })
+                check_formatting(nent)
 
 class strscan:
     strval = None
@@ -935,8 +936,8 @@ def proc_content_table(scan,obj):
     if "notes" in ji:
         if type(ji["notes"]) == list:
             for nent in ji["notes"]:
-                if "formatted" in nent and nent["formatted"] == True:
-                    nent["text"] = stringtoformatted({ "type": "normal", "compiled format:array/formatting": "normal" },nent["text"],ji,"normal",{ })
+                check_formatting(nent)
+    #
     table["sources"].append(ji)
 
 def bytes_from_base_suffix(base_n,unit_n):
