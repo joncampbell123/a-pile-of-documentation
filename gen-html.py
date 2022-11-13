@@ -870,7 +870,7 @@ hw.write(apodhtml.htmlelem(tag="h1",content="A Pile of Documentation"))
 hw.write(apodhtml.htmlelem(tag="div",content=("Release "+datestr)))
 hw.write(apodhtml.htmlelem(tag="br"))
 #
-hw.write(apodhtml.htmlelem(tag="div",content="A carefully arrange collection of technical information compiled from various sources."))
+hw.write(apodhtml.htmlelem(tag="div",content="A carefully arranged collection of technical information compiled from various sources."))
 hw.write(apodhtml.htmlelem(tag="br"))
 #
 el = [ ]
