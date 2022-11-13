@@ -1,0 +1,9 @@
+{
+	"type": "website",
+	"schema": {
+		"version": 1
+	},
+	"id": "doslib",
+	"title": "DOSLIB DOS library project",
+	"url": "https://github.com/joncampbell123/doslib/"
+}
