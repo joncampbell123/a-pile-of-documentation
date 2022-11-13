@@ -34,5 +34,8 @@
 			"name": "comments",
 			"title": "Comments"
 		}
+	],
+	"notes": [
+		{ "formatted": true, "text": "This character set is most often seen on IBM compatible VGA hardware in text mode as 8x16 character cells, though it can also be seen on EGA as 8x14, CGA/Tandy/PCjr as 8x8, and MDA as 9x14\n{image:id=cp437}" }
 	]
 }
