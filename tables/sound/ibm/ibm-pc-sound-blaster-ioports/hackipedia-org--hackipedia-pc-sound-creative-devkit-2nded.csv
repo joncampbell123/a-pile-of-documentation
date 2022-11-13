@@ -1,4 +1,4 @@
-port,rw,card,comments
+port,rw,card,description,comments
 
 SBCD_BASE+0x0,R/W,Sound Blaster 2.0 CD Interface,"CD-ROM Command or Data Register"
 SBCD_BASE+0x1,R,Sound Blaster 2.0 CD Interface,"CD-ROM Status Register"

@@ -37,6 +37,15 @@
 		},
 		{
 			"type": "string",
+			"name": "description",
+			"title": "Description",
+			"nowrap": true,
+			"case insensitive": true,
+			"description": "Description of the I/O port",
+			"required": true
+		},
+		{
+			"type": "string",
 			"case insensitive": true,
 			"combine different": true,
 			"with formatting": true,
