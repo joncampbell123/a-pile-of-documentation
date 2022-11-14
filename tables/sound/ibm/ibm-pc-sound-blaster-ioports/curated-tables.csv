@@ -13,3 +13,12 @@ SB_BASE+0xC,W,Sound Blaster,"DSP Write Command/Data",
 SB_BASE+0xC,R,Sound Blaster,"DSP Write-Buffer Status","{bitfield:bits=8,bit[7]=Status{enum:1=Busy,0=Ready}}"
 SB_BASE+0xE,R,Sound Blaster,"DSP Read-Buffer Status","{bitfield:bits=8,bit[7]=Status{enum:1=Data ready,0=No data}}"
 
+0x200-0x207,R/W,Joystick interface,"IBM PC compatible"
+
+0x388,R,Sound Blaster,"FM Music Status Port",
+0x388,W,Sound Blaster,"FM Music Register Port",
+0x389,W,Sound Blaster,"FM Music Data Port",
+0x38A,R,Sound Blaster Pro 2,"Advanced FM Music Status Port"
+0x38A,W,Sound Blaster Pro 2,"Advanced FM Music Register Address Port"
+0x38B,W,Sound Blaster Pro 2,"Advanced FM Music Data Port"
+
