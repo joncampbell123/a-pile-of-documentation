@@ -995,10 +995,17 @@ def rowcolsortfilter(tcol,col):
             if tcol["string sort"] == "bytes":
                 col = strtol_bytes(col)
             if tcol["string sort"] == "numeric" or tcol["string sort"] == "mixed":
-                # it might be something like "180 KB" or "450 foo 3"
+                # it might be something like "180 KB" or "450 foo 3".
+                # we don't just split at commas and such, we convert to an array of small arrays
+                # arranged such that it is possible for Python to short strings and numbers mixed
+                # together.
                 sp = re.split('[ ,+]+',col)
                 for spi in range(0,len(sp)):
-                    sp[spi] = xlateuint(tcol,sp[spi])
+                    spent = xlateuint(tcol,sp[spi])
+                    if isinstance(spent,str):
+                        sp[spi] = [ spent, 0 ]
+                    else:
+                        sp[spi] = [ "", spent ]
                 col = sp
     if tcol["type"] == "float":
         col = tablecolxlate(tcol,col)
