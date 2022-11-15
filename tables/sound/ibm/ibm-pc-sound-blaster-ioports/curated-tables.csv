@@ -13,7 +13,8 @@ SB_BASE+0xC,W,Sound Blaster,"DSP Write Command/Data",
 SB_BASE+0xC,R,Sound Blaster,"DSP Write-Buffer Status","{bitfield:bits=8,bit[7]=Status{enum:1=Busy,0=Ready}}"
 SB_BASE+0xE,R,Sound Blaster,"DSP Read-Buffer Status","{bitfield:bits=8,bit[7]=Status{enum:1=Data ready,0=No data}}"
 
-0x200-0x207,R/W,Joystick interface,"IBM PC compatible"
+0x200-0x207,R,Joystick interface,"IBM PC compatible","{bitfield:bits=8,bit[7]=Button 4,bit[6]=Button 3,bit[5]=Button 2,bit[4]=Button 1,bit[3]=Monostable Joystick B Y-Axis,bit[2]=Monostable Joystick B X-Axis,bit[1]=Monostable Joystick A Y-Axis,bit[0]=Monostable Joystick A X-Axis}"
+0x200-0x207,W,Joystick interface,"IBM PC compatible","Trigger one-shot to read joystick position"
 
 0x388,R,Sound Blaster,"FM Music Status Port",
 0x388,W,Sound Blaster,"FM Music Register Port",
