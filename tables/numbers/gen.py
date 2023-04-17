@@ -232,29 +232,35 @@ csw.writerow(['Mantissa shown with implicit bit that is not stored in the final 
 csw.writerow(['Final float value, without sign, is mantissa * pow(2.0,exponent)',                                              '#table-note'])
 csw.writerow([])
 # seeeeeffffffffff 16 bits
-mant_implicit = 1 << 10
+float_bits = 16
+float_hex_digits = int((float_bits + 3) / 4)
+mant_bits = 10
+mant_implicit = 1 << mant_bits
 exp_bias = 15
+exp_min = -exp_bias
+exp_bits = 5
+exp_mask = (1 << exp_bits) - 1
 for sgn in range(0,2):
     ssgn = ['','-'][sgn]
     for rexp in range(-15,16):
-        for rmant in [0,1<<8,2<<8,3<<8]:
-            if rexp > -15:
+        for rmant in [0,1<<(mant_bits-2),2<<(mant_bits-2),3<<(mant_bits-2)]:
+            if rexp > exp_min:
                 note = ""
                 mant = rmant | mant_implicit # normal
                 exp = rexp
             else:
                 note = "Subnormal float, implicit bit 0"
                 mant = rmant # subnormal
-                exp = -14
+                exp = exp_min + 1
             #
             fval = mant * math.pow(2, exp)
-            encoding = (sgn << 15) | (((rexp + exp_bias) & 0x1F) << 10) | rmant
+            encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
             #
             vhex = hex(encoding)[2:] # strip off the '0x'
-            while len(vhex) < 4:
+            while len(vhex) < float_hex_digits:
                 vhex = '0' + vhex
             vbin = bin(encoding)[2:] # strip off the '0b'
-            while len(vbin) < 16:
+            while len(vbin) < float_bits:
                 vbin = '0' + vbin
             #
             csw.writerow([ssgn+str(fval),str(sgn),str(exp),hex(mant),vhex,vbin,note])
@@ -264,13 +270,13 @@ for sgn in range(0,2):
     rmant = 0
     ssgn = ['','-'][sgn]
     note = "Infinity"
-    encoding = (sgn << 15) | (((rexp + exp_bias) & 0x1F) << 10) | rmant
+    encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
     #
     vhex = hex(encoding)[2:] # strip off the '0x'
-    while len(vhex) < 4:
+    while len(vhex) < float_hex_digits:
         vhex = '0' + vhex
     vbin = bin(encoding)[2:] # strip off the '0b'
-    while len(vbin) < 16:
+    while len(vbin) < float_bits:
         vbin = '0' + vbin
     #
     csw.writerow([ssgn+"∞",str(sgn),str(exp),hex(mant),vhex,vbin,note])
@@ -279,13 +285,13 @@ for sgn in range(0,2):
     rmant = 1
     ssgn = ['','-'][sgn]
     note = "Quiet Not A Number"
-    encoding = (sgn << 15) | (((rexp + exp_bias) & 0x1F) << 10) | rmant
+    encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
     #
     vhex = hex(encoding)[2:] # strip off the '0x'
-    while len(vhex) < 4:
+    while len(vhex) < float_hex_digits:
         vhex = '0' + vhex
     vbin = bin(encoding)[2:] # strip off the '0b'
-    while len(vbin) < 16:
+    while len(vbin) < float_bits:
         vbin = '0' + vbin
     #
     csw.writerow([ssgn+"Nan",str(sgn),str(exp),hex(mant),vhex,vbin,note])
@@ -294,13 +300,13 @@ for sgn in range(0,2):
     rmant = mant_implicit >> 1
     ssgn = ['','-'][sgn]
     note = "Signalling Not A Number"
-    encoding = (sgn << 15) | (((rexp + exp_bias) & 0x1F) << 10) | rmant
+    encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
     #
     vhex = hex(encoding)[2:] # strip off the '0x'
-    while len(vhex) < 4:
+    while len(vhex) < float_hex_digits:
         vhex = '0' + vhex
     vbin = bin(encoding)[2:] # strip off the '0b'
-    while len(vbin) < 16:
+    while len(vbin) < float_bits:
         vbin = '0' + vbin
     #
     csw.writerow([ssgn+"sNan",str(sgn),str(exp),hex(mant),vhex,vbin,note])
