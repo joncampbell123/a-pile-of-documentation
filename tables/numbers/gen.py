@@ -152,9 +152,9 @@ def graycode(i):
 
 f = open("gen-numbers-gray-codes.csv",mode="w",encoding="utf-8",newline="")
 csw = csv.writer(f)
-csw.writerow(['Original hexadecimal', 'Original decimal', 'Original octal', 'Original binary', 'Hexadecimal',    'Decimal',        'Octal',         'Binary',        '#column-names'])
-csw.writerow(['numeric:base=16',      'numeric:base=10',  'numeric:base=8', 'numeric:base=1',  'numeric:base=16','numeric:base=10','numeric:base=8','numeric:base=2','#column-format'])
-csw.writerow(['right',                'right',            'right',          'right',           'right',          'right',          'right',         'right',         '#column-align'])
+csw.writerow(['Original hexadecimal', 'Original decimal', 'Original octal', 'Original binary', '-',         'Hexadecimal',    'Decimal',        'Octal',         'Binary',        '#column-names'])
+csw.writerow(['numeric:base=16',      'numeric:base=10',  'numeric:base=8', 'numeric:base=1',  'separator', 'numeric:base=16','numeric:base=10','numeric:base=8','numeric:base=2','#column-format'])
+csw.writerow(['right',                'right',            'right',          'right',           '',          'right',          'right',          'right',         'right',         '#column-align'])
 csw.writerow(['Integer numbers in various common bases as gray codes',                                                                                               '#table-title'])
 csw.writerow([])
 pgi = 0
@@ -183,7 +183,7 @@ for i in range(0,257):
     while len(vbin) < 9:
         vbin = '0' + vbin
     #
-    csw.writerow([ovhex,ovdec,ovoct,ovbin,vhex,vdec,voct,vbin])
+    csw.writerow([ovhex,ovdec,ovoct,ovbin,'-',vhex,vdec,voct,vbin])
     #
     if i > 0:
         bc = gi ^ pgi # make sure only one bit changed
