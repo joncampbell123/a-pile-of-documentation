@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import csv
+import math
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
@@ -217,4 +218,45 @@ write_logic2_table("gen-logic-nand.csv","Not AND (NAND)",lambda i1,i2: 1 ^ (i1 &
 write_logic2_table("gen-logic-and.csv","AND",lambda i1,i2: (i1 & i2))
 write_logic2_table("gen-logic-xnor.csv","eXclusive NOR (XNOR)",lambda i1,i2: 1 ^ (i1 ^ i2))
 write_logic2_table("gen-logic-or.csv","OR",lambda i1,i2: (i1 | i2))
+
+#--------------------------------------------------------------------------------------------------------
+# list of numbers in various common bases as encoding of 16-bit IEEE floating point
+# float, sign, exponent, mantissa, hexadecimal, binary
+f = open("gen-numbers-ieeefloat16.csv",mode="w",encoding="utf-8",newline="")
+csw = csv.writer(f)
+csw.writerow(['Float value', 'Sign',           'Exponent',      'Mantissa',       'Hexadecimal',    'Binary',        'Notes',  '#column-names'])
+csw.writerow(['numeric',     'numeric',        'numeric',       'numeric:base=16','numeric:base=16','numeric:base=2','string', '#column-format'])
+csw.writerow(['right',       'right',          'right',         'right',          'right',          'right',         'left',   '#column-align'])
+csw.writerow(['16-bit IEEE floating point numbers and their encodings as various binary encodings',                            '#table-title'])
+csw.writerow(['Mantissa shown with implicit bit that is not stored in the final encoding',                                     '#table-note'])
+csw.writerow(['Final float value, without sign, is mantissa * pow(2.0,exponent)',                                              '#table-note'])
+csw.writerow([])
+# seeeeeffffffffff 16 bits
+mant_implicit = 1 << 10
+exp_bias = 15
+for sgn in range(0,2):
+    ssgn = ['','-'][sgn]
+    for rexp in range(-15,16):
+        for rmant in [0,1<<8,2<<8,3<<8]:
+            if rexp > -15:
+                note = ""
+                mant = rmant | mant_implicit # normal
+                exp = rexp
+            else:
+                note = "Subnormal float, implicit bit 0"
+                mant = rmant # subnormal
+                exp = -14
+            #
+            fval = mant * math.pow(2, exp)
+            encoding = (sgn << 15) | (((rexp + exp_bias) & 0xF) << 10) | rmant
+            #
+            vhex = hex(encoding)[2:] # strip off the '0x'
+            while len(vhex) < 4:
+                vhex = '0' + vhex
+            vbin = bin(encoding)[2:] # strip off the '0b'
+            while len(vbin) < 16:
+                vbin = '0' + vbin
+            #
+            csw.writerow([ssgn+str(fval),str(sgn),str(exp),hex(mant),vhex,vbin,note])
+f.close()
 
