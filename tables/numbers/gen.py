@@ -193,3 +193,28 @@ for i in range(0,257):
     pgi = gi
 f.close()
 
+#--------------------------------------------------------------------------------------------------------
+# list of numbers in various common bases as gray codes
+# hexadecimal, decimal, octal, binary
+def write_logic2_table(csvname,title,lambdafunc):
+    f = open(csvname,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    csw.writerow(['Input 1 (P)',   'Input 2 (Q)',   'Output',        '#column-names'])
+    csw.writerow(['numeric:base=1','numeric:base=1','numeric:base=1','#column-format'])
+    csw.writerow(['right',         'right',         'right',         '#column-align'])
+    csw.writerow([title,                                             '#table-title'])
+    csw.writerow([])
+    for i in range(0,4):
+        i1 = (i >> 1) & 1
+        i2 = (i >> 0) & 1
+        ou = lambdafunc(i1,i2)
+        csw.writerow([str(i1),str(i2),str(ou)])
+    f.close()
+
+write_logic2_table("gen-logic-nor.csv","Not OR (NOR)",lambda i1,i2: 1 ^ (i1 | i2))
+write_logic2_table("gen-logic-xor.csv","eXclusive OR (XOR)",lambda i1,i2: (i1 ^ i2))
+write_logic2_table("gen-logic-nand.csv","Not AND (NAND)",lambda i1,i2: 1 ^ (i1 & i2))
+write_logic2_table("gen-logic-and.csv","AND",lambda i1,i2: (i1 & i2))
+write_logic2_table("gen-logic-xnor.csv","eXclusive NOR (XNOR)",lambda i1,i2: 1 ^ (i1 ^ i2))
+write_logic2_table("gen-logic-or.csv","OR",lambda i1,i2: (i1 | i2))
+
