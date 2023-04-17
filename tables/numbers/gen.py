@@ -228,16 +228,31 @@ def common_float_csv_header(csw,float_bits):
     csw.writerow(['right',       'right',          'right',         'right',          'right',          'right',         'left',   '#column-align'])
     csw.writerow([str(float_bits)+'-bit IEEE floating point numbers and their encodings as various binary encodings',              '#table-title'])
     csw.writerow(['Final float value, without sign, is mantissa * pow(2.0,exponent)',                                              '#table-note'])
-def common_float_csv_gen(csw,float_bits,mant_bits,exp_bits,exp_bias):
+def common_float_csv_gen(csw,float_bits,mant_bits,exp_bits,exp_bias,explicit_mantissa_msb=False):
     float_hex_digits = int((float_bits + 3) / 4)
+    #
+    if explicit_mantissa_msb == True:
+        exp_shift = mant_bits + 1
+    else:
+        exp_shift = mant_bits
+    #
     mant_implicit = 1 << mant_bits
-    exp_min = -exp_bias
     exp_mask = (1 << exp_bits) - 1
+    exp_min = -exp_bias
+    exp_max = exp_mask + exp_min - 1
+    # Python seems to do only double precision float, limit the exponent range or else the 80-bit Intel format will cause a fault
+    real_exp_min = exp_min
+    real_exp_max = exp_max
+    if exp_min < -1023:
+        exp_min = -1023
+    if exp_max > 1023:
+        exp_max = 1023
+    #
     for sgn in range(0,2):
         ssgn = ['','-'][sgn]
-        for rexp in range(exp_min,exp_mask + exp_min):
+        for rexp in range(exp_min,exp_max + 1):
             for rmant in [0,1<<(mant_bits-2),2<<(mant_bits-2),3<<(mant_bits-2)]:
-                if rexp > exp_min:
+                if rexp > real_exp_min:
                     note = ""
                     mant = rmant | mant_implicit # normal
                     exp = rexp
@@ -247,7 +262,9 @@ def common_float_csv_gen(csw,float_bits,mant_bits,exp_bits,exp_bias):
                     exp = exp_min + 1
                 #
                 fval = mant * math.pow(2, exp - mant_bits)
-                encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
+                encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << exp_shift) | rmant
+                if explicit_mantissa_msb == True:
+                    encoding = encoding | mant_implicit
                 #
                 vhex = hex(encoding)[2:] # strip off the '0x'
                 while len(vhex) < float_hex_digits:
@@ -259,11 +276,13 @@ def common_float_csv_gen(csw,float_bits,mant_bits,exp_bits,exp_bias):
                 csw.writerow([ssgn+str(fval),str(sgn),str(exp),hex(mant),vhex,vbin,note])
     # gotta mention infinity and Nan for reference, too
     for sgn in range(0,2):
-        rexp = exp_mask + exp_min
+        rexp = exp_mask - exp_bias
         rmant = 0
         ssgn = ['','-'][sgn]
         note = "Infinity"
-        encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
+        encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << exp_shift) | rmant
+        if explicit_mantissa_msb == True:
+            encoding = encoding | mant_implicit
         #
         vhex = hex(encoding)[2:] # strip off the '0x'
         while len(vhex) < float_hex_digits:
@@ -274,11 +293,13 @@ def common_float_csv_gen(csw,float_bits,mant_bits,exp_bits,exp_bias):
         #
         csw.writerow([ssgn+"∞",str(sgn),str(rexp),hex(rmant),vhex,vbin,note])
     for sgn in range(0,2):
-        rexp = exp_mask + exp_min
+        rexp = exp_mask - exp_bias
         rmant = 1
         ssgn = ['','-'][sgn]
         note = "Quiet Not A Number"
-        encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
+        encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << exp_shift) | rmant
+        if explicit_mantissa_msb == True:
+            encoding = encoding | mant_implicit | (mant_implicit >> 1)
         #
         vhex = hex(encoding)[2:] # strip off the '0x'
         while len(vhex) < float_hex_digits:
@@ -289,11 +310,13 @@ def common_float_csv_gen(csw,float_bits,mant_bits,exp_bits,exp_bias):
         #
         csw.writerow([ssgn+"Nan",str(sgn),str(rexp),hex(rmant),vhex,vbin,note])
     for sgn in range(0,2):
-        rexp = exp_mask + exp_min
+        rexp = exp_mask - exp_bias
         rmant = mant_implicit >> 1
         ssgn = ['','-'][sgn]
         note = "Signalling Not A Number"
-        encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
+        encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << exp_shift) | rmant
+        if explicit_mantissa_msb == True:
+            encoding = encoding | mant_implicit
         #
         vhex = hex(encoding)[2:] # strip off the '0x'
         while len(vhex) < float_hex_digits:
@@ -326,5 +349,13 @@ common_float_csv_header(csw,float_bits=64)
 csw.writerow(['Mantissa shown with implicit bit that is not stored in the final encoding',                                     '#table-note'])
 csw.writerow([])
 common_float_csv_gen(csw,float_bits=64,mant_bits=52,exp_bits=11,exp_bias=1023)
+f.close()
+
+f = open("gen-numbers-ieeefloat80.csv",mode="w",encoding="utf-8",newline="")
+csw = csv.writer(f)
+common_float_csv_header(csw,float_bits=80)
+csw.writerow(['Mantissa shown with implicit bit that is always stored in the final encoding',                                  '#table-note'])
+csw.writerow([])
+common_float_csv_gen(csw,float_bits=80,mant_bits=63,exp_bits=15,exp_bias=16383,explicit_mantissa_msb=True)
 f.close()
 
