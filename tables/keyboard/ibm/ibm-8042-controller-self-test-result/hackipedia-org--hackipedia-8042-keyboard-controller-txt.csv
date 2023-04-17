@@ -1,7 +1,0 @@
-result,resultof,meaning,comments
-0,0xA9 0xAB,No error
-1,0xA9 0xAB,Clock line stuck low
-2,0xA9 0xAB,Clock line stuck high
-3,0xA9 0xAB,Data line stuck low
-4,0xA9 0xAB,Data line stuck high
-

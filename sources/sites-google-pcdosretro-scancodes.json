@@ -1,9 +1,0 @@
-{
-	"type": "website",
-	"schema": {
-		"version": 1
-	},
-	"id": "sites-google-pcdosretro-scancodes",
-	"title": "Keyboard scan code/character code combinations returned in AH/AL by INT 16h functions 00h/01h (standard) and functions 01h/11h (extended)",
-	"url": "https://sites.google.com/site/pcdosretro/scancodes"
-}

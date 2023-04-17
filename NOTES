@@ -1,5 +1,0 @@
-Python CSV parser:
-  - You can quote a field if you want to use a comma inside the quotes, but the
-    quotation marks must start immediately. No whitespace before or after the
-    quotation marks.
-

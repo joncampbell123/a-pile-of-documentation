@@ -1,9 +1,0 @@
-{
-	"id": "ibm-pc-sound-blaster-ioports",
-	"schema": {
-		"version": 1
-	},
-	"source": {
-	},
-	"table in csv": true
-}

@@ -1,9 +1,0 @@
-cmdbyte,params,command,comments
-0x00,,Identify Touchpad,"Returns three bytes. Middle byte is 0x47, which is how you detect Synaptics touchpad devices."
-0x01,,Read Touchpad Modes,"The first two bytes of the response are the constants $3B and $47, respectively, and the third byte is the TouchPad mode byte."
-0x02,,Read Capabilities,"The first and third byte hold the extended capability bits; the second byte is the constant $47"
-0x03,,Read Model ID,"The three response bytes hold the 24-bit TouchPad model ID. Model ID bit 8 (the least significant bit of the second byte) is always 0 in this protocol."
-0x06,,Read Serial Number Prefix,"This query returns the first twelve bits (bits 35–24) of the TouchPad’s unique serial number. See section 2.4.5; note that the pads currently produced by Synaptics do not yet include serial numbers"
-0x07,,Read Serial Number Suffix,"This query returns the remaining 24 bits of the serial number. The results from this query are undefined if the Serial Number Prefix query returned zero for bits 35–24."
-0x08,,Read Resolutions,"This query returns the X and Y coordinate resolutions in Absolute units per millimeter. The second byte of the response is undefined except for the most significant bit, which is guaranteed to be 1."
-
