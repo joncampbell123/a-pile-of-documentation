@@ -248,7 +248,7 @@ for sgn in range(0,2):
                 exp = -14
             #
             fval = mant * math.pow(2, exp)
-            encoding = (sgn << 15) | (((rexp + exp_bias) & 0xF) << 10) | rmant
+            encoding = (sgn << 15) | (((rexp + exp_bias) & 0x1F) << 10) | rmant
             #
             vhex = hex(encoding)[2:] # strip off the '0x'
             while len(vhex) < 4:
@@ -258,5 +258,52 @@ for sgn in range(0,2):
                 vbin = '0' + vbin
             #
             csw.writerow([ssgn+str(fval),str(sgn),str(exp),hex(mant),vhex,vbin,note])
+# gotta mention infinity and Nan for reference, too
+for sgn in range(0,2):
+    rexp = 16
+    rmant = 0
+    ssgn = ['','-'][sgn]
+    note = "Infinity"
+    encoding = (sgn << 15) | (((rexp + exp_bias) & 0x1F) << 10) | rmant
+    #
+    vhex = hex(encoding)[2:] # strip off the '0x'
+    while len(vhex) < 4:
+        vhex = '0' + vhex
+    vbin = bin(encoding)[2:] # strip off the '0b'
+    while len(vbin) < 16:
+        vbin = '0' + vbin
+    #
+    csw.writerow([ssgn+"∞",str(sgn),str(exp),hex(mant),vhex,vbin,note])
+for sgn in range(0,2):
+    rexp = 16
+    rmant = 1
+    ssgn = ['','-'][sgn]
+    note = "Quiet Not A Number"
+    encoding = (sgn << 15) | (((rexp + exp_bias) & 0x1F) << 10) | rmant
+    #
+    vhex = hex(encoding)[2:] # strip off the '0x'
+    while len(vhex) < 4:
+        vhex = '0' + vhex
+    vbin = bin(encoding)[2:] # strip off the '0b'
+    while len(vbin) < 16:
+        vbin = '0' + vbin
+    #
+    csw.writerow([ssgn+"Nan",str(sgn),str(exp),hex(mant),vhex,vbin,note])
+for sgn in range(0,2):
+    rexp = 16
+    rmant = mant_implicit >> 1
+    ssgn = ['','-'][sgn]
+    note = "Signalling Not A Number"
+    encoding = (sgn << 15) | (((rexp + exp_bias) & 0x1F) << 10) | rmant
+    #
+    vhex = hex(encoding)[2:] # strip off the '0x'
+    while len(vhex) < 4:
+        vhex = '0' + vhex
+    vbin = bin(encoding)[2:] # strip off the '0b'
+    while len(vbin) < 16:
+        vbin = '0' + vbin
+    #
+    csw.writerow([ssgn+"sNan",str(sgn),str(exp),hex(mant),vhex,vbin,note])
+#
 f.close()
 
