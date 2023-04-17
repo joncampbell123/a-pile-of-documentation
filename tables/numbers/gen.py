@@ -320,3 +320,11 @@ csw.writerow([])
 common_float_csv_gen(csw,float_bits=32,mant_bits=23,exp_bits=8,exp_bias=127) # seee'eeee'efff'ffff'ffff'ffff'ffff'ffff 32 bits
 f.close()
 
+f = open("gen-numbers-ieeefloat64.csv",mode="w",encoding="utf-8",newline="")
+csw = csv.writer(f)
+common_float_csv_header(csw,float_bits=64)
+csw.writerow(['Mantissa shown with implicit bit that is not stored in the final encoding',                                     '#table-note'])
+csw.writerow([])
+common_float_csv_gen(csw,float_bits=64,mant_bits=52,exp_bits=11,exp_bias=1023)
+f.close()
+
