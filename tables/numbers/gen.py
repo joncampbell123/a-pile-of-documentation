@@ -222,94 +222,101 @@ write_logic2_table("gen-logic-or.csv","OR",lambda i1,i2: (i1 | i2))
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases as encoding of 16-bit IEEE floating point
 # float, sign, exponent, mantissa, hexadecimal, binary
+def common_float_csv_header(csw,float_bits):
+    csw.writerow(['Float value', 'Sign',           'Exponent',      'Mantissa',       'Hexadecimal',    'Binary',        'Notes',  '#column-names'])
+    csw.writerow(['numeric',     'numeric',        'numeric',       'numeric:base=16','numeric:base=16','numeric:base=2','string', '#column-format'])
+    csw.writerow(['right',       'right',          'right',         'right',          'right',          'right',         'left',   '#column-align'])
+    csw.writerow([str(float_bits)+'-bit IEEE floating point numbers and their encodings as various binary encodings',              '#table-title'])
+    csw.writerow(['Final float value, without sign, is mantissa * pow(2.0,exponent)',                                              '#table-note'])
+def common_float_csv_gen(csw,float_bits,mant_bits,exp_bits,exp_bias):
+    float_hex_digits = int((float_bits + 3) / 4)
+    mant_implicit = 1 << mant_bits
+    exp_min = -exp_bias
+    exp_mask = (1 << exp_bits) - 1
+    for sgn in range(0,2):
+        ssgn = ['','-'][sgn]
+        for rexp in range(exp_min,exp_mask + exp_min):
+            for rmant in [0,1<<(mant_bits-2),2<<(mant_bits-2),3<<(mant_bits-2)]:
+                if rexp > exp_min:
+                    note = ""
+                    mant = rmant | mant_implicit # normal
+                    exp = rexp
+                else:
+                    note = "Subnormal float, implicit bit 0"
+                    mant = rmant # subnormal
+                    exp = exp_min + 1
+                #
+                fval = mant * math.pow(2, exp - mant_bits)
+                encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
+                #
+                vhex = hex(encoding)[2:] # strip off the '0x'
+                while len(vhex) < float_hex_digits:
+                    vhex = '0' + vhex
+                vbin = bin(encoding)[2:] # strip off the '0b'
+                while len(vbin) < float_bits:
+                    vbin = '0' + vbin
+                #
+                csw.writerow([ssgn+str(fval),str(sgn),str(exp),hex(mant),vhex,vbin,note])
+    # gotta mention infinity and Nan for reference, too
+    for sgn in range(0,2):
+        rexp = 16
+        rmant = 0
+        ssgn = ['','-'][sgn]
+        note = "Infinity"
+        encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
+        #
+        vhex = hex(encoding)[2:] # strip off the '0x'
+        while len(vhex) < float_hex_digits:
+            vhex = '0' + vhex
+        vbin = bin(encoding)[2:] # strip off the '0b'
+        while len(vbin) < float_bits:
+            vbin = '0' + vbin
+        #
+        csw.writerow([ssgn+"∞",str(sgn),str(exp),hex(mant),vhex,vbin,note])
+    for sgn in range(0,2):
+        rexp = 16
+        rmant = 1
+        ssgn = ['','-'][sgn]
+        note = "Quiet Not A Number"
+        encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
+        #
+        vhex = hex(encoding)[2:] # strip off the '0x'
+        while len(vhex) < float_hex_digits:
+            vhex = '0' + vhex
+        vbin = bin(encoding)[2:] # strip off the '0b'
+        while len(vbin) < float_bits:
+            vbin = '0' + vbin
+        #
+        csw.writerow([ssgn+"Nan",str(sgn),str(exp),hex(mant),vhex,vbin,note])
+    for sgn in range(0,2):
+        rexp = 16
+        rmant = mant_implicit >> 1
+        ssgn = ['','-'][sgn]
+        note = "Signalling Not A Number"
+        encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
+        #
+        vhex = hex(encoding)[2:] # strip off the '0x'
+        while len(vhex) < float_hex_digits:
+            vhex = '0' + vhex
+        vbin = bin(encoding)[2:] # strip off the '0b'
+        while len(vbin) < float_bits:
+            vbin = '0' + vbin
+        #
+        csw.writerow([ssgn+"sNan",str(sgn),str(exp),hex(mant),vhex,vbin,note])
+
 f = open("gen-numbers-ieeefloat16.csv",mode="w",encoding="utf-8",newline="")
 csw = csv.writer(f)
-csw.writerow(['Float value', 'Sign',           'Exponent',      'Mantissa',       'Hexadecimal',    'Binary',        'Notes',  '#column-names'])
-csw.writerow(['numeric',     'numeric',        'numeric',       'numeric:base=16','numeric:base=16','numeric:base=2','string', '#column-format'])
-csw.writerow(['right',       'right',          'right',         'right',          'right',          'right',         'left',   '#column-align'])
-csw.writerow(['16-bit IEEE floating point numbers and their encodings as various binary encodings',                            '#table-title'])
+common_float_csv_header(csw,float_bits=16)
 csw.writerow(['Mantissa shown with implicit bit that is not stored in the final encoding',                                     '#table-note'])
-csw.writerow(['Final float value, without sign, is mantissa * pow(2.0,exponent)',                                              '#table-note'])
 csw.writerow([])
-# seeeeeffffffffff 16 bits
-float_bits = 16
-float_hex_digits = int((float_bits + 3) / 4)
-mant_bits = 10
-mant_implicit = 1 << mant_bits
-exp_bias = 15
-exp_min = -exp_bias
-exp_bits = 5
-exp_mask = (1 << exp_bits) - 1
-for sgn in range(0,2):
-    ssgn = ['','-'][sgn]
-    for rexp in range(-15,16):
-        for rmant in [0,1<<(mant_bits-2),2<<(mant_bits-2),3<<(mant_bits-2)]:
-            if rexp > exp_min:
-                note = ""
-                mant = rmant | mant_implicit # normal
-                exp = rexp
-            else:
-                note = "Subnormal float, implicit bit 0"
-                mant = rmant # subnormal
-                exp = exp_min + 1
-            #
-            fval = mant * math.pow(2, exp)
-            encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
-            #
-            vhex = hex(encoding)[2:] # strip off the '0x'
-            while len(vhex) < float_hex_digits:
-                vhex = '0' + vhex
-            vbin = bin(encoding)[2:] # strip off the '0b'
-            while len(vbin) < float_bits:
-                vbin = '0' + vbin
-            #
-            csw.writerow([ssgn+str(fval),str(sgn),str(exp),hex(mant),vhex,vbin,note])
-# gotta mention infinity and Nan for reference, too
-for sgn in range(0,2):
-    rexp = 16
-    rmant = 0
-    ssgn = ['','-'][sgn]
-    note = "Infinity"
-    encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
-    #
-    vhex = hex(encoding)[2:] # strip off the '0x'
-    while len(vhex) < float_hex_digits:
-        vhex = '0' + vhex
-    vbin = bin(encoding)[2:] # strip off the '0b'
-    while len(vbin) < float_bits:
-        vbin = '0' + vbin
-    #
-    csw.writerow([ssgn+"∞",str(sgn),str(exp),hex(mant),vhex,vbin,note])
-for sgn in range(0,2):
-    rexp = 16
-    rmant = 1
-    ssgn = ['','-'][sgn]
-    note = "Quiet Not A Number"
-    encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
-    #
-    vhex = hex(encoding)[2:] # strip off the '0x'
-    while len(vhex) < float_hex_digits:
-        vhex = '0' + vhex
-    vbin = bin(encoding)[2:] # strip off the '0b'
-    while len(vbin) < float_bits:
-        vbin = '0' + vbin
-    #
-    csw.writerow([ssgn+"Nan",str(sgn),str(exp),hex(mant),vhex,vbin,note])
-for sgn in range(0,2):
-    rexp = 16
-    rmant = mant_implicit >> 1
-    ssgn = ['','-'][sgn]
-    note = "Signalling Not A Number"
-    encoding = (sgn << (float_bits-1)) | (((rexp + exp_bias) & exp_mask) << mant_bits) | rmant
-    #
-    vhex = hex(encoding)[2:] # strip off the '0x'
-    while len(vhex) < float_hex_digits:
-        vhex = '0' + vhex
-    vbin = bin(encoding)[2:] # strip off the '0b'
-    while len(vbin) < float_bits:
-        vbin = '0' + vbin
-    #
-    csw.writerow([ssgn+"sNan",str(sgn),str(exp),hex(mant),vhex,vbin,note])
-#
+common_float_csv_gen(csw,float_bits=16,mant_bits=10,exp_bits=5,exp_bias=15) # seee'eeff'ffff'ffff 16 bits
+f.close()
+
+f = open("gen-numbers-ieeefloat32.csv",mode="w",encoding="utf-8",newline="")
+csw = csv.writer(f)
+common_float_csv_header(csw,float_bits=32)
+csw.writerow(['Mantissa shown with implicit bit that is not stored in the final encoding',                                     '#table-note'])
+csw.writerow([])
+common_float_csv_gen(csw,float_bits=32,mant_bits=23,exp_bits=8,exp_bias=127) # seee'eeee'efff'ffff'ffff'ffff'ffff'ffff 32 bits
 f.close()
 
