@@ -259,7 +259,7 @@ def common_float_csv_gen(csw,float_bits,mant_bits,exp_bits,exp_bias):
                 csw.writerow([ssgn+str(fval),str(sgn),str(exp),hex(mant),vhex,vbin,note])
     # gotta mention infinity and Nan for reference, too
     for sgn in range(0,2):
-        rexp = 16
+        rexp = exp_mask + exp_min
         rmant = 0
         ssgn = ['','-'][sgn]
         note = "Infinity"
@@ -272,9 +272,9 @@ def common_float_csv_gen(csw,float_bits,mant_bits,exp_bits,exp_bias):
         while len(vbin) < float_bits:
             vbin = '0' + vbin
         #
-        csw.writerow([ssgn+"∞",str(sgn),str(exp),hex(mant),vhex,vbin,note])
+        csw.writerow([ssgn+"∞",str(sgn),str(rexp),hex(rmant),vhex,vbin,note])
     for sgn in range(0,2):
-        rexp = 16
+        rexp = exp_mask + exp_min
         rmant = 1
         ssgn = ['','-'][sgn]
         note = "Quiet Not A Number"
@@ -287,9 +287,9 @@ def common_float_csv_gen(csw,float_bits,mant_bits,exp_bits,exp_bias):
         while len(vbin) < float_bits:
             vbin = '0' + vbin
         #
-        csw.writerow([ssgn+"Nan",str(sgn),str(exp),hex(mant),vhex,vbin,note])
+        csw.writerow([ssgn+"Nan",str(sgn),str(rexp),hex(rmant),vhex,vbin,note])
     for sgn in range(0,2):
-        rexp = 16
+        rexp = exp_mask + exp_min
         rmant = mant_implicit >> 1
         ssgn = ['','-'][sgn]
         note = "Signalling Not A Number"
@@ -302,7 +302,7 @@ def common_float_csv_gen(csw,float_bits,mant_bits,exp_bits,exp_bias):
         while len(vbin) < float_bits:
             vbin = '0' + vbin
         #
-        csw.writerow([ssgn+"sNan",str(sgn),str(exp),hex(mant),vhex,vbin,note])
+        csw.writerow([ssgn+"sNan",str(sgn),str(rexp),hex(rmant),vhex,vbin,note])
 
 f = open("gen-numbers-ieeefloat16.csv",mode="w",encoding="utf-8",newline="")
 csw = csv.writer(f)

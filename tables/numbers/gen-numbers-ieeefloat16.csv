@@ -253,9 +253,9 @@ Mantissa shown with implicit bit that is not stored in the final encoding,#table
 -40960.0,1,15,0x500,f900,1111100100000000,
 -49152.0,1,15,0x600,fa00,1111101000000000,
 -57344.0,1,15,0x700,fb00,1111101100000000,
-∞,0,15,0x700,7c00,0111110000000000,Infinity
--∞,1,15,0x700,fc00,1111110000000000,Infinity
-Nan,0,15,0x700,7c01,0111110000000001,Quiet Not A Number
--Nan,1,15,0x700,fc01,1111110000000001,Quiet Not A Number
-sNan,0,15,0x700,7e00,0111111000000000,Signalling Not A Number
--sNan,1,15,0x700,fe00,1111111000000000,Signalling Not A Number
+∞,0,16,0x0,7c00,0111110000000000,Infinity
+-∞,1,16,0x0,fc00,1111110000000000,Infinity
+Nan,0,16,0x1,7c01,0111110000000001,Quiet Not A Number
+-Nan,1,16,0x1,fc01,1111110000000001,Quiet Not A Number
+sNan,0,16,0x200,7e00,0111111000000000,Signalling Not A Number
+-sNan,1,16,0x200,fe00,1111111000000000,Signalling Not A Number
