@@ -143,3 +143,53 @@ for si in range(-257,257):
         csw.writerow(["-"+str(-(si+1)),vhex,vdec,voct,vbin])
 f.close()
 
+#--------------------------------------------------------------------------------------------------------
+# list of numbers in various common bases as gray codes
+# hexadecimal, decimal, octal, binary
+
+def graycode(i):
+    return i ^ (i >> 1)
+
+f = open("gen-numbers-gray-codes.csv",mode="w",encoding="utf-8",newline="")
+csw = csv.writer(f)
+csw.writerow(['Original hexadecimal', 'Original decimal', 'Original octal', 'Original binary', 'Hexadecimal',    'Decimal',        'Octal',         'Binary',        '#column-names'])
+csw.writerow(['numeric:base=16',      'numeric:base=10',  'numeric:base=8', 'numeric:base=1',  'numeric:base=16','numeric:base=10','numeric:base=8','numeric:base=2','#column-format'])
+csw.writerow(['right',                'right',            'right',          'right',           'right',          'right',          'right',         'right',         '#column-align'])
+csw.writerow(['Integer numbers in various common bases as gray codes',                                                                                               '#table-title'])
+csw.writerow([])
+pgi = 0
+for i in range(0,257):
+    gi = graycode(i)
+    #
+    ovhex = hex(i)[2:] # strip off the '0x'
+    while len(ovhex) < 2:
+        ovhex = '0' + ovhex
+    ovdec = str(i)
+    ovoct = oct(i)[2:] # strip off the '0o'
+    while len(ovoct) < 3:
+        ovoct = '0' + ovoct
+    ovbin = bin(i)[2:] # strip off the '0b'
+    while len(ovbin) < 9:
+        ovbin = '0' + ovbin
+    #
+    vhex = hex(gi)[2:] # strip off the '0x'
+    while len(vhex) < 2:
+        vhex = '0' + vhex
+    vdec = str(gi)
+    voct = oct(gi)[2:] # strip off the '0o'
+    while len(voct) < 3:
+        voct = '0' + voct
+    vbin = bin(gi)[2:] # strip off the '0b'
+    while len(vbin) < 9:
+        vbin = '0' + vbin
+    #
+    csw.writerow([ovhex,ovdec,ovoct,ovbin,vhex,vdec,voct,vbin])
+    #
+    if i > 0:
+        bc = gi ^ pgi # make sure only one bit changed
+        if not (bc & (bc - 1)) == 0: # if not power of 2
+            raise Exception("Gray code encoding for "+str(i)+" failed")
+    #
+    pgi = gi
+f.close()
+
