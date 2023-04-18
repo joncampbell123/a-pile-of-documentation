@@ -408,3 +408,29 @@ write_logichex_table("gen-logichex-and.csv","AND",lambda i1,i2: (i1 & i2))
 write_logichex_table("gen-logichex-xnor.csv","eXclusive NOR (XNOR)",lambda i1,i2: 0xF ^ (i1 ^ i2))
 write_logichex_table("gen-logichex-or.csv","OR",lambda i1,i2: (i1 | i2))
 
+#--------------------------------------------------------------------------------------------------------
+# list of numbers in various common bases in a times tables format
+# hexadecimal, decimal, octal, binary
+f = open("gen-numbers-times-tables.csv",mode="w",encoding="utf-8",newline="")
+csw = csv.writer(f)
+csw.writerow(['X',      'Y',      'Result (Hexadecimal)','Result (Decimal)','Result (Octal)','Result (Binary)','#column-names'])
+csw.writerow(['numeric','numeric','numeric:base=16',     'numeric:base=10', 'numeric:base=8','numeric:base=2', '#column-format'])
+csw.writerow(['right',  'right',  'right',               'right',           'right',         'right',          '#column-align'])
+csw.writerow(['Multiplication table X * Y',                                                                    '#table-title'])
+csw.writerow([])
+for x in range(0,13):
+    for y in range(0,13):
+        result = x * y
+        vhex = hex(result)[2:] # strip off the '0x'
+        while len(vhex) < 2:
+            vhex = '0' + vhex
+        vdec = str(result)
+        voct = oct(result)[2:] # strip off the '0o'
+        while len(voct) < 3:
+            voct = '0' + voct
+        vbin = bin(result)[2:] # strip off the '0b'
+        while len(vbin) < 8:
+            vbin = '0' + vbin
+        csw.writerow([str(x),str(y),vhex,vdec,voct,vbin])
+f.close()
+
