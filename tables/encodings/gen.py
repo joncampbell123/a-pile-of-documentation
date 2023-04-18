@@ -52,6 +52,16 @@ class UnicodeMapEntry:
                 s = '0' + s
             r += s
         return r
+    def getUnicpString(self):
+        unicp_s = hex(self.unicp)[2:]
+        while len(unicp_s) < 4:
+            unicp_s = '0' + unicp_s
+        return unicp_s
+    def getDisplayString(self):
+        disp = ''
+        if not ent.display == None:
+            disp = ent.display
+        return disp
 
 def load_unicode_mapping_file(path):
     ret = { }
@@ -123,12 +133,8 @@ for i in range(0,128): # the first 128 of CP437 is the same as ASCII
     vdec = ent.getDecString()
     voct = ent.getOctString()
     vbin = ent.getBinString()
-    unicp_s = hex(ent.unicp)[2:]
-    while len(unicp_s) < 4:
-        unicp_s = '0' + unicp_s
-    disp = ''
-    if not ent.display == None:
-        disp = ent.display
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp])
+    unicp_s = ent.getUnicpString()
+    disp_s = ent.getDisplayString()
+    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
 f.close()
 
