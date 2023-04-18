@@ -217,8 +217,8 @@ f.close()
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_cp737 = load_unicode_mapping_file("ref/CP737.TXT")
-patch_cp437_control_codes(map_cp737)
+map_current = load_unicode_mapping_file("ref/CP737.TXT")
+patch_cp437_control_codes(map_current)
 f = open("gen-cp737.csv",mode="w",encoding="utf-8",newline="")
 csw = csv.writer(f)
 csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
@@ -226,8 +226,30 @@ csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:bas
 csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
 csw.writerow(['Microsoft/IBM PC Code Page 737 table (Greek)', '#table-title'])
 csw.writerow([])
-for enti in map_cp737:
-    ent = map_cp737[enti]
+for enti in map_current:
+    ent = map_current[enti]
+    vhex = ent.getHexString()
+    vdec = ent.getDecString()
+    voct = ent.getOctString()
+    vbin = ent.getBinString()
+    unicp_s = ent.getUnicpString()
+    disp_s = ent.getDisplayString()
+    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
+f.close()
+
+#--------------------------------------------------------------------------------------------------------
+# list of numbers in various common bases
+# hexadecimal, decimal, octal, binary
+map_current = load_unicode_mapping_file("ref/CP1252.TXT")
+f = open("gen-cp1252.csv",mode="w",encoding="utf-8",newline="")
+csw = csv.writer(f)
+csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
+csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
+csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
+csw.writerow(['Microsoft Windows Code Page 1252 (Latin ISO 8859-1)', '#table-title'])
+csw.writerow([])
+for enti in map_current:
+    ent = map_current[enti]
     vhex = ent.getHexString()
     vdec = ent.getDecString()
     voct = ent.getOctString()
