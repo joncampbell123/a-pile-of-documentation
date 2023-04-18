@@ -41,9 +41,15 @@ csw.writerow([])
 for pi in range(0,63):
     i = 1 << pi
     vhex = hex(i)[2:] # strip off the '0x'
+    while len(vhex) < 16:
+        vhex = '0' + vhex
     vdec = str(i)
     voct = oct(i)[2:] # strip off the '0o'
+    while len(voct) < 21:
+        voct = '0' + voct
     vbin = bin(i)[2:] # strip off the '0b'
+    while len(vbin) < 64:
+        vbin = '0' + vbin
     #
     csw.writerow([str(pi),vhex,vdec,voct,vbin])
 f.close()
