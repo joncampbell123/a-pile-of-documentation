@@ -41,6 +41,15 @@ cp437_control_codes = [
         [ 0x1F, 0x25BC ]  # triangle arrow down
 ]
 
+def patch_cp437_control_codes(m):
+    # CP437 has well known symbols in the range 0-31 inclusive which
+    # this code will patch in now.
+    global cp437_control_codes
+    for ent in cp437_control_codes:
+        m[ent[0]].unicp = ent[1]
+        if not ent[1] == None:
+            m[ent[0]].display = chr(ent[1])
+
 class UnicodeMapEntry:
     display = None
     byteseq = None
@@ -159,12 +168,8 @@ map_ascii = { }
 for key in map_cp437:
     if key < 128:
         map_ascii[key] = map_cp437[key]
-# CP437 has well known symbols in the range 0-31 inclusive which
-# this code will patch in now.
-for ent in cp437_control_codes:
-    map_cp437[ent[0]].unicp = ent[1]
-    if not ent[1] == None:
-        map_cp437[ent[0]].display = chr(ent[1])
+#
+patch_cp437_control_codes(map_cp437)
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
@@ -195,10 +200,33 @@ csw = csv.writer(f)
 csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
 csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
 csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 437 table', '#table-title'])
+csw.writerow(['Microsoft/IBM PC Code Page 437 table (Latin US)', '#table-title'])
 csw.writerow([])
 for enti in map_cp437:
     ent = map_cp437[enti]
+    vhex = ent.getHexString()
+    vdec = ent.getDecString()
+    voct = ent.getOctString()
+    vbin = ent.getBinString()
+    unicp_s = ent.getUnicpString()
+    disp_s = ent.getDisplayString()
+    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
+f.close()
+
+#--------------------------------------------------------------------------------------------------------
+# list of numbers in various common bases
+# hexadecimal, decimal, octal, binary
+map_cp737 = load_unicode_mapping_file("ref/CP737.TXT")
+patch_cp437_control_codes(map_cp737)
+f = open("gen-cp737.csv",mode="w",encoding="utf-8",newline="")
+csw = csv.writer(f)
+csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
+csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
+csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
+csw.writerow(['Microsoft/IBM PC Code Page 737 table (Greek)', '#table-title'])
+csw.writerow([])
+for enti in map_cp737:
+    ent = map_cp737[enti]
     vhex = ent.getHexString()
     vdec = ent.getDecString()
     voct = ent.getOctString()
