@@ -5,6 +5,42 @@ import sys
 import csv
 import math
 
+# cp437
+cp437_control_codes = [
+        # byte value, unicode point
+        [ 0x01, 0x263A ], # smiley
+        [ 0x02, 0x263B ], # smiley
+        [ 0x03, 0x2665 ], # heart
+        [ 0x04, 0x2666 ], # diamond
+        [ 0x05, 0x2663 ], # club
+        [ 0x06, 0x2660 ], # spade
+        [ 0x07, 0x2022 ], # dot
+        [ 0x08, 0x25D8 ], # dot
+        [ 0x09, 0x25CB ], # circle
+        [ 0x0A, 0x25D9 ], # circle
+        [ 0x0B, 0x2642 ], # male symbol
+        [ 0x0C, 0x2640 ], # female symbol
+        [ 0x0D, 0x266A ], # music note
+        [ 0x0E, 0x266B ], # music note
+        [ 0x0F, 0x263C ], # sun
+        [ 0x10, 0x25BA ], # right triangle arrow
+        [ 0x11, 0x25C4 ], # left triangle arrow
+        [ 0x12, 0x2195 ], # double vertical arrow
+        [ 0x13, 0x203C ], # double exclamation mark
+        [ 0x14, 0x00B6 ], # paragraph
+        [ 0x15, 0x00A7 ], # section
+        [ 0x16, 0x25AC ], # black rectangle
+        [ 0x17, 0x21A8 ], # up-down arrow with base
+        [ 0x18, 0x2191 ], # up arrow
+        [ 0x19, 0x2193 ], # down arrow
+        [ 0x1A, 0x2192 ], # right arrow
+        [ 0x1B, 0x2190 ], # left arrow
+        [ 0x1C, 0x221F ], # right angle
+        [ 0x1D, 0x2194 ], # double horizontal arrow
+        [ 0x1E, 0x25B2 ], # triangle arrow up
+        [ 0x1F, 0x25BC ]  # triangle arrow down
+]
+
 class UnicodeMapEntry:
     display = None
     byteseq = None
@@ -116,6 +152,19 @@ def load_unicode_mapping_file(path):
     return ret
 
 map_cp437 = load_unicode_mapping_file("ref/CP437.TXT")
+# CP437 is the same as ASCII for the first 128 entries.
+# The Unicode consortium list always treats 0-31 inclusive as control codes
+# even though CP437 has well known symbols in that range.
+map_ascii = { }
+for key in map_cp437:
+    if key < 128:
+        map_ascii[key] = map_cp437[key]
+# CP437 has well known symbols in the range 0-31 inclusive which
+# this code will patch in now.
+for ent in cp437_control_codes:
+    map_cp437[ent[0]].unicp = ent[1]
+    if not ent[1] == None:
+        map_cp437[ent[0]].display = chr(ent[1])
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
@@ -127,8 +176,8 @@ csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:bas
 csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
 csw.writerow(['ASCII table', '#table-title'])
 csw.writerow([])
-for i in range(0,128): # the first 128 of CP437 is the same as ASCII
-    ent = map_cp437[i]
+for enti in map_ascii:
+    ent = map_ascii[enti]
     vhex = ent.getHexString()
     vdec = ent.getDecString()
     voct = ent.getOctString()
@@ -148,7 +197,7 @@ csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:bas
 csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
 csw.writerow(['Microsoft/IBM PC Code Page 437 table', '#table-title'])
 csw.writerow([])
-for enti in map_cp437: # the first 128 of CP437 is the same as ASCII
+for enti in map_cp437:
     ent = map_cp437[enti]
     vhex = ent.getHexString()
     vdec = ent.getDecString()
