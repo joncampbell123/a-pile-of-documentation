@@ -42,10 +42,45 @@ cp437_control_codes = [
 ]
 
 # cp932
-cp932_control_codes = [
+cp932_replaced_codes = [
         # byte value, unicode point
         [ 0x5C, 0x00A5 ], # yen
         [ 0x7E, 0x203E ]  # overline
+]
+cp932_control_codes = [
+        # byte value, unicode point
+        [ 0x00, 0x2400 ],
+        [ 0x01, 0x2401 ],
+        [ 0x02, 0x2402 ],
+        [ 0x03, 0x2403 ],
+        [ 0x04, 0x2404 ],
+        [ 0x05, 0x2405 ],
+        [ 0x06, 0x2406 ],
+        [ 0x07, 0x2407 ],
+        [ 0x08, 0x2408 ],
+        [ 0x09, 0x2409 ],
+        [ 0x0A, 0x240A ],
+        [ 0x0B, 0x240B ],
+        [ 0x0C, 0x240C ],
+        [ 0x0D, 0x240D ],
+        [ 0x0E, 0x240E ],
+        [ 0x0F, 0x240F ],
+        [ 0x10, 0x2410 ],
+        [ 0x11, 0x2411 ],
+        [ 0x12, 0x2412 ],
+        [ 0x13, 0x2413 ],
+        [ 0x14, 0x2414 ],
+        [ 0x15, 0x2415 ],
+        [ 0x16, 0x2416 ],
+        [ 0x17, 0x2417 ],
+        [ 0x18, 0x2418 ],
+        [ 0x19, 0x2419 ],
+        [ 0x1A, 0x241A ],
+        [ 0x1B, 0x241B ],
+        [ 0x1C, 0x241C ],
+        [ 0x1D, 0x241D ],
+        [ 0x1E, 0x241E ],
+        [ 0x1F, 0x241F ]
 ]
 
 def patch_cp437_control_codes(m):
@@ -57,12 +92,22 @@ def patch_cp437_control_codes(m):
         if not ent[1] == None:
             m[ent[0]].display = chr(ent[1])
 
-def patch_shiftjis_replaced_ascii_codes(m):
+def patch_shiftjis_control_codes(m):
     # Unicode list forgot to list that backslash was replaced by Yen (which is why
     # Japanese systems have such strange looking DOS prompts) and tilde by a
     # top horizontal line.
     global cp932_control_codes
     for ent in cp932_control_codes:
+        m[ent[0]].unicp = ent[1]
+        if not ent[1] == None:
+            m[ent[0]].display = chr(ent[1])
+
+def patch_shiftjis_replaced_ascii_codes(m):
+    # Unicode list forgot to list that backslash was replaced by Yen (which is why
+    # Japanese systems have such strange looking DOS prompts) and tilde by a
+    # top horizontal line.
+    global cp932_replaced_codes
+    for ent in cp932_replaced_codes:
         m[ent[0]].unicp = ent[1]
         if not ent[1] == None:
             m[ent[0]].display = chr(ent[1])
@@ -281,6 +326,7 @@ f.close()
 # hexadecimal, decimal, octal, binary
 map_current = load_unicode_mapping_file("ref/CP932.TXT")
 patch_shiftjis_replaced_ascii_codes(map_current)
+patch_shiftjis_control_codes(map_current)
 f = open("gen-cp932.csv",mode="w",encoding="utf-8",newline="")
 csw = csv.writer(f)
 csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
