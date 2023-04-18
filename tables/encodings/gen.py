@@ -98,6 +98,8 @@ class UnicodeMapEntry:
             r += s
         return r
     def getUnicpString(self):
+        if self.unicp == None:
+            return '    '
         unicp_s = hex(self.unicp)[2:]
         while len(unicp_s) < 4:
             unicp_s = '0' + unicp_s
@@ -143,7 +145,6 @@ def load_unicode_mapping_file(path):
             ss = hbstr[i*2:(i+1)*2]
             bv[i] = int("0x"+ss,16)
         #
-        bv += bytearray([4])
         if not unicp[0:2] == "0x":
             continue
         unicp = int(unicp[2:],16)
