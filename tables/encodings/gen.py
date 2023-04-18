@@ -41,11 +41,28 @@ cp437_control_codes = [
         [ 0x1F, 0x25BC ]  # triangle arrow down
 ]
 
+# cp932
+cp932_control_codes = [
+        # byte value, unicode point
+        [ 0x5C, 0x00A5 ], # yen
+        [ 0x7E, 0x203E ]  # overline
+]
+
 def patch_cp437_control_codes(m):
     # CP437 has well known symbols in the range 0-31 inclusive which
     # this code will patch in now.
     global cp437_control_codes
     for ent in cp437_control_codes:
+        m[ent[0]].unicp = ent[1]
+        if not ent[1] == None:
+            m[ent[0]].display = chr(ent[1])
+
+def patch_shiftjis_replaced_ascii_codes(m):
+    # Unicode list forgot to list that backslash was replaced by Yen (which is why
+    # Japanese systems have such strange looking DOS prompts) and tilde by a
+    # top horizontal line.
+    global cp932_control_codes
+    for ent in cp932_control_codes:
         m[ent[0]].unicp = ent[1]
         if not ent[1] == None:
             m[ent[0]].display = chr(ent[1])
@@ -247,6 +264,29 @@ csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal
 csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
 csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
 csw.writerow(['Microsoft Windows Code Page 1252 (Latin ISO 8859-1)', '#table-title'])
+csw.writerow([])
+for enti in map_current:
+    ent = map_current[enti]
+    vhex = ent.getHexString()
+    vdec = ent.getDecString()
+    voct = ent.getOctString()
+    vbin = ent.getBinString()
+    unicp_s = ent.getUnicpString()
+    disp_s = ent.getDisplayString()
+    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
+f.close()
+
+#--------------------------------------------------------------------------------------------------------
+# list of numbers in various common bases
+# hexadecimal, decimal, octal, binary
+map_current = load_unicode_mapping_file("ref/CP932.TXT")
+patch_shiftjis_replaced_ascii_codes(map_current)
+f = open("gen-cp932.csv",mode="w",encoding="utf-8",newline="")
+csw = csv.writer(f)
+csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
+csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
+csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
+csw.writerow(['Microsoft/IBM PC Code Page 932 table (Shift JIS)', '#table-title'])
 csw.writerow([])
 for enti in map_current:
     ent = map_current[enti]
