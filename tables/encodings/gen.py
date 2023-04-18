@@ -80,7 +80,8 @@ cp932_control_codes = [
         [ 0x1C, 0x241C ],
         [ 0x1D, 0x241D ],
         [ 0x1E, 0x241E ],
-        [ 0x1F, 0x241F ]
+        [ 0x1F, 0x241F ],
+        [ 0x7F, 0x2421 ]
 ]
 
 def patch_cp437_control_codes(m):
