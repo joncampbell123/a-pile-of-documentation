@@ -125,10 +125,31 @@ csw = csv.writer(f)
 csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
 csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
 csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['ASCII table',                                                                                                                           '#table-title'])
+csw.writerow(['ASCII table', '#table-title'])
 csw.writerow([])
 for i in range(0,128): # the first 128 of CP437 is the same as ASCII
     ent = map_cp437[i]
+    vhex = ent.getHexString()
+    vdec = ent.getDecString()
+    voct = ent.getOctString()
+    vbin = ent.getBinString()
+    unicp_s = ent.getUnicpString()
+    disp_s = ent.getDisplayString()
+    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
+f.close()
+
+#--------------------------------------------------------------------------------------------------------
+# list of numbers in various common bases
+# hexadecimal, decimal, octal, binary
+f = open("gen-cp437.csv",mode="w",encoding="utf-8",newline="")
+csw = csv.writer(f)
+csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
+csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
+csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
+csw.writerow(['Microsoft/IBM PC Code Page 437 table', '#table-title'])
+csw.writerow([])
+for enti in map_cp437: # the first 128 of CP437 is the same as ASCII
+    ent = map_cp437[enti]
     vhex = ent.getHexString()
     vdec = ent.getDecString()
     voct = ent.getOctString()
