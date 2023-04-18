@@ -365,3 +365,46 @@ csw.writerow([])
 common_float_csv_gen(csw,float_bits=80,mant_bits=63,exp_bits=15,exp_bias=16383,explicit_mantissa_msb=True)
 f.close()
 
+#--------------------------------------------------------------------------------------------------------
+# list of numbers and logical operators
+# hexadecimal, decimal, octal, binary
+def write_logichex_table(csvname,title,lambdafunc):
+    f = open(csvname,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    csw.writerow(['Input 1 (P) (bin)','Input 1 (P) (hex)','Input 2 (Q) (bin)','Input 2 (Q) (hex)','Output (bin)',  'Output (hex)',   '#column-names'])
+    csw.writerow(['numeric:base=1',   'numeric:base=16',  'numeric:base=1',   'numeric:base=16',  'numeric:base=1','numeric:base=16','#column-format'])
+    csw.writerow(['right',            'right',            'right',            'right',            'right',         'right',          '#column-align'])
+    csw.writerow([title,                                                                                                             '#table-title'])
+    csw.writerow([])
+    for i in range(0,256):
+        i1 = (i >> 4) & 0xF
+        i2 = (i >> 0) & 0xF
+        ou = lambdafunc(i1,i2)
+        i1h = hex(i1)[2:]
+        while len(i1h) < 2:
+            i1h = '0' + i1h
+        i1b = bin(i1)[2:]
+        while len(i1b) < 4:
+            i1b = '0' + i1b
+        i2h = hex(i2)[2:]
+        while len(i2h) < 2:
+            i2h = '0' + i2h
+        i2b = bin(i2)[2:]
+        while len(i2b) < 4:
+            i2b = '0' + i2b
+        ouh = hex(ou)[2:]
+        while len(ouh) < 2:
+            ouh = '0' + ouh
+        oub = bin(ou)[2:]
+        while len(oub) < 4:
+            oub = '0' + oub
+        csw.writerow([i1b,i1h,i2b,i2h,oub,ouh])
+    f.close()
+
+write_logichex_table("gen-logichex-nor.csv","Not OR (NOR)",lambda i1,i2: 0xF ^ (i1 | i2))
+write_logichex_table("gen-logichex-xor.csv","eXclusive OR (XOR)",lambda i1,i2: (i1 ^ i2))
+write_logichex_table("gen-logichex-nand.csv","Not AND (NAND)",lambda i1,i2: 0xF ^ (i1 & i2))
+write_logichex_table("gen-logichex-and.csv","AND",lambda i1,i2: (i1 & i2))
+write_logichex_table("gen-logichex-xnor.csv","eXclusive NOR (XNOR)",lambda i1,i2: 0xF ^ (i1 ^ i2))
+write_logichex_table("gen-logichex-or.csv","OR",lambda i1,i2: (i1 | i2))
+
