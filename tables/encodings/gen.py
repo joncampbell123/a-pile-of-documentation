@@ -218,7 +218,7 @@ def load_unicode_mapping_file(path):
         ent.unicp = unicp
         ent.name = name
         ent.display = None
-        if ent.unicp >= 32 and not ent.unicp == 127:
+        if not (ent.unicp < 0x20 or (ent.unicp >= 0x7F and ent.unicp <= 0x9F)):
             ent.display = chr(ent.unicp)
         ret[key] = ent
         #
@@ -410,6 +410,28 @@ csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal
 csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
 csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
 csw.writerow(['Apple Macintosh Cyrillic table', '#table-title'])
+csw.writerow([])
+for enti in map_current:
+    ent = map_current[enti]
+    vhex = ent.getHexString()
+    vdec = ent.getDecString()
+    voct = ent.getOctString()
+    vbin = ent.getBinString()
+    unicp_s = ent.getUnicpString()
+    disp_s = ent.getDisplayString()
+    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
+f.close()
+
+#--------------------------------------------------------------------------------------------------------
+# list of numbers in various common bases
+# hexadecimal, decimal, octal, binary
+map_current = load_unicode_mapping_file("ref/CP037.TXT")
+f = open("gen-ebcdic-cp037.csv",mode="w",encoding="utf-8",newline="")
+csw = csv.writer(f)
+csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
+csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
+csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
+csw.writerow(['IBM EBCDIC US/Canada table', '#table-title'])
 csw.writerow([])
 for enti in map_current:
     ent = map_current[enti]
