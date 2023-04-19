@@ -335,7 +335,9 @@ csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:bas
 csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
 csw.writerow(['Microsoft/IBM PC Code Page 932 table (Shift JIS)', '#table-title'])
 csw.writerow([])
-for enti in map_current:
+sorto = list(map_current.keys());
+sorto.sort(key=lambda x: map_current[x].byteseq)
+for enti in sorto:
     ent = map_current[enti]
     vhex = ent.getHexString()
     vdec = ent.getDecString()
