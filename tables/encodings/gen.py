@@ -38,7 +38,8 @@ cp437_control_codes = [
         [ 0x1C, 0x221F ], # right angle
         [ 0x1D, 0x2194 ], # double horizontal arrow
         [ 0x1E, 0x25B2 ], # triangle arrow up
-        [ 0x1F, 0x25BC ]  # triangle arrow down
+        [ 0x1F, 0x25BC ], # triangle arrow down
+        [ 0x7F, 0x2302 ]
 ]
 
 # cp932
