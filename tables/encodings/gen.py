@@ -399,3 +399,26 @@ for enti in map_current:
     csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
 f.close()
 
+#--------------------------------------------------------------------------------------------------------
+# list of numbers in various common bases
+# hexadecimal, decimal, octal, binary
+map_current = load_unicode_mapping_file("ref/MAC-CYRILLIC.TXT")
+patch_cp437_control_codes(map_current)
+f = open("gen-apple-mac-cyrillic.csv",mode="w",encoding="utf-8",newline="")
+csw = csv.writer(f)
+csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
+csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
+csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
+csw.writerow(['Apple Macintosh Cyrillic table', '#table-title'])
+csw.writerow([])
+for enti in map_current:
+    ent = map_current[enti]
+    vhex = ent.getHexString()
+    vdec = ent.getDecString()
+    voct = ent.getOctString()
+    vbin = ent.getBinString()
+    unicp_s = ent.getUnicpString()
+    disp_s = ent.getDisplayString()
+    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
+f.close()
+
