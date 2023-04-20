@@ -377,3 +377,79 @@ docWriteBMP("gen-cp853.bmp",drawsbcsgrid(docLoadBMP("ref/cp853vga8x16.bmp"),8,16
 #-----------------------------------------------------
 docWriteBMP("gen-cp866.bmp",drawsbcsgrid(docLoadBMP("ref/cp866vga8x16.bmp"),8,16))
 
+#-----------------------------------------------------
+# PC-98 FONT ROM, video memory text codes
+
+def drawsbcsgrid_pc98(imgcp,charCellWidth,charCellHeight):
+    charGridX = 1+(charCellWidth*4)
+    charGridY = 1+charCellHeight
+    img = docImage(((charCellWidth+1)*16)+charGridX,((charCellHeight+1)*16)+charGridY,8)
+    #
+    img.palette_used = 3
+    img.palette[0] = docRGBA(0,0,0,0)
+    img.palette[1] = docRGBA(255,255,255,255)
+    img.palette[2] = docRGBA(63,63,192)
+    #
+    img.fillrect(0,0,img.width,img.height,1)
+    img.fillrect(charGridX-1,charGridY-1,img.width,charGridY,2)
+    img.fillrect(charGridX-1,charGridY-1,charGridX,img.height,2)
+    for r in range(0,17):
+        img.fillrect(charGridX,(r*17)+charGridY-1,img.width,(r*17)+charGridY,2)
+    for c in range(0,17):
+        img.fillrect((c*9)+charGridX-1,charGridY,(c*9)+charGridX,img.height,2)
+    #
+    for r in range(0,16):
+        s = hex(r)[2:].upper()
+        sx = int(ord(s[0]) % 16) * 8
+        sy = int(ord(s[0]) / 16) * 16
+        dx = charGridX + (r * 9)
+        dy = 0
+        imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
+        #
+        dx = 16
+        dy = charGridY + (r * 17)
+        imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
+        sx = int(ord('0') % 16) * 8
+        sy = int(ord('0') / 16) * 16
+        dx = 0
+        imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
+        dx = 8
+        imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
+        dx = 24
+        imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
+    #
+    for r in range(0,16):
+        for c in range(0,16):
+            sx = c * 8
+            sy = r * 16
+            dx = charGridX + (c * 9)
+            dy = charGridY + (r * 17)
+            imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: _x)
+    #
+    return img
+
+
+
+f = open("ref/pc98font.rom",mode="rb")
+pc98rom = f.read()
+f.close()
+# at 0x00000 = 8x8 single wide 8-bit character cells (not used here)
+# at 0x00800 = 8x16 single wide 8-bit character cells
+# at 0x01800 = 96x92 double wide character cells
+# render the sbcs
+img_pc98sbcs = docImage(8*16,16*16,1)
+img_pc98sbcs.palette_used = 2
+img_pc98sbcs.palette[0] = docRGBA(0,0,0,0)
+img_pc98sbcs.palette[1] = docRGBA(255,255,255,255)
+for c in range(0,256):
+    ofs = 0x800+(c*16)
+    cb = c&0xF
+    rb = (c>>4)*16
+    for r in range(0,16):
+        img_pc98sbcs.rows[r+rb][cb] = pc98rom[ofs+r]
+#
+docWriteBMP("gen-pc98-tvram-0-sbcs.bmp",drawsbcsgrid_pc98(img_pc98sbcs,8,16))
+#
+pc98rom = None
+img_pc98sbcs = None
+
