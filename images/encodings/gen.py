@@ -413,36 +413,55 @@ docWriteBMP("gen-cp866.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp866vga8x16.bmp"
 # at 0x00000 = 8x8 single wide 8-bit character cells (not used here)
 # at 0x00800 = 8x16 single wide 8-bit character cells
 # at 0x01800 = 96x92 double wide character cells
-f = open("ref/pc98font.rom",mode="rb")
-pc98rom = f.read()
-f.close()
+class PC98FONTROM:
+    ROM = None
+    def font8x8(self):
+        return self.ROM[0:8*256]
+    def char8x8(self,c):
+        o = c*8
+        return self.font8x8()[o:o+8]
+    def font8x16(self):
+        return self.ROM[0x800:0x800+(16*256)]
+    def char8x16(self,c):
+        o = c*16
+        return self.font8x16()[o:o+16]
+    def font16x16(self):
+        return self.ROM[0x1800:0x1800+(16*2*96*92)] # 16x16 96x92 grid
+    def char16x16(self,c):
+        h = ((c >> 8) & 0x7F) - 0x20
+        l = c & 0x7F
+        if h < 0 or h > 95 or l <= 0 or l > 92:
+            return [ 0 ] * 16 * 2
+        o = ((l-1) * 96 * 16 * 2) + (h * 16 * 2)
+        return self.font16x16()[o:o+(16*2)]
+    def __init__(self,path="ref/pc98font.rom"):
+        f = open(path,mode="rb")
+        self.ROM = f.read()
+        f.close()
+
+#-----------------------------------------------------
+PC98FONT = PC98FONTROM()
 
 #-----------------------------------------------------
 # PC-98 sbcs
 img_pc98sbcs = docImage(8*16,16*16,1)
-img_pc98sbcs.palette_used = 2
-img_pc98sbcs.palette[0] = docRGBA(0,0,0,0)
-img_pc98sbcs.palette[1] = docRGBA(255,255,255,255)
 for c in range(0,256):
-    ofs = 0x800+(c*16)
+    cbmp = PC98FONT.char8x16(c)
     cb = c&0xF
     rb = (c>>4)*16
     for r in range(0,16):
-        img_pc98sbcs.rows[r+rb][cb] = pc98rom[ofs+r]
+        img_pc98sbcs.rows[r+rb][cb] = cbmp[r]
 docWriteBMP("gen-pc98-tvram-0000.bmp",drawchargrid(colDigits=4,imgcp=img_pc98sbcs))
 # PC-98 dbcs
-img_pc98dbcs = docImage(16*16,8*16,1)
-img_pc98dbcs.palette_used = 2
-img_pc98dbcs.palette[0] = docRGBA(0,0,0,0)
-img_pc98dbcs.palette[1] = docRGBA(255,255,255,255)
 # despite the normally double wide cells, there is a small range where the double wide encoding becomes a single wide char.
 # these are apparently special nonstandard codes defined by NEC.
-def cellLambda(cc,w,h):
+def PC98dbcsCellLambda(cc,w,h):
     if (cc & 0xFC) == 0x08: # xx08 xx09 xx0A xx0B
         return [8,h]
     #
     return [w,h]
 #
+img_pc98dbcs = docImage(16*16,8*16,1)
 for hib in range(0x20,0x80,0x04):
     imgs = [ None ] * 0x04
     for subrow in range(0,len(imgs)):
@@ -450,14 +469,14 @@ for hib in range(0x20,0x80,0x04):
         code_base = (hib + subrow) << 8
         img_pc98dbcs.fillrect(0,0,16*16,8*16,0)
         for jiscol in range(0x01,0x5D):
-            ofs = 0x01800 + ((jiscol-1) * 96 * 16 * 2) + (jisrow * 16 * 2)
+            cbmp = PC98FONT.char16x16(code_base+jiscol)
             dx = (jiscol & 0xF) * 2
             dy = (jiscol >> 4) * 16
             for y in range(0,16):
                 for x in range(0,2):
-                    img_pc98dbcs.rows[dy+y][dx+x] = pc98rom[ofs+y+(x*16)]
+                    img_pc98dbcs.rows[dy+y][dx+x] = cbmp[y+(x*16)]
         #
-        imgs[subrow] = drawchargrid(imgt8=img_pc98sbcs,tcWidth=8,colDigits=4,imgcp=img_pc98dbcs,charRows=8,charCellWidth=16,charCellHeight=16,code_base=code_base,charCellSizeLF=cellLambda)
+        imgs[subrow] = drawchargrid(imgt8=img_pc98sbcs,tcWidth=8,colDigits=4,imgcp=img_pc98dbcs,charRows=8,charCellWidth=16,charCellHeight=16,code_base=code_base,charCellSizeLF=PC98dbcsCellLambda)
     #
     code_base = hib << 8
     sc = hex(code_base)[2:]
@@ -469,6 +488,7 @@ for hib in range(0x20,0x80,0x04):
     imgs = None
 #
 pc98rom = None
+PC98FONT = None
 img_pc98sbcs = None
 img_pc98dbcs = None
 
