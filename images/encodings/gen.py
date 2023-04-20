@@ -374,3 +374,6 @@ docWriteBMP("gen-cp852.bmp",drawsbcsgrid(docLoadBMP("ref/cp852vga8x16.bmp"),8,16
 #-----------------------------------------------------
 docWriteBMP("gen-cp853.bmp",drawsbcsgrid(docLoadBMP("ref/cp853vga8x16.bmp"),8,16))
 
+#-----------------------------------------------------
+docWriteBMP("gen-cp866.bmp",drawsbcsgrid(docLoadBMP("ref/cp866vga8x16.bmp"),8,16))
+
