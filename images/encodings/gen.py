@@ -326,12 +326,7 @@ def drawsbcsgrid(imgcp,charCellWidth,charCellHeight):
     img.palette[2] = docRGBA(63,63,192)
     #
     img.fillrect(0,0,img.width,img.height,1)
-    img.fillrect(charGridX-1,charGridY-1,img.width,charGridY,2)
-    img.fillrect(charGridX-1,charGridY-1,charGridX,img.height,2)
-    for r in range(0,17):
-        img.fillrect(charGridX,(r*17)+charGridY-1,img.width,(r*17)+charGridY,2)
-    for c in range(0,17):
-        img.fillrect((c*9)+charGridX-1,charGridY,(c*9)+charGridX,img.height,2)
+    img.fillrect(charGridX-1,charGridY-1,img.width,img.height,2)
     #
     for r in range(0,16):
         s = hex(r)[2:].upper()
@@ -378,7 +373,10 @@ docWriteBMP("gen-cp853.bmp",drawsbcsgrid(docLoadBMP("ref/cp853vga8x16.bmp"),8,16
 docWriteBMP("gen-cp866.bmp",drawsbcsgrid(docLoadBMP("ref/cp866vga8x16.bmp"),8,16))
 
 #-----------------------------------------------------
-def drawsbcsgrid_pc98(imgcp,charCellWidth,charCellHeight):
+def drawgrid_pc98(imgcp,charCellWidth,charCellHeight,code_base,charCellSizeLF=None):
+    if charCellSizeLF == None:
+        charCellSizeLF = lambda c,w,h: [w,h]
+    #
     charGridX = 1+(charCellWidth*4)
     charGridY = 1+charCellHeight
     img = docImage(((charCellWidth+1)*16)+charGridX,((charCellHeight+1)*16)+charGridY,8)
@@ -389,12 +387,7 @@ def drawsbcsgrid_pc98(imgcp,charCellWidth,charCellHeight):
     img.palette[2] = docRGBA(63,63,192)
     #
     img.fillrect(0,0,img.width,img.height,1)
-    img.fillrect(charGridX-1,charGridY-1,img.width,charGridY,2)
-    img.fillrect(charGridX-1,charGridY-1,charGridX,img.height,2)
-    for r in range(0,17):
-        img.fillrect(charGridX,(r*17)+charGridY-1,img.width,(r*17)+charGridY,2)
-    for c in range(0,17):
-        img.fillrect((c*9)+charGridX-1,charGridY,(c*9)+charGridX,img.height,2)
+    img.fillrect(charGridX-1,charGridY-1,img.width,img.height,2)
     #
     for r in range(0,16):
         s = hex(r)[2:].upper()
@@ -404,16 +397,27 @@ def drawsbcsgrid_pc98(imgcp,charCellWidth,charCellHeight):
         dy = 0
         imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
         #
-        dx = 16
+        code = hex(code_base + (r<<4))[2:]
+        while len(code) < 4:
+            code = '0' + code
+        #
         dy = charGridY + (r * 17)
-        imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
-        sx = int(ord('0') % 16) * 8
-        sy = int(ord('0') / 16) * 16
+        #
         dx = 0
+        sx = int(ord(code[0]) % 16) * 8
+        sy = int(ord(code[0]) / 16) * 16
         imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
         dx = 8
+        sx = int(ord(code[1]) % 16) * 8
+        sy = int(ord(code[1]) / 16) * 16
+        imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
+        dx = 16
+        sx = int(ord(code[2]) % 16) * 8
+        sy = int(ord(code[2]) / 16) * 16
         imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
         dx = 24
+        sx = int(ord(code[3]) % 16) * 8
+        sy = int(ord(code[3]) / 16) * 16
         imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
     #
     for r in range(0,16):
@@ -422,7 +426,9 @@ def drawsbcsgrid_pc98(imgcp,charCellWidth,charCellHeight):
             sy = r * 16
             dx = charGridX + (c * 9)
             dy = charGridY + (r * 17)
-            imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: _x)
+            charcode = code_base + (r * 16) + c
+            cw,ch = charCellSizeLF(charcode,charCellWidth,charCellHeight)
+            imgmonocopy(img,dx,dy,cw,ch,imgcp,sx,sy,lambda _x: _x)
     #
     return img
 
@@ -448,7 +454,7 @@ for c in range(0,256):
     for r in range(0,16):
         img_pc98sbcs.rows[r+rb][cb] = pc98rom[ofs+r]
 #
-docWriteBMP("gen-pc98-tvram-0-sbcs.bmp",drawsbcsgrid_pc98(img_pc98sbcs,8,16))
+docWriteBMP("gen-pc98-tvram-0-sbcs.bmp",drawgrid_pc98(img_pc98sbcs,8,16,0x0000))
 #
 pc98rom = None
 img_pc98sbcs = None
