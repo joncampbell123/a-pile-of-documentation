@@ -145,7 +145,7 @@ class docImage:
             rp = self.rows[y]
             if not rp == None:
                 return self.readpixelp(rp,x)
-        return None
+        return 0
     def writepixel(self,x,y,c):
         if y >= 0 and y < len(self.rows):
             rp = self.rows[y]
@@ -156,21 +156,21 @@ class docImage:
         bio = x & 7
         if byo < len(rp):
             return (rp[byo] >> (7-bio)) & 0x1
-        return None
+        return 0
     def readpixel_4(self,rp,x):
-        return None
+        return 0
     def readpixel_8(self,rp,x):
         if x < len(rp):
             return rp[x]
-        return None
+        return 0
     def readpixel_15(self,rp,x):
-        return None
+        return 0
     def readpixel_16(self,rp,x):
-        return None
+        return 0
     def readpixel_24(self,rp,x):
-        return None
+        return 0
     def readpixel_32(self,rp,x):
-        return None
+        return 0
     def writepixel_1(self,rp,x,c):
         byo = x >> 3
         bio = x & 7
@@ -310,76 +310,44 @@ def docWriteBMP(dst,img):
     #
     return raw
 
+def docImageStackCombine(imgs):
+    final_h = 0
+    final_w = 0
+    for simg in imgs:
+        final_h += simg.height
+        if final_w < simg.width:
+            final_w = simg.width
+    #
+    img = docImage(final_w,final_h,imgs[0].bits_per_pixel)
+    img.palette = imgs[0].palette
+    img.palette_used = imgs[0].palette_used
+    #
+    y = 0
+    for simg in imgs:
+        h = simg.height
+        img.rows[y:y+h] = simg.rows[0:h]
+        y += h
+    #
+    return img
+
 def imgmonocopy(dimg,dx,dy,w,h,simg,sx,sy,lf):
     for y in range(0,h):
         for x in range(0,w):
             dimg.writepixel(dx+x,dy+y,lf(simg.readpixel(sx+x,sy+y)))
 
-def drawsbcsgrid(imgcp,charCellWidth,charCellHeight):
-    charGridX = 1+(charCellWidth*2)
-    charGridY = 1+charCellHeight
-    img = docImage(((charCellWidth+1)*16)+charGridX,((charCellHeight+1)*16)+charGridY,8)
-    #
-    img.palette_used = 3
-    img.palette[0] = docRGBA(0,0,0,0)
-    img.palette[1] = docRGBA(255,255,255,255)
-    img.palette[2] = docRGBA(63,63,192)
-    #
-    img.fillrect(0,0,img.width,img.height,1)
-    img.fillrect(charGridX-1,charGridY-1,img.width,img.height,2)
-    #
-    for r in range(0,16):
-        s = hex(r)[2:].upper()
-        sx = int(ord(s[0]) % 16) * 8
-        sy = int(ord(s[0]) / 16) * 16
-        dx = charGridX + (r * 9)
-        dy = 0
-        imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
-        #
-        dx = 0
-        dy = charGridY + (r * 17)
-        imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
-        sx = int(ord('0') % 16) * 8
-        sy = int(ord('0') / 16) * 16
-        dx = 8
-        imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
-    #
-    for r in range(0,16):
-        for c in range(0,16):
-            sx = c * 8
-            sy = r * 16
-            dx = charGridX + (c * 9)
-            dy = charGridY + (r * 17)
-            imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: _x)
-    #
-    return img
-
-#-----------------------------------------------------
-docWriteBMP("gen-cp437.bmp",drawsbcsgrid(docLoadBMP("ref/cp437vga8x16.bmp"),8,16))
-
-#-----------------------------------------------------
-docWriteBMP("gen-cp850.bmp",drawsbcsgrid(docLoadBMP("ref/cp850vga8x16.bmp"),8,16))
-
-#-----------------------------------------------------
-docWriteBMP("gen-cp851.bmp",drawsbcsgrid(docLoadBMP("ref/cp851vga8x16.bmp"),8,16))
-
-#-----------------------------------------------------
-docWriteBMP("gen-cp852.bmp",drawsbcsgrid(docLoadBMP("ref/cp852vga8x16.bmp"),8,16))
-
-#-----------------------------------------------------
-docWriteBMP("gen-cp853.bmp",drawsbcsgrid(docLoadBMP("ref/cp853vga8x16.bmp"),8,16))
-
-#-----------------------------------------------------
-docWriteBMP("gen-cp866.bmp",drawsbcsgrid(docLoadBMP("ref/cp866vga8x16.bmp"),8,16))
-
-#-----------------------------------------------------
-def drawgrid_pc98(imgcp,charCellWidth,charCellHeight,code_base,charCellSizeLF=None):
+def drawchargrid(*,imgt8=None,tcWidth=None,tcHeight=None,colDigits=2,imgcp,charCols=16,charRows=16,charCellWidth=8,charCellHeight=16,code_base=0,charCellSizeLF=None):
+    if imgt8 == None:
+        imgt8 = imgcp
+    if tcWidth == None:
+        tcWidth = charCellWidth
+    if tcHeight == None:
+        tcHeight = charCellHeight
     if charCellSizeLF == None:
         charCellSizeLF = lambda c,w,h: [w,h]
     #
-    charGridX = 1+(charCellWidth*4)
-    charGridY = 1+charCellHeight
-    img = docImage(((charCellWidth+1)*16)+charGridX,((charCellHeight+1)*16)+charGridY,8)
+    charGridX = 1+(tcWidth*colDigits)
+    charGridY = 1+tcHeight
+    img = docImage(((charCellWidth+1)*charCols)+charGridX,((charCellHeight+1)*charRows)+charGridY,8)
     #
     img.palette_used = 3
     img.palette[0] = docRGBA(0,0,0,0)
@@ -389,48 +357,56 @@ def drawgrid_pc98(imgcp,charCellWidth,charCellHeight,code_base,charCellSizeLF=No
     img.fillrect(0,0,img.width,img.height,1)
     img.fillrect(charGridX-1,charGridY-1,img.width,img.height,2)
     #
-    for r in range(0,16):
-        s = hex(r)[2:].upper()
-        sx = int(ord(s[0]) % 16) * 8
-        sy = int(ord(s[0]) / 16) * 16
-        dx = charGridX + (r * 9)
+    for c in range(0,charCols):
+        s = hex(c)[2:].upper()
+        sx = int(ord(s[0]) % 16) * tcWidth
+        sy = int(ord(s[0]) / 16) * tcHeight
+        dx = charGridX + (c * (charCellWidth+1)) + int(max(0,charCellWidth-tcWidth) / 2)
         dy = 0
-        imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
-        #
-        code = hex(code_base + (r<<4))[2:]
-        while len(code) < 4:
+        imgmonocopy(img,dx,dy,tcWidth,tcHeight,imgt8,sx,sy,lambda _x: (_x ^ 1))
+    #
+    for r in range(0,charRows):
+        code = hex(code_base + (r<<4))[2:].upper()
+        while len(code) < colDigits:
             code = '0' + code
         #
-        dy = charGridY + (r * 17)
+        dy = charGridY + (r * (charCellHeight+1)) + int(max(0,charCellHeight-tcHeight) / 2)
         #
-        dx = 0
-        sx = int(ord(code[0]) % 16) * 8
-        sy = int(ord(code[0]) / 16) * 16
-        imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
-        dx = 8
-        sx = int(ord(code[1]) % 16) * 8
-        sy = int(ord(code[1]) / 16) * 16
-        imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
-        dx = 16
-        sx = int(ord(code[2]) % 16) * 8
-        sy = int(ord(code[2]) / 16) * 16
-        imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
-        dx = 24
-        sx = int(ord(code[3]) % 16) * 8
-        sy = int(ord(code[3]) / 16) * 16
-        imgmonocopy(img,dx,dy,8,16,imgcp,sx,sy,lambda _x: (_x ^ 1))
+        for ci in range(0,colDigits):
+            dx = tcWidth*ci
+            sx = int(ord(code[ci]) % 16) * tcWidth
+            sy = int(ord(code[ci]) / 16) * tcHeight
+            imgmonocopy(img,dx,dy,8,16,imgt8,sx,sy,lambda _x: (_x ^ 1))
     #
-    for r in range(0,16):
-        for c in range(0,16):
-            sx = c * 8
-            sy = r * 16
-            dx = charGridX + (c * 9)
-            dy = charGridY + (r * 17)
+    for r in range(0,charRows):
+        for c in range(0,charCols):
+            sx = c * charCellWidth
+            sy = r * charCellHeight
+            dx = charGridX + (c * (charCellWidth+1))
+            dy = charGridY + (r * (charCellHeight+1))
             charcode = code_base + (r * 16) + c
             cw,ch = charCellSizeLF(charcode,charCellWidth,charCellHeight)
             imgmonocopy(img,dx,dy,cw,ch,imgcp,sx,sy,lambda _x: _x)
     #
     return img
+
+#-----------------------------------------------------
+docWriteBMP("gen-cp437.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp437vga8x16.bmp")))
+
+#-----------------------------------------------------
+docWriteBMP("gen-cp850.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp850vga8x16.bmp")))
+
+#-----------------------------------------------------
+docWriteBMP("gen-cp851.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp851vga8x16.bmp")))
+
+#-----------------------------------------------------
+docWriteBMP("gen-cp852.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp852vga8x16.bmp")))
+
+#-----------------------------------------------------
+docWriteBMP("gen-cp853.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp853vga8x16.bmp")))
+
+#-----------------------------------------------------
+docWriteBMP("gen-cp866.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp866vga8x16.bmp")))
 
 #-----------------------------------------------------
 # PC-98 FONT ROM, video memory text codes
@@ -453,9 +429,46 @@ for c in range(0,256):
     rb = (c>>4)*16
     for r in range(0,16):
         img_pc98sbcs.rows[r+rb][cb] = pc98rom[ofs+r]
+docWriteBMP("gen-pc98-tvram-0000.bmp",drawchargrid(colDigits=4,imgcp=img_pc98sbcs))
+# PC-98 dbcs
+img_pc98dbcs = docImage(16*16,8*16,1)
+img_pc98dbcs.palette_used = 2
+img_pc98dbcs.palette[0] = docRGBA(0,0,0,0)
+img_pc98dbcs.palette[1] = docRGBA(255,255,255,255)
+# despite the normally double wide cells, there is a small range where the double wide encoding becomes a single wide char.
+# these are apparently special nonstandard codes defined by NEC.
+def cellLambda(cc,w,h):
+    if (cc & 0xFC) == 0x08: # xx08 xx09 xx0A xx0B
+        return [8,h]
+    #
+    return [w,h]
 #
-docWriteBMP("gen-pc98-tvram-0000.bmp",drawgrid_pc98(img_pc98sbcs,8,16,0x0000))
+for hib in range(0x20,0x80,0x04):
+    imgs = [ None ] * 0x04
+    for subrow in range(0,len(imgs)):
+        jisrow = hib + subrow - 0x20
+        code_base = (hib + subrow) << 8
+        img_pc98dbcs.fillrect(0,0,16*16,8*16,0)
+        for jiscol in range(0x01,0x5D):
+            ofs = 0x01800 + ((jiscol-1) * 96 * 16 * 2) + (jisrow * 16 * 2)
+            dx = (jiscol & 0xF) * 2
+            dy = (jiscol >> 4) * 16
+            for y in range(0,16):
+                for x in range(0,2):
+                    img_pc98dbcs.rows[dy+y][dx+x] = pc98rom[ofs+y+(x*16)]
+        #
+        imgs[subrow] = drawchargrid(imgt8=img_pc98sbcs,tcWidth=8,colDigits=4,imgcp=img_pc98dbcs,charRows=8,charCellWidth=16,charCellHeight=16,code_base=code_base,charCellSizeLF=cellLambda)
+    #
+    code_base = hib << 8
+    sc = hex(code_base)[2:]
+    while len(sc) < 4:
+        sc = '0' + sc
+    #
+    docWriteBMP("gen-pc98-tvram-"+sc+".bmp",docImageStackCombine(imgs))
+    #
+    imgs = None
 #
 pc98rom = None
 img_pc98sbcs = None
+img_pc98dbcs = None
 
