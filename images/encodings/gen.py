@@ -18,8 +18,8 @@ class BITMAPFILEHEADER:
     fmtsz = struct.calcsize(fmt)
     bfType = None
     bfSize = None
-    bfReserved1 = None
-    bfReserved2 = None
+    bfReserved1 = 0
+    bfReserved2 = 0
     bfOffBits = None
     def __init__(self,d=None):
         if not d == None:
@@ -54,10 +54,10 @@ class BITMAPINFOHEADER:
     biBitCount = None
     biCompression = None
     biSizeImage = None
-    biXPelsPerMeter = None
-    biYPelsPerMeter = None
-    biClrUsed = None
-    biClrImportant = None
+    biXPelsPerMeter = 0
+    biYPelsPerMeter = 0
+    biClrUsed = 0
+    biClrImportant = 0
     def __init__(self,d=None):
         if not d == None:
             self.decode(d)
@@ -71,7 +71,10 @@ class BITMAPINFOHEADER:
         else:
             raise Exception("BITMAPINFOHEADER unknown biSize="+str(self.biSize))
     def encode(self):
-        return struct.pack(self.fmt,self.biSize,self.biWidth,self.biHeight,self.biPlanes,self.biBitCount,self.biCompression,self.biSizeImage,self.biXPelsPerMeter,self.biYPelsPerMeter,self.biClrUsed,self.biClrImportant)
+        if self.biSize == 40:
+            return struct.pack(self.fmt,self.biSize,self.biWidth,self.biHeight,self.biPlanes,self.biBitCount,self.biCompression,self.biSizeImage,self.biXPelsPerMeter,self.biYPelsPerMeter,self.biClrUsed,self.biClrImportant)
+        else:
+            raise Exception("BITMAPINFOHEADER unknown biSize="+str(self.biSize))
     def __str__(self):
         return "[BITMAPINFOHEADER biSize="+hex(self.biSize)+" biWidth="+str(self.biWidth)+" biHeight="+str(self.biHeight)+" biPlanes="+str(self.biPlanes)+" biBitCount="+str(self.biBitCount)+" biCompression="+hex(self.biCompression)+" biSizeImage="+str(self.biSizeImage)+" biClrUsed="+str(self.biClrUsed)+" biClrImportant="+str(self.biClrImportant)+"]"
 
@@ -238,6 +241,71 @@ def docLoadBMP(bmp):
         return docLoadBMP(bmp)
     raise Exception("docLoadBMP unhandled type "+str(type(bmp)))
 
+def docWriteBMP(dst,img):
+    totsz = BITMAPFILEHEADER.fmtsz + 40
+    #
+    palsz = 0
+    palOff = totsz
+    if not img.palette == None:
+        palsz = len(img.palette)
+        if palsz > img.palette_used:
+            palsz = img.palette_used
+        totsz += palsz * 4
+    #
+    dibOff = totsz
+    #
+    bmpStride = (((img.width * img.bits_per_pixel) + 31) & (~31)) >> 3
+    dibSize = bmpStride * img.height
+    totsz += dibSize
+    #
+    cpyStride = bmpStride
+    if cpyStride > img.stride:
+        cpyStride = img.stride
+    #
+    raw = bytearray(totsz)
+    #
+    fileinfo = BITMAPFILEHEADER()
+    fileinfo.bfType = 0x4d42
+    fileinfo.bfSize = totsz
+    fileinfo.bfOffBits = dibOff
+    raw[0:14] = fileinfo.encode()
+    #
+    bmpinfo = BITMAPINFOHEADER()
+    bmpinfo.biSize = 40
+    bmpinfo.biWidth = img.width
+    bmpinfo.biHeight = img.height
+    bmpinfo.biPlanes = 1
+    bmpinfo.biBitCount = img.bits_per_pixel
+    bmpinfo.biCompression = 0
+    bmpinfo.biSizeImage = dibSize
+    bmpinfo.biXPelsPerMeter = 0
+    bmpinfo.biYPelsPerMeter = 0
+    bmpinfo.biClrUsed = palsz
+    bmpinfo.biClrImportant = palsz
+    raw[14:14+40] = bmpinfo.encode()
+    #
+    if palsz > 0:
+        for pi in range(0,len(img.palette)):
+            raw[palOff+(pi*4)+0] = img.palette[pi].B
+            raw[palOff+(pi*4)+1] = img.palette[pi].G
+            raw[palOff+(pi*4)+2] = img.palette[pi].R
+            raw[palOff+(pi*4)+3] = 0
+    #
+    for py in range(0,img.height):
+        ny = img.height - (1 + py)
+        raw[dibOff+(ny*bmpStride):dibOff+(ny*bmpStride)+cpyStride] = img.rows[py][0:cpyStride]
+    #
+    if type(dst) == str:
+        f = open(dst,mode="wb")
+        f.write(raw)
+        f.close()
+    elif dst == None:
+        True
+    else:
+        raise Exception("Asked to encode BMP to unknown type")
+    #
+    return raw
+
 #-----------------------------------------------------
 img = docLoadBMP("ref/cp437vga8x16.bmp")
 for y in range(0,img.height):
@@ -249,4 +317,6 @@ for y in range(0,img.height):
         else:
             blah += ' '
     print(blah)
+#
+docWriteBMP("gen-cp437.bmp",img)
 
