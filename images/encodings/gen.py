@@ -192,6 +192,10 @@ class docImage:
         True
     def __str__(self):
         return "[docImage width="+str(self.width)+" height="+str(self.height)+" stride="+str(self.stride)+" bits/pixel="+str(self.bits_per_pixel)+" bytes/pixel="+str(self.bytes_per_pixel)+"]"
+    def fillrect(self,x1,y1,x2,y2,c):
+        for y in range(y1,y2):
+            for x in range(x1,x2):
+                self.writepixel(x,y,c)
 
 def docLoadBMPUncompressed(fileinfo,bmpinfo,bmp):
     if bmpinfo.biWidth < 0 or bmpinfo.biHeight < 0:
@@ -307,16 +311,56 @@ def docWriteBMP(dst,img):
     return raw
 
 #-----------------------------------------------------
-img = docLoadBMP("ref/cp437vga8x16.bmp")
-for y in range(0,img.height):
-    blah=''
-    for x in range(0,img.width):
-        p = img.readpixel(x,y)
-        if p > 0:
-            blah += chr(p+0x30)
-        else:
-            blah += ' '
-    print(blah)
+img437 = docLoadBMP("ref/cp437vga8x16.bmp")
+
+def imgmonocopy(dimg,dx,dy,w,h,simg,sx,sy,lf):
+    for y in range(0,h):
+        for x in range(0,w):
+            dimg.writepixel(dx+x,dy+y,lf(simg.readpixel(sx+x,sy+y)))
+
+#-----------------------------------------------------
+charCellWidth = 8
+charCellHeight = 16
+charGridX = 1+(charCellWidth*2)
+charGridY = 1+charCellHeight
+img = docImage(((charCellWidth+1)*16)+charGridX,((charCellHeight+1)*16)+charGridY,8)
+#
+img.palette_used = 3
+img.palette[0] = docRGBA(0,0,0,0)
+img.palette[1] = docRGBA(255,255,255,255)
+img.palette[2] = docRGBA(63,63,192)
+#
+img.fillrect(0,0,img.width,img.height,1)
+img.fillrect(charGridX-1,charGridY-1,img.width,charGridY,2)
+img.fillrect(charGridX-1,charGridY-1,charGridX,img.height,2)
+for r in range(0,17):
+    img.fillrect(charGridX,(r*17)+charGridY-1,img.width,(r*17)+charGridY,2)
+for c in range(0,17):
+    img.fillrect((c*9)+charGridX-1,charGridY,(c*9)+charGridX,img.height,2)
+#
+for r in range(0,16):
+    s = hex(r)[2:].upper()
+    sx = int(ord(s[0]) % 16) * 8
+    sy = int(ord(s[0]) / 16) * 16
+    dx = charGridX + (r * 9)
+    dy = 0
+    imgmonocopy(img,dx,dy,8,16,img437,sx,sy,lambda _x: (_x ^ 1))
+
+    dx = 0
+    dy = charGridY + (r * 17)
+    imgmonocopy(img,dx,dy,8,16,img437,sx,sy,lambda _x: (_x ^ 1))
+    sx = int(ord('0') % 16) * 8
+    sy = int(ord('0') / 16) * 16
+    dx = 8
+    imgmonocopy(img,dx,dy,8,16,img437,sx,sy,lambda _x: (_x ^ 1))
+#
+for r in range(0,16):
+    for c in range(0,16):
+        sx = c * 8
+        sy = r * 16
+        dx = charGridX + (c * 9)
+        dy = charGridY + (r * 17)
+        imgmonocopy(img,dx,dy,8,16,img437,sx,sy,lambda _x: _x)
 #
 docWriteBMP("gen-cp437.bmp",img)
 
