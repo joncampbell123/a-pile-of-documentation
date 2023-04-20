@@ -454,7 +454,7 @@ for c in range(0,256):
     for r in range(0,16):
         img_pc98sbcs.rows[r+rb][cb] = pc98rom[ofs+r]
 #
-docWriteBMP("gen-pc98-tvram-0-sbcs.bmp",drawgrid_pc98(img_pc98sbcs,8,16,0x0000))
+docWriteBMP("gen-pc98-tvram-0000.bmp",drawgrid_pc98(img_pc98sbcs,8,16,0x0000))
 #
 pc98rom = None
 img_pc98sbcs = None
