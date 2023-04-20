@@ -378,8 +378,6 @@ docWriteBMP("gen-cp853.bmp",drawsbcsgrid(docLoadBMP("ref/cp853vga8x16.bmp"),8,16
 docWriteBMP("gen-cp866.bmp",drawsbcsgrid(docLoadBMP("ref/cp866vga8x16.bmp"),8,16))
 
 #-----------------------------------------------------
-# PC-98 FONT ROM, video memory text codes
-
 def drawsbcsgrid_pc98(imgcp,charCellWidth,charCellHeight):
     charGridX = 1+(charCellWidth*4)
     charGridY = 1+charCellHeight
@@ -428,15 +426,17 @@ def drawsbcsgrid_pc98(imgcp,charCellWidth,charCellHeight):
     #
     return img
 
-
-
-f = open("ref/pc98font.rom",mode="rb")
-pc98rom = f.read()
-f.close()
+#-----------------------------------------------------
+# PC-98 FONT ROM, video memory text codes
 # at 0x00000 = 8x8 single wide 8-bit character cells (not used here)
 # at 0x00800 = 8x16 single wide 8-bit character cells
 # at 0x01800 = 96x92 double wide character cells
-# render the sbcs
+f = open("ref/pc98font.rom",mode="rb")
+pc98rom = f.read()
+f.close()
+
+#-----------------------------------------------------
+# PC-98 sbcs
 img_pc98sbcs = docImage(8*16,16*16,1)
 img_pc98sbcs.palette_used = 2
 img_pc98sbcs.palette[0] = docRGBA(0,0,0,0)
