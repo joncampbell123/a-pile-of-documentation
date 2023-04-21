@@ -94,6 +94,7 @@ class docImage:
     width = None
     height = None
     stride = None
+    maprow = None
     palette = None # array of docRGBA
     bits_per_pixel = None
     bytes_per_pixel = None
@@ -116,6 +117,7 @@ class docImage:
             self.palette = [ None ] * (1 << self.bits_per_pixel)
             for i in range(0,len(self.palette)):
                 self.palette[i] = docRGBA(0,0,0,0)
+        self.maprow = self.def_maprow
         self.rows = [ 0 ] * self.height
         for i in range(0,self.height):
             self.rows[i] = bytearray(self.stride)
@@ -140,17 +142,14 @@ class docImage:
         elif bpp == 32:
             self.readpixelp = self.readpixel_32
             self.writepixelp = self.writepixel_32
+    def def_maprow(self,y):
+        if y >= 0 and y < len(self.rows):
+            return self.rows[y]
+        return bytearray(self.stride)
     def readpixel(self,x,y):
-        if y >= 0 and y < len(self.rows):
-            rp = self.rows[y]
-            if not rp == None:
-                return self.readpixelp(rp,x)
-        return 0
+        return self.readpixelp(self.maprow(y),x)
     def writepixel(self,x,y,c):
-        if y >= 0 and y < len(self.rows):
-            rp = self.rows[y]
-            if not rp == None and x >= 0:
-                self.writepixelp(rp,x,c)
+        self.writepixelp(self.maprow(y),x,c)
     def readpixel_1(self,rp,x):
         byo = x >> 3
         bio = x & 7
