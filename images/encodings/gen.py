@@ -100,7 +100,7 @@ class docImage:
     bytes_per_pixel = None
     readpixelp = None
     writepixelp = None
-    def __init__(self,w,h,bpp):
+    def __init__(self,w,h,bpp,*,initBMP=None,initBMPStride=None):
         self.width = w
         self.height = h
         self.bits_per_pixel = bpp
@@ -117,10 +117,17 @@ class docImage:
             self.palette = [ None ] * (1 << self.bits_per_pixel)
             for i in range(0,len(self.palette)):
                 self.palette[i] = docRGBA(0,0,0,0)
-        self.maprow = self.def_maprow
-        self.rows = [ 0 ] * self.height
-        for i in range(0,self.height):
-            self.rows[i] = bytearray(self.stride)
+        if not initBMP == None:
+            self.maprow = self.def_maprow_bmp
+            if not initBMPStride == None:
+                self.stride = initBMPStride
+            self.rows = [ initBMP ]
+        else:
+            self.maprow = self.def_maprow
+            self.rows = [ 0 ] * self.height
+            for i in range(0,self.height):
+                self.rows[i] = bytearray(self.stride)
+        #
         if bpp == 1:
             self.readpixelp = self.readpixel_1
             self.writepixelp = self.writepixel_1
@@ -145,6 +152,10 @@ class docImage:
     def def_maprow(self,y):
         if y >= 0 and y < len(self.rows):
             return self.rows[y]
+        return bytearray(self.stride)
+    def def_maprow_bmp(self,y):
+        if y >= 0 and y < self.height:
+            return self.rows[0][y*self.stride:(y+1):self.stride]
         return bytearray(self.stride)
     def readpixel(self,x,y):
         return self.readpixelp(self.maprow(y),x)
@@ -334,7 +345,7 @@ def imgmonocopy(dimg,dx,dy,w,h,simg,sx,sy,lf):
         for x in range(0,w):
             dimg.writepixel(dx+x,dy+y,lf(simg.readpixel(sx+x,sy+y)))
 
-def drawchargrid(*,imgt8=None,tcWidth=None,tcHeight=None,colDigits=2,imgcp,charCols=16,charRows=16,charCellWidth=8,charCellHeight=16,code_base=0,charCellSizeLF=None):
+def drawchargrid(*,imgt8=None,tcWidth=None,tcHeight=None,colDigits=2,imgcp,charCols=16,charRows=16,charCellWidth=8,charCellHeight=16,code_base=0,charCellSizeLF=None,gridMapFunc=None,textMapFunc=None):
     if imgt8 == None:
         imgt8 = imgcp
     if tcWidth == None:
@@ -343,6 +354,10 @@ def drawchargrid(*,imgt8=None,tcWidth=None,tcHeight=None,colDigits=2,imgcp,charC
         tcHeight = charCellHeight
     if charCellSizeLF == None:
         charCellSizeLF = lambda c,w,h: [w,h]
+    if gridMapFunc == None:
+        gridMapFunc = lambda c: [(c&0xF)*charCellWidth,(c>>4)*charCellHeight]
+    if textMapFunc == None:
+        textMapFunc = lambda c: [(c&0xF)*tcWidth,(c>>4)*tcHeight]
     #
     charGridX = 1+(tcWidth*colDigits)
     charGridY = 1+tcHeight
@@ -358,8 +373,7 @@ def drawchargrid(*,imgt8=None,tcWidth=None,tcHeight=None,colDigits=2,imgcp,charC
     #
     for c in range(0,charCols):
         s = hex(c)[2:].upper()
-        sx = int(ord(s[0]) % 16) * tcWidth
-        sy = int(ord(s[0]) / 16) * tcHeight
+        sx,sy = textMapFunc(ord(s[0]))
         dx = charGridX + (c * (charCellWidth+1)) + int(max(0,charCellWidth-tcWidth) / 2)
         dy = 0
         imgmonocopy(img,dx,dy,tcWidth,tcHeight,imgt8,sx,sy,lambda _x: (_x ^ 1))
@@ -373,19 +387,18 @@ def drawchargrid(*,imgt8=None,tcWidth=None,tcHeight=None,colDigits=2,imgcp,charC
         #
         for ci in range(0,colDigits):
             dx = tcWidth*ci
-            sx = int(ord(code[ci]) % 16) * tcWidth
-            sy = int(ord(code[ci]) / 16) * tcHeight
+            sx,sy = textMapFunc(ord(code[ci]))
             imgmonocopy(img,dx,dy,8,16,imgt8,sx,sy,lambda _x: (_x ^ 1))
     #
     for r in range(0,charRows):
         for c in range(0,charCols):
-            sx = c * charCellWidth
-            sy = r * charCellHeight
+            charcode = code_base + (r * 16) + c
             dx = charGridX + (c * (charCellWidth+1))
             dy = charGridY + (r * (charCellHeight+1))
-            charcode = code_base + (r * 16) + c
             cw,ch = charCellSizeLF(charcode,charCellWidth,charCellHeight)
-            imgmonocopy(img,dx,dy,cw,ch,imgcp,sx,sy,lambda _x: _x)
+            if cw > 0 and ch > 0:
+                sx,sy = gridMapFunc((r<<4)+c)
+                imgmonocopy(img,dx,dy,cw,ch,imgcp,sx,sy,lambda _x: _x)
     #
     return img
 
@@ -441,17 +454,14 @@ class PC98FONTROM:
 #-----------------------------------------------------
 PC98FONT = PC98FONTROM()
 
-#-----------------------------------------------------
-# PC-98 sbcs
-img_pc98sbcs = docImage(8*16,16*16,1)
-for c in range(0,256):
-    cbmp = PC98FONT.char8x16(c)
-    cb = c&0xF
-    rb = (c>>4)*16
-    for r in range(0,16):
-        img_pc98sbcs.rows[r+rb][cb] = cbmp[r]
-docWriteBMP("gen-pc98-tvram-0000.bmp",drawchargrid(colDigits=4,imgcp=img_pc98sbcs))
-# PC-98 dbcs
+def PC98IsSJIS(cc):
+    return (cc >= 0x81 and cc <= 0x9F) or (cc >= 0xE0 and cc <= 0xEF)
+
+def PC98NotSJISCellSize(cc,w,h):
+    if PC98IsSJIS(cc):
+        return [0,0]
+    return [w,h]
+
 # despite the normally double wide cells, there is a small range where the double wide encoding becomes a single wide char.
 # these are apparently special nonstandard codes defined by NEC.
 def PC98dbcsCellLambda(cc,w,h):
@@ -459,7 +469,15 @@ def PC98dbcsCellLambda(cc,w,h):
         return [8,h]
     #
     return [w,h]
-#
+
+#-----------------------------------------------------
+# PC-98 sbcs
+img_pc98sbcs = docImage(8,16*256,1,initBMP=PC98FONT.font8x16(),initBMPStride=1)
+docWriteBMP("gen-pc98-tvram-0000.bmp",drawchargrid(colDigits=4,imgcp=img_pc98sbcs,textMapFunc=lambda cc: [0,cc*16],gridMapFunc=lambda cc: [0,cc*16]))
+docWriteBMP("gen-pc98-sjis-0000.bmp",drawchargrid(colDigits=4,imgcp=img_pc98sbcs,textMapFunc=lambda cc: [0,cc*16],gridMapFunc=lambda cc: [0,cc*16],charCellSizeLF=PC98NotSJISCellSize))
+
+#-----------------------------------------------------
+# PC-98 dbcs vidmem
 img_pc98dbcs = docImage(16*16,8*16,1)
 for hib in range(0x20,0x80,0x04):
     imgs = [ None ] * 0x04
@@ -475,7 +493,7 @@ for hib in range(0x20,0x80,0x04):
                 for x in range(0,2):
                     img_pc98dbcs.rows[dy+y][dx+x] = cbmp[y+(x*16)]
         #
-        imgs[subrow] = drawchargrid(imgt8=img_pc98sbcs,tcWidth=8,colDigits=4,imgcp=img_pc98dbcs,charRows=8,charCellWidth=16,charCellHeight=16,code_base=code_base,charCellSizeLF=PC98dbcsCellLambda)
+        imgs[subrow] = drawchargrid(imgt8=img_pc98sbcs,tcWidth=8,textMapFunc=lambda cc: [0,cc*16],colDigits=4,imgcp=img_pc98dbcs,charRows=8,charCellWidth=16,charCellHeight=16,code_base=code_base,charCellSizeLF=PC98dbcsCellLambda)
     #
     code_base = hib << 8
     sc = hex(code_base)[2:]
@@ -485,7 +503,8 @@ for hib in range(0x20,0x80,0x04):
     docWriteBMP("gen-pc98-tvram-"+sc+".bmp",docImageStackCombine(imgs))
     #
     imgs = None
-#
+
+#-----------------------------------------------------
 pc98rom = None
 PC98FONT = None
 img_pc98sbcs = None
