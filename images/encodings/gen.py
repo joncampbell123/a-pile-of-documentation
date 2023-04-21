@@ -418,6 +418,12 @@ docWriteBMP("gen-cp852.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp852vga8x16.bmp"
 docWriteBMP("gen-cp853.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp853vga8x16.bmp")))
 
 #-----------------------------------------------------
+docWriteBMP("gen-cp855.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp855vga8x16.bmp")))
+
+#-----------------------------------------------------
+docWriteBMP("gen-cp857.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp857vga8x16.bmp")))
+
+#-----------------------------------------------------
 docWriteBMP("gen-cp866.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp866vga8x16.bmp")))
 
 #-----------------------------------------------------
