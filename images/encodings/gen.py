@@ -455,12 +455,43 @@ class PC98FONTROM:
 PC98FONT = PC98FONTROM()
 
 def PC98IsSJIS(cc):
-    return (cc >= 0x81 and cc <= 0x9F) or (cc >= 0xE0 and cc <= 0xEF)
+    if (cc >= 0x8100 and cc <= 0x9F00) or (cc >= 0xE000 and cc <= 0xEF00):
+        b = cc & 0xFF
+        if b >= 0x40 and not b == 0x7F:
+            return True
+    return False
 
 def PC98NotSJISCellSize(cc,w,h):
-    if PC98IsSJIS(cc):
+    if (cc >= 0x8100 and cc <= 0x9FFF) or (cc >= 0xE000 and cc <= 0xEFFF):
         return [0,0]
     return [w,h]
+
+def PC98SJISCellSize(cc,w,h):
+    if PC98IsSJIS(cc):
+        if cc >= 0x8540 and cc < 0x8690:# half width special NEC chars
+            return [8,h]
+        return [w,h]
+    return [0,0]
+
+def DecodeSJIS(h,l):
+    if h >= 0x81 and h <= 0x9F:
+        b1 = (h - 112) * 2
+    elif h >= 0xE0 and h <= 0xEF:
+        b1 = (h - 176) * 2
+    else:
+        return [-1,-1]
+
+    if l >= 0x9F:
+        b2 = l - 126
+    elif l == 0x7F:
+        return [-1,-1]
+    elif l >= 0x40:
+        b1 -= 1
+        b2 = l - 31
+        if l >= 0x80:
+            b2 -= 1
+
+    return [b1,b2]
 
 # despite the normally double wide cells, there is a small range where the double wide encoding becomes a single wide char.
 # these are apparently special nonstandard codes defined by NEC.
@@ -474,7 +505,39 @@ def PC98dbcsCellLambda(cc,w,h):
 # PC-98 sbcs
 img_pc98sbcs = docImage(8,16*256,1,initBMP=PC98FONT.font8x16(),initBMPStride=1)
 docWriteBMP("gen-pc98-tvram-0000.bmp",drawchargrid(colDigits=4,imgcp=img_pc98sbcs,textMapFunc=lambda cc: [0,cc*16],gridMapFunc=lambda cc: [0,cc*16]))
-docWriteBMP("gen-pc98-sjis-0000.bmp",drawchargrid(colDigits=4,imgcp=img_pc98sbcs,textMapFunc=lambda cc: [0,cc*16],gridMapFunc=lambda cc: [0,cc*16],charCellSizeLF=PC98NotSJISCellSize))
+docWriteBMP("gen-pc98-sjis-0000.bmp",drawchargrid(colDigits=4,imgcp=img_pc98sbcs,textMapFunc=lambda cc: [0,cc*16],gridMapFunc=lambda cc: [0,cc*16],charCellSizeLF=lambda c,w,h: PC98NotSJISCellSize(c<<8,w,h)))
+
+#-----------------------------------------------------
+# PC-98 dbcs sjis
+img_pc98dbcs = docImage(16*16,16*16,1)
+for hib in range(0x80,0xF0,0x02):
+    if hib >= 0xA0 and hib <= 0xDF:
+        continue
+    #
+    imgs = [ None ] * 0x02
+    for subrow in range(0,len(imgs)):
+        code_base = (hib + subrow) << 8
+        img_pc98dbcs.fillrect(0,0,16*16,16*16,0)
+        for lob in range(0x40,0x100):
+            b1,b2 = DecodeSJIS(hib+subrow,lob)
+            if b1 >= 0x20:
+                cbmp = PC98FONT.char16x16((b1-0x20)+(b2<<8)) # conversion from unshifted to VRAM means subtracting 0x20
+                dx = (lob & 0xF) * 2
+                dy = (lob >> 4) * 16
+                for y in range(0,16):
+                    for x in range(0,2):
+                        img_pc98dbcs.rows[dy+y][dx+x] = cbmp[y+(x*16)]
+        #
+        imgs[subrow] = drawchargrid(imgt8=img_pc98sbcs,tcWidth=8,textMapFunc=lambda cc: [0,cc*16],colDigits=4,imgcp=img_pc98dbcs,charRows=16,charCellWidth=16,charCellHeight=16,code_base=code_base,charCellSizeLF=PC98SJISCellSize)
+    #
+    code_base = hib << 8
+    sc = hex(code_base)[2:]
+    while len(sc) < 4:
+        sc = '0' + sc
+    #
+    docWriteBMP("gen-pc98-sjis-"+sc+".bmp",docImageStackCombine(imgs))
+    #
+    imgs = None
 
 #-----------------------------------------------------
 # PC-98 dbcs vidmem
