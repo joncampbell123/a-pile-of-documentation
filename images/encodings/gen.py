@@ -9,6 +9,7 @@ import struct
 
 sys.path.append(os.path.join(os.path.dirname(__file__),'..','..'))
 
+from apodlib.ShiftJIS import *
 from apodlib.docImage import *
 from apodlib.windowsBMP import *
 from apodlib.windowsFNT import *
@@ -133,13 +134,6 @@ docWriteBMP("gen-windows31-cp1252-sans-serif-8pt.bmp",loadAndRenderWindowsFNT("r
 #-----------------------------------------------------
 PC98FONT = PC98FONTROM()
 
-def IsWordSJIS(cc):
-    if (cc >= 0x8100 and cc <= 0x9F00) or (cc >= 0xE000 and cc <= 0xEF00):
-        b = cc & 0xFF
-        if b >= 0x40 and not b == 0x7F:
-            return True
-    return False
-
 def PC98IsSJIS(cc):
     return IsWordSJIS(cc)
 
@@ -154,26 +148,6 @@ def PC98SJISCellSize(cc,w,h):
             return [8,h]
         return [w,h]
     return [0,0]
-
-def DecodeSJIS(h,l):
-    if h >= 0x81 and h <= 0x9F:
-        b1 = (h - 112) * 2
-    elif h >= 0xE0 and h <= 0xEF:
-        b1 = (h - 176) * 2
-    else:
-        return [-1,-1]
-
-    if l >= 0x9F:
-        b2 = l - 126
-    elif l == 0x7F:
-        return [-1,-1]
-    elif l >= 0x40:
-        b1 -= 1
-        b2 = l - 31
-        if l >= 0x80:
-            b2 -= 1
-
-    return [b1,b2]
 
 # despite the normally double wide cells, there is a small range where the double wide encoding becomes a single wide char.
 # these are apparently special nonstandard codes defined by NEC.
