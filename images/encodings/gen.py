@@ -132,6 +132,7 @@ docWriteBMP("gen-windows31-cp1252-system.bmp",loadAndRenderWindowsFNT(raw=Window
 docWriteBMP("gen-windows31-cp1252-fixedsys.bmp",loadAndRenderWindowsFNT(raw=WindowsNEResourceReader(path="ref/windows31_fixedsys.fon").getResource(resTypeID=8,resID=0x1F).data))
 docWriteBMP("gen-windows31-cp1252-sans-serif-8pt.bmp",loadAndRenderWindowsFNT(raw=WindowsNEResourceReader(path="ref/windows31_sans_serif.fon").getResource(resTypeID=8,resID=0x54).data))
 docWriteBMP("gen-windows31-symbole.bmp",loadAndRenderWindowsFNT(raw=WindowsNEResourceReader(path="ref/windows31_symbole.fon").getResource(resTypeID=8,resID=6).data))
+docWriteBMP("gen-windows31-smalle.bmp",loadAndRenderWindowsFNT(raw=WindowsNEResourceReader(path="ref/windows31_smalle.fon").getResource(resTypeID=8,resID=8).data))
 
 #-----------------------------------------------------
 PC98FONT = PC98FONTROM(path="ref/pc98font.rom")
