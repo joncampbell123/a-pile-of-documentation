@@ -88,10 +88,16 @@ class MSWINFNT:
     header = None
     def parse(self,fntraw):
         self.header = self.headerStruct(fntraw)
-    def __init__(self,path):
-        f = open(path,mode="rb")
-        self.fntraw = f.read()
-        f.close()
+    def __init__(self,*,path=None,raw=None):
+        if not path == None:
+            f = open(path,mode="rb")
+            self.fntraw = f.read()
+            f.close()
+        elif not raw == None:
+            self.fntraw = raw
+        else:
+            raise Exception("Nothing given")
+        #
         self.parse(self.fntraw)
     def getchar(self,c,*,genDocImage=False):
         if type(c) == str:
