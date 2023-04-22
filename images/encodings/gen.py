@@ -555,6 +555,13 @@ class MSWINFNT:
                     r.docImage.rows[row][col] = r.bmp[(col*r.height)+row]
         #
         return r
+    def getWidestOfChar(self,s):
+        w = 0
+        for cc in s:
+            nfo = self.getchar(ord(cc))
+            if w < nfo.width:
+                w = nfo.width
+        return w
 
 # Windows code page 1252, System font extracted from Windows 3.1
 win31sysfnt = MSWINFNT("ref/window31_system_font_cp1252.fnt")
@@ -562,13 +569,14 @@ wgridw = win31sysfnt.header.dfMaxWidth
 wgridh = win31sysfnt.header.dfPixHeight
 wgrid = docImage(wgridw*16,wgridh*16,1)
 wgrid.fillrect(0,0,wgrid.width,wgrid.height,0)
+textw = win31sysfnt.getWidestOfChar('0123456789ABCDEF')
 for r in range(0,16):
     for c in range(0,16):
         cc = (r << 4) + c
         wbmpinfo = win31sysfnt.getchar(cc,genDocImage=True)
         imgmonocopy(wgrid,c*wgridw,r*wgridh,wbmpinfo.width,wbmpinfo.height,wbmpinfo.docImage,0,0,lambda _x: _x)
 #
-docWriteBMP("gen-windows31-cp1252-system.bmp",drawchargrid(imgcp=wgrid,charCellWidth=wgridw,charCellHeight=wgridh))
+docWriteBMP("gen-windows31-cp1252-system.bmp",drawchargrid(tcWidth=textw,textMapFunc=lambda cc: [(cc&0xF)*wgridw,(cc>>4)*wgridh],imgcp=wgrid,charCellWidth=wgridw,charCellHeight=wgridh))
 win31sysfnt = None
 wbmpinfo = None
 wgrid = None
