@@ -563,41 +563,26 @@ class MSWINFNT:
                 w = nfo.width
         return w
 
-# Windows code page 1252, System font extracted from Windows 3.1
-win31sysfnt = MSWINFNT("ref/window31_system_font_cp1252.fnt")
-wgridw = win31sysfnt.header.dfMaxWidth
-wgridh = win31sysfnt.header.dfPixHeight
-wgrid = docImage(wgridw*16,wgridh*16,1)
-wgrid.fillrect(0,0,wgrid.width,wgrid.height,0)
-textw = win31sysfnt.getWidestOfChar('0123456789ABCDEF')
-for r in range(0,16):
-    for c in range(0,16):
-        cc = (r << 4) + c
-        wbmpinfo = win31sysfnt.getchar(cc,genDocImage=True)
-        imgmonocopy(wgrid,c*wgridw,r*wgridh,wbmpinfo.width,wbmpinfo.height,wbmpinfo.docImage,0,0,lambda _x: _x)
-#
-docWriteBMP("gen-windows31-cp1252-system.bmp",drawchargrid(tcWidth=textw,textMapFunc=lambda cc: [(cc&0xF)*wgridw,(cc>>4)*wgridh],imgcp=wgrid,charCellWidth=wgridw,charCellHeight=wgridh))
-win31sysfnt = None
-wbmpinfo = None
-wgrid = None
+def loadAndRenderWindowsFNT(path):
+    # Windows code page 1252, System font extracted from Windows 3.1
+    win31sysfnt = MSWINFNT(path)
+    wgridw = win31sysfnt.header.dfMaxWidth
+    wgridh = win31sysfnt.header.dfPixHeight
+    wgrid = docImage(wgridw*16,wgridh*16,1)
+    wgrid.fillrect(0,0,wgrid.width,wgrid.height,0)
+    textw = win31sysfnt.getWidestOfChar('0123456789ABCDEF')
+    for r in range(0,16):
+        for c in range(0,16):
+            cc = (r << 4) + c
+            wbmpinfo = win31sysfnt.getchar(cc,genDocImage=True)
+            imgmonocopy(wgrid,c*wgridw,r*wgridh,wbmpinfo.width,wbmpinfo.height,wbmpinfo.docImage,0,0,lambda _x: _x)
+    #
+    return drawchargrid(tcWidth=textw,textMapFunc=lambda cc: [(cc&0xF)*wgridw,(cc>>4)*wgridh],imgcp=wgrid,charCellWidth=wgridw,charCellHeight=wgridh)
 
-# Windows code page 1252, Fixedsys font extracted from Windows 3.1
-win31sysfnt = MSWINFNT("ref/window31_fixedsys_font_cp1252.fnt")
-wgridw = win31sysfnt.header.dfMaxWidth
-wgridh = win31sysfnt.header.dfPixHeight
-wgrid = docImage(wgridw*16,wgridh*16,1)
-wgrid.fillrect(0,0,wgrid.width,wgrid.height,0)
-textw = win31sysfnt.getWidestOfChar('0123456789ABCDEF')
-for r in range(0,16):
-    for c in range(0,16):
-        cc = (r << 4) + c
-        wbmpinfo = win31sysfnt.getchar(cc,genDocImage=True)
-        imgmonocopy(wgrid,c*wgridw,r*wgridh,wbmpinfo.width,wbmpinfo.height,wbmpinfo.docImage,0,0,lambda _x: _x)
-#
-docWriteBMP("gen-windows31-cp1252-fixedsys.bmp",drawchargrid(tcWidth=textw,textMapFunc=lambda cc: [(cc&0xF)*wgridw,(cc>>4)*wgridh],imgcp=wgrid,charCellWidth=wgridw,charCellHeight=wgridh))
-win31sysfnt = None
-wbmpinfo = None
-wgrid = None
+#-----------------------------------------------------
+# Windows FNT font files
+docWriteBMP("gen-windows31-cp1252-system.bmp",loadAndRenderWindowsFNT("ref/window31_system_font_cp1252.fnt"))
+docWriteBMP("gen-windows31-cp1252-fixedsys.bmp",loadAndRenderWindowsFNT("ref/window31_fixedsys_font_cp1252.fnt"))
 
 #-----------------------------------------------------
 # PC-98 FONT ROM, video memory text codes
