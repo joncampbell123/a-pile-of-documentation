@@ -128,38 +128,6 @@ class docImage:
             for x in range(x1,x2):
                 self.writepixel(x,y,c)
 
-def docLoadBMPUncompressed(fileinfo,bmpinfo,bmp):
-    if bmpinfo.biWidth < 0 or bmpinfo.biHeight < 0:
-        raise Exception("BMP format with negative w/h values not supported")
-    if bmpinfo.biWidth > 0 and not bmpinfo.biHeight == 0 and bmpinfo.biPlanes == 1:
-        dibBits = bmp[fileinfo.bfOffBits:fileinfo.bfOffBits+bmpinfo.biSizeImage]
-        img = docImage(bmpinfo.biWidth,bmpinfo.biHeight,bmpinfo.biBitCount)
-        if not img.palette == None and bmpinfo.biBitCount <= 8:
-            clr = len(img.palette)
-            if clr > bmpinfo.biClrUsed:
-                clr = bmpinfo.biClrUsed
-            img.palette_used = clr
-            # BMP palette follows BITMAPINFOHEADER BGRA (or, well, it's really just RGBX)
-            palBytes = bmp[14+bmpinfo.biSize:14+bmpinfo.biSize+(4*clr)]
-            for i in range(0,clr):
-                palEnt = palBytes[i*4:(i+1)*4]
-                img.palette[i].B = palEnt[0]
-                img.palette[i].G = palEnt[1]
-                img.palette[i].R = palEnt[2]
-                img.palette[i].A = 0xFF
-        bmpStride = (((bmpinfo.biWidth * bmpinfo.biBitCount) + 31) & (~31)) >> 3
-        cpyStride = bmpStride
-        if cpyStride > img.stride:
-            cpyStride = img.stride
-        # bitmaps are "upside down"
-        for py in range(0,bmpinfo.biHeight):
-            ny = bmpinfo.biHeight - (1 + py)
-            row = img.rows[ny]
-            row[0:cpyStride] = dibBits[bmpStride*py:(bmpStride*py)+cpyStride]
-        #
-        return img
-    raise Exception("Unknown BMP format")
-
 def docImageStackCombine(imgs):
     final_h = 0
     final_w = 0
