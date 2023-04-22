@@ -13,6 +13,7 @@ from apodlib.docImage import *
 from apodlib.windowsBMP import *
 from apodlib.windowsFNT import *
 from apodlib.docImageBMP import *
+from apodlib.NECPC98FONTROM import *
 
 def drawchargrid(*,imgt8=None,tcWidth=None,tcHeight=None,colDigits=2,imgcp,charCols=16,charRows=16,charCellWidth=8,charCellHeight=16,code_base=0,charCellSizeLF=None,gridMapFunc=None,textMapFunc=None):
     if imgt8 == None:
@@ -130,45 +131,17 @@ docWriteBMP("gen-windows31-cp1252-fixedsys.bmp",loadAndRenderWindowsFNT("ref/win
 docWriteBMP("gen-windows31-cp1252-sans-serif-8pt.bmp",loadAndRenderWindowsFNT("ref/window31_sans_serif_8pt_font_cp1252.fnt"))
 
 #-----------------------------------------------------
-# PC-98 FONT ROM, video memory text codes
-# at 0x00000 = 8x8 single wide 8-bit character cells (not used here)
-# at 0x00800 = 8x16 single wide 8-bit character cells
-# at 0x01800 = 96x92 double wide character cells
-class PC98FONTROM:
-    ROM = None
-    def font8x8(self):
-        return self.ROM[0:8*256]
-    def char8x8(self,c):
-        o = c*8
-        return self.font8x8()[o:o+8]
-    def font8x16(self):
-        return self.ROM[0x800:0x800+(16*256)]
-    def char8x16(self,c):
-        o = c*16
-        return self.font8x16()[o:o+16]
-    def font16x16(self):
-        return self.ROM[0x1800:0x1800+(16*2*96*92)] # 16x16 96x92 grid
-    def char16x16(self,c):
-        h = ((c >> 8) & 0x7F) - 0x20
-        l = c & 0x7F
-        if h < 0 or h > 95 or l <= 0 or l > 92:
-            return [ 0 ] * 16 * 2
-        o = ((l-1) * 96 * 16 * 2) + (h * 16 * 2)
-        return self.font16x16()[o:o+(16*2)]
-    def __init__(self,path="ref/pc98font.rom"):
-        f = open(path,mode="rb")
-        self.ROM = f.read()
-        f.close()
-
-#-----------------------------------------------------
 PC98FONT = PC98FONTROM()
 
-def PC98IsSJIS(cc):
+def IsWordSJIS(cc):
     if (cc >= 0x8100 and cc <= 0x9F00) or (cc >= 0xE000 and cc <= 0xEF00):
         b = cc & 0xFF
         if b >= 0x40 and not b == 0x7F:
             return True
     return False
+
+def PC98IsSJIS(cc):
+    return IsWordSJIS(cc)
 
 def PC98NotSJISCellSize(cc,w,h):
     if (cc >= 0x8100 and cc <= 0x9FFF) or (cc >= 0xE000 and cc <= 0xEFFF):
