@@ -25,8 +25,13 @@ class PC98FONTROM:
             return [ 0 ] * 16 * 2
         o = ((l-1) * 96 * 16 * 2) + (h * 16 * 2)
         return self.font16x16()[o:o+(16*2)]
-    def __init__(self,path="ref/pc98font.rom"):
-        f = open(path,mode="rb")
-        self.ROM = f.read()
-        f.close()
+    def __init__(self,*,path=None,ROM=None):
+        if not path == None:
+            f = open(path,mode="rb")
+            self.ROM = f.read()
+            f.close()
+        elif not ROM == None:
+            self.ROM = ROM
+        else:
+            raise Exception("PC98FONTRAM nothing given")
 

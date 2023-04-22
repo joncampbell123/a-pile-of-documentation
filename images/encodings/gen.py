@@ -132,7 +132,7 @@ docWriteBMP("gen-windows31-cp1252-fixedsys.bmp",loadAndRenderWindowsFNT("ref/win
 docWriteBMP("gen-windows31-cp1252-sans-serif-8pt.bmp",loadAndRenderWindowsFNT("ref/window31_sans_serif_8pt_font_cp1252.fnt"))
 
 #-----------------------------------------------------
-PC98FONT = PC98FONTROM()
+PC98FONT = PC98FONTROM(path="ref/pc98font.rom")
 
 def PC98IsSJIS(cc):
     return IsWordSJIS(cc)
