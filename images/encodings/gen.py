@@ -502,8 +502,8 @@ class MSWINFNT:
             if self.dfVersion >= 0x300:
                 for i in range(0,charTableEntries):
                     ent = self.charTableEntry()
-                    blobofs = self.dfCharTableOffset+(i*4)
-                    blob = raw[blobofs:blobofs+4]
+                    blobofs = self.dfCharTableOffset+(i*6)
+                    blob = raw[blobofs:blobofs+6]
                     ent.charWidth,ent.charOffset = struct.unpack("<HL",blob)
                     self.dfCharTable[i] = ent
             else:
