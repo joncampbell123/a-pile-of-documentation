@@ -124,7 +124,11 @@ def loadAndRenderWindowsFNT(*,path=None,raw=None):
             wbmpinfo = win31sysfnt.getchar(cc,genDocImage=True)
             imgmonocopy(wgrid,c*wgridw,r*wgridh,wbmpinfo.width,wbmpinfo.height,wbmpinfo.docImage,0,0,lambda _x: _x)
     #
-    return drawchargrid(tcWidth=textw,textMapFunc=lambda cc: [(cc&0xF)*wgridw,(cc>>4)*wgridh],imgcp=wgrid,charCellWidth=wgridw,charCellHeight=wgridh)
+    def gridMatchSize(cc,w,h):
+        wbmpinfo = win31sysfnt.getchar(cc)
+        return [wbmpinfo.width,wbmpinfo.height]
+    #
+    return drawchargrid(tcWidth=textw,textMapFunc=lambda cc: [(cc&0xF)*wgridw,(cc>>4)*wgridh],imgcp=wgrid,charCellWidth=wgridw,charCellHeight=wgridh,charCellSizeLF=gridMatchSize)
 
 #-----------------------------------------------------
 # Windows FNT font files
