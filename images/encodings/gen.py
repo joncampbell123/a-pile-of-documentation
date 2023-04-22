@@ -583,6 +583,7 @@ def loadAndRenderWindowsFNT(path):
 # Windows FNT font files
 docWriteBMP("gen-windows31-cp1252-system.bmp",loadAndRenderWindowsFNT("ref/window31_system_font_cp1252.fnt"))
 docWriteBMP("gen-windows31-cp1252-fixedsys.bmp",loadAndRenderWindowsFNT("ref/window31_fixedsys_font_cp1252.fnt"))
+docWriteBMP("gen-windows31-cp1252-sans-serif-8pt.bmp",loadAndRenderWindowsFNT("ref/window31_sans_serif_8pt_font_cp1252.fnt"))
 
 #-----------------------------------------------------
 # PC-98 FONT ROM, video memory text codes
