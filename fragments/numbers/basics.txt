@@ -111,7 +111,7 @@ The same rules apply going to and from binary, decimal, octal, and
 hexadecimal.
 
 !!#://----------------------------------------------------------
-!!#:subsection(title="Addition",section="addition");
+!!#:subsection(title="Addition/subtraction",section="addition");
 !!#:preformatted=0; newlinebreak=0;
 Just as with decimal, addition works the same in any other numeric base. Add
 each digit. If the sum requires more than one digit (is equal or larger to the
@@ -191,4 +191,17 @@ Hexadecimal:      (1)    (1)
       0xA+0x8=0x12 hex is 10+8=18 dec. 0xA = 10 dec, 0x12 = 18 dec.
       0x34+0xFD=0x137 hex is 52+253=305 dec.
 !!#:preformatted=0; newlinebreak=0;
+
+Subtraction works the same way as it does in decimal. Work right to left on
+each column, subtract digits and carry. It will work in any numeric base
+including binary.
+
+It is uncommon to write negative hexadecimal, octal, and binary numbers.
+Negative numbers are often handled by computers by using one of the bits to
+say whether the number is positive or negative. This is often called the sign
+bit. The bit chosen is usually the highest numbered bit in the data type used
+by the program. 0 is almost always considered positive, but some negative
+number encodings allow a negative zero. Non-decimal numeric bases in computer
+programs often represent the actual bits stored in memory including the sign
+bit which is then interpreted as part of the number.
 
