@@ -16,7 +16,8 @@ first and using two digits. Decimal is base 10, and uses digits 0 through 9.
 Computer hardware and software also use binary (base 2), octal (base 8), and
 hexadecimal (base 16). Each base number is a power of 2 because computers
 think at a basic level in binary digits. Each base is a grouping of binary
-digits to make writing easier.
+digits to make writing easier. Octal can represent a group of 3 bits, and
+hexadecimal a group of 4 bits.
 
 !!#:preformatted=1; newlinebreak=1;
   Binary digits:      0 1
@@ -35,18 +36,93 @@ This guide will follow the same convention to avoid confusion.
 !!#:insertTable(ref="numbers/gen-numbers-bases",sortby="#column1");
 
 !!#://----------------------------------------------------------
+!!#:subsection(title="Converting between bases",section="conversion");
+!!#:preformatted=0; newlinebreak=0;
+To convert between bases, multiply each digit by the base you are converting
+from and repeat the multiplication by the place (the count of the column from
+the right side counting from zero) of the digit. Sum the products together.
+For the rightmost column, no multiplication is performed. Skip zero digits to
+save time.
+
+Repeated multiplication of X by a count of Y is also known as the power of X
+to Y. Shown here as X ^ Y in which ^ is the power operator, not XOR.
+
+To convert binary (base 2) to decimal:
+
+!!#:preformatted=1; newlinebreak=1;
+     1001101b
+     -------
+     6543210   count from right side
+     |||||||
+     ||||||1     --+
+     |||||2        |
+     ||||2*2       |
+     |||2*2*2      +-- multiply by and sum each product
+     ||2*2*2*2     |
+     |2*2*2*2*2    |
+     2*2*2*2*2*2 --+
+
+     In this example:
+            1 * 2*2*2*2*2*2  (7th column count 6)    2^6 == 64
+          + 0 * 2*2*2*2*2    (6th column count 5)    2^5 == 32
+          + 0 * 2*2*2*2      (5th column count 4)    2^4 == 16
+          + 1 * 2*2*2        (4th column count 3)    2^3 == 8
+          + 1 * 2*2          (3rd column count 2)    2^2 == 4
+          + 0 * 2            (2nd column count 1)    2^1 == 2
+          + 1                (1st column count 0)    2^0 == 1
+       ------------------
+            64
+          +  0
+          +  0
+          +  8
+          +  4
+          +  0
+          +  1
+        -----------------
+            77
+!!#:preformatted=0; newlinebreak=0;
+
+To convert hexadecimal (base 16) to decimal:
+
+!!#:preformatted=1; newlinebreak=1;
+     0x1E4
+     -----
+       210   count from right side
+       |||
+       ||1    --+
+       |16      +-- multiply by and sum each product
+       16*16  --+
+
+     0xE = 14 dec
+
+     In this example:
+           0x1 * 16*16        (3rd column count 2)   16^2 = 256
+         + 0xE * 16           (2nd column count 1)   16^1 = 16
+         + 0x4                (1st column count 0)   16^0 = 1
+       ------------------
+           256
+         + 224                (0xE*16 == 14*16)
+         +   4
+       ------------------
+           484
+!!#:preformatted=0; newlinebreak=0;
+
+The same rules apply going to and from binary, decimal, octal, and
+hexadecimal.
+
+!!#://----------------------------------------------------------
 !!#:subsection(title="Addition",section="addition");
 !!#:preformatted=0; newlinebreak=0;
 Just as with decimal, addition works the same in any other numeric base. Add
-each digit. If the sum exceeds the number of digits (the base), carry into the
-next digit. The rules are the same regardless of numeric base.
+each digit. If the sum requires more than one digit (is equal or larger to the
+numeric base), carry into the next digit. The rules are the same regardless
+of numeric base.
 
 Add each digit going through each column right to left. Write the first digit
 of the sum below the line. If the sum needs more than one digit, carry that
 second digit into the next column as part of the addition.
 
 !!#:preformatted=1; newlinebreak=1;
-
 No carry, none of the columns add up to a sum needing two digits:
    1     3    11    33   382105
   +1    +4   +13   +55  +617594
@@ -114,4 +190,5 @@ Hexadecimal:      (1)    (1)
       0x6+0x6=0xC hex is 6+6+12 dec. 0xC = 12.
       0xA+0x8=0x12 hex is 10+8=18 dec. 0xA = 10 dec, 0x12 = 18 dec.
       0x34+0xFD=0x137 hex is 52+253=305 dec.
+!!#:preformatted=0; newlinebreak=0;
 
