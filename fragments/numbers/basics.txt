@@ -1,0 +1,117 @@
+!!#:section(title="Numeric basics",section="basics");
+!!#://----------------------------------------------------------
+!!#:subsection(title="Counting in bases",section="counting");
+!!#:preformatted=0; newlinebreak=0;
+!!#://This is a comment. Any line starting with !!#: a sequence unlikely to
+!!#://occur in actual text, is interpreted as code.
+Decimal is commonly used throughout the world, but in computer software and
+hardware there are other numeric bases in use.
+
+A numeric base determines how many digits there are before going back to the
+first and using two digits. Decimal is base 10, and uses digits 0 through 9.
+!!#:// ^ Don't just go by what you know, refer to "authoritative" sources too
+!!#://   even if they cloak it behind academic jargon like Wikipedia is so
+!!#://   keen to do so much.
+
+Computer hardware and software also use binary (base 2), octal (base 8), and
+hexadecimal (base 16). Each base number is a power of 2 because computers
+think at a basic level in binary digits. Each base is a grouping of binary
+digits to make writing easier.
+
+!!#:preformatted=1; newlinebreak=1;
+  Binary digits:      0 1
+  Octal digits:       0 1 2 3 4 5 6 7
+  Decimal digits:     0 1 2 3 4 5 6 7 8 9
+  Hexadecimal digits: 0 1 2 3 4 5 6 7 8 9 A B C D E F
+!!#:preformatted=0; newlinebreak=0;
+
+To avoid confusion in computer software, decimal is written as normal,
+hexadecimal starts with "0x", and octal with "0". Binary may be written
+without any prefix or suffix but in some cases is written with a "b" at the
+end, or a "0b" at the beginning to signal that the digits are binary.
+
+This guide will follow the same convention to avoid confusion.
+
+!!#:insertTable(ref="numbers/gen-numbers-bases",sortby="#column1");
+
+!!#://----------------------------------------------------------
+!!#:subsection(title="Addition",section="addition");
+!!#:preformatted=0; newlinebreak=0;
+Just as with decimal, addition works the same in any other numeric base. Add
+each digit. If the sum exceeds the number of digits (the base), carry into the
+next digit. The rules are the same regardless of numeric base.
+
+Add each digit going through each column right to left. Write the first digit
+of the sum below the line. If the sum needs more than one digit, carry that
+second digit into the next column as part of the addition.
+
+!!#:preformatted=1; newlinebreak=1;
+
+No carry, none of the columns add up to a sum needing two digits:
+   1     3    11    33   382105
+  +1    +4   +13   +55  +617594
+  --    --   ---    --  -------
+   2     7    24    88   999699
+
+If a sum within a column needs two digits, the second digit is carried (added)
+to the next column:
+
+ (1)   (1)   (1)   (1)
+   9     8    23    44
+  +1    +9   + 8   +57
+  --    --   ---   ---
+  10    17    31   101
+
+              ^    ^
+              |    |
+            3+8=11 |
+                   |
+                 4+7=11
+               (1)+4+5=10
+
+Decimal:
+         4       4      13
+       + 5     + 9    + 79
+       ---     ---    ----
+         9      13      92
+
+                            (1)
+Binary:              (1)     (1)
+         0b     1b    101b   10110b
+       + 1b   + 1b  + 110b  + 1101b
+       ---    ---     ---   ------
+         1b    10b   1011b  100011b
+
+                               ^^
+                               ||
+                             1+1=10 in binary
+                             Check: 10110b = 22 decimal
+                                     1101b = 13 decimal
+                                   100011b = 35 decimal
+
+                           (1)
+                            (1)
+Octal:       (1)  (1)  (1)   (1)
+         02   04   07  013  0644
+        +03  +05  +07 +036 +0777
+         --   --   --  --- -----
+         05  011  016  051 01643
+
+              ^    ^    ^
+              |    |    |
+        4+5=9, 9 dec = 011 octal
+        7+7=14, 14 dec = 016 octal
+        013+036=051 oct is 11+30=41 dec
+        0644+0777=01643 oct is 420+511=931 dec
+
+                        (1)
+Hexadecimal:      (1)    (1)
+      0x4   0x6   0xA   0x34
+     +0x4  +0x6  +0x8  +0xFD
+     ----  ----  ----  -----
+      0x8   0xC  0x12  0x137
+
+      0x6+0x6=0xC hex is 6+6+12 dec. 0xC = 12.
+      0xA+0x8=0x12 hex is 10+8=18 dec. 0xA = 10 dec, 0x12 = 18 dec.
+      0x34+0xFD=0x137 hex is 52+253=305 dec.
+
