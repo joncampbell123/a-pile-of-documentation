@@ -208,3 +208,76 @@ number encodings allow a negative zero. Non-decimal numeric bases in computer
 programs often represent the actual bits stored in memory including the sign
 bit, which is then interpreted as part of the number.
 
+!!#://----------------------------------------------------------
+!!#:subsection(title="Multiplication",section="multiplication");
+!!#:preformatted=0; newlinebreak=0;
+Multiplication works the same as it does with decimal. Arrange the numbers to
+multiply as you would on paper, in columns. For each digit in the first,
+multiply it by all digits of the second. Sum each product together.
+
+Multiplication of X and Y as a function means to start from zero, and add X, Y
+times.
+
+When decimal numbers are involved, the digits are multiplied ignoring the
+decimal point and then the product is given a new decimal point that is
+placed at the sum of the two original decimal point positions.
+
+Though computer software uses the asterisk (*) to represent multiplication,
+traditional arithmetic uses a diagonal cross or X.
+
+Traditionally multiplication on paper was taught using the memorization of a
+12x12 "times table".
+
+!!#:preformatted=1; newlinebreak=1;
+Decimal:
+
+      3      9     13              123
+    X 4   X 12   X 25            X 842
+    ---   ----   ----            -----
+     12     18     15 ( 3 x  5)      6  (  3 x   2)
+          + 9   +  50 (10 x  5)     40  ( 20 x   2)
+          ----  +  60 ( 3 x 20)    200  (100 x   2)
+           108  + 200 (10 x 20)    120  (  3 x  40)
+                -----              800  ( 20 x  40)
+                  325             4000  (100 x  40)
+                                  2400  (  3 x 800)
+                                 16000  ( 20 x 800)
+                               + 80000  (100 x 800)
+                               -------
+                                103566
+
+Binary:
+
+      10b (2)
+    X 11b (3)
+    -----
+       0b   ( 0b x  1b)
+      10b   (10b x  1b)
+      00b   ( 0b x 10b)
+   + 100b   (10b x 10b)
+   ------
+     110b (6)
+
+
+Hexadecimal:
+
+      0xE (14)       0x123 (1*256 + 2*16 + 3 = 291)
+    X 0x4  (4)     X 0xABC (10*256 + 11*16 + 12 = 2560 + 176 + 12 = 2748)
+    -----            -----
+     0x38 (56)        0x24 (0x003 x 0x00C) (3 * 12 = 36)
+                     0x180 (0x020 x 0x00C) (32 * 12 = 384)
+                     0xC00 (0x100 x 0x00C) (256 * 12 = 3072)
+                     0x210 (0x003 x 0x0B0) (3 * 176 = 528)
+                    0x1600 (0x020 x 0x0B0) (32 * 176 = 5632)
+                    0xB000 (0x100 x 0x0B0) (256 * 176 = 45056)
+                     0x1E0 (0x003 x 0xA00) (3 * 160 = 480)
+                    0x1400 (0x020 x 0xA00) (32 * 160 = 5120)
+                    0xA000 (0x100 x 0xA00) (256 * 160 = 40960)
+                    ------
+                   0x18B94 (36+384+3072+528+5632+45056+480+5120+40960 = 101268)
+!!#:preformatted=0; newlinebreak=0;
+!!#:insertTable(ref="numbers/gen-numbers-times-tables",layout="2d-grid",columns="Y",rows="X",cellcontent2d="column:Result (Hexadecimal)",title="Times tables (Hexadecimal)");
+!!#:insertTable(ref="numbers/gen-numbers-times-tables",layout="2d-grid",columns="Y",rows="X",cellcontent2d="column:Result (Decimal)",title="Times tables (Decimal)");
+!!#:insertTable(ref="numbers/gen-numbers-times-tables",layout="2d-grid",columns="Y",rows="X",cellcontent2d="column:Result (Octal)",title="Times tables (Octal)");
+!!#:insertTable(ref="numbers/gen-numbers-times-tables",layout="2d-grid",columns="Y",rows="X",cellcontent2d="column:Result (Binary)",title="Times tables (Binary)");
+
