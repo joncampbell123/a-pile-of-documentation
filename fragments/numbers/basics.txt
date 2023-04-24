@@ -246,6 +246,63 @@ Decimal:
                                -------
                                 103566
 
+    1.234  decimal point position 3
+  X   3.2  decimal point position 1
+  -------
+        8 (     4 x   2)
+       60 (    30 x   2)
+      400 (   200 x   2)
+     2000 (  1000 x   2)
+      120 (     4 x  30)
+      900 (    30 x  30)
+     6000 (   200 x  30)
+    30000 (  1000 x  30)
+    -----
+    39488
+    -----
+   3.9488  decimal point position 3+1 = 4
+
+
+    1.234  decimal point position 3
+  X 0.033  decimal point position 3
+  -------
+       12 (     3 x     4)
+       90 (     3 x    30)
+      600 (     3 x   200)
+     3000 (     3 x  1000)
+      120 (    30 x     4)
+      900 (    30 x    30)
+     6000 (    30 x   200)
+    30000 (    30 x  1000)
+   ------
+    40722
+   ------
+ 0.040722  decimal point position 3+3 = 3
+
+
+     1.33     decimal point position 2
+   X    4000. decimal point position -3 (as if 4 x 1,000)
+   ---------
+       12     (     4 x    3)
+      120     (     4 x   30)
+      400     (     4 x  100)
+    --------
+      532
+    --------
+      5320.   decimal point position 2 + -3 == 2 - 3 = -1 (add one zero)
+
+     1.33     decimal point position 2
+  X  4000     decimal point position 0
+  ----------- (skip zero digits on lower number)
+    12000     (  4000 x    3)
+   120000     (  4000 x   30)
+   400000     (  4000 x  100)
+  -----------
+   532000
+  -----------
+   5320.00    decimal point position 2 + 0 == 2
+
+
 Binary:
 
       10b (2)
