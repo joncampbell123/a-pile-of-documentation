@@ -1,7 +1,7 @@
 !!#:section(title="Numeric basics",section="basics");
 !!#://----------------------------------------------------------
 !!#:subsection(title="Counting in bases",section="counting");
-!!#:preformatted=0; newlinebreak=0;
+!!#:preformatted(False); // Plain text by default is handled preformatted
 !!#://This is a comment. Any line starting with !!#: a sequence unlikely to
 !!#://occur in actual text, is interpreted as code.
 Decimal is commonly used throughout the world, but in computer software and
@@ -19,12 +19,12 @@ think at a basic level in binary digits. Each base is a grouping of binary
 digits to make writing easier. Octal can represent a group of 3 bits, and
 hexadecimal a group of 4 bits.
 
-!!#:preformatted=1; newlinebreak=1;
+!!#:pushformatting(); preformatted(True);
   Binary digits:      0 1
   Octal digits:       0 1 2 3 4 5 6 7
   Decimal digits:     0 1 2 3 4 5 6 7 8 9
   Hexadecimal digits: 0 1 2 3 4 5 6 7 8 9 A B C D E F
-!!#:preformatted=0; newlinebreak=0;
+!!#:popformatting();
 
 To avoid confusion in computer software, decimal is written as normal,
 hexadecimal starts with "0x", and octal with "0". Binary may be written
@@ -40,7 +40,7 @@ This guide will follow the same convention to avoid confusion.
 
 !!#://----------------------------------------------------------
 !!#:subsection(title="Converting between bases",section="conversion");
-!!#:preformatted=0; newlinebreak=0;
+!!#:popformatting();
 To convert between bases, multiply each digit by the base you are converting
 from and repeat the multiplication by the place (the count of the column from
 the right side counting from zero) of the digit. Sum the products together.
@@ -52,7 +52,7 @@ to Y. Shown here as X ^ Y where ^ is the power operator, not XOR.
 
 To convert binary (base 2) to decimal:
 
-!!#:preformatted=1; newlinebreak=1;
+!!#:pushformatting(); preformatted(True);
      1001101b
      -------
      6543210   count from right side
@@ -83,11 +83,11 @@ To convert binary (base 2) to decimal:
           +  1
         -----------------
             77
-!!#:preformatted=0; newlinebreak=0;
+!!#:popformatting();
 
 To convert hexadecimal (base 16) to decimal:
 
-!!#:preformatted=1; newlinebreak=1;
+!!#:pushformatting(); preformatted(True);
      0x1E4
      -----
        210   count from right side
@@ -108,14 +108,14 @@ To convert hexadecimal (base 16) to decimal:
          +   4
        ------------------
            484
-!!#:preformatted=0; newlinebreak=0;
+!!#:popformatting();
 
 The same rules apply going to and from binary, decimal, octal, and
 hexadecimal.
 
 !!#://----------------------------------------------------------
 !!#:subsection(title="Addition/subtraction",section="addition");
-!!#:preformatted=0; newlinebreak=0;
+!!#:popformatting();
 Just as with decimal, addition works the same in any other numeric base. Add
 each digit. If the sum requires more than one digit (is equal or larger to the
 numeric base), carry into the next digit. The rules are the same regardless
@@ -125,7 +125,7 @@ Add each digit going through each column right to left. Write the first digit
 of the sum below the line. If the sum needs more than one digit, carry that
 second digit into the next column as part of the addition.
 
-!!#:preformatted=1; newlinebreak=1;
+!!#:pushformatting(); preformatted(True);
 No carry, none of the columns add up to a sum needing two digits:
    1     3    11    33   382105
   +1    +4   +13   +55  +617594
@@ -193,7 +193,7 @@ Hexadecimal:      (1)    (1)
       0x6+0x6=0xC hex is 6+6+12 dec. 0xC = 12.
       0xA+0x8=0x12 hex is 10+8=18 dec. 0xA = 10 dec, 0x12 = 18 dec.
       0x34+0xFD=0x137 hex is 52+253=305 dec.
-!!#:preformatted=0; newlinebreak=0;
+!!#:popformatting();
 
 Subtraction works the same way as it does in decimal. Work right to left on
 each column, subtract digits and carry. It will work in any numeric base
@@ -210,7 +210,7 @@ bit, which is then interpreted as part of the number.
 
 !!#://----------------------------------------------------------
 !!#:subsection(title="Multiplication",section="multiplication");
-!!#:preformatted=0; newlinebreak=0;
+!!#:popformatting();
 Multiplication works the same as it does with decimal. Arrange the numbers to
 multiply as you would on paper, in columns. For each digit in the first,
 multiply it by all digits of the second. Sum each product together.
@@ -228,7 +228,7 @@ traditional arithmetic uses a diagonal cross or X.
 Traditionally multiplication on paper was taught using the memorization of a
 12x12 "times table".
 
-!!#:preformatted=1; newlinebreak=1;
+!!#:pushformatting(); preformatted(True);
 Decimal:
 
       3      9     13              123
@@ -275,7 +275,7 @@ Hexadecimal:
                     0xA000 (0x100 x 0xA00) (256 * 160 = 40960)
                     ------
                    0x18B94 (36+384+3072+528+5632+45056+480+5120+40960 = 101268)
-!!#:preformatted=0; newlinebreak=0;
+!!#:popformatting();
 !!#:insertTable(ref="numbers/gen-numbers-times-tables",layout="2d-grid",columns="Y",rows="X",cellcontent2d="column:Result (Hexadecimal)",title="Times tables (Hexadecimal)");
 !!#:insertTable(ref="numbers/gen-numbers-times-tables",layout="2d-grid",columns="Y",rows="X",cellcontent2d="column:Result (Decimal)",title="Times tables (Decimal)");
 !!#:insertTable(ref="numbers/gen-numbers-times-tables",layout="2d-grid",columns="Y",rows="X",cellcontent2d="column:Result (Octal)",title="Times tables (Octal)");
