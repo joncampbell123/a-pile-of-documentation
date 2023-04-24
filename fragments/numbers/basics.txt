@@ -9,9 +9,9 @@ hardware there are other numeric bases in use.
 
 A numeric base determines how many digits there are before going back to the
 first and using two digits. Decimal is base 10, and uses digits 0 through 9.
-!!#:// ^ Don't just go by what you know, refer to "authoritative" sources too
-!!#://   even if they cloak it behind academic jargon like Wikipedia is so
-!!#://   keen to do so much.
+
+Another related term for this is "numerical system" as far as Wikipedia is
+concerned.
 
 Computer hardware and software also use binary (base 2), octal (base 8), and
 hexadecimal (base 16). Each base number is a power of 2 because computers
@@ -31,6 +31,9 @@ hexadecimal starts with "0x", and octal with "0". Binary may be written
 without any prefix or suffix but in some cases is written with a "b" at the
 end, or a "0b" at the beginning to signal that the digits are binary.
 
+The trailing "b" notation is used by some assembler programs and the leading
+"0b" syntax is commonly used in the Python programming language.
+
 This guide will follow the same convention to avoid confusion.
 
 !!#:insertTable(ref="numbers/gen-numbers-bases",sortby="#column1");
@@ -45,7 +48,7 @@ For the rightmost column, no multiplication is performed. Skip zero digits to
 save time.
 
 Repeated multiplication of X by a count of Y is also known as the power of X
-to Y. Shown here as X ^ Y in which ^ is the power operator, not XOR.
+to Y. Shown here as X ^ Y where ^ is the power operator, not XOR.
 
 To convert binary (base 2) to decimal:
 
@@ -203,5 +206,5 @@ bit. The bit chosen is usually the highest numbered bit in the data type used
 by the program. 0 is almost always considered positive, but some negative
 number encodings allow a negative zero. Non-decimal numeric bases in computer
 programs often represent the actual bits stored in memory including the sign
-bit which is then interpreted as part of the number.
+bit, which is then interpreted as part of the number.
 
