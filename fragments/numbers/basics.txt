@@ -208,6 +208,11 @@ number encodings allow a negative zero. Non-decimal numeric bases in computer
 programs often represent the actual bits stored in memory including the sign
 bit, which is then interpreted as part of the number.
 
+Hexadecimal, decimal, octal, and binary numbers as used in most computer
+software are whole numbers called integers. If decimal math and storage are
+needed for non-integer numbers like 1.5 or 3.333333, there is a data type
+called "floating point" available for software to use for that purpose.
+
 !!#://----------------------------------------------------------
 !!#:subsection(title="Multiplication",section="multiplication");
 !!#:popformatting();
