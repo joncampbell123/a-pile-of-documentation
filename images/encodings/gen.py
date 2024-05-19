@@ -17,6 +17,15 @@ from apodlib.docImageBMP import *
 from apodlib.windowsNEres import *
 from apodlib.NECPC98FONTROM import *
 
+def is_newer_than(source,dest):
+    if not os.path.exists(source):
+        return False
+    if not os.path.exists(dest):
+        return True
+    so = os.lstat(source)
+    do = os.lstat(dest)
+    return so.st_mtime > do.st_mtime
+
 def drawchargrid(*,imgt8=None,tcWidth=None,tcHeight=None,colDigits=2,imgcp,charCols=16,charRows=16,charCellWidth=8,charCellHeight=16,code_base=0,charCellSizeLF=None,gridMapFunc=None,textMapFunc=None):
     if imgt8 == None:
         imgt8 = imgcp
@@ -75,34 +84,20 @@ def drawchargrid(*,imgt8=None,tcWidth=None,tcHeight=None,colDigits=2,imgcp,charC
     return img
 
 #-----------------------------------------------------
-docWriteBMP("gen-cp437.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp437vga8x16.bmp")))
+def do_dosbox_fontromdump(source,dest,w=8,h=16):
+    if is_newer_than(source=source,dest=dest):
+        docWriteBMP(dest,drawchargrid(imgcp=docLoadBMP(source)),charCellWidth=w,charCellHeight=h)
 
-#-----------------------------------------------------
-docWriteBMP("gen-cp850.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp850vga8x16.bmp")))
-
-#-----------------------------------------------------
-docWriteBMP("gen-cp851.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp851vga8x16.bmp")))
-
-#-----------------------------------------------------
-docWriteBMP("gen-cp852.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp852vga8x16.bmp")))
-
-#-----------------------------------------------------
-docWriteBMP("gen-cp853.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp853vga8x16.bmp")))
-
-#-----------------------------------------------------
-docWriteBMP("gen-cp855.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp855vga8x16.bmp")))
-
-#-----------------------------------------------------
-docWriteBMP("gen-cp857.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp857vga8x16.bmp")))
-
-#-----------------------------------------------------
-docWriteBMP("gen-cp862.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp862vga8x16.bmp")))
-
-#-----------------------------------------------------
-docWriteBMP("gen-cp864.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp864vga8x16.bmp")))
-
-#-----------------------------------------------------
-docWriteBMP("gen-cp866.bmp",drawchargrid(imgcp=docLoadBMP("ref/cp866vga8x16.bmp")))
+do_dosbox_fontromdump(source="ref/cp437vga8x16.bmp",dest="gen-cp437.bmp")
+do_dosbox_fontromdump(source="ref/cp850vga8x16.bmp",dest="gen-cp850.bmp")
+do_dosbox_fontromdump(source="ref/cp851vga8x16.bmp",dest="gen-cp851.bmp")
+do_dosbox_fontromdump(source="ref/cp852vga8x16.bmp",dest="gen-cp852.bmp")
+do_dosbox_fontromdump(source="ref/cp853vga8x16.bmp",dest="gen-cp853.bmp")
+do_dosbox_fontromdump(source="ref/cp855vga8x16.bmp",dest="gen-cp855.bmp")
+do_dosbox_fontromdump(source="ref/cp857vga8x16.bmp",dest="gen-cp857.bmp")
+do_dosbox_fontromdump(source="ref/cp862vga8x16.bmp",dest="gen-cp862.bmp")
+do_dosbox_fontromdump(source="ref/cp864vga8x16.bmp",dest="gen-cp864.bmp")
+do_dosbox_fontromdump(source="ref/cp866vga8x16.bmp",dest="gen-cp866.bmp")
 
 #-----------------------------------------------------
 pc98rom = None
