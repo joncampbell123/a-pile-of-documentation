@@ -5,18 +5,37 @@ import subprocess;
 
 topdir = os.getcwd();
 
-# encoding .csv
-os.chdir(os.path.join(os.path.abspath(topdir),'tables','encodings'));
-print(os.getcwd());
-subprocess.run(["./gen.py","--only-changed"], check=True);
+todolist = [
+    {
+        "path": "tables/encodings",
+        "run": [ "./gen.py", "--only-changed" ]
+    },
+    {
+        "path": "tables/numbers",
+        "run": [ "./gen.py", "--only-changed" ]
+    },
+    {
+        "path": "images/encodings",
+        "run": [ "./gen.py", "--only-changed" ]
+    }
+]
 
-# number .csv
-os.chdir(os.path.join(os.path.abspath(topdir),'tables','numbers'));
-print(os.getcwd());
-subprocess.run(["./gen.py","--only-changed"], check=True);
-
-# images, encodings .csv
-os.chdir(os.path.join(os.path.abspath(topdir),'images','encodings'));
-print(os.getcwd());
-subprocess.run(["./gen.py","--only-changed"], check=True);
+for todo in todolist:
+    announce = ""
+    if "path" in todo:
+        announce += " task in " + todo["path"]
+    if "run" in todo:
+        announce += " to run " + str(todo["run"])
+    if announce == "":
+        announce = "task"
+    announce = announce.strip()
+    #
+    print(announce)
+    if "path" in todo:
+        os.chdir(os.path.join(os.path.abspath(topdir),todo["path"]))
+    else:
+        os.chdir(topdir)
+    #
+    if "run" in todo:
+        subprocess.run(todo["run"], check=True)
 
