@@ -266,6 +266,7 @@ patch_cp437_control_codes(map_cp437)
 
 todolist = [
     { "maplist": map_ascii,                   "dest": "gen-ascii.csv",                "title": "ASCII table" },
+    { "source": "ref/CP037.TXT",              "dest": "gen-ebcdic-cp037.csv",         "title": "IBM EBCDIC US/Canada table" },
     { "maplist": map_cp437,                   "dest": "gen-cp437.csv",                "title": "Microsoft/IBM PC Code Page 437 table (Latin US)" },
     { "source": "ref/CP737.TXT",              "dest": "gen-cp737.csv",                "title": "Microsoft/IBM PC Code Page 737 table (Greek)" },
     { "source": "ref/CP775.TXT",              "dest": "gen-cp775.csv",                "title": "Microsoft/IBM PC Code Page 775 table (Baltic Rim)" },
@@ -278,7 +279,16 @@ todolist = [
     { "source": "ref/CP861.TXT",              "dest": "gen-cp861.csv",                "title": "Microsoft/IBM PC Code Page 861 table (Icelandic)" },
     { "source": "ref/CP862.TXT",              "dest": "gen-cp862.csv",                "title": "Microsoft/IBM PC Code Page 862 table (Hebrew)" },
     { "source": "ref/CP863.TXT",              "dest": "gen-cp863.csv",                "title": "Microsoft/IBM PC Code Page 863 table (French Canadian)" },
-    { "source": "ref/CP864.TXT",              "dest": "gen-cp864.csv",                "title": "Microsoft/IBM PC Code Page 864 table (Arabic)" }
+    { "source": "ref/CP864.TXT",              "dest": "gen-cp864.csv",                "title": "Microsoft/IBM PC Code Page 864 table (Arabic)" },
+    { "source": "ref/CP865.TXT",              "dest": "gen-cp865.csv",                "title": "Microsoft/IBM PC Code Page 865 table (Nordic)" },
+    { "source": "ref/CP866.TXT",              "dest": "gen-cp866.csv",                "title": "Microsoft/IBM PC Code Page 866 table (Russian)" },
+    { "source": "ref/CP869.TXT",              "dest": "gen-cp869.csv",                "title": "Microsoft/IBM PC Code Page 869 table (Greek)" },
+    { "source": "ref/CP874.TXT",              "dest": "gen-cp874.csv",                "title": "Microsoft/IBM PC Code Page 874 table (Thai)" },
+    { "source": "ref/CP932.TXT",              "dest": "gen-cp932.csv",                "title": "Microsoft/IBM PC Code Page 932 table (Shift JIS)" },
+    { "source": "ref/CP950.TXT",              "dest": "gen-cp950.csv",                "title": "Microsoft/IBM PC Code Page 950 table (Chinese Big 5)" },
+    { "source": "ref/CP1252.TXT",             "dest": "gen-cp1252.csv",               "title": "Microsoft Windows Code Page 1252 (Latin ISO 8859-1)" },
+    { "source": "ref/MAC-ROMAN.TXT",          "dest": "gen-apple-mac-roman.csv",      "title": "Apple Macintosh MacRoman table" },
+    { "source": "ref/MAC-CYRILLIC.TXT",       "dest": "gen-apple-mac-cyrillic.csv",   "title": "Apple Macintosh Cyrillic table" }
 ]
 
 for todo in todolist:
@@ -307,145 +317,5 @@ for todo in todolist:
     csw = csv.writer(f)
     write_standard_csv_header(csw,title=title)
     write_standard_csv_table(csw,map_list)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp865.csv"
-ref_file = "ref/CP865.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 865 table (Nordic)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp866.csv"
-ref_file = "ref/CP866.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 866 table (Russian)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp869.csv"
-ref_file = "ref/CP869.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 869 table (Greek)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp874.csv"
-ref_file = "ref/CP874.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 874 table (Thai)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp1252.csv"
-ref_file = "ref/CP1252.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft Windows Code Page 1252 (Latin ISO 8859-1)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp932.csv"
-ref_file = "ref/CP932.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 932 table (Shift JIS)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp950.csv"
-ref_file = "ref/CP950.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 950 table (Chinese Big 5)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-apple-mac-roman.csv"
-ref_file = "ref/MAC-ROMAN.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title="Apple Macintosh MacRoman table")
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-apple-mac-cyrillic.csv"
-ref_file = "ref/MAC-CYRILLIC.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title="Apple Macintosh Cyrillic table")
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-ebcdic-cp037.csv"
-ref_file = "ref/CP037.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='IBM EBCDIC US/Canada table')
-    write_standard_csv_table(csw,map_current)
     f.close()
 
