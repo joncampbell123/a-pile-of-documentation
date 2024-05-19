@@ -23,6 +23,8 @@ def DecodeSJIS(h,l):
         b2 = l - 31
         if l >= 0x80:
             b2 -= 1
+    else:
+        b2 = -1
 
     return [b1,b2]
 
