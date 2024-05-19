@@ -166,8 +166,12 @@ def PC98dbcsCellLambda(cc,w,h):
 #-----------------------------------------------------
 # PC-98 sbcs
 img_pc98sbcs = docImage(8,16*256,1,initBMP=PC98FONT.font8x16(),initBMPStride=1)
-docWriteBMP("gen-pc98-tvram-0000.bmp",drawchargrid(colDigits=4,imgcp=img_pc98sbcs,textMapFunc=lambda cc: [0,cc*16],gridMapFunc=lambda cc: [0,cc*16]))
-docWriteBMP("gen-pc98-sjis-0000.bmp",drawchargrid(colDigits=4,imgcp=img_pc98sbcs,textMapFunc=lambda cc: [0,cc*16],gridMapFunc=lambda cc: [0,cc*16],charCellSizeLF=lambda c,w,h: PC98NotSJISCellSize(c<<8,w,h)))
+
+if is_newer_than(source="ref/pc98font.rom",dest="gen-pc98-tvram-0000.bmp"):
+    docWriteBMP("gen-pc98-tvram-0000.bmp",drawchargrid(colDigits=4,imgcp=img_pc98sbcs,textMapFunc=lambda cc: [0,cc*16],gridMapFunc=lambda cc: [0,cc*16]))
+
+if is_newer_than(source="ref/pc98font.rom",dest="gen-pc98-sjis-0000.bmp"):
+    docWriteBMP("gen-pc98-sjis-0000.bmp",drawchargrid(colDigits=4,imgcp=img_pc98sbcs,textMapFunc=lambda cc: [0,cc*16],gridMapFunc=lambda cc: [0,cc*16],charCellSizeLF=lambda c,w,h: PC98NotSJISCellSize(c<<8,w,h)))
 
 #-----------------------------------------------------
 # PC-98 dbcs sjis
