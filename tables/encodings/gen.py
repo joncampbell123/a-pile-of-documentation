@@ -265,41 +265,12 @@ for key in map_cp437:
 patch_cp437_control_codes(map_cp437)
 
 todolist = [
-    {
-        "title": "ASCII table",
-        "maplist": map_ascii,
-        "dest": "gen-ascii.csv"
-    },
-    {
-        "title": "Microsoft/IBM PC Code Page 437 table (Latin US)",
-        "maplist": map_cp437,
-        "dest": "gen-cp437.csv"
-    },
-    {
-        "title": "Microsoft/IBM PC Code Page 737 table (Greek)",
-        "source": "ref/CP737.TXT",
-        "dest": "gen-cp737.csv"
-    },
-    {
-        "title": "Microsoft/IBM PC Code Page 775 table (Baltic Rim)",
-        "source": "ref/CP775.TXT",
-        "dest": "gen-cp775.csv"
-    },
-    {
-        "title": 'Microsoft/IBM PC Code Page 850 table (Latin 1)',
-        "source": "ref/CP850.TXT",
-        "dest": "gen-cp850.csv"
-    },
-    {
-        "title": "Microsoft/IBM PC Code Page 852 table (Latin 2)",
-        "source": "ref/CP852.TXT",
-        "dest": "gen-cp852.csv"
-    },
-    {
-        "title": "",
-        "source": "",
-        "dest": ""
-    }
+    { "maplist": map_ascii,                   "dest": "gen-ascii.csv",                "title": "ASCII table" },
+    { "maplist": map_cp437,                   "dest": "gen-cp437.csv",                "title": "Microsoft/IBM PC Code Page 437 table (Latin US)" },
+    { "source": "ref/CP737.TXT",              "dest": "gen-cp737.csv",                "title": "Microsoft/IBM PC Code Page 737 table (Greek)" },
+    { "source": "ref/CP775.TXT",              "dest": "gen-cp775.csv",                "title": "Microsoft/IBM PC Code Page 775 table (Baltic Rim)" },
+    { "source": "ref/CP850.TXT",              "dest": "gen-cp850.csv",                "title": 'Microsoft/IBM PC Code Page 850 table (Latin 1)' },
+    { "source": "ref/CP852.TXT",              "dest": "gen-cp852.csv",                "title": "Microsoft/IBM PC Code Page 852 table (Latin 2)" }
 ]
 
 for todo in todolist:
