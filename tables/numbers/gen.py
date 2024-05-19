@@ -1,154 +1,174 @@
 #!/usr/bin/python3
 
+import os
 import csv
 import math
+
+def is_newer_than(source,dest):
+    if not os.path.exists(source):
+        return False
+    if not os.path.exists(dest):
+        return True
+    so = os.lstat(source)
+    do = os.lstat(dest)
+    return so.st_mtime > do.st_mtime
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-f = open("gen-numbers-bases.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Hexadecimal',    'Decimal',        'Octal',         'Binary',        '#column-names'])
-csw.writerow(['numeric:base=16','numeric:base=10','numeric:base=8','numeric:base=2','#column-format'])
-csw.writerow(['right',          'right',          'right',         'right',         '#column-align'])
-csw.writerow(['Integer numbers in various common bases',                            '#table-title'])
-csw.writerow([])
-for i in range(0,1025):
-    vhex = hex(i)[2:] # strip off the '0x'
-    while len(vhex) < 3:
-        vhex = '0' + vhex
-    vdec = str(i)
-    voct = oct(i)[2:] # strip off the '0o'
-    while len(voct) < 5:
-        voct = '0' + voct
-    vbin = bin(i)[2:] # strip off the '0b'
-    while len(vbin) < 11:
-        vbin = '0' + vbin
-    #
-    csw.writerow([vhex,vdec,voct,vbin])
-f.close()
+csv_file="gen-numbers-bases.csv"
+if is_newer_than(source=__file__,dest=csv_file):
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    csw.writerow(['Hexadecimal',    'Decimal',        'Octal',         'Binary',        '#column-names'])
+    csw.writerow(['numeric:base=16','numeric:base=10','numeric:base=8','numeric:base=2','#column-format'])
+    csw.writerow(['right',          'right',          'right',         'right',         '#column-align'])
+    csw.writerow(['Integer numbers in various common bases',                            '#table-title'])
+    csw.writerow([])
+    for i in range(0,1025):
+        vhex = hex(i)[2:] # strip off the '0x'
+        while len(vhex) < 3:
+            vhex = '0' + vhex
+        vdec = str(i)
+        voct = oct(i)[2:] # strip off the '0o'
+        while len(voct) < 5:
+            voct = '0' + voct
+        vbin = bin(i)[2:] # strip off the '0b'
+        while len(vbin) < 11:
+            vbin = '0' + vbin
+        #
+        csw.writerow([vhex,vdec,voct,vbin])
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of powers of 2 in various common bases
 # hexadecimal, decimal, octal, binary
-f = open("gen-numbers-pow2.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Power',  'Hexadecimal',    'Decimal',        'Octal',         'Binary',        '#column-names'])
-csw.writerow(['numeric','numeric:base=16','numeric:base=10','numeric:base=8','numeric:base=2','#column-format'])
-csw.writerow(['right',  'right',          'right',          'right',         'right',         '#column-align'])
-csw.writerow(['Power of 2 integer numbers in various common bases',                           '#table-title'])
-csw.writerow([])
-for pi in range(0,63):
-    i = 1 << pi
-    vhex = hex(i)[2:] # strip off the '0x'
-    while len(vhex) < 16:
-        vhex = '0' + vhex
-    vdec = str(i)
-    voct = oct(i)[2:] # strip off the '0o'
-    while len(voct) < 21:
-        voct = '0' + voct
-    vbin = bin(i)[2:] # strip off the '0b'
-    while len(vbin) < 64:
-        vbin = '0' + vbin
-    #
-    csw.writerow([str(pi),vhex,vdec,voct,vbin])
-f.close()
+csv_file="gen-numbers-pow2.csv"
+if is_newer_than(source=__file__,dest=csv_file):
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    csw.writerow(['Power',  'Hexadecimal',    'Decimal',        'Octal',         'Binary',        '#column-names'])
+    csw.writerow(['numeric','numeric:base=16','numeric:base=10','numeric:base=8','numeric:base=2','#column-format'])
+    csw.writerow(['right',  'right',          'right',          'right',         'right',         '#column-align'])
+    csw.writerow(['Power of 2 integer numbers in various common bases',                           '#table-title'])
+    csw.writerow([])
+    for pi in range(0,63):
+        i = 1 << pi
+        vhex = hex(i)[2:] # strip off the '0x'
+        while len(vhex) < 16:
+            vhex = '0' + vhex
+        vdec = str(i)
+        voct = oct(i)[2:] # strip off the '0o'
+        while len(voct) < 21:
+            voct = '0' + voct
+        vbin = bin(i)[2:] # strip off the '0b'
+        while len(vbin) < 64:
+            vbin = '0' + vbin
+        #
+        csw.writerow([str(pi),vhex,vdec,voct,vbin])
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases as signed 2's complement 16-bit integers
 # hexadecimal, decimal, octal, binary
-f = open("gen-numbers-int16-2scmp.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Signed integer value', 'Hexadecimal',    'Decimal',        'Octal',         'Binary',        '#column-names'])
-csw.writerow(['numeric',              'numeric:base=16','numeric:base=10','numeric:base=8','numeric:base=2','#column-format'])
-csw.writerow(['right',                'right',          'right',          'right',         'right',         '#column-align'])
-csw.writerow(['Integer numbers in various common bases as signed 2\'s complement 16-bit integers',          '#table-title'])
-csw.writerow([])
-for si in range(-256,257):
-    if si >= 0:
-        i = si
-    else:
-        i = 0x10000 + si
-    #
-    vhex = hex(i)[2:] # strip off the '0x'
-    while len(vhex) < 4:
-        vhex = '0' + vhex
-    vdec = str(i)
-    voct = oct(i)[2:] # strip off the '0o'
-    while len(voct) < 6:
-        voct = '0' + voct
-    vbin = bin(i)[2:] # strip off the '0b'
-    while len(vbin) < 16:
-        vbin = '0' + vbin
-    #
-    csw.writerow([str(si),vhex,vdec,voct,vbin])
-f.close()
+csv_file="gen-numbers-int16-2scmp.csv"
+if is_newer_than(source=__file__,dest=csv_file):
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    csw.writerow(['Signed integer value', 'Hexadecimal',    'Decimal',        'Octal',         'Binary',        '#column-names'])
+    csw.writerow(['numeric',              'numeric:base=16','numeric:base=10','numeric:base=8','numeric:base=2','#column-format'])
+    csw.writerow(['right',                'right',          'right',          'right',         'right',         '#column-align'])
+    csw.writerow(['Integer numbers in various common bases as signed 2\'s complement 16-bit integers',          '#table-title'])
+    csw.writerow([])
+    for si in range(-256,257):
+        if si >= 0:
+            i = si
+        else:
+            i = 0x10000 + si
+        #
+        vhex = hex(i)[2:] # strip off the '0x'
+        while len(vhex) < 4:
+            vhex = '0' + vhex
+        vdec = str(i)
+        voct = oct(i)[2:] # strip off the '0o'
+        while len(voct) < 6:
+            voct = '0' + voct
+        vbin = bin(i)[2:] # strip off the '0b'
+        while len(vbin) < 16:
+            vbin = '0' + vbin
+        #
+        csw.writerow([str(si),vhex,vdec,voct,vbin])
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases as signed 1's complement 16-bit integers
 # hexadecimal, decimal, octal, binary
-f = open("gen-numbers-int16-1scmp.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Signed integer value', 'Hexadecimal',    'Decimal',        'Octal',         'Binary',        '#column-names'])
-csw.writerow(['numeric',              'numeric:base=16','numeric:base=10','numeric:base=8','numeric:base=2','#column-format'])
-csw.writerow(['right',                'right',          'right',          'right',         'right',         '#column-align'])
-csw.writerow(['Integer numbers in various common bases as signed 1\'s complement 16-bit integers',          '#table-title'])
-csw.writerow([])
-for si in range(-257,257):
-    if si >= 0:
-        i = si
-    else:
-        i = 0x10000 + si
-    #
-    vhex = hex(i)[2:] # strip off the '0x'
-    while len(vhex) < 4:
-        vhex = '0' + vhex
-    vdec = str(i)
-    voct = oct(i)[2:] # strip off the '0o'
-    while len(voct) < 6:
-        voct = '0' + voct
-    vbin = bin(i)[2:] # strip off the '0b'
-    while len(vbin) < 16:
-        vbin = '0' + vbin
-    #
-    if si >= 0:
-        csw.writerow([str(si),vhex,vdec,voct,vbin])
-    else:
-        csw.writerow(["-"+str(-(si+1)),vhex,vdec,voct,vbin])
-f.close()
+csv_file="gen-numbers-int16-1scmp.csv"
+if is_newer_than(source=__file__,dest=csv_file):
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    csw.writerow(['Signed integer value', 'Hexadecimal',    'Decimal',        'Octal',         'Binary',        '#column-names'])
+    csw.writerow(['numeric',              'numeric:base=16','numeric:base=10','numeric:base=8','numeric:base=2','#column-format'])
+    csw.writerow(['right',                'right',          'right',          'right',         'right',         '#column-align'])
+    csw.writerow(['Integer numbers in various common bases as signed 1\'s complement 16-bit integers',          '#table-title'])
+    csw.writerow([])
+    for si in range(-257,257):
+        if si >= 0:
+            i = si
+        else:
+            i = 0x10000 + si
+        #
+        vhex = hex(i)[2:] # strip off the '0x'
+        while len(vhex) < 4:
+            vhex = '0' + vhex
+        vdec = str(i)
+        voct = oct(i)[2:] # strip off the '0o'
+        while len(voct) < 6:
+            voct = '0' + voct
+        vbin = bin(i)[2:] # strip off the '0b'
+        while len(vbin) < 16:
+            vbin = '0' + vbin
+        #
+        if si >= 0:
+            csw.writerow([str(si),vhex,vdec,voct,vbin])
+        else:
+            csw.writerow(["-"+str(-(si+1)),vhex,vdec,voct,vbin])
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases as sign-magnitude 16-bit integers
 # hexadecimal, decimal, octal, binary
-f = open("gen-numbers-int16-sm.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Signed integer value', 'Hexadecimal',    'Decimal',        'Octal',         'Binary',        '#column-names'])
-csw.writerow(['numeric',              'numeric:base=16','numeric:base=10','numeric:base=8','numeric:base=2','#column-format'])
-csw.writerow(['right',                'right',          'right',          'right',         'right',         '#column-align'])
-csw.writerow(['Integer numbers in various common bases as sign-magnitude 16-bit integers',                  '#table-title'])
-csw.writerow([])
-for si in range(-257,257):
-    if si >= 0:
-        i = si
-    else:
-        i = 0x7FFF - si
-    #
-    vhex = hex(i)[2:] # strip off the '0x'
-    while len(vhex) < 4:
-        vhex = '0' + vhex
-    vdec = str(i)
-    voct = oct(i)[2:] # strip off the '0o'
-    while len(voct) < 6:
-        voct = '0' + voct
-    vbin = bin(i)[2:] # strip off the '0b'
-    while len(vbin) < 16:
-        vbin = '0' + vbin
-    #
-    if si >= 0:
-        csw.writerow([str(si),vhex,vdec,voct,vbin])
-    else:
-        csw.writerow(["-"+str(-(si+1)),vhex,vdec,voct,vbin])
-f.close()
+csv_file="gen-numbers-int16-sm.csv"
+if is_newer_than(source=__file__,dest=csv_file):
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    csw.writerow(['Signed integer value', 'Hexadecimal',    'Decimal',        'Octal',         'Binary',        '#column-names'])
+    csw.writerow(['numeric',              'numeric:base=16','numeric:base=10','numeric:base=8','numeric:base=2','#column-format'])
+    csw.writerow(['right',                'right',          'right',          'right',         'right',         '#column-align'])
+    csw.writerow(['Integer numbers in various common bases as sign-magnitude 16-bit integers',                  '#table-title'])
+    csw.writerow([])
+    for si in range(-257,257):
+        if si >= 0:
+            i = si
+        else:
+            i = 0x7FFF - si
+        #
+        vhex = hex(i)[2:] # strip off the '0x'
+        while len(vhex) < 4:
+            vhex = '0' + vhex
+        vdec = str(i)
+        voct = oct(i)[2:] # strip off the '0o'
+        while len(voct) < 6:
+            voct = '0' + voct
+        vbin = bin(i)[2:] # strip off the '0b'
+        while len(vbin) < 16:
+            vbin = '0' + vbin
+        #
+        if si >= 0:
+            csw.writerow([str(si),vhex,vdec,voct,vbin])
+        else:
+            csw.writerow(["-"+str(-(si+1)),vhex,vdec,voct,vbin])
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases as gray codes
@@ -157,66 +177,69 @@ f.close()
 def graycode(i):
     return i ^ (i >> 1)
 
-f = open("gen-numbers-gray-codes.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Original hexadecimal', 'Original decimal', 'Original octal', 'Original binary', '-',         'Hexadecimal',    'Decimal',        'Octal',         'Binary',        '#column-names'])
-csw.writerow(['numeric:base=16',      'numeric:base=10',  'numeric:base=8', 'numeric:base=1',  'separator', 'numeric:base=16','numeric:base=10','numeric:base=8','numeric:base=2','#column-format'])
-csw.writerow(['right',                'right',            'right',          'right',           '',          'right',          'right',          'right',         'right',         '#column-align'])
-csw.writerow(['Integer numbers in various common bases as gray codes',                                                                                               '#table-title'])
-csw.writerow([])
-pgi = 0
-for i in range(0,257):
-    gi = graycode(i)
-    #
-    ovhex = hex(i)[2:] # strip off the '0x'
-    while len(ovhex) < 2:
-        ovhex = '0' + ovhex
-    ovdec = str(i)
-    ovoct = oct(i)[2:] # strip off the '0o'
-    while len(ovoct) < 3:
-        ovoct = '0' + ovoct
-    ovbin = bin(i)[2:] # strip off the '0b'
-    while len(ovbin) < 9:
-        ovbin = '0' + ovbin
-    #
-    vhex = hex(gi)[2:] # strip off the '0x'
-    while len(vhex) < 2:
-        vhex = '0' + vhex
-    vdec = str(gi)
-    voct = oct(gi)[2:] # strip off the '0o'
-    while len(voct) < 3:
-        voct = '0' + voct
-    vbin = bin(gi)[2:] # strip off the '0b'
-    while len(vbin) < 9:
-        vbin = '0' + vbin
-    #
-    csw.writerow([ovhex,ovdec,ovoct,ovbin,'-',vhex,vdec,voct,vbin])
-    #
-    if i > 0:
-        bc = gi ^ pgi # make sure only one bit changed
-        if not (bc & (bc - 1)) == 0: # if not power of 2
-            raise Exception("Gray code encoding for "+str(i)+" failed")
-    #
-    pgi = gi
-f.close()
+csv_file="gen-numbers-gray-codes.csv"
+if is_newer_than(source=__file__,dest=csv_file):
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    csw.writerow(['Original hexadecimal', 'Original decimal', 'Original octal', 'Original binary', '-',         'Hexadecimal',    'Decimal',        'Octal',         'Binary',        '#column-names'])
+    csw.writerow(['numeric:base=16',      'numeric:base=10',  'numeric:base=8', 'numeric:base=1',  'separator', 'numeric:base=16','numeric:base=10','numeric:base=8','numeric:base=2','#column-format'])
+    csw.writerow(['right',                'right',            'right',          'right',           '',          'right',          'right',          'right',         'right',         '#column-align'])
+    csw.writerow(['Integer numbers in various common bases as gray codes',                                                                                               '#table-title'])
+    csw.writerow([])
+    pgi = 0
+    for i in range(0,257):
+        gi = graycode(i)
+        #
+        ovhex = hex(i)[2:] # strip off the '0x'
+        while len(ovhex) < 2:
+            ovhex = '0' + ovhex
+        ovdec = str(i)
+        ovoct = oct(i)[2:] # strip off the '0o'
+        while len(ovoct) < 3:
+            ovoct = '0' + ovoct
+        ovbin = bin(i)[2:] # strip off the '0b'
+        while len(ovbin) < 9:
+            ovbin = '0' + ovbin
+        #
+        vhex = hex(gi)[2:] # strip off the '0x'
+        while len(vhex) < 2:
+            vhex = '0' + vhex
+        vdec = str(gi)
+        voct = oct(gi)[2:] # strip off the '0o'
+        while len(voct) < 3:
+            voct = '0' + voct
+        vbin = bin(gi)[2:] # strip off the '0b'
+        while len(vbin) < 9:
+            vbin = '0' + vbin
+        #
+        csw.writerow([ovhex,ovdec,ovoct,ovbin,'-',vhex,vdec,voct,vbin])
+        #
+        if i > 0:
+            bc = gi ^ pgi # make sure only one bit changed
+            if not (bc & (bc - 1)) == 0: # if not power of 2
+                raise Exception("Gray code encoding for "+str(i)+" failed")
+        #
+        pgi = gi
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases as gray codes
 # hexadecimal, decimal, octal, binary
 def write_logic2_table(csvname,title,lambdafunc):
-    f = open(csvname,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    csw.writerow(['Input 1 (P)',   'Input 2 (Q)',   'Output',        '#column-names'])
-    csw.writerow(['numeric:base=1','numeric:base=1','numeric:base=1','#column-format'])
-    csw.writerow(['right',         'right',         'right',         '#column-align'])
-    csw.writerow([title,                                             '#table-title'])
-    csw.writerow([])
-    for i in range(0,4):
-        i1 = (i >> 1) & 1
-        i2 = (i >> 0) & 1
-        ou = lambdafunc(i1,i2)
-        csw.writerow([str(i1),str(i2),str(ou)])
-    f.close()
+    if is_newer_than(source=__file__,dest=csvname):
+        f = open(csvname,mode="w",encoding="utf-8",newline="")
+        csw = csv.writer(f)
+        csw.writerow(['Input 1 (P)',   'Input 2 (Q)',   'Output',        '#column-names'])
+        csw.writerow(['numeric:base=1','numeric:base=1','numeric:base=1','#column-format'])
+        csw.writerow(['right',         'right',         'right',         '#column-align'])
+        csw.writerow([title,                                             '#table-title'])
+        csw.writerow([])
+        for i in range(0,4):
+            i1 = (i >> 1) & 1
+            i2 = (i >> 0) & 1
+            ou = lambdafunc(i1,i2)
+            csw.writerow([str(i1),str(i2),str(ou)])
+        f.close()
 
 write_logic2_table("gen-logic-nor.csv","Not OR (NOR)",lambda i1,i2: 1 ^ (i1 | i2))
 write_logic2_table("gen-logic-xor.csv","eXclusive OR (XOR)",lambda i1,i2: (i1 ^ i2))
@@ -333,73 +356,82 @@ def common_float_csv_gen(csw,float_bits,mant_bits,exp_bits,exp_bias,explicit_man
         #
         csw.writerow([ssgn+"sNan",str(sgn),str(rexp),hex(rmant),vhex,vbin,note])
 
-f = open("gen-numbers-ieeefloat16.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-common_float_csv_header(csw,float_bits=16)
-csw.writerow(['Mantissa shown with implicit bit that is not stored in the final encoding',                                     '#table-note'])
-csw.writerow([])
-common_float_csv_gen(csw,float_bits=16,mant_bits=10,exp_bits=5,exp_bias=15) # seee'eeff'ffff'ffff 16 bits
-f.close()
+csv_file="gen-numbers-ieeefloat16.csv"
+if is_newer_than(source=__file__,dest=csv_file):
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    common_float_csv_header(csw,float_bits=16)
+    csw.writerow(['Mantissa shown with implicit bit that is not stored in the final encoding',                                     '#table-note'])
+    csw.writerow([])
+    common_float_csv_gen(csw,float_bits=16,mant_bits=10,exp_bits=5,exp_bias=15) # seee'eeff'ffff'ffff 16 bits
+    f.close()
 
-f = open("gen-numbers-ieeefloat32.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-common_float_csv_header(csw,float_bits=32)
-csw.writerow(['Mantissa shown with implicit bit that is not stored in the final encoding',                                     '#table-note'])
-csw.writerow([])
-common_float_csv_gen(csw,float_bits=32,mant_bits=23,exp_bits=8,exp_bias=127) # seee'eeee'efff'ffff'ffff'ffff'ffff'ffff 32 bits
-f.close()
+csv_file="gen-numbers-ieeefloat32.csv"
+if is_newer_than(source=__file__,dest=csv_file):
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    common_float_csv_header(csw,float_bits=32)
+    csw.writerow(['Mantissa shown with implicit bit that is not stored in the final encoding',                                     '#table-note'])
+    csw.writerow([])
+    common_float_csv_gen(csw,float_bits=32,mant_bits=23,exp_bits=8,exp_bias=127) # seee'eeee'efff'ffff'ffff'ffff'ffff'ffff 32 bits
+    f.close()
 
-f = open("gen-numbers-ieeefloat64.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-common_float_csv_header(csw,float_bits=64)
-csw.writerow(['Mantissa shown with implicit bit that is not stored in the final encoding',                                     '#table-note'])
-csw.writerow([])
-common_float_csv_gen(csw,float_bits=64,mant_bits=52,exp_bits=11,exp_bias=1023)
-f.close()
+csv_file="gen-numbers-ieeefloat64.csv"
+if is_newer_than(source=__file__,dest=csv_file):
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    common_float_csv_header(csw,float_bits=64)
+    csw.writerow(['Mantissa shown with implicit bit that is not stored in the final encoding',                                     '#table-note'])
+    csw.writerow([])
+    common_float_csv_gen(csw,float_bits=64,mant_bits=52,exp_bits=11,exp_bias=1023)
+    f.close()
 
-f = open("gen-numbers-ieeefloat80.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-common_float_csv_header(csw,float_bits=80)
-csw.writerow(['Mantissa shown with implicit bit that is always stored in the final encoding',                                  '#table-note'])
-csw.writerow([])
-common_float_csv_gen(csw,float_bits=80,mant_bits=63,exp_bits=15,exp_bias=16383,explicit_mantissa_msb=True)
-f.close()
+csv_file="gen-numbers-ieeefloat80.csv"
+if is_newer_than(source=__file__,dest=csv_file):
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    common_float_csv_header(csw,float_bits=80)
+    csw.writerow(['Mantissa shown with implicit bit that is always stored in the final encoding',                                  '#table-note'])
+    csw.writerow([])
+    common_float_csv_gen(csw,float_bits=80,mant_bits=63,exp_bits=15,exp_bias=16383,explicit_mantissa_msb=True)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers and logical operators
 # hexadecimal, decimal, octal, binary
 def write_logichex_table(csvname,title,lambdafunc):
-    f = open(csvname,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    csw.writerow(['Input 1 (P) (bin)','Input 1 (P) (hex)','Input 2 (Q) (bin)','Input 2 (Q) (hex)','Output (bin)',  'Output (hex)',   '#column-names'])
-    csw.writerow(['numeric:base=1',   'numeric:base=16',  'numeric:base=1',   'numeric:base=16',  'numeric:base=1','numeric:base=16','#column-format'])
-    csw.writerow(['right',            'right',            'right',            'right',            'right',         'right',          '#column-align'])
-    csw.writerow([title,                                                                                                             '#table-title'])
-    csw.writerow([])
-    for i in range(0,256):
-        i1 = (i >> 4) & 0xF
-        i2 = (i >> 0) & 0xF
-        ou = lambdafunc(i1,i2)
-        i1h = hex(i1)[2:]
-        while len(i1h) < 2:
-            i1h = '0' + i1h
-        i1b = bin(i1)[2:]
-        while len(i1b) < 4:
-            i1b = '0' + i1b
-        i2h = hex(i2)[2:]
-        while len(i2h) < 2:
-            i2h = '0' + i2h
-        i2b = bin(i2)[2:]
-        while len(i2b) < 4:
-            i2b = '0' + i2b
-        ouh = hex(ou)[2:]
-        while len(ouh) < 2:
-            ouh = '0' + ouh
-        oub = bin(ou)[2:]
-        while len(oub) < 4:
-            oub = '0' + oub
-        csw.writerow([i1b,i1h,i2b,i2h,oub,ouh])
-    f.close()
+    if is_newer_than(source=__file__,dest=csvname):
+        f = open(csvname,mode="w",encoding="utf-8",newline="")
+        csw = csv.writer(f)
+        csw.writerow(['Input 1 (P) (bin)','Input 1 (P) (hex)','Input 2 (Q) (bin)','Input 2 (Q) (hex)','Output (bin)',  'Output (hex)',   '#column-names'])
+        csw.writerow(['numeric:base=1',   'numeric:base=16',  'numeric:base=1',   'numeric:base=16',  'numeric:base=1','numeric:base=16','#column-format'])
+        csw.writerow(['right',            'right',            'right',            'right',            'right',         'right',          '#column-align'])
+        csw.writerow([title,                                                                                                             '#table-title'])
+        csw.writerow([])
+        for i in range(0,256):
+            i1 = (i >> 4) & 0xF
+            i2 = (i >> 0) & 0xF
+            ou = lambdafunc(i1,i2)
+            i1h = hex(i1)[2:]
+            while len(i1h) < 2:
+                i1h = '0' + i1h
+            i1b = bin(i1)[2:]
+            while len(i1b) < 4:
+                i1b = '0' + i1b
+            i2h = hex(i2)[2:]
+            while len(i2h) < 2:
+                i2h = '0' + i2h
+            i2b = bin(i2)[2:]
+            while len(i2b) < 4:
+                i2b = '0' + i2b
+            ouh = hex(ou)[2:]
+            while len(ouh) < 2:
+                ouh = '0' + ouh
+            oub = bin(ou)[2:]
+            while len(oub) < 4:
+                oub = '0' + oub
+            csw.writerow([i1b,i1h,i2b,i2h,oub,ouh])
+        f.close()
 
 write_logichex_table("gen-logichex-nor.csv","Not OR (NOR)",lambda i1,i2: 0xF ^ (i1 | i2))
 write_logichex_table("gen-logichex-xor.csv","eXclusive OR (XOR)",lambda i1,i2: (i1 ^ i2))
@@ -411,26 +443,28 @@ write_logichex_table("gen-logichex-or.csv","OR",lambda i1,i2: (i1 | i2))
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases in a times tables format
 # hexadecimal, decimal, octal, binary
-f = open("gen-numbers-times-tables.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['X',      'Y',      'Result (Hexadecimal)','Result (Decimal)','Result (Octal)','Result (Binary)','#column-names'])
-csw.writerow(['numeric','numeric','numeric:base=16',     'numeric:base=10', 'numeric:base=8','numeric:base=2', '#column-format'])
-csw.writerow(['right',  'right',  'right',               'right',           'right',         'right',          '#column-align'])
-csw.writerow(['Multiplication table X * Y',                                                                    '#table-title'])
-csw.writerow([])
-for x in range(0,13):
-    for y in range(0,13):
-        result = x * y
-        vhex = hex(result)[2:] # strip off the '0x'
-        while len(vhex) < 2:
-            vhex = '0' + vhex
-        vdec = str(result)
-        voct = oct(result)[2:] # strip off the '0o'
-        while len(voct) < 3:
-            voct = '0' + voct
-        vbin = bin(result)[2:] # strip off the '0b'
-        while len(vbin) < 8:
-            vbin = '0' + vbin
-        csw.writerow([str(x),str(y),vhex,vdec,voct,vbin])
-f.close()
+csv_file="gen-numbers-times-tables.csv"
+if is_newer_than(source=__file__,dest=csv_file):
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    csw.writerow(['X',      'Y',      'Result (Hexadecimal)','Result (Decimal)','Result (Octal)','Result (Binary)','#column-names'])
+    csw.writerow(['numeric','numeric','numeric:base=16',     'numeric:base=10', 'numeric:base=8','numeric:base=2', '#column-format'])
+    csw.writerow(['right',  'right',  'right',               'right',           'right',         'right',          '#column-align'])
+    csw.writerow(['Multiplication table X * Y',                                                                    '#table-title'])
+    csw.writerow([])
+    for x in range(0,13):
+        for y in range(0,13):
+            result = x * y
+            vhex = hex(result)[2:] # strip off the '0x'
+            while len(vhex) < 2:
+                vhex = '0' + vhex
+            vdec = str(result)
+            voct = oct(result)[2:] # strip off the '0o'
+            while len(voct) < 3:
+                voct = '0' + voct
+            vbin = bin(result)[2:] # strip off the '0b'
+            while len(vbin) < 8:
+                vbin = '0' + vbin
+            csw.writerow([str(x),str(y),vhex,vdec,voct,vbin])
+    f.close()
 
