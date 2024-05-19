@@ -274,7 +274,11 @@ todolist = [
     { "source": "ref/CP855.TXT",              "dest": "gen-cp855.csv",                "title": "Microsoft/IBM PC Code Page 855 table (Cyrillic)" },
     { "source": "ref/CP856.TXT",              "dest": "gen-cp856.csv",                "title": "Microsoft/IBM PC Code Page 856 table (Hebrew)" },
     { "source": "ref/CP857.TXT",              "dest": "gen-cp857.csv",                "title": "Microsoft/IBM PC Code Page 857 table (Turkish)" },
-    { "source": "ref/CP860.TXT",              "dest": "gen-cp860.csv",                "title": "Microsoft/IBM PC Code Page 860 table (Portuguese)" }
+    { "source": "ref/CP860.TXT",              "dest": "gen-cp860.csv",                "title": "Microsoft/IBM PC Code Page 860 table (Portuguese)" },
+    { "source": "ref/CP861.TXT",              "dest": "gen-cp861.csv",                "title": "Microsoft/IBM PC Code Page 861 table (Icelandic)" },
+    { "source": "ref/CP862.TXT",              "dest": "gen-cp862.csv",                "title": "Microsoft/IBM PC Code Page 862 table (Hebrew)" },
+    { "source": "ref/CP863.TXT",              "dest": "gen-cp863.csv",                "title": "Microsoft/IBM PC Code Page 863 table (French Canadian)" },
+    { "source": "ref/CP864.TXT",              "dest": "gen-cp864.csv",                "title": "Microsoft/IBM PC Code Page 864 table (Arabic)" }
 ]
 
 for todo in todolist:
@@ -303,62 +307,6 @@ for todo in todolist:
     csw = csv.writer(f)
     write_standard_csv_header(csw,title=title)
     write_standard_csv_table(csw,map_list)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp861.csv"
-ref_file = "ref/CP861.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 861 table (Icelandic)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp862.csv"
-ref_file = "ref/CP862.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 862 table (Hebrew)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp863.csv"
-ref_file = "ref/CP863.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 863 table (French Canadian)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp864.csv"
-ref_file = "ref/CP864.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 864 table (Arabic)')
-    write_standard_csv_table(csw,map_current)
     f.close()
 
 #--------------------------------------------------------------------------------------------------------
