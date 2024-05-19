@@ -270,7 +270,11 @@ todolist = [
     { "source": "ref/CP737.TXT",              "dest": "gen-cp737.csv",                "title": "Microsoft/IBM PC Code Page 737 table (Greek)" },
     { "source": "ref/CP775.TXT",              "dest": "gen-cp775.csv",                "title": "Microsoft/IBM PC Code Page 775 table (Baltic Rim)" },
     { "source": "ref/CP850.TXT",              "dest": "gen-cp850.csv",                "title": 'Microsoft/IBM PC Code Page 850 table (Latin 1)' },
-    { "source": "ref/CP852.TXT",              "dest": "gen-cp852.csv",                "title": "Microsoft/IBM PC Code Page 852 table (Latin 2)" }
+    { "source": "ref/CP852.TXT",              "dest": "gen-cp852.csv",                "title": "Microsoft/IBM PC Code Page 852 table (Latin 2)" },
+    { "source": "ref/CP855.TXT",              "dest": "gen-cp855.csv",                "title": "Microsoft/IBM PC Code Page 855 table (Cyrillic)" },
+    { "source": "ref/CP856.TXT",              "dest": "gen-cp856.csv",                "title": "Microsoft/IBM PC Code Page 856 table (Hebrew)" },
+    { "source": "ref/CP857.TXT",              "dest": "gen-cp857.csv",                "title": "Microsoft/IBM PC Code Page 857 table (Turkish)" },
+    { "source": "ref/CP860.TXT",              "dest": "gen-cp860.csv",                "title": "Microsoft/IBM PC Code Page 860 table (Portuguese)" }
 ]
 
 for todo in todolist:
@@ -299,62 +303,6 @@ for todo in todolist:
     csw = csv.writer(f)
     write_standard_csv_header(csw,title=title)
     write_standard_csv_table(csw,map_list)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp855.csv"
-ref_file = "ref/CP855.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 855 table (Cyrillic)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp856.csv"
-ref_file = "ref/CP856.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 856 table (Hebrew)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp857.csv"
-ref_file = "ref/CP857.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 857 table (Turkish)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp860.csv"
-ref_file = "ref/CP860.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 860 table (Portuguese)')
-    write_standard_csv_table(csw,map_current)
     f.close()
 
 #--------------------------------------------------------------------------------------------------------
