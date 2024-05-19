@@ -580,70 +580,42 @@ f.close()
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-# NTS: The unicode listing does not list it, but code 0xF0 is a solid Apple logo. Which has no Unicode
-#      equivalent and will therefore need the image rendering mode for "display" column.
-map_current = load_unicode_mapping_file("ref/MAC-ROMAN.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-apple-mac-roman.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Apple Macintosh MacRoman table', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-apple-mac-roman.csv"
+ref_file = "ref/MAC-ROMAN.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title="Apple Macintosh MacRoman table")
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/MAC-CYRILLIC.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-apple-mac-cyrillic.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Apple Macintosh Cyrillic table', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-apple-mac-cyrillic.csv"
+ref_file = "ref/MAC-CYRILLIC.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title="Apple Macintosh Cyrillic table")
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP037.TXT")
-f = open("gen-ebcdic-cp037.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['IBM EBCDIC US/Canada table', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-ebcdic-cp037.csv"
+ref_file = "ref/CP037.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='IBM EBCDIC US/Canada table')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
