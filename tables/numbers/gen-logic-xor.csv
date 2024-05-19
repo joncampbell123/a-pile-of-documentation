@@ -1,9 +1,0 @@
-Input 1 (P),Input 2 (Q),Output,#column-names
-numeric:base=1,numeric:base=1,numeric:base=1,#column-format
-right,right,right,#column-align
-eXclusive OR (XOR),#table-title
-
-0,0,0
-0,1,1
-1,0,1
-1,1,0

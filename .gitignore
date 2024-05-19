@@ -138,3 +138,7 @@ reference/
 # python cached versions of .py files
 *.pyc
 
+# generated files in building the info
+gen-*.csv
+gen-*.bmp
+
