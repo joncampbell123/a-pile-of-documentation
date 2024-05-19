@@ -180,8 +180,8 @@ class UnicodeMapEntry:
         return unicp_s
     def getDisplayString(self):
         disp = ''
-        if not ent.display == None:
-            disp = ent.display
+        if not self.display == None:
+            disp = self.display
         return disp
 
 def load_unicode_mapping_file(path):
@@ -235,6 +235,24 @@ def load_unicode_mapping_file(path):
     f.close()
     return ret
 
+def write_standard_csv_header(csw,title="UNTITLED"):
+    csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
+    csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
+    csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
+    csw.writerow([title, '#table-title'])
+    csw.writerow([])
+
+def write_standard_csv_table(csw,map_table):
+    for enti in map_table:
+        ent = map_table[enti]
+        vhex = ent.getHexString()
+        vdec = ent.getDecString()
+        voct = ent.getOctString()
+        vbin = ent.getBinString()
+        unicp_s = ent.getUnicpString()
+        disp_s = ent.getDisplayString()
+        csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
+
 map_cp437 = load_unicode_mapping_file("ref/CP437.TXT")
 # CP437 is the same as ASCII for the first 128 entries.
 # The Unicode consortium list always treats 0-31 inclusive as control codes
@@ -254,20 +272,8 @@ ref_file = __file__
 if is_newer_than(source=ref_file,dest=csv_file):
     f = open(csv_file,mode="w",encoding="utf-8",newline="")
     csw = csv.writer(f)
-    csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-    csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-    csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-    csw.writerow(['ASCII table', '#table-title'])
-    csw.writerow([])
-    for enti in map_ascii:
-        ent = map_ascii[enti]
-        vhex = ent.getHexString()
-        vdec = ent.getDecString()
-        voct = ent.getOctString()
-        vbin = ent.getBinString()
-        unicp_s = ent.getUnicpString()
-        disp_s = ent.getDisplayString()
-        csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
+    write_standard_csv_header(csw,title="ASCII table")
+    write_standard_csv_table(csw,map_ascii)
     f.close()
 
 #--------------------------------------------------------------------------------------------------------
@@ -278,20 +284,8 @@ ref_file = __file__
 if is_newer_than(source=ref_file,dest=csv_file):
     f = open(csv_file,mode="w",encoding="utf-8",newline="")
     csw = csv.writer(f)
-    csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-    csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-    csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-    csw.writerow(['Microsoft/IBM PC Code Page 437 table (Latin US)', '#table-title'])
-    csw.writerow([])
-    for enti in map_cp437:
-        ent = map_cp437[enti]
-        vhex = ent.getHexString()
-        vdec = ent.getDecString()
-        voct = ent.getOctString()
-        vbin = ent.getBinString()
-        unicp_s = ent.getUnicpString()
-        disp_s = ent.getDisplayString()
-        csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
+    write_standard_csv_header(csw,title="Microsoft/IBM PC Code Page 437 table (Latin US)")
+    write_standard_csv_table(csw,map_cp437)
     f.close()
 
 #--------------------------------------------------------------------------------------------------------
@@ -304,20 +298,8 @@ if is_newer_than(source=ref_file,dest=csv_file):
     patch_cp437_control_codes(map_current)
     f = open(csv_file,mode="w",encoding="utf-8",newline="")
     csw = csv.writer(f)
-    csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-    csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-    csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-    csw.writerow(['Microsoft/IBM PC Code Page 737 table (Greek)', '#table-title'])
-    csw.writerow([])
-    for enti in map_current:
-        ent = map_current[enti]
-        vhex = ent.getHexString()
-        vdec = ent.getDecString()
-        voct = ent.getOctString()
-        vbin = ent.getBinString()
-        unicp_s = ent.getUnicpString()
-        disp_s = ent.getDisplayString()
-        csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 737 table (Greek)')
+    write_standard_csv_table(csw,map_current)
     f.close()
 
 #--------------------------------------------------------------------------------------------------------
@@ -330,20 +312,8 @@ if is_newer_than(source=ref_file,dest=csv_file):
     patch_cp437_control_codes(map_current)
     f = open(csv_file,mode="w",encoding="utf-8",newline="")
     csw = csv.writer(f)
-    csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-    csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-    csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-    csw.writerow(['Microsoft/IBM PC Code Page 775 table (Baltic Rim)', '#table-title'])
-    csw.writerow([])
-    for enti in map_current:
-        ent = map_current[enti]
-        vhex = ent.getHexString()
-        vdec = ent.getDecString()
-        voct = ent.getOctString()
-        vbin = ent.getBinString()
-        unicp_s = ent.getUnicpString()
-        disp_s = ent.getDisplayString()
-        csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 775 table (Baltic Rim)')
+    write_standard_csv_table(csw,map_current)
     f.close()
 
 #--------------------------------------------------------------------------------------------------------
@@ -356,20 +326,8 @@ if is_newer_than(source=ref_file,dest=csv_file):
     patch_cp437_control_codes(map_current)
     f = open(csv_file,mode="w",encoding="utf-8",newline="")
     csw = csv.writer(f)
-    csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-    csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-    csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-    csw.writerow(['Microsoft/IBM PC Code Page 850 table (Latin 1)', '#table-title'])
-    csw.writerow([])
-    for enti in map_current:
-        ent = map_current[enti]
-        vhex = ent.getHexString()
-        vdec = ent.getDecString()
-        voct = ent.getOctString()
-        vbin = ent.getBinString()
-        unicp_s = ent.getUnicpString()
-        disp_s = ent.getDisplayString()
-        csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 850 table (Latin 1)')
+    write_standard_csv_table(csw,map_current)
     f.close()
 
 #--------------------------------------------------------------------------------------------------------
