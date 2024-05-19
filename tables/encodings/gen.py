@@ -268,22 +268,22 @@ todolist = [
     { "maplist": map_ascii,                   "dest": "gen-ascii.csv",                "title": "ASCII table" },
     { "source": "ref/CP037.TXT",              "dest": "gen-ebcdic-cp037.csv",         "title": "IBM EBCDIC US/Canada table" },
     { "maplist": map_cp437,                   "dest": "gen-cp437.csv",                "title": "Microsoft/IBM PC Code Page 437 table (Latin US)" },
-    { "source": "ref/CP737.TXT",              "dest": "gen-cp737.csv",                "title": "Microsoft/IBM PC Code Page 737 table (Greek)" },
-    { "source": "ref/CP775.TXT",              "dest": "gen-cp775.csv",                "title": "Microsoft/IBM PC Code Page 775 table (Baltic Rim)" },
-    { "source": "ref/CP850.TXT",              "dest": "gen-cp850.csv",                "title": 'Microsoft/IBM PC Code Page 850 table (Latin 1)' },
-    { "source": "ref/CP852.TXT",              "dest": "gen-cp852.csv",                "title": "Microsoft/IBM PC Code Page 852 table (Latin 2)" },
-    { "source": "ref/CP855.TXT",              "dest": "gen-cp855.csv",                "title": "Microsoft/IBM PC Code Page 855 table (Cyrillic)" },
-    { "source": "ref/CP856.TXT",              "dest": "gen-cp856.csv",                "title": "Microsoft/IBM PC Code Page 856 table (Hebrew)" },
-    { "source": "ref/CP857.TXT",              "dest": "gen-cp857.csv",                "title": "Microsoft/IBM PC Code Page 857 table (Turkish)" },
-    { "source": "ref/CP860.TXT",              "dest": "gen-cp860.csv",                "title": "Microsoft/IBM PC Code Page 860 table (Portuguese)" },
-    { "source": "ref/CP861.TXT",              "dest": "gen-cp861.csv",                "title": "Microsoft/IBM PC Code Page 861 table (Icelandic)" },
-    { "source": "ref/CP862.TXT",              "dest": "gen-cp862.csv",                "title": "Microsoft/IBM PC Code Page 862 table (Hebrew)" },
-    { "source": "ref/CP863.TXT",              "dest": "gen-cp863.csv",                "title": "Microsoft/IBM PC Code Page 863 table (French Canadian)" },
-    { "source": "ref/CP864.TXT",              "dest": "gen-cp864.csv",                "title": "Microsoft/IBM PC Code Page 864 table (Arabic)" },
-    { "source": "ref/CP865.TXT",              "dest": "gen-cp865.csv",                "title": "Microsoft/IBM PC Code Page 865 table (Nordic)" },
-    { "source": "ref/CP866.TXT",              "dest": "gen-cp866.csv",                "title": "Microsoft/IBM PC Code Page 866 table (Russian)" },
-    { "source": "ref/CP869.TXT",              "dest": "gen-cp869.csv",                "title": "Microsoft/IBM PC Code Page 869 table (Greek)" },
-    { "source": "ref/CP874.TXT",              "dest": "gen-cp874.csv",                "title": "Microsoft/IBM PC Code Page 874 table (Thai)" },
+    { "source": "ref/CP737.TXT",              "dest": "gen-cp737.csv",                "title": "Microsoft/IBM PC Code Page 737 table (Greek)", "patch437ctrl": True },
+    { "source": "ref/CP775.TXT",              "dest": "gen-cp775.csv",                "title": "Microsoft/IBM PC Code Page 775 table (Baltic Rim)", "patch437ctrl": True },
+    { "source": "ref/CP850.TXT",              "dest": "gen-cp850.csv",                "title": 'Microsoft/IBM PC Code Page 850 table (Latin 1)', "patch437ctrl": True },
+    { "source": "ref/CP852.TXT",              "dest": "gen-cp852.csv",                "title": "Microsoft/IBM PC Code Page 852 table (Latin 2)", "patch437ctrl": True },
+    { "source": "ref/CP855.TXT",              "dest": "gen-cp855.csv",                "title": "Microsoft/IBM PC Code Page 855 table (Cyrillic)", "patch437ctrl": True },
+    { "source": "ref/CP856.TXT",              "dest": "gen-cp856.csv",                "title": "Microsoft/IBM PC Code Page 856 table (Hebrew)", "patch437ctrl": True },
+    { "source": "ref/CP857.TXT",              "dest": "gen-cp857.csv",                "title": "Microsoft/IBM PC Code Page 857 table (Turkish)", "patch437ctrl": True },
+    { "source": "ref/CP860.TXT",              "dest": "gen-cp860.csv",                "title": "Microsoft/IBM PC Code Page 860 table (Portuguese)", "patch437ctrl": True },
+    { "source": "ref/CP861.TXT",              "dest": "gen-cp861.csv",                "title": "Microsoft/IBM PC Code Page 861 table (Icelandic)", "patch437ctrl": True },
+    { "source": "ref/CP862.TXT",              "dest": "gen-cp862.csv",                "title": "Microsoft/IBM PC Code Page 862 table (Hebrew)", "patch437ctrl": True },
+    { "source": "ref/CP863.TXT",              "dest": "gen-cp863.csv",                "title": "Microsoft/IBM PC Code Page 863 table (French Canadian)", "patch437ctrl": True },
+    { "source": "ref/CP864.TXT",              "dest": "gen-cp864.csv",                "title": "Microsoft/IBM PC Code Page 864 table (Arabic)", "patch437ctrl": True },
+    { "source": "ref/CP865.TXT",              "dest": "gen-cp865.csv",                "title": "Microsoft/IBM PC Code Page 865 table (Nordic)", "patch437ctrl": True },
+    { "source": "ref/CP866.TXT",              "dest": "gen-cp866.csv",                "title": "Microsoft/IBM PC Code Page 866 table (Russian)", "patch437ctrl": True },
+    { "source": "ref/CP869.TXT",              "dest": "gen-cp869.csv",                "title": "Microsoft/IBM PC Code Page 869 table (Greek)", "patch437ctrl": True },
+    { "source": "ref/CP874.TXT",              "dest": "gen-cp874.csv",                "title": "Microsoft/IBM PC Code Page 874 table (Thai)", "patch437ctrl": True },
     { "source": "ref/CP932.TXT",              "dest": "gen-cp932.csv",                "title": "Microsoft/IBM PC Code Page 932 table (Shift JIS)" },
     { "source": "ref/CP950.TXT",              "dest": "gen-cp950.csv",                "title": "Microsoft/IBM PC Code Page 950 table (Chinese Big 5)" },
     { "source": "ref/CP1252.TXT",             "dest": "gen-cp1252.csv",               "title": "Microsoft Windows Code Page 1252 (Latin ISO 8859-1)" },
@@ -312,6 +312,8 @@ for todo in todolist:
     #
     if map_list == None:
         map_list = load_unicode_mapping_file(ref_file)
+        if todo.get("patch437ctrl") == True:
+            patch_cp437_control_codes(map_list)
     #
     f = open(csv_file,mode="w",encoding="utf-8",newline="")
     csw = csv.writer(f)
