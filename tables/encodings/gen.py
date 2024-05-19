@@ -333,323 +333,198 @@ if is_newer_than(source=ref_file,dest=csv_file):
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP852.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-cp852.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 852 table (Latin 2)', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp852.csv"
+ref_file = "ref/CP852.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 852 table (Latin 2)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP855.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-cp855.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 855 table (Cyrillic)', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp855.csv"
+ref_file = "ref/CP855.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 855 table (Cyrillic)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP856.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-cp856.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 856 table (Hebrew)', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp856.csv"
+ref_file = "ref/CP856.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 856 table (Hebrew)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP857.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-cp857.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 857 table (Turkish)', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp857.csv"
+ref_file = "ref/CP857.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 857 table (Turkish)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP860.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-cp860.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 860 table (Portuguese)', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp860.csv"
+ref_file = "ref/CP860.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 860 table (Portuguese)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP861.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-cp861.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 861 table (Icelandic)', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp861.csv"
+ref_file = "ref/CP861.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 861 table (Icelandic)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP862.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-cp862.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 862 table (Hebrew)', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp862.csv"
+ref_file = "ref/CP862.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 862 table (Hebrew)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP863.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-cp863.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 863 table (French Canadian)', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp863.csv"
+ref_file = "ref/CP863.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 863 table (French Canadian)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP864.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-cp864.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 864 table (Arabic)', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp864.csv"
+ref_file = "ref/CP864.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 864 table (Arabic)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP865.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-cp865.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 865 table (Nordic)', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp865.csv"
+ref_file = "ref/CP865.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 865 table (Nordic)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP866.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-cp866.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 866 table (Russian)', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp866.csv"
+ref_file = "ref/CP866.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 866 table (Russian)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP869.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-cp869.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 869 table (Greek)', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp869.csv"
+ref_file = "ref/CP869.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 869 table (Greek)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP874.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-cp874.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 874 table (Thai)', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp874.csv"
+ref_file = "ref/CP874.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 874 table (Thai)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP1252.TXT")
-f = open("gen-cp1252.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft Windows Code Page 1252 (Latin ISO 8859-1)', '#table-title'])
-csw.writerow([])
-for enti in map_current:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp1252.csv"
+ref_file = "ref/CP1252.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft Windows Code Page 1252 (Latin ISO 8859-1)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
