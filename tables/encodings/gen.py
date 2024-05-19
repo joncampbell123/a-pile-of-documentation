@@ -264,84 +264,70 @@ for key in map_cp437:
 #
 patch_cp437_control_codes(map_cp437)
 
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-ascii.csv"
-ref_file = __file__
-if is_newer_than(source=ref_file,dest=csv_file):
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title="ASCII table")
-    write_standard_csv_table(csw,map_ascii)
-    f.close()
+todolist = [
+    {
+        "title": "ASCII table",
+        "maplist": map_ascii,
+        "dest": "gen-ascii.csv"
+    },
+    {
+        "title": "Microsoft/IBM PC Code Page 437 table (Latin US)",
+        "maplist": map_cp437,
+        "dest": "gen-cp437.csv"
+    },
+    {
+        "title": "Microsoft/IBM PC Code Page 737 table (Greek)",
+        "source": "ref/CP737.TXT",
+        "dest": "gen-cp737.csv"
+    },
+    {
+        "title": "Microsoft/IBM PC Code Page 775 table (Baltic Rim)",
+        "source": "ref/CP775.TXT",
+        "dest": "gen-cp775.csv"
+    },
+    {
+        "title": 'Microsoft/IBM PC Code Page 850 table (Latin 1)',
+        "source": "ref/CP850.TXT",
+        "dest": "gen-cp850.csv"
+    },
+    {
+        "title": "Microsoft/IBM PC Code Page 852 table (Latin 2)",
+        "source": "ref/CP852.TXT",
+        "dest": "gen-cp852.csv"
+    },
+    {
+        "title": "",
+        "source": "",
+        "dest": ""
+    }
+]
 
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp437.csv"
-ref_file = __file__
-if is_newer_than(source=ref_file,dest=csv_file):
+for todo in todolist:
+    ref_file = __file__
+    if "source" in todo:
+        ref_file = todo["source"]
+    csv_file = None
+    if "dest" in todo:
+        csv_file = todo["dest"]
+    map_list = None
+    if "maplist" in todo:
+        map_list = todo["maplist"]
+    title = "UNTITLED"
+    if "title" in todo:
+        title = todo["title"]
+    #
+    if ref_file == None or csv_file == None:
+        continue
+    if not is_newer_than(source=ref_file,dest=csv_file):
+        continue
+    #
+    if map_list == None:
+        map_list = load_unicode_mapping_file(ref_file)
+    #
     f = open(csv_file,mode="w",encoding="utf-8",newline="")
     csw = csv.writer(f)
-    write_standard_csv_header(csw,title="Microsoft/IBM PC Code Page 437 table (Latin US)")
-    write_standard_csv_table(csw,map_cp437)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp737.csv"
-ref_file = "ref/CP737.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 737 table (Greek)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp775.csv"
-ref_file = "ref/CP775.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 775 table (Baltic Rim)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp850.csv"
-ref_file = "ref/CP850.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 850 table (Latin 1)')
-    write_standard_csv_table(csw,map_current)
-    f.close()
-
-#--------------------------------------------------------------------------------------------------------
-# list of numbers in various common bases
-# hexadecimal, decimal, octal, binary
-csv_file = "gen-cp852.csv"
-ref_file = "ref/CP852.TXT"
-if is_newer_than(source=ref_file,dest=csv_file):
-    map_current = load_unicode_mapping_file(ref_file)
-    patch_cp437_control_codes(map_current)
-    f = open(csv_file,mode="w",encoding="utf-8",newline="")
-    csw = csv.writer(f)
-    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 852 table (Latin 2)')
-    write_standard_csv_table(csw,map_current)
+    write_standard_csv_header(csw,title=title)
+    write_standard_csv_table(csw,map_list)
     f.close()
 
 #--------------------------------------------------------------------------------------------------------
