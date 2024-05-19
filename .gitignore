@@ -134,3 +134,7 @@ reference/
 
 # vim backup files
 *~
+
+# python cached versions of .py files
+*.pyc
+
