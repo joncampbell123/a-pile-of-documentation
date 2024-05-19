@@ -213,6 +213,15 @@ for hib in range(0x80,0xF0,0x02):
 # PC-98 dbcs vidmem
 img_pc98dbcs = docImage(16*16,8*16,1)
 for hib in range(0x20,0x80,0x04):
+    code_base = hib << 8
+    sc = hex(code_base)[2:]
+    while len(sc) < 4:
+        sc = '0' + sc
+    #
+    bmp_name = "gen-pc98-tvram-"+sc+".bmp"
+    if not is_newer_than(source="ref/pc98font.rom",dest=bmp_name):
+        continue
+    #
     imgs = [ None ] * 0x04
     for subrow in range(0,len(imgs)):
         jisrow = hib + subrow - 0x20
@@ -228,12 +237,7 @@ for hib in range(0x20,0x80,0x04):
         #
         imgs[subrow] = drawchargrid(imgt8=img_pc98sbcs,tcWidth=8,textMapFunc=lambda cc: [0,cc*16],colDigits=4,imgcp=img_pc98dbcs,charRows=8,charCellWidth=16,charCellHeight=16,code_base=code_base,charCellSizeLF=PC98dbcsCellLambda)
     #
-    code_base = hib << 8
-    sc = hex(code_base)[2:]
-    while len(sc) < 4:
-        sc = '0' + sc
-    #
-    docWriteBMP("gen-pc98-tvram-"+sc+".bmp",docImageStackCombine(imgs))
+    docWriteBMP(bmp_name,docImageStackCombine(imgs))
     #
     imgs = None
 
