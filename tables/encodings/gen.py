@@ -529,53 +529,30 @@ if is_newer_than(source=ref_file,dest=csv_file):
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP932.TXT")
-patch_shiftjis_replaced_ascii_codes(map_current)
-patch_shiftjis_control_codes(map_current)
-f = open("gen-cp932.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 932 table (Shift JIS)', '#table-title'])
-csw.writerow([])
-sorto = list(map_current.keys());
-sorto.sort(key=lambda x: map_current[x].byteseq)
-for enti in sorto:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp932.csv"
+ref_file = "ref/CP932.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 932 table (Shift JIS)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
 # hexadecimal, decimal, octal, binary
-map_current = load_unicode_mapping_file("ref/CP950.TXT")
-patch_cp437_control_codes(map_current)
-f = open("gen-cp950.csv",mode="w",encoding="utf-8",newline="")
-csw = csv.writer(f)
-csw.writerow(['Code (hexadecimal)',      'Code (decimal)',          'Code (octal)',            'Code (binary)',          'Unicode code point','name',  'description','display',         '#column-names'])
-csw.writerow(['numeric:base=16,multiple','numeric:base=10,multiple','numeric:base=10,multiple','numeric:base=2,multiple','numeric:base=16',   'string','string',     'string/image',    '#column-format'])
-csw.writerow(['right',                   'right',                   'right',                   'right',                  'right',             'left',  'left',       'left',            '#column-align'])
-csw.writerow(['Microsoft/IBM PC Code Page 950 table (Chinese Big 5)', '#table-title'])
-csw.writerow([])
-sorto = list(map_current.keys());
-sorto.sort(key=lambda x: map_current[x].byteseq)
-for enti in sorto:
-    ent = map_current[enti]
-    vhex = ent.getHexString()
-    vdec = ent.getDecString()
-    voct = ent.getOctString()
-    vbin = ent.getBinString()
-    unicp_s = ent.getUnicpString()
-    disp_s = ent.getDisplayString()
-    csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
-f.close()
+csv_file = "gen-cp950.csv"
+ref_file = "ref/CP950.TXT"
+if is_newer_than(source=ref_file,dest=csv_file):
+    map_current = load_unicode_mapping_file(ref_file)
+    patch_cp437_control_codes(map_current)
+    f = open(csv_file,mode="w",encoding="utf-8",newline="")
+    csw = csv.writer(f)
+    write_standard_csv_header(csw,title='Microsoft/IBM PC Code Page 950 table (Chinese Big 5)')
+    write_standard_csv_table(csw,map_current)
+    f.close()
 
 #--------------------------------------------------------------------------------------------------------
 # list of numbers in various common bases
