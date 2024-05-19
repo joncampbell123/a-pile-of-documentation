@@ -180,6 +180,15 @@ for hib in range(0x80,0xF0,0x02):
     if hib >= 0xA0 and hib <= 0xDF:
         continue
     #
+    code_base = hib << 8
+    sc = hex(code_base)[2:]
+    while len(sc) < 4:
+        sc = '0' + sc
+    #
+    bmp_name = "gen-pc98-sjis-"+sc+".bmp"
+    if not is_newer_than(source="ref/pc98font.rom",dest=bmp_name):
+        continue
+    #
     imgs = [ None ] * 0x02
     for subrow in range(0,len(imgs)):
         code_base = (hib + subrow) << 8
@@ -196,12 +205,7 @@ for hib in range(0x80,0xF0,0x02):
         #
         imgs[subrow] = drawchargrid(imgt8=img_pc98sbcs,tcWidth=8,textMapFunc=lambda cc: [0,cc*16],colDigits=4,imgcp=img_pc98dbcs,charRows=16,charCellWidth=16,charCellHeight=16,code_base=code_base,charCellSizeLF=PC98SJISCellSize)
     #
-    code_base = hib << 8
-    sc = hex(code_base)[2:]
-    while len(sc) < 4:
-        sc = '0' + sc
-    #
-    docWriteBMP("gen-pc98-sjis-"+sc+".bmp",docImageStackCombine(imgs))
+    docWriteBMP(bmp_name,docImageStackCombine(imgs))
     #
     imgs = None
 
