@@ -266,6 +266,14 @@ def my_htmlescape(x):
             r += c
     return r
 
+def hex_prepend_0x(x):
+    r = ""
+    for h in re.split(r" +",x):
+        if not r == "":
+            r += " "
+        r += "0x"+str(h)
+    return r
+
 def write_standard_html_file(html_file,map_table):
     # this code ASSUMES the entries are already in byte value order, as the .TXT files are
     hf = open(html_file,mode="w",encoding="utf-8",newline="\n")
@@ -306,9 +314,9 @@ def write_standard_html_file(html_file,map_table):
             hf.write(" class=\"oddline\"")
         hf.write(">")
         hf.write("<td class=\"\">"+my_htmlescape(disp_s)+"</td>")
-        hf.write("<td class=\"ral hexdigit\">"+my_htmlescape(vhex).upper()+"</td>")
+        hf.write("<td class=\"ral hexdigit\">"+hex_prepend_0x(my_htmlescape(vhex).upper())+"</td>")
         hf.write("<td class=\"ral\">"+my_htmlescape(vdec)+"</td>")
-        hf.write("<td class=\"ral hexdigit\">"+my_htmlescape(unicp_s).upper()+"</td>")
+        hf.write("<td class=\"ral hexdigit\">"+hex_prepend_0x(my_htmlescape(unicp_s).upper())+"</td>")
         hf.write("<td class=\"rightmost\">"+my_htmlescape(ent.name)+"</td>")
         hf.write("</tr>")
         #
