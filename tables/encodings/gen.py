@@ -285,8 +285,18 @@ todolist = [
     { "source": "ref/CP869.TXT",              "dest": "gen-cp869.csv",                "title": "Microsoft/IBM PC Code Page 869 table (Greek)", "patch437ctrl": True },
     { "source": "ref/CP874.TXT",              "dest": "gen-cp874.csv",                "title": "Microsoft/IBM PC Code Page 874 table (Thai)", "patch437ctrl": True },
     { "source": "ref/CP932.TXT",              "dest": "gen-cp932.csv",                "title": "Microsoft/IBM PC Code Page 932 table (Shift JIS)" },
+    { "source": "ref/CP936.TXT",              "dest": "gen-cp936.csv",                "title": "Microsoft/IBM PC Code Page 936 table (GBK)" },
+    { "source": "ref/CP949.TXT",              "dest": "gen-cp949.csv",                "title": "Microsoft/IBM PC Code Page 949 table (Unified Hangul)" },
     { "source": "ref/CP950.TXT",              "dest": "gen-cp950.csv",                "title": "Microsoft/IBM PC Code Page 950 table (Chinese Big 5)" },
+    { "source": "ref/CP1250.TXT",             "dest": "gen-cp1250.csv",               "title": "Microsoft Windows Code Page 1250 (Central/Eastern Europe)" },
+    { "source": "ref/CP1251.TXT",             "dest": "gen-cp1251.csv",               "title": "Microsoft Windows Code Page 1251 (Cyrillic)" },
     { "source": "ref/CP1252.TXT",             "dest": "gen-cp1252.csv",               "title": "Microsoft Windows Code Page 1252 (Latin ISO 8859-1)" },
+    { "source": "ref/CP1253.TXT",             "dest": "gen-cp1253.csv",               "title": "Microsoft Windows Code Page 1253 (Greek)" },
+    { "source": "ref/CP1254.TXT",             "dest": "gen-cp1254.csv",               "title": "Microsoft Windows Code Page 1254 (Turkish)" },
+    { "source": "ref/CP1255.TXT",             "dest": "gen-cp1255.csv",               "title": "Microsoft Windows Code Page 1255 (Hebrew)" },
+    { "source": "ref/CP1256.TXT",             "dest": "gen-cp1256.csv",               "title": "Microsoft Windows Code Page 1256 (Arabic)" },
+    { "source": "ref/CP1257.TXT",             "dest": "gen-cp1257.csv",               "title": "Microsoft Windows Code Page 1257 (Estonian, Latvian, Lithuanian, and more)" },
+    { "source": "ref/CP1258.TXT",             "dest": "gen-cp1258.csv",               "title": "Microsoft Windows Code Page 1258 (Vietnamese)" },
     { "source": "ref/MAC-ROMAN.TXT",          "dest": "gen-apple-mac-roman.csv",      "title": "Apple Macintosh MacRoman table" },
     { "source": "ref/MAC-CYRILLIC.TXT",       "dest": "gen-apple-mac-cyrillic.csv",   "title": "Apple Macintosh Cyrillic table" }
 ]
