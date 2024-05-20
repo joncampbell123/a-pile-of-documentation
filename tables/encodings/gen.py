@@ -253,6 +253,71 @@ def write_standard_csv_table(csw,map_table):
         disp_s = ent.getDisplayString()
         csw.writerow([vhex,vdec,voct,vbin,unicp_s,ent.name,'',disp_s])
 
+def my_htmlescape(x):
+    r = ''
+    for c in x:
+        if c == '<':
+            r += '&lt;'
+        elif c == '>':
+            r += '&gt;'
+        elif c == '&':
+            r += '&amp;'
+        else:
+            r += c
+    return r
+
+def write_standard_html_file(html_file,map_table):
+    # this code ASSUMES the entries are already in byte value order, as the .TXT files are
+    hf = open(html_file,mode="w",encoding="utf-8",newline="\n")
+    hf.write("<!DOCTYPE html>\n<html><head>")
+    hf.write("<meta charset=\"UTF-8\">")
+    hf.write("<style>\n")
+    hf.write("th, td { padding: 0; padding-left: 0.5em; padding-right: 0.5em; margin: 0; margin-left: 0.35em; margin-right: 0.35em; }\n")
+    hf.write("th { color: white; background-color: black; font-weight: 900; padding-top: 0.25em; padding-bottom: 0.25em; }\n")
+    hf.write("td { border-right: 1px solid black; height: 1.75em; }\n")
+    hf.write("td.rightmost { border-right: none; }\n")
+    hf.write("th.ral, td.ral { text-align: right; }\n")
+    hf.write("td.hexdigit { font-family: monospace; font-size: 1em; }\n")
+    hf.write("tr { padding: 0; margin: 0; background-color: white; }\n")
+    hf.write("tr.oddline { background-color: #DDDDDD; }\n")
+    hf.write("tr:hover { background-color: #DDDDFF; }\n")
+    hf.write("</style>")
+    hf.write("</head><body>")
+    hf.write("<table style=\"text-align: left; padding: 0; margin: 0; border-spacing: 0; border: 1px solid black;\">")
+    #
+    hf.write("<tr>")
+    hf.write("<th>Display</th>")
+    hf.write("<th class=\"ral\">Hex</th>")
+    hf.write("<th class=\"ral\">Dec</th>")
+    hf.write("<th class=\"ral\">Unicode</th>")
+    hf.write("<th>Name</th>")
+    hf.write("</tr>")
+    #
+    count = 0
+    for enti in map_table:
+        ent = map_table[enti]
+        vhex = ent.getHexString()
+        vdec = ent.getDecString()
+        unicp_s = ent.getUnicpString()
+        disp_s = ent.getDisplayString()
+        #
+        hf.write("<tr")
+        if (count % 2) == 1:
+            hf.write(" class=\"oddline\"")
+        hf.write(">")
+        hf.write("<td class=\"\">"+my_htmlescape(disp_s)+"</td>")
+        hf.write("<td class=\"ral hexdigit\">"+my_htmlescape(vhex).upper()+"</td>")
+        hf.write("<td class=\"ral\">"+my_htmlescape(vdec)+"</td>")
+        hf.write("<td class=\"ral hexdigit\">"+my_htmlescape(unicp_s).upper()+"</td>")
+        hf.write("<td class=\"rightmost\">"+my_htmlescape(ent.name)+"</td>")
+        hf.write("</tr>")
+        #
+        count += 1
+    #
+    hf.write("</table>")
+    hf.write("</body></html>")
+    hf.close()
+
 map_cp437 = load_unicode_mapping_file("ref/CP437.TXT")
 # CP437 is the same as ASCII for the first 128 entries.
 # The Unicode consortium list always treats 0-31 inclusive as control codes
@@ -284,7 +349,7 @@ todolist = [
     { "source": "ref/CP866.TXT",              "dest": "gen-cp866.csv",                "title": "Microsoft/IBM PC Code Page 866 table (Russian)", "patch437ctrl": True },
     { "source": "ref/CP869.TXT",              "dest": "gen-cp869.csv",                "title": "Microsoft/IBM PC Code Page 869 table (Greek)", "patch437ctrl": True },
     { "source": "ref/CP874.TXT",              "dest": "gen-cp874.csv",                "title": "Microsoft/IBM PC Code Page 874 table (Thai)", "patch437ctrl": True },
-    { "source": "ref/CP932.TXT",              "dest": "gen-cp932.csv",                "title": "Microsoft/IBM PC Code Page 932 table (Shift JIS)" },
+    { "source": "ref/CP932.TXT",              "dest": "gen-cp932.csv",                "title": "Microsoft/IBM PC Code Page 932 table (Shift JIS)", "patch932ctrl": True, "patchsjisascii": True },
     { "source": "ref/CP936.TXT",              "dest": "gen-cp936.csv",                "title": "Microsoft/IBM PC Code Page 936 table (GBK)" },
     { "source": "ref/CP949.TXT",              "dest": "gen-cp949.csv",                "title": "Microsoft/IBM PC Code Page 949 table (Unified Hangul)" },
     { "source": "ref/CP950.TXT",              "dest": "gen-cp950.csv",                "title": "Microsoft/IBM PC Code Page 950 table (Chinese Big 5)" },
@@ -324,10 +389,19 @@ for todo in todolist:
         map_list = load_unicode_mapping_file(ref_file)
         if todo.get("patch437ctrl") == True:
             patch_cp437_control_codes(map_list)
+        if todo.get("patch932ctrl") == True:
+            patch_shiftjis_control_codes(map_list)
+        if todo.get("patchsjisascii") == True:
+            patch_shiftjis_replaced_ascii_codes(map_list)
     #
     f = open(csv_file,mode="w",encoding="utf-8",newline="")
     csw = csv.writer(f)
     write_standard_csv_header(csw,title=title)
     write_standard_csv_table(csw,map_list)
     f.close()
+    #
+    html_file = re.sub(r"\.csv$",".html",csv_file)
+    if csv_file == html_file:
+        continue
+    write_standard_html_file(html_file,map_list)
 
