@@ -138,6 +138,10 @@ do_win_ne_fnt_res(source="ref/windows14_helvb.fon",         dest="gen-windows14-
 do_win_ne_fnt_res(source="ref/windows14_tmsra.fon",         dest="gen-windows14-tmsra.bmp",                    resTypeID=8,resID=0x4A)
 do_win_ne_fnt_res(source="ref/windows14_tmsrb.fon",         dest="gen-windows14-tmsrb.bmp",                    resTypeID=8,resID=0x47)
 
+do_win_ne_fnt_res(source="ref/windows20_coure.fon",         dest="gen-windows20-coure.bmp",                    resTypeID=8,resID=0x5c)
+do_win_ne_fnt_res(source="ref/windows20_helve.fon",         dest="gen-windows20-helve.bmp",                    resTypeID=8,resID=0x59)
+do_win_ne_fnt_res(source="ref/windows20_tmsre.fon",         dest="gen-windows20-tmsre.bmp",                    resTypeID=8,resID=0x53)
+
 do_win_ne_fnt_res(source="ref/windows31_system.fon",        dest="gen-windows31-cp1252-system.bmp",            resTypeID=8,resID=0x1F)
 do_win_ne_fnt_res(source="ref/windows31_fixedsys.fon",      dest="gen-windows31-cp1252-fixedsys.bmp",          resTypeID=8,resID=0x1F)
 do_win_ne_fnt_res(source="ref/windows31_sans_serif.fon",    dest="gen-windows31-cp1252-sans-serif-8pt.bmp",    resTypeID=8,resID=0x59)
