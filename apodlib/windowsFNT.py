@@ -61,6 +61,9 @@ class MSWINFNT:
                 self.dfCharTableOffset = 0x94; # FIXME: Untested
             else:
                 self.dfCharTableOffset = 0x76;
+            # We do not support vector FNT files (that means you, Windows 1.0 ROMAN.FON)
+            if not (self.dfType & 1) == 0:
+                raise Exception("windows vector fnt files not supported")
             #
             charTableEntries = self.dfLastChar + 2 - self.dfFirstChar
             self.dfCharTable = [ None ] * charTableEntries
