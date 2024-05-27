@@ -131,6 +131,7 @@ def do_win_ne_fnt_res(source,dest,resTypeID,resID):
     if is_newer_than(source=source,dest=dest):
         docWriteBMP(dest,loadAndRenderWindowsFNT(raw=WindowsNEResourceReader(path=source).getResource(resTypeID=resTypeID,resID=resID).data))
 
+do_win_ne_fnt_res(source="ref/windows14_coura.fon",         dest="gen-windows14-coura.bmp",                    resTypeID=8,resID=0x06)
 do_win_ne_fnt_res(source="ref/windows14_tmsra.fon",         dest="gen-windows14-tmsra.bmp",                    resTypeID=8,resID=0x4A)
 do_win_ne_fnt_res(source="ref/windows31_system.fon",        dest="gen-windows31-cp1252-system.bmp",            resTypeID=8,resID=0x1F)
 do_win_ne_fnt_res(source="ref/windows31_fixedsys.fon",      dest="gen-windows31-cp1252-fixedsys.bmp",          resTypeID=8,resID=0x1F)

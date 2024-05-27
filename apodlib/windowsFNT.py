@@ -72,6 +72,7 @@ class MSWINFNT:
                 charTableEntries = self.dfLastChar + 2 - self.dfFirstChar
             else:
                 charTableEntries = self.dfLastChar + 1 - self.dfFirstChar
+            #
             self.dfCharTable = [ None ] * charTableEntries
             if self.dfVersion >= 0x300:
                 for i in range(0,charTableEntries):
@@ -87,7 +88,15 @@ class MSWINFNT:
                     blob = raw[blobofs:blobofs+4]
                     ent.charWidth,ent.charOffset = struct.unpack("<HH",blob)
                     self.dfCharTable[i] = ent
-            else:
+            elif self.dfPixWidth > 0: # fixed width fonts, Windows 1.0
+                for i in range(0,charTableEntries):
+                    cX = self.dfPixWidth * i
+                    ent = self.charTableEntry()
+                    ent.charWidth = self.dfPixWidth
+                    ent.charOffset = (cX >> 3) + self.dfBitsOffset
+                    ent.charPixelOffset = cX & 7
+                    self.dfCharTable[i] = ent
+            else: # variable width fonts, Windows 1.0
                 # Windows 1.0 bitmap fonts could be thought of as one large horizontal strip of font height
                 # containing all the characters, with a list of 16-bit integers listing the ending X coordinate
                 # of each one in ascending order. Which means to get the width of each one, read the value and
