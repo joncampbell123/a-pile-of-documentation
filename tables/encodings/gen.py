@@ -95,7 +95,7 @@ def patch_cp437_control_codes(m):
     # this code will patch in now.
     global cp437_control_codes
     for ent in cp437_control_codes:
-        m[ent[0]].unicp = ent[1]
+        m[ent[0]].unicp = [ ent[1] ]
         if not ent[1] == None:
             m[ent[0]].display = chr(ent[1])
 
@@ -105,7 +105,7 @@ def patch_shiftjis_control_codes(m):
     # top horizontal line.
     global cp932_control_codes
     for ent in cp932_control_codes:
-        m[ent[0]].unicp = ent[1]
+        m[ent[0]].unicp = [ ent[1] ]
         if not ent[1] == None:
             m[ent[0]].display = chr(ent[1])
 
@@ -115,7 +115,7 @@ def patch_shiftjis_replaced_ascii_codes(m):
     # top horizontal line.
     global cp932_replaced_codes
     for ent in cp932_replaced_codes:
-        m[ent[0]].unicp = ent[1]
+        m[ent[0]].unicp = [ ent[1] ]
         if not ent[1] == None:
             m[ent[0]].display = chr(ent[1])
 
@@ -177,11 +177,16 @@ class UnicodeMapEntry:
             r += s
         return r
     def getUnicpString(self):
-        if self.unicp == None:
-            return '    '
-        unicp_s = hex(self.unicp)[2:]
-        while len(unicp_s) < 4:
-            unicp_s = '0' + unicp_s
+        unicp_s = ""
+        if not self.unicp == None:
+            for us in self.unicp:
+                if not unicp_s == "":
+                    unicp_s += " "
+                us = hex(us)[2:]
+                while len(us) < 4:
+                    us = '0' + us
+                unicp_s += us
+        #
         return unicp_s
     def getDisplayString(self):
         disp = ''
@@ -224,17 +229,22 @@ def load_unicode_mapping_file(path):
             ss = hbstr[i*2:(i+1)*2]
             bv[i] = int("0x"+ss,16)
         #
-        if not unicp[0:2] == "0x":
-            continue
-        unicp = int(unicp[2:],16)
-        #
         ent = UnicodeMapEntry()
+        ent.unicp = [ ]
+        for uas in unicp.split("+"):
+            if not uas[0:2] == "0x":
+                continue
+            ent.unicp.append(int(uas[2:],16))
+        #
         ent.byteseq = bv
-        ent.unicp = unicp
         ent.name = name
         ent.display = None
-        if not (ent.unicp < 0x20 or (ent.unicp >= 0x7F and ent.unicp <= 0x9F)):
-            ent.display = chr(ent.unicp)
+        if len(ent.unicp) > 0:
+            ent.display = ""
+            for u in ent.unicp:
+                if not (u < 0x20 or (u >= 0x7F and u <= 0x9F)):
+                    ent.display += chr(u)
+        #
         ret[key] = ent
         #
     f.close()
@@ -360,42 +370,43 @@ for key in map_cp437:
 patch_cp437_control_codes(map_cp437)
 
 todolist = [
-    { "maplist": map_ascii,                   "dest": "gen-ascii.csv",                "title": "ASCII table" },
-    { "source": "ref/CP037.TXT",              "dest": "gen-ebcdic-cp037.csv",         "title": "IBM EBCDIC US/Canada table" },
-    { "maplist": map_cp437,                   "dest": "gen-cp437.csv",                "title": "Microsoft/IBM PC Code Page 437 table (Latin US)" },
-    { "source": "ref/CP737.TXT",              "dest": "gen-cp737.csv",                "title": "Microsoft/IBM PC Code Page 737 table (Greek)", "patch437ctrl": True },
-    { "source": "ref/CP775.TXT",              "dest": "gen-cp775.csv",                "title": "Microsoft/IBM PC Code Page 775 table (Baltic Rim)", "patch437ctrl": True },
-    { "source": "ref/CP850.TXT",              "dest": "gen-cp850.csv",                "title": 'Microsoft/IBM PC Code Page 850 table (Latin 1)', "patch437ctrl": True },
-    { "source": "ref/CP852.TXT",              "dest": "gen-cp852.csv",                "title": "Microsoft/IBM PC Code Page 852 table (Latin 2)", "patch437ctrl": True },
-    { "source": "ref/CP855.TXT",              "dest": "gen-cp855.csv",                "title": "Microsoft/IBM PC Code Page 855 table (Cyrillic)", "patch437ctrl": True },
-    { "source": "ref/CP856.TXT",              "dest": "gen-cp856.csv",                "title": "Microsoft/IBM PC Code Page 856 table (Hebrew)", "patch437ctrl": True },
-    { "source": "ref/CP857.TXT",              "dest": "gen-cp857.csv",                "title": "Microsoft/IBM PC Code Page 857 table (Turkish)", "patch437ctrl": True },
-    { "source": "ref/CP860.TXT",              "dest": "gen-cp860.csv",                "title": "Microsoft/IBM PC Code Page 860 table (Portuguese)", "patch437ctrl": True },
-    { "source": "ref/CP861.TXT",              "dest": "gen-cp861.csv",                "title": "Microsoft/IBM PC Code Page 861 table (Icelandic)", "patch437ctrl": True },
-    { "source": "ref/CP862.TXT",              "dest": "gen-cp862.csv",                "title": "Microsoft/IBM PC Code Page 862 table (Hebrew)", "patch437ctrl": True },
-    { "source": "ref/CP863.TXT",              "dest": "gen-cp863.csv",                "title": "Microsoft/IBM PC Code Page 863 table (French Canadian)", "patch437ctrl": True },
-    { "source": "ref/CP864.TXT",              "dest": "gen-cp864.csv",                "title": "Microsoft/IBM PC Code Page 864 table (Arabic)", "patch437ctrl": True },
-    { "source": "ref/CP865.TXT",              "dest": "gen-cp865.csv",                "title": "Microsoft/IBM PC Code Page 865 table (Nordic)", "patch437ctrl": True },
-    { "source": "ref/CP866.TXT",              "dest": "gen-cp866.csv",                "title": "Microsoft/IBM PC Code Page 866 table (Russian)", "patch437ctrl": True },
-    { "source": "ref/CP869.TXT",              "dest": "gen-cp869.csv",                "title": "Microsoft/IBM PC Code Page 869 table (Greek)", "patch437ctrl": True },
-    { "source": "ref/CP874.TXT",              "dest": "gen-cp874.csv",                "title": "Microsoft/IBM PC Code Page 874 table (Thai)", "patch437ctrl": True },
-    { "source": "ref/CP932.TXT",              "dest": "gen-cp932.csv",                "title": "Microsoft/IBM PC Code Page 932 table (Shift JIS)", "patch932ctrl": True, "patchsjisascii": True },
-    { "source": "ref/CP936.TXT",              "dest": "gen-cp936.csv",                "title": "Microsoft/IBM PC Code Page 936 table (GBK)" },
-    { "source": "ref/CP949.TXT",              "dest": "gen-cp949.csv",                "title": "Microsoft/IBM PC Code Page 949 table (Unified Hangul)" },
-    { "source": "ref/CP950.TXT",              "dest": "gen-cp950.csv",                "title": "Microsoft/IBM PC Code Page 950 table (Chinese Big 5)" },
-    { "source": "ref/CP1250.TXT",             "dest": "gen-cp1250.csv",               "title": "Microsoft Windows Code Page 1250 (Central/Eastern Europe)" },
-    { "source": "ref/CP1251.TXT",             "dest": "gen-cp1251.csv",               "title": "Microsoft Windows Code Page 1251 (Cyrillic)" },
-    { "source": "ref/CP1252.TXT",             "dest": "gen-cp1252.csv",               "title": "Microsoft Windows Code Page 1252 (Latin ISO 8859-1)" },
-    { "source": "ref/CP1253.TXT",             "dest": "gen-cp1253.csv",               "title": "Microsoft Windows Code Page 1253 (Greek)" },
-    { "source": "ref/CP1254.TXT",             "dest": "gen-cp1254.csv",               "title": "Microsoft Windows Code Page 1254 (Turkish)" },
-    { "source": "ref/CP1255.TXT",             "dest": "gen-cp1255.csv",               "title": "Microsoft Windows Code Page 1255 (Hebrew)" },
-    { "source": "ref/CP1256.TXT",             "dest": "gen-cp1256.csv",               "title": "Microsoft Windows Code Page 1256 (Arabic)" },
-    { "source": "ref/CP1257.TXT",             "dest": "gen-cp1257.csv",               "title": "Microsoft Windows Code Page 1257 (Estonian, Latvian, Lithuanian, and more)" },
-    { "source": "ref/CP1258.TXT",             "dest": "gen-cp1258.csv",               "title": "Microsoft Windows Code Page 1258 (Vietnamese)" },
-    { "source": "ref/MAC-ROMAN.TXT",          "dest": "gen-apple-mac-roman.csv",      "title": "Apple Macintosh MacRoman table", "patch": apple_roman_patch },
-    { "source": "ref/MAC-ARABIC.TXT",         "dest": "gen-apple-mac-arabic.csv",     "title": "Apple Macintosh Arabic table" },
-    { "source": "ref/MAC-ARMENIAN.TXT",       "dest": "gen-apple-mac-armenian.csv",   "title": "Apple Macintosh Armenian table" },
-    { "source": "ref/MAC-CYRILLIC.TXT",       "dest": "gen-apple-mac-cyrillic.csv",   "title": "Apple Macintosh Cyrillic table" }
+    { "maplist": map_ascii,                   "dest": "gen-ascii.csv",                            "title": "ASCII table" },
+    { "source": "ref/CP037.TXT",              "dest": "gen-ebcdic-cp037.csv",                     "title": "IBM EBCDIC US/Canada table" },
+    { "maplist": map_cp437,                   "dest": "gen-cp437.csv",                            "title": "Microsoft/IBM PC Code Page 437 table (Latin US)" },
+    { "source": "ref/CP737.TXT",              "dest": "gen-cp737.csv",                            "title": "Microsoft/IBM PC Code Page 737 table (Greek)", "patch437ctrl": True },
+    { "source": "ref/CP775.TXT",              "dest": "gen-cp775.csv",                            "title": "Microsoft/IBM PC Code Page 775 table (Baltic Rim)", "patch437ctrl": True },
+    { "source": "ref/CP850.TXT",              "dest": "gen-cp850.csv",                            "title": 'Microsoft/IBM PC Code Page 850 table (Latin 1)', "patch437ctrl": True },
+    { "source": "ref/CP852.TXT",              "dest": "gen-cp852.csv",                            "title": "Microsoft/IBM PC Code Page 852 table (Latin 2)", "patch437ctrl": True },
+    { "source": "ref/CP855.TXT",              "dest": "gen-cp855.csv",                            "title": "Microsoft/IBM PC Code Page 855 table (Cyrillic)", "patch437ctrl": True },
+    { "source": "ref/CP856.TXT",              "dest": "gen-cp856.csv",                            "title": "Microsoft/IBM PC Code Page 856 table (Hebrew)", "patch437ctrl": True },
+    { "source": "ref/CP857.TXT",              "dest": "gen-cp857.csv",                            "title": "Microsoft/IBM PC Code Page 857 table (Turkish)", "patch437ctrl": True },
+    { "source": "ref/CP860.TXT",              "dest": "gen-cp860.csv",                            "title": "Microsoft/IBM PC Code Page 860 table (Portuguese)", "patch437ctrl": True },
+    { "source": "ref/CP861.TXT",              "dest": "gen-cp861.csv",                            "title": "Microsoft/IBM PC Code Page 861 table (Icelandic)", "patch437ctrl": True },
+    { "source": "ref/CP862.TXT",              "dest": "gen-cp862.csv",                            "title": "Microsoft/IBM PC Code Page 862 table (Hebrew)", "patch437ctrl": True },
+    { "source": "ref/CP863.TXT",              "dest": "gen-cp863.csv",                            "title": "Microsoft/IBM PC Code Page 863 table (French Canadian)", "patch437ctrl": True },
+    { "source": "ref/CP864.TXT",              "dest": "gen-cp864.csv",                            "title": "Microsoft/IBM PC Code Page 864 table (Arabic)", "patch437ctrl": True },
+    { "source": "ref/CP865.TXT",              "dest": "gen-cp865.csv",                            "title": "Microsoft/IBM PC Code Page 865 table (Nordic)", "patch437ctrl": True },
+    { "source": "ref/CP866.TXT",              "dest": "gen-cp866.csv",                            "title": "Microsoft/IBM PC Code Page 866 table (Russian)", "patch437ctrl": True },
+    { "source": "ref/CP869.TXT",              "dest": "gen-cp869.csv",                            "title": "Microsoft/IBM PC Code Page 869 table (Greek)", "patch437ctrl": True },
+    { "source": "ref/CP874.TXT",              "dest": "gen-cp874.csv",                            "title": "Microsoft/IBM PC Code Page 874 table (Thai)", "patch437ctrl": True },
+    { "source": "ref/CP932.TXT",              "dest": "gen-cp932.csv",                            "title": "Microsoft/IBM PC Code Page 932 table (Shift JIS)", "patch932ctrl": True, "patchsjisascii": True },
+    { "source": "ref/CP936.TXT",              "dest": "gen-cp936.csv",                            "title": "Microsoft/IBM PC Code Page 936 table (GBK)" },
+    { "source": "ref/CP949.TXT",              "dest": "gen-cp949.csv",                            "title": "Microsoft/IBM PC Code Page 949 table (Unified Hangul)" },
+    { "source": "ref/CP950.TXT",              "dest": "gen-cp950.csv",                            "title": "Microsoft/IBM PC Code Page 950 table (Chinese Big 5)" },
+    { "source": "ref/CP1250.TXT",             "dest": "gen-cp1250.csv",                           "title": "Microsoft Windows Code Page 1250 (Central/Eastern Europe)" },
+    { "source": "ref/CP1251.TXT",             "dest": "gen-cp1251.csv",                           "title": "Microsoft Windows Code Page 1251 (Cyrillic)" },
+    { "source": "ref/CP1252.TXT",             "dest": "gen-cp1252.csv",                           "title": "Microsoft Windows Code Page 1252 (Latin ISO 8859-1)" },
+    { "source": "ref/CP1253.TXT",             "dest": "gen-cp1253.csv",                           "title": "Microsoft Windows Code Page 1253 (Greek)" },
+    { "source": "ref/CP1254.TXT",             "dest": "gen-cp1254.csv",                           "title": "Microsoft Windows Code Page 1254 (Turkish)" },
+    { "source": "ref/CP1255.TXT",             "dest": "gen-cp1255.csv",                           "title": "Microsoft Windows Code Page 1255 (Hebrew)" },
+    { "source": "ref/CP1256.TXT",             "dest": "gen-cp1256.csv",                           "title": "Microsoft Windows Code Page 1256 (Arabic)" },
+    { "source": "ref/CP1257.TXT",             "dest": "gen-cp1257.csv",                           "title": "Microsoft Windows Code Page 1257 (Estonian, Latvian, Lithuanian, and more)" },
+    { "source": "ref/CP1258.TXT",             "dest": "gen-cp1258.csv",                           "title": "Microsoft Windows Code Page 1258 (Vietnamese)" },
+    { "source": "ref/MAC-ROMAN.TXT",          "dest": "gen-apple-mac-roman.csv",                  "title": "Apple Macintosh MacRoman table", "patch": apple_roman_patch },
+    { "source": "ref/MAC-ARABIC.TXT",         "dest": "gen-apple-mac-arabic.csv",                 "title": "Apple Macintosh Arabic table" },
+    { "source": "ref/MAC-ARMENIAN.TXT",       "dest": "gen-apple-mac-armenian.csv",               "title": "Apple Macintosh Armenian table" },
+    { "source": "ref/MAC-BARENCYR.TXT",       "dest": "gen-apple-mac-barents-cyrillic.csv",       "title": "Apple Macintosh Barents Cyrillic table" },
+    { "source": "ref/MAC-CYRILLIC.TXT",       "dest": "gen-apple-mac-cyrillic.csv",               "title": "Apple Macintosh Cyrillic table" }
 ]
 
 for todo in todolist:
