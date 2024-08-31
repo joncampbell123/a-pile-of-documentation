@@ -85,6 +85,9 @@ cp932_control_codes = [
         [ 0x1F, 0x241F ],
         [ 0x7F, 0x2421 ]
 ]
+apple_roman_patch = [
+        { "byteseq": bytes([0xF0]), "name": "Apple logo" }
+]
 
 def patch_cp437_control_codes(m):
     # CP437 has well known symbols in the range 0-31 inclusive which
@@ -243,7 +246,7 @@ def write_standard_csv_header(csw,title="UNTITLED"):
     csw.writerow([])
 
 def write_standard_csv_table(csw,map_table):
-    for enti in map_table:
+    for enti in sorted(map_table.keys()):
         ent = map_table[enti]
         vhex = ent.getHexString()
         vdec = ent.getDecString()
@@ -269,6 +272,8 @@ def my_htmlescape(x):
 def hex_prepend_0x(x):
     r = ""
     for h in re.split(r" +",x):
+        if h == "":
+            continue
         if not r == "":
             r += " "
         r += "0x"+str(h)
@@ -302,7 +307,7 @@ def write_standard_html_file(html_file,map_table):
     hf.write("</tr>")
     #
     count = 0
-    for enti in map_table:
+    for enti in sorted(map_table.keys()):
         ent = map_table[enti]
         vhex = ent.getHexString()
         vdec = ent.getDecString()
@@ -370,7 +375,7 @@ todolist = [
     { "source": "ref/CP1256.TXT",             "dest": "gen-cp1256.csv",               "title": "Microsoft Windows Code Page 1256 (Arabic)" },
     { "source": "ref/CP1257.TXT",             "dest": "gen-cp1257.csv",               "title": "Microsoft Windows Code Page 1257 (Estonian, Latvian, Lithuanian, and more)" },
     { "source": "ref/CP1258.TXT",             "dest": "gen-cp1258.csv",               "title": "Microsoft Windows Code Page 1258 (Vietnamese)" },
-    { "source": "ref/MAC-ROMAN.TXT",          "dest": "gen-apple-mac-roman.csv",      "title": "Apple Macintosh MacRoman table" },
+    { "source": "ref/MAC-ROMAN.TXT",          "dest": "gen-apple-mac-roman.csv",      "title": "Apple Macintosh MacRoman table", "patch": apple_roman_patch },
     { "source": "ref/MAC-CYRILLIC.TXT",       "dest": "gen-apple-mac-cyrillic.csv",   "title": "Apple Macintosh Cyrillic table" }
 ]
 
@@ -401,6 +406,27 @@ for todo in todolist:
             patch_shiftjis_control_codes(map_list)
         if todo.get("patchsjisascii") == True:
             patch_shiftjis_replaced_ascii_codes(map_list)
+    #
+    if "patch" in todo:
+        p = todo["patch"]
+        for patch in p:
+            key = ""
+            bseq = None
+            if "byteseq" in patch:
+                byt = patch["byteseq"]
+                k = None
+                for b in byt:
+                    if k == None:
+                        k = 0
+                    k = (k << 8) + b
+                bseq = byt
+                key = k
+            if not key == None:
+                if not key in map_list:
+                    map_list[key] = UnicodeMapEntry()
+                    map_list[key].byteseq = bseq
+                if "name" in patch:
+                    map_list[key].name = patch["name"]
     #
     f = open(csv_file,mode="w",encoding="utf-8",newline="")
     csw = csv.writer(f)
