@@ -95,9 +95,10 @@ def patch_cp437_control_codes(m):
     # this code will patch in now.
     global cp437_control_codes
     for ent in cp437_control_codes:
-        m[ent[0]].unicp = [ ent[1] ]
+        key = bytes([ ent[0] ])
+        m[key].unicp = [ ent[1] ]
         if not ent[1] == None:
-            m[ent[0]].display = chr(ent[1])
+            m[key].display = chr(ent[1])
 
 def patch_shiftjis_control_codes(m):
     # Unicode list forgot to list that backslash was replaced by Yen (which is why
@@ -105,9 +106,10 @@ def patch_shiftjis_control_codes(m):
     # top horizontal line.
     global cp932_control_codes
     for ent in cp932_control_codes:
-        m[ent[0]].unicp = [ ent[1] ]
+        key = bytes([ ent[0] ])
+        m[key].unicp = [ ent[1] ]
         if not ent[1] == None:
-            m[ent[0]].display = chr(ent[1])
+            m[key].display = chr(ent[1])
 
 def patch_shiftjis_replaced_ascii_codes(m):
     # Unicode list forgot to list that backslash was replaced by Yen (which is why
@@ -115,9 +117,10 @@ def patch_shiftjis_replaced_ascii_codes(m):
     # top horizontal line.
     global cp932_replaced_codes
     for ent in cp932_replaced_codes:
-        m[ent[0]].unicp = [ ent[1] ]
+        key = bytes([ ent[0] ])
+        m[key].unicp = [ ent[1] ]
         if not ent[1] == None:
-            m[ent[0]].display = chr(ent[1])
+            m[key].display = chr(ent[1])
 
 def is_newer_than(source,dest):
     if not os.path.exists(source):
@@ -214,7 +217,6 @@ def load_unicode_mapping_file(path):
         hbstr = t11[0]
         unicp = t11[1]
         name = t1[1].strip()
-        key = 0
         bva = [ ]
         for kn in hbstr.split("+"):
             if not kn[0:2] == "0x":
@@ -222,11 +224,9 @@ def load_unicode_mapping_file(path):
             knstr = kn[2:]
             kv = int(knstr,16)
             if kv >= 0x100:
-                key = (key << 16) + kv
                 bva.append(kv >> 8)
                 bva.append(kv & 0xFF)
             else:
-                key = (key << 8) + kv
                 bva.append(kv)
         #
         bv = bytes(bva)
@@ -247,7 +247,7 @@ def load_unicode_mapping_file(path):
                 if not (u < 0x20 or (u >= 0x7F and u <= 0x9F)):
                     ent.display += chr(u)
         #
-        ret[key] = ent
+        ret[ent.byteseq] = ent
         #
     f.close()
     return ret
@@ -366,7 +366,7 @@ map_cp437 = load_unicode_mapping_file("ref/CP437.TXT")
 # even though CP437 has well known symbols in that range.
 map_ascii = { }
 for key in map_cp437:
-    if key < 128:
+    if len(key) == 1 and key[0] < 128:
         map_ascii[key] = map_cp437[key]
 #
 patch_cp437_control_codes(map_cp437)
@@ -445,17 +445,10 @@ for todo in todolist:
     if "patch" in todo:
         p = todo["patch"]
         for patch in p:
-            key = ""
+            key = None
             bseq = None
             if "byteseq" in patch:
-                byt = patch["byteseq"]
-                k = None
-                for b in byt:
-                    if k == None:
-                        k = 0
-                    k = (k << 8) + b
-                bseq = byt
-                key = k
+                bseq = key = patch["byteseq"]
             if not key == None:
                 if not key in map_list:
                     map_list[key] = UnicodeMapEntry()
