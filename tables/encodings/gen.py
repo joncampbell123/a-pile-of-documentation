@@ -87,7 +87,7 @@ cp932_control_codes = [
         [ 0x7F, 0x2421 ]
 ]
 apple_roman_patch = [
-        { "byteseq": bytes([0xF0]), "name": "Apple logo", "display image": "ref/Apple_logo_black.svg.png" }
+        { "byteseq": bytes([0xF0]), "name": "Apple logo", "display image": "ref/Apple_logo_black.svg" }
 ]
 
 def patch_cp437_control_codes(m):
@@ -284,6 +284,8 @@ def hex_prepend_0x(x):
 def b_detect_imagetype(b):
     if b[0:4] == b'\x89PNG':
         return "image/png"
+    if b[0:4] == b'<svg':
+        return "image/svg+xml"
     #
     return None
 
