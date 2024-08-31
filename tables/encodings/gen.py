@@ -393,6 +393,7 @@ todolist = [
     { "source": "ref/CP1257.TXT",             "dest": "gen-cp1257.csv",               "title": "Microsoft Windows Code Page 1257 (Estonian, Latvian, Lithuanian, and more)" },
     { "source": "ref/CP1258.TXT",             "dest": "gen-cp1258.csv",               "title": "Microsoft Windows Code Page 1258 (Vietnamese)" },
     { "source": "ref/MAC-ROMAN.TXT",          "dest": "gen-apple-mac-roman.csv",      "title": "Apple Macintosh MacRoman table", "patch": apple_roman_patch },
+    { "source": "ref/MAC-ARABIC.TXT",         "dest": "gen-apple-mac-arabic.csv",     "title": "Apple Macintosh Arabic table" },
     { "source": "ref/MAC-ARMENIAN.TXT",       "dest": "gen-apple-mac-armenian.csv",   "title": "Apple Macintosh Armenian table" },
     { "source": "ref/MAC-CYRILLIC.TXT",       "dest": "gen-apple-mac-cyrillic.csv",   "title": "Apple Macintosh Cyrillic table" }
 ]
