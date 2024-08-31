@@ -213,7 +213,7 @@ def load_unicode_mapping_file(path):
         # <hex byte(s)> <unicode code point> <name>
         hbstr = t11[0]
         unicp = t11[1]
-        name = t1[1]
+        name = t1[1].strip()
         if not hbstr[0:2] == "0x":
             continue
         hbstr = hbstr[2:]
@@ -406,7 +406,8 @@ todolist = [
     { "source": "ref/MAC-ARABIC.TXT",         "dest": "gen-apple-mac-arabic.csv",                 "title": "Apple Macintosh Arabic table" },
     { "source": "ref/MAC-ARMENIAN.TXT",       "dest": "gen-apple-mac-armenian.csv",               "title": "Apple Macintosh Armenian table" },
     { "source": "ref/MAC-BARENCYR.TXT",       "dest": "gen-apple-mac-barents-cyrillic.csv",       "title": "Apple Macintosh Barents Cyrillic table" },
-    { "source": "ref/MAC-CYRILLIC.TXT",       "dest": "gen-apple-mac-cyrillic.csv",               "title": "Apple Macintosh Cyrillic table" }
+    { "source": "ref/MAC-CYRILLIC.TXT",       "dest": "gen-apple-mac-cyrillic.csv",               "title": "Apple Macintosh Cyrillic table" },
+    { "source": "ref/MAC-CELTIC.TXT",         "dest": "gen-apple-mac-celtic.csv",                 "title": "Apple Macintosh Celtic table" }
 ]
 
 for todo in todolist:
