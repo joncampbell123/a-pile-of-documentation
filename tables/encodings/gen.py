@@ -214,20 +214,22 @@ def load_unicode_mapping_file(path):
         hbstr = t11[0]
         unicp = t11[1]
         name = t1[1].strip()
-        if not hbstr[0:2] == "0x":
-            continue
-        hbstr = hbstr[2:]
-        key = int(hbstr,16)
-        bvl = len(hbstr)
-        if (bvl & 1) > 0:
-            continue
-        bvl = bvl >> 1
-        if bvl == 0:
-            continue
-        bv = bytearray(bvl)
-        for i in range(0,bvl):
-            ss = hbstr[i*2:(i+1)*2]
-            bv[i] = int("0x"+ss,16)
+        key = 0
+        bva = [ ]
+        for kn in hbstr.split("+"):
+            if not kn[0:2] == "0x":
+                continue
+            knstr = kn[2:]
+            kv = int(knstr,16)
+            if kv >= 0x100:
+                key = (key << 16) + kv
+                bva.append(kv >> 8)
+                bva.append(kv & 0xFF)
+            else:
+                key = (key << 8) + kv
+                bva.append(kv)
+        #
+        bv = bytes(bva)
         #
         ent = UnicodeMapEntry()
         ent.unicp = [ ]
@@ -408,7 +410,8 @@ todolist = [
     { "source": "ref/MAC-BARENCYR.TXT",       "dest": "gen-apple-mac-barents-cyrillic.csv",       "title": "Apple Macintosh Barents Cyrillic table" },
     { "source": "ref/MAC-CELTIC.TXT",         "dest": "gen-apple-mac-celtic.csv",                 "title": "Apple Macintosh Celtic table" },
     { "source": "ref/MAC-CENTEURO.TXT",       "dest": "gen-apple-mac-central-european.csv",       "title": "Apple Macintosh Central European table" },
-    { "source": "ref/MAC-CYRILLIC.TXT",       "dest": "gen-apple-mac-cyrillic.csv",               "title": "Apple Macintosh Cyrillic table" }
+    { "source": "ref/MAC-CYRILLIC.TXT",       "dest": "gen-apple-mac-cyrillic.csv",               "title": "Apple Macintosh Cyrillic table" },
+    { "source": "ref/MAC-DEVANAGA.TXT",       "dest": "gen-apple-mac-devanagari.csv",             "title": "Apple Macintosh Devanagari table" }
 ]
 
 for todo in todolist:
