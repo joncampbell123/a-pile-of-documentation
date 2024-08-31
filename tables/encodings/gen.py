@@ -411,7 +411,8 @@ todolist = [
     { "source": "ref/MAC-CELTIC.TXT",         "dest": "gen-apple-mac-celtic.csv",                 "title": "Apple Macintosh Celtic table" },
     { "source": "ref/MAC-CENTEURO.TXT",       "dest": "gen-apple-mac-central-european.csv",       "title": "Apple Macintosh Central European table" },
     { "source": "ref/MAC-CYRILLIC.TXT",       "dest": "gen-apple-mac-cyrillic.csv",               "title": "Apple Macintosh Cyrillic table" },
-    { "source": "ref/MAC-DEVANAGA.TXT",       "dest": "gen-apple-mac-devanagari.csv",             "title": "Apple Macintosh Devanagari table" }
+    { "source": "ref/MAC-DEVANAGA.TXT",       "dest": "gen-apple-mac-devanagari.csv",             "title": "Apple Macintosh Devanagari table" },
+    { "source": "ref/MAC-FARSI.TXT",          "dest": "gen-apple-mac-farsi.csv",                  "title": "Apple Macintosh Farsi table" }
 ]
 
 for todo in todolist:
