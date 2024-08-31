@@ -406,8 +406,9 @@ todolist = [
     { "source": "ref/MAC-ARABIC.TXT",         "dest": "gen-apple-mac-arabic.csv",                 "title": "Apple Macintosh Arabic table" },
     { "source": "ref/MAC-ARMENIAN.TXT",       "dest": "gen-apple-mac-armenian.csv",               "title": "Apple Macintosh Armenian table" },
     { "source": "ref/MAC-BARENCYR.TXT",       "dest": "gen-apple-mac-barents-cyrillic.csv",       "title": "Apple Macintosh Barents Cyrillic table" },
-    { "source": "ref/MAC-CYRILLIC.TXT",       "dest": "gen-apple-mac-cyrillic.csv",               "title": "Apple Macintosh Cyrillic table" },
-    { "source": "ref/MAC-CELTIC.TXT",         "dest": "gen-apple-mac-celtic.csv",                 "title": "Apple Macintosh Celtic table" }
+    { "source": "ref/MAC-CELTIC.TXT",         "dest": "gen-apple-mac-celtic.csv",                 "title": "Apple Macintosh Celtic table" },
+    { "source": "ref/MAC-CENTEURO.TXT",       "dest": "gen-apple-mac-central-european.csv",       "title": "Apple Macintosh Central European table" },
+    { "source": "ref/MAC-CYRILLIC.TXT",       "dest": "gen-apple-mac-cyrillic.csv",               "title": "Apple Macintosh Cyrillic table" }
 ]
 
 for todo in todolist:
