@@ -5,6 +5,7 @@ import re
 import sys
 import csv
 import math
+import base64
 
 # cp437
 cp437_control_codes = [
@@ -86,7 +87,7 @@ cp932_control_codes = [
         [ 0x7F, 0x2421 ]
 ]
 apple_roman_patch = [
-        { "byteseq": bytes([0xF0]), "name": "Apple logo" }
+        { "byteseq": bytes([0xF0]), "name": "Apple logo", "display image": "ref/Apple_logo_black.svg.png" }
 ]
 
 def patch_cp437_control_codes(m):
@@ -128,6 +129,7 @@ def is_newer_than(source,dest):
     return so.st_mtime > do.st_mtime
 
 class UnicodeMapEntry:
+    displayImage = None
     display = None
     byteseq = None
     unicp = None
@@ -279,6 +281,12 @@ def hex_prepend_0x(x):
         r += "0x"+str(h)
     return r
 
+def b_detect_imagetype(b):
+    if b[0:4] == b'\x89PNG':
+        return "image/png"
+    #
+    return None
+
 def write_standard_html_file(html_file,map_table):
     # this code ASSUMES the entries are already in byte value order, as the .TXT files are
     hf = open(html_file,mode="w",encoding="utf-8",newline="\n")
@@ -318,7 +326,14 @@ def write_standard_html_file(html_file,map_table):
         if (count % 2) == 1:
             hf.write(" class=\"oddline\"")
         hf.write(">")
-        hf.write("<td class=\"\">"+my_htmlescape(disp_s)+"</td>")
+        if not ent.displayImage == None:
+            f = open(ent.displayImage,"rb")
+            b = f.read()
+            f.close()
+            imgmime = b_detect_imagetype(b)
+            hf.write("<td class=\"\"><img style=\"width:1em;\" src=\"data:"+imgmime+";base64,"+base64.b64encode(b).decode('ascii')+"\"/></td>")
+        else:
+            hf.write("<td class=\"\">"+my_htmlescape(disp_s)+"</td>")
         hf.write("<td class=\"ral hexdigit\">"+hex_prepend_0x(my_htmlescape(vhex).upper())+"</td>")
         hf.write("<td class=\"ral\">"+my_htmlescape(vdec)+"</td>")
         hf.write("<td class=\"ral hexdigit\">"+hex_prepend_0x(my_htmlescape(unicp_s).upper())+"</td>")
@@ -427,6 +442,8 @@ for todo in todolist:
                     map_list[key].byteseq = bseq
                 if "name" in patch:
                     map_list[key].name = patch["name"]
+                if "display image" in patch:
+                    map_list[key].displayImage = patch["display image"]
     #
     f = open(csv_file,mode="w",encoding="utf-8",newline="")
     csw = csv.writer(f)
