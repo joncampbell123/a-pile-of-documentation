@@ -1,5 +1,8 @@
-Bibliography			Release 61		Last change 16jul00
+Bibliography			Release 62		Last change 2024/09/01
+
+Additions by A Pile of Documentation (c) 2024
 Copyright (c) 1989-1999,2000 Ralf Brown
+
 --------!---BIBLIOGRAPHY---------------------
 Information on Tseng/Ahead/Paradise EGA video modes from a list posted by
 Dan Kegel 3/87.
