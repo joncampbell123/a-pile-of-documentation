@@ -143,3 +143,6 @@ gen-*.csv
 gen-*.bmp
 gen-*.html
 
+images/encodings/*.bmp
+images/encodings/*.png
+
