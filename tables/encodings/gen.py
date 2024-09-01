@@ -322,9 +322,9 @@ def write_standard_html_file(html_file,map_table):
     #
     hf.write("<tr>")
     hf.write("<th>Display</th>")
-    hf.write("<th class=\"ral\">Hex</th>")
+    hf.write("<th>Hex</th>")
     hf.write("<th class=\"ral\">Dec</th>")
-    hf.write("<th class=\"ral\">Unicode</th>")
+    hf.write("<th>Unicode</th>")
     hf.write("<th>Name</th>")
     hf.write("</tr>")
     #
@@ -348,9 +348,9 @@ def write_standard_html_file(html_file,map_table):
             hf.write("<td class=\"\"><img style=\"width:1em;\" src=\"data:"+imgmime+";base64,"+base64.b64encode(b).decode('ascii')+"\"/></td>")
         else:
             hf.write("<td class=\"\">"+my_htmlescape(disp_s)+"</td>")
-        hf.write("<td class=\"ral hexdigit\">"+hex_prepend_0x(my_htmlescape(vhex).upper())+"</td>")
+        hf.write("<td class=\"hexdigit\">"+hex_prepend_0x(my_htmlescape(vhex).upper())+"</td>")
         hf.write("<td class=\"ral\">"+my_htmlescape(vdec)+"</td>")
-        hf.write("<td class=\"ral hexdigit\">"+hex_prepend_0x(my_htmlescape(unicp_s).upper())+"</td>")
+        hf.write("<td class=\"hexdigit\">"+hex_prepend_0x(my_htmlescape(unicp_s).upper())+"</td>")
         hf.write("<td class=\"rightmost\">"+my_htmlescape(ent.name)+"</td>")
         hf.write("</tr>")
         #
