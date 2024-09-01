@@ -79,6 +79,16 @@ class WindowsNEResourceReader:
                     return rtent[resID]
         #
         return None
+    def listResourceTypes(self):
+        if self.resByType == None:
+            return [ ]
+        return self.resByType.keys()
+    def listResources(self,typeId):
+        if self.resByType == None:
+            return [ ]
+        if not typeId in self.resByType:
+            return [ ]
+        return self.resByType[typeId].res.keys()
     def __init__(self,*,path=None):
         if not path == None:
             f = open(path,mode="rb")
