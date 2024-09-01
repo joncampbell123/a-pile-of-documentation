@@ -17,6 +17,78 @@ from apodlib.docImageBMP import *
 from apodlib.windowsNEres import *
 from apodlib.NECPC98FONTROM import *
 
+#-------------------------------------------------
+import zlib
+import struct
+
+def docWritePNGChunk(f,chunkID,chunkData=b""):
+    # <LENGTH> <CHUNK TYPE> <DATA> <CRC>
+    f.write(struct.pack(">L",len(chunkData)))
+    if not len(chunkID) == 4:
+        raise Exception("PNG chunkID not 4 chars")
+    #
+    f.write(chunkID)
+    #
+    if len(chunkData) > 0:
+        f.write(chunkData)
+    #
+    f.write(struct.pack(">L",zlib.crc32(chunkID + chunkData)))
+
+def docWritePNG(path,image):
+    f = open(path,"wb")
+    # PNG signature
+    f.write(bytes([0x89,0x50,0x4E,0x47,0x0D,0x0A,0x1A,0x0A]))
+    # IHDR
+    #  L  WIDTH
+    #  L  HEIGHT
+    #  B  BIT DEPTH
+    #  B  COLOR TYPE
+    #  B  COMPRESSION METHOD
+    #  B  FILTER METHOD
+    #  B  INTERLACE METHOD
+    iWidth = image.width
+    iHeight = image.height
+    iBitDepth = image.bits_per_pixel
+    if image.bits_per_pixel == 1 or image.bits_per_pixel == 4 or image.bits_per_pixel == 8:
+        iColorType = 3 # indexed color
+    elif image.bits_per_pixel == 24:
+        iColorType = 2 # truecolor
+    elif image.bits_per_pixel == 32:
+        iColorType = 6 # truecolor with alpha
+    else:
+        raise Exception("Unknown image format")
+    iCompressMethod = 0 # zlib
+    iFilterMethod = 0 # none/adaptive
+    iInterlace = 0 # no interlacing
+    docWritePNGChunk(f,b"IHDR",struct.pack(">LLBBBBB",iWidth,iHeight,iBitDepth,iColorType,iCompressMethod,iFilterMethod,iInterlace));
+    # PLTE
+    if not image.palette == None:
+        palsz = len(image.palette)
+        if palsz > image.palette_used:
+            palsz = image.palette_used
+        if palsz > 0:
+            pal = bytearray(palsz*3)
+            for pi in range(0,palsz):
+                pal[(pi*3)+0] = image.palette[pi].R
+                pal[(pi*3)+1] = image.palette[pi].G
+                pal[(pi*3)+2] = image.palette[pi].B
+            docWritePNGChunk(f,b"PLTE",pal)
+    # IDAT
+    zz = zlib.compressobj(level=9,wbits=15)
+    bypp = ((image.width*image.bits_per_pixel) + 7) >> 3
+    idat = b""
+    for y in range(0,image.height):
+        row = bytes([0]) + image.rows[y][0:bypp] # filter byte + image data
+        idat += zz.compress(row)
+    idat += zz.flush()
+    docWritePNGChunk(f,b"IDAT",idat)
+    # IEND
+    docWritePNGChunk(f,b"IEND")
+    # done
+    f.close()
+
+#-------------------------------------------------
+
 def is_newer_than(source,dest):
     if not os.path.exists(source):
         return False
@@ -86,7 +158,11 @@ def drawchargrid(*,imgt8=None,tcWidth=None,tcHeight=None,colDigits=2,imgcp,charC
 #-----------------------------------------------------
 def do_dosbox_fontromdump(source,dest,w=8,h=16):
     if is_newer_than(source=source,dest=dest):
-        docWriteBMP(dest,drawchargrid(imgcp=docLoadBMP(source),charCellWidth=w,charCellHeight=h))
+        image = drawchargrid(imgcp=docLoadBMP(source),charCellWidth=w,charCellHeight=h)
+        docWriteBMP(dest,image)
+        png = re.sub(r'\.bmp',".png",dest)
+        if not png == dest:
+            docWritePNG(png,image)
 
 do_dosbox_fontromdump(source="ref/cp437vga8x16.bmp",dest="gen-cp437.bmp")
 do_dosbox_fontromdump(source="ref/cp850vga8x16.bmp",dest="gen-cp850.bmp")
@@ -129,7 +205,11 @@ def loadAndRenderWindowsFNT(*,path=None,raw=None):
 # Windows FNT font files
 def do_win_ne_fnt_res(source,dest,resTypeID,resID):
     if is_newer_than(source=source,dest=dest):
-        docWriteBMP(dest,loadAndRenderWindowsFNT(raw=WindowsNEResourceReader(path=source).getResource(resTypeID=resTypeID,resID=resID).data))
+        image = loadAndRenderWindowsFNT(raw=WindowsNEResourceReader(path=source).getResource(resTypeID=resTypeID,resID=resID).data)
+        docWriteBMP(dest,image)
+        png = re.sub(r'\.bmp',".png",dest)
+        if not png == dest:
+            docWritePNG(png,image)
 
 do_win_ne_fnt_res(source="ref/windows14_coura.fon",         dest="gen-windows14-coura.bmp",                    resTypeID=8,resID=0x06)
 do_win_ne_fnt_res(source="ref/windows14_courb.fon",         dest="gen-windows14-courb.bmp",                    resTypeID=8,resID=0x0e)
@@ -179,10 +259,14 @@ def PC98dbcsCellLambda(cc,w,h):
 img_pc98sbcs = docImage(8,16*256,1,initBMP=PC98FONT.font8x16(),initBMPStride=1)
 
 if is_newer_than(source="ref/pc98font.rom",dest="gen-pc98-tvram-0000.bmp"):
-    docWriteBMP("gen-pc98-tvram-0000.bmp",drawchargrid(colDigits=4,imgcp=img_pc98sbcs,textMapFunc=lambda cc: [0,cc*16],gridMapFunc=lambda cc: [0,cc*16]))
+    image = drawchargrid(colDigits=4,imgcp=img_pc98sbcs,textMapFunc=lambda cc: [0,cc*16],gridMapFunc=lambda cc: [0,cc*16])
+    docWriteBMP("gen-pc98-tvram-0000.bmp",image)
+    docWritePNG("gen-pc98-tvram-0000.png",image)
 
 if is_newer_than(source="ref/pc98font.rom",dest="gen-pc98-sjis-0000.bmp"):
-    docWriteBMP("gen-pc98-sjis-0000.bmp",drawchargrid(colDigits=4,imgcp=img_pc98sbcs,textMapFunc=lambda cc: [0,cc*16],gridMapFunc=lambda cc: [0,cc*16],charCellSizeLF=lambda c,w,h: PC98NotSJISCellSize(c<<8,w,h)))
+    image = drawchargrid(colDigits=4,imgcp=img_pc98sbcs,textMapFunc=lambda cc: [0,cc*16],gridMapFunc=lambda cc: [0,cc*16],charCellSizeLF=lambda c,w,h: PC98NotSJISCellSize(c<<8,w,h))
+    docWriteBMP("gen-pc98-sjis-0000.bmp",image)
+    docWritePNG("gen-pc98-sjis-0000.png",image)
 
 #-----------------------------------------------------
 # PC-98 dbcs sjis
@@ -197,6 +281,7 @@ for hib in range(0x80,0xF0,0x02):
         sc = '0' + sc
     #
     bmp_name = "gen-pc98-sjis-"+sc+".bmp"
+    png_name = "gen-pc98-sjis-"+sc+".png"
     if not is_newer_than(source="ref/pc98font.rom",dest=bmp_name):
         continue
     #
@@ -216,7 +301,9 @@ for hib in range(0x80,0xF0,0x02):
         #
         imgs[subrow] = drawchargrid(imgt8=img_pc98sbcs,tcWidth=8,textMapFunc=lambda cc: [0,cc*16],colDigits=4,imgcp=img_pc98dbcs,charRows=16,charCellWidth=16,charCellHeight=16,code_base=code_base,charCellSizeLF=PC98SJISCellSize)
     #
-    docWriteBMP(bmp_name,docImageStackCombine(imgs))
+    imgcomb = docImageStackCombine(imgs)
+    docWriteBMP(bmp_name,imgcomb)
+    docWritePNG(png_name,imgcomb)
     #
     imgs = None
 
@@ -230,6 +317,7 @@ for hib in range(0x20,0x80,0x04):
         sc = '0' + sc
     #
     bmp_name = "gen-pc98-tvram-"+sc+".bmp"
+    png_name = "gen-pc98-tvram-"+sc+".png"
     if not is_newer_than(source="ref/pc98font.rom",dest=bmp_name):
         continue
     #
@@ -248,7 +336,9 @@ for hib in range(0x20,0x80,0x04):
         #
         imgs[subrow] = drawchargrid(imgt8=img_pc98sbcs,tcWidth=8,textMapFunc=lambda cc: [0,cc*16],colDigits=4,imgcp=img_pc98dbcs,charRows=8,charCellWidth=16,charCellHeight=16,code_base=code_base,charCellSizeLF=PC98dbcsCellLambda)
     #
-    docWriteBMP(bmp_name,docImageStackCombine(imgs))
+    imgcomb = docImageStackCombine(imgs)
+    docWriteBMP(bmp_name,imgcomb)
+    docWritePNG(png_name,imgcomb)
     #
     imgs = None
 
