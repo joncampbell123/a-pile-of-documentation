@@ -18,7 +18,7 @@ If you notice any mistakes or omissions, please let me know!  It is only with
 YOUR help that the list can continue to grow at the current rate.  Please send
 all changes to me rather than distributing a modified version of the list.
 
-Please read the file INTERRUP.1ST before asking me any questions.  You may find
+Please read the file INTERRUPT.1ST before asking me any questions.  You may find
 that they have already been addressed.
 
 	 Ralf Brown
@@ -33,7 +33,7 @@ bad return paths.  If you don't get a response from me within a reasonable
 period of time, send it again with a better return path (many mailers are
 improperly configured and do not produce a valid From: address).
 --------!---Note-----------------------------
-See INTERRUP.1ST for the key to system abbreviations and a list of the
+See INTERRUPT.1ST for the key to system abbreviations and a list of the
 trademarks mentioned here.
 --------!---DISCLAIMER-----------------------
 DISCLAIMER:  THIS MATERIAL IS PROVIDED "AS IS".	 I verify the information
