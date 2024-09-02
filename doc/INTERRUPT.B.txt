@@ -1032,7 +1032,7 @@ INT 10 - CARBON COPY PLUS v5.0 - GET LAST PHONE NUMBER DIALED
 	AX = FF02h
 Return: ES:DI -> ASCIZ phone number
 SeeAlso: AX=FF00h,AX=FF01h
---------H,PC98-11---------------------------------
+--------J-11---------------------------------
 INT 11 C - IRQ 9 EXTERNAL INTERRUPT (NEC PC-98)
 --------C-11---------------------------------
 INT 11 - CPU-generated (80486+) - ALIGNMENT CHECK
@@ -1415,7 +1415,7 @@ INT 11 - BACK&FORTH (before v1.62) API
 		Return: AX = ???
 SeeAlso: INT 12/AX=FFFEh
 Index:	installation check;BACK&FORTH
---------H,PC98-12---------------------------------
+--------J-12---------------------------------
 INT 12 C - IRQ 10 EXTERNAL INTERRUPT (NEC PC-98)
 --------B-12---------------------------------
 INT 12 - BIOS - GET MEMORY SIZE
@@ -1579,7 +1579,7 @@ Offset	Size	Description	(Table 00233)
  22h	DWORD	time task was suspended/exited
  26h	WORD	task handle
 SeeAlso: #00231,#00232
---------H,PC98-13---------------------------------
+--------J-13---------------------------------
 INT 13 C - IRQ 11 EXTERNAL INTERRUPT (NEC PC-98)
 --------B-1300-------------------------------
 INT 13 - DISK - RESET DISK SYSTEM
@@ -4951,7 +4951,7 @@ INT 13 - UNIQUE UX Turbo Utility - SET TURBO MODE
 Return: nothing
 SeeAlso: INT 15/AH=DFh
 Index:	installation check;UNIQUE UX Turbo Utility
---------H,PC98-14---------------------------------
+--------J-14---------------------------------
 INT 14 C - IRQ 12 EXTERNAL INTERRUPT (NEC PC-98)
 --------S-14---------------------------------
 INT 14 - SERIAL - Digiboard DigiCHANNEL PC/X* Extender INT 14 (XAPCM232.SYS)
@@ -9156,7 +9156,7 @@ Offset	Size	Description	(Table 00404)
  08h  2 BYTEs	00h,00h
  0Ah	DWORD	-> direct address mapping table
  0Eh	DWORD	previous INT 14 vector
---------H,PC98-15---------------------------------
+--------J-15---------------------------------
 INT 15 C - IRQ 13 EXTERNAL INTERRUPT (NEC PC-98)
 --------t-15---------------------------------
 INT 15 - Microsoft TSR Specification

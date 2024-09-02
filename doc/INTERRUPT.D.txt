@@ -274,7 +274,7 @@ Return: CF clear if hardware already initialised
 		...
 		bit 11: EC00-EFFF
 	CF set if hardware not initialised yet
---------H,PC98-16---------------------------------
+--------J-16---------------------------------
 INT 16 C - IRQ 14 EXTERNAL INTERRUPT (NEC PC-98)
 --------B-1600-------------------------------
 INT 16 - KEYBOARD - GET KEYSTROKE
@@ -3730,7 +3730,7 @@ SeeAlso: AX=FFFFh,INT 33/AX=0001h
 INT 16 U - PC Tools v5.1-8.0 DESKTOP - HIDE MOUSE CURSOR
 	AX = FFFFh
 SeeAlso: AX=FFFEh,INT 33/AX=0002h
---------H,PC98-17---------------------------------
+--------J-17---------------------------------
 INT 17 C - IRQ 15 EXTERNAL INTERRUPT (NEC PC-98)
 --------P-17----DX0ABC-----------------------
 INT 17 - PRINTER - LPTx v5.x INSTALLATION CHECK
