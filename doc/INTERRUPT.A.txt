@@ -534,7 +534,7 @@ Program: PSPS is shareware PostScript PrintScreen utility by A.N.D.
 	  Technologies
 SeeAlso: AX=454Ah,AX=4E57h,INT 17/AH=62h
 --------D,PC98-05---------------------------------
-INT 06 D - NEC PC-98 COPY KEY INTERRUPT
+INT 05 D - NEC PC-98 COPY KEY INTERRUPT
 Desc:   this is called when the user presses the COPY key on the keyboard.
           this is the PC-98 equivalent to Print Screen on IBM keyboards.
 --------C-06---------------------------------
