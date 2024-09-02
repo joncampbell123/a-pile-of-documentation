@@ -658,55 +658,186 @@ SeeAlso: INT 16/AH=00h,INT 16/AH=10h,INT 1B,INT 2F/AX=A901h,INT 4A/AH=00h"TI"
 SeeAlso: INT 51"DESQview",INT 59"DoubleDOS",INT 79"GO32"
 
 (Table 00006)
-Values for keyboard make/break (scan) code:
- 01h	Esc		 31h	N
- 02h	1 !		 32h	M
- 03h	2 @		 33h	, <		 63h	F16
- 04h	3 #		 34h	. >		 64h	F17
- 05h	4 $		 35h	/ ?		 65h	F18
- 06h	5 %		 36h	Right Shift	 66h	F19
- 07h	6 ^		 37h	Grey*		 67h	F20
- 08h	7 &		 38h	Alt		 68h	F21 (Fn) [*]
- 09h	8 *		 39h	SpaceBar	 69h	F22
- 0Ah	9 (		 3Ah	CapsLock	 6Ah	F23
- 0Bh	0 )		 3Bh	F1		 6Bh	F24
- 0Ch	- _		 3Ch	F2		 6Ch	--
- 0Dh	= +		 3Dh	F3		 6Dh	EraseEOF
- 0Eh	Backspace	 3Eh	F4
- 0Fh	Tab		 3Fh	F5		 6Fh	Copy/Play
- 10h	Q		 40h	F6
- 11h	W		 41h	F7
- 12h	E		 42h	F8		 72h	CrSel
- 13h	R		 43h	F9		 73h	<delta> [*]
- 14h	T		 44h	F10		 74h	ExSel
- 15h	Y		 45h	NumLock		 75h	--
- 16h	U		 46h	ScrollLock	 76h	Clear
- 17h	I		 47h	Home		 77h	[Note2] Joyst But1
- 18h	O		 48h	UpArrow		 78h	[Note2] Joyst But2
- 19h	P		 49h	PgUp		 79h	[Note2] Joyst Right
- 1Ah	[ {		 4Ah	Grey-		 7Ah	[Note2] Joyst Left
- 1Bh	] }		 4Bh	LeftArrow	 7Bh	[Note2] Joyst Up
- 1Ch	Enter		 4Ch	Keypad 5	 7Ch	[Note2] Joyst Down
- 1Dh	Ctrl		 4Dh	RightArrow	 7Dh	[Note2] right mouse
- 1Eh	A		 4Eh	Grey+		 7Eh	[Note2] left mouse
- 1Fh	S		 4Fh	End
- 20h	D		 50h	DownArrow
- 21h	F		 51h	PgDn
- 22h	G		 52h	Ins
- 23h	H		 53h	Del
- 24h	J		 54h	SysReq		---non-key codes---
- 25h	K		 55h	[Note1] F11	 00h	kbd buffer full
- 26h	L		 56h	left \| (102-key)
- 27h	; :		 57h	F11		 AAh	self-test complete
- 28h	' "		 58h	F12		 E0h	prefix code
- 29h	` ~		 59h	[Note1] F15	 E1h	prefix code
- 2Ah	Left Shift	 5Ah	PA1		 EEh	ECHO
- 2Bh	\ |		 5Bh	F13 (LWin)	 F0h	prefix code (key break)
- 2Ch	Z		 5Ch	F14 (RWin)	 FAh	ACK
- 2Dh	X		 5Dh	F15 (Menu)	 FCh	diag failure (MF-kbd)
- 2Eh	C					 FDh	diag failure (AT-kbd)
- 2Fh	V					 FEh	RESEND
- 30h	B					 FFh	kbd error/buffer full
++-(Table 00006-us-scset-1)
+The break code is the make code OR 80h, except non-key codes and prefixes. For
+example, ESC is make 01h break 81h. Scan codes with a E0h/E1h prefix are
+listed separately from the base code.  Values for keyboard make scan code, set 1:
+@table(format=(scancode=byte[],description=string)){
+ 00h				kbd buffer full [non-key code]
+ 01h				Esc
+ 02h				1 !
+ 03h				2 @
+ 04h				3 #
+ 05h				4 $
+ 06h				5 %
+ 07h				6 ^
+ 08h				7 &
+ 09h				8 *
+ 0Ah				9 (
+ 0Bh				0 )
+ 0Ch				- _
+ 0Dh				= +
+ 0Eh				Backspace
+ 0Fh				Tab
+ 10h				Q
+ 11h				W
+ 12h				E
+ 13h				R
+ 14h				T
+ 15h				Y
+ 16h				U
+ 17h				I
+ 18h				O
+ 19h				P
+ 1Ah				[ {
+ 1Bh				] }
+ 1Ch				Enter
+ 1Dh				Ctrl / Left ctrl
+ 1Eh				A
+ 1Fh				S
+ 20h				D
+ 21h				F
+ 22h				G
+ 23h				H
+ 24h				J
+ 25h				K
+ 26h				L
+ 27h				; :
+ 28h				' "
+ 29h				` ~
+ 2Ah				Left Shift
+ 2Bh				\ |
+ 2Ch				Z
+ 2Dh				X
+ 2Eh				C
+ 2Fh				V
+ 30h				B
+ 31h				N
+ 32h				M
+ 33h				, <
+ 34h				. >
+ 35h				/ ?
+ 36h				Right Shift
+ 37h				Keypad *
+ 38h				Alt / Left Alt
+ 39h				Spacebar
+ 3Ah				Caps Lock
+ 3Bh				F1
+ 3Ch				F2
+ 3Dh				F3
+ 3Eh				F4
+ 3Fh				F5
+ 40h				F6
+ 41h				F7
+ 42h				F8
+ 43h				F9
+ 44h				F10
+ 45h				Num Lock
+ 46h				Scroll Lock
+ 47h				Keypad 7 / Home
+ 48h				Keypad 8 / Up Arrow
+ 49h				Keypad 9 / Page Up
+ 4Ah				Keypad -
+ 4Bh				Keypad 4 / Left Arrow
+ 4Ch				Keypad 5
+ 4Dh				Keypad 6 / Right Arrow
+ 4Eh				Keypad +
+ 4Fh				Keypad 1 / End
+ 50h				Keypad 2 / Down Arrow
+ 51h				Keypad 3 / Page Down
+ 52h				Keypad 0 / Insert
+ 53h				Keypad . / Delete
+ 54h				PrtSc/SysReq [IBM PC/XT 83-keyboard]
+ 55h				[Note1] F11
+ 56h				left \| (102-key)
+ 57h				F11
+ 58h				F12
+ 59h				[Note1] F15
+ 5Ah				PA1
+ 5Bh				F13
+ 5Ch				F14
+ 5Dh				F15
+ 63h				F16
+ 64h				F17
+ 65h				F18
+ 66h				F19
+ 67h				F20
+ 68h				F21 (Fn) [*]
+ 69h				F22
+ 6Ah				F23
+ 6Bh				F24
+
+ 6Dh				EraseEOF
+ 6Fh				Copy/Play
+
+ 72h				CrSel
+ 73h				<delta> [*]
+ 74h				ExSel
+
+ 76h				Clear
+ 77h				[Note2] Joyst But1
+ 78h				[Note2] Joyst But2
+ 79h				[Note2] Joyst Right
+ 7Ah				[Note2] Joyst Left
+ 7Bh				[Note2] Joyst Up
+ 7Ch				[Note2] Joyst Down
+ 7Dh				[Note2] right mouse
+ 7Eh				[Note2] left mouse
+
+ AAh				self-test complete [non-key code]
+ E0h				prefix code (1 byte follows) [part of a code]
+ E1h				prefix code (2 bytes follow) [part of a code]
+ EEh				ECHO [non-key code]
+ F0h				prefix code (key break, scan code set 2) [non-key code]
+ FAh				ACK [non-key code]
+ FCh				diag failure (MF-kbd) [non-key code]
+ FDh				diag failure (AT-kbd) [non-key code]
+ FEh				RESEND [non-key code]
+ FFh				kbd error/buffer full [non-key code]
+
+ E0h 10h			Previous track [Windows multimedia keyboard]
+ E0h 19h			Next track [Windows multimedia keyboard]
+ E0h 1Ch			Keypad Enter
+ E0h 1Dh			Right Ctrl
+ E0h 20h			Mute [Windows multimedia keyboard]
+ E0h 21h			Calculator [Windows multimedia keyboard]
+ E0h 22h			Play/pause [Windows multimedia keyboard]
+ E0h 24h			Stop [Windows multimedia keyboard]
+ E0h 2Ah E0h 37h		Print Screen / SysRq (break code is E0h B7h E0h AAh)
+ E0h 2Eh			Volume Down [Windows multimedia keyboard]
+ E0h 30h			Volume Up [Windows multimedia keyboard]
+ E0h 32h			WWW Home [Windows multimedia keyboard]
+ E0h 35h			Keypad /
+ E0h 38h			Right Alt
+ E0h 47h			Home
+ E0h 48h			Up Arrow
+ E0h 49h			Page Up
+ E0h 4Bh			Left Arrow
+ E0h 4Dh			Right Arrow
+ E0h 4Fh			End
+ E0h 50h			Down Arrow
+ E0h 51h			Page Down
+ E0h 52h			Insert
+ E0h 53h			Delete
+ E0h 5Bh			Left GUI aka Windows
+ E0h 5Ch			Right GUI aka Windows
+ E0h 5Dh			Application aka Menu
+ E0h 5Eh			Power button (ACPI)
+ E0h 5Fh			Sleep button (ACPI)
+ E0h 63h			Wake button (ACPI)
+ E0h 65h			WWW Search [Windows multimedia keyboard]
+ E0h 66h			WWW Favorites [Windows multimedia keyboard]
+ E0h 67h			WWW Refresh [Windows multimedia keyboard]
+ E0h 68h			WWW Stop [Windows multimedia keyboard]
+ E0h 69h			WWW Forward [Windows multimedia keyboard]
+ E0h 6Ah			WWW Back [Windows multimedia keyboard]
+ E0h 6Bh			My Computer [Windows multimedia keyboard]
+ E0h 6Ch			E-mail [Windows multimedia keyboard]
+ E0h 6Dh			Media select [Windows multimedia keyboard]
+
+ E1h 1Dh 45h E1h 9Dh C5h	Pause (no codes sent on key release)
+
+}table
 Notes:	scan codes 56h-E1h are only available on the extended (101/102-key)
 	  keyboard and Host Connected (122-key) keyboard; scan codes 5Bh-5Dh
 	  are only available on the 122-key keyboard and the Microsoft Natural
