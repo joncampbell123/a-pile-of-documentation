@@ -937,6 +937,16 @@ Note:	newer Roland cards and MIDI interfaces by other manufacturers use
 	  a jumper-selectable IRQ, but software and hardware generally defaults
 	  to IRQ2
 SeeAlso: INT 52"DESQview",INT 5A"DoubleDOS",INT 71,INT 7A"GO32"
+--------H,PC98-0A---------------------------------
+INT 0A - IRQ2 - CRT VSYNC INTERRUPT
+Desc:   vertical retrace interrupt, if enabled by writing port 64h. interrupt
+          will only occur once. if vsync interrupt every frame is desired, the
+          interrupt handler must write port 64h again.
+--------H,PC98-0A---------------------------------
+INT 0A - IRQ2 - V50 BUILT-IN TIMER TCU CHANNEL 1 [PC-98LT/HA]
+Desc:   External interrupt for V50 built-in timer (TCU) channel 1.
+          Interrupt period is 10Hz for PC-98LT, 40Hz for PC-98HA.
+          Handled by BIOS. Used for blinking cursor and power management, etc.
 --------C-0A---------------------------------
 INT 0A CP - CPU-generated (80286+) - INVALID TASK STATE SEGMENT
 Desc:	automatically called during a task switch if the new TSS specified by
