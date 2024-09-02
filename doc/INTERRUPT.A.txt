@@ -152,6 +152,30 @@ Notes:	return address points to start of interrupted instruction on 80286+
 		DMA timer time-out interrupt: PS50+
 		Low battery: HP 95LX
 		Module pulled: HP 95LX
+        NEC-PC98: NMI occurs at the falling edge of the IOCHK0 signal on the
+          expansion bus. It is used to detect parity errors in the additional RAM
+          installed in the expansion slot. NMI occurrence can be masked with I/O 0050h,
+          0052h. I/O 0033h bit 1 can be used to check whether an extended RAM parity
+          error has occurred. If a parity error is detected in the built-in
+          RAM (including RAM in the memory slot), an NMI occurs.
+        PC-98 98NOTE with resume support and no SMM: When resume is ON, an NMI
+          occurs during a specific I/O write. This is used to save output data to I/O.
+          When a RAM parity error occurs, a parity error notification is also displayed.
+          When resume is OFF, only a parity error notification is displayed.
+        PC-9801LV･N: An NMI occurs when an extended RAM parity error or a low
+          battery occurs.
+        PC-98LT: An NMI occurs when the power switch is turned off.
+          When the NMI handler confirms that the power switch is turned off at I/O
+          8810h, it sets 0000:04F8h bit 7=1. It then issues INT 1Fh - Function 8Ch.
+          If it returns with CF=0, set 0000:04F8h bit 6=1. The system interrupt (INT 0Ah)
+          handler checks this bit and performs
+        PC-98HA: When the power switch is pressed, an NMI occurs. When the NMI
+          handler confirms with I/O 8810h that the power switch is pressed, it sets
+          0000:04F8h bit 7=1 and returns. power-off processing.
+        PC-H98: In addition to when an internal RAM parity error is detected
+          and the IOCHK0 signal of the expansion bus falls, an NMI also occurs when a
+          specific state times out, a bus timeout occurs, or when the power switch is
+          pressed.
 --------m-02----SI0714-----------------------
 INT 02 U - STB RAPIDMAP.SYS - ???
 	SI = 0714h
@@ -509,6 +533,10 @@ INT 05 U - PSPS v2.01 - UNINSTALL
 Program: PSPS is shareware PostScript PrintScreen utility by A.N.D.
 	  Technologies
 SeeAlso: AX=454Ah,AX=4E57h,INT 17/AH=62h
+--------D,PC98-05---------------------------------
+INT 06 D - NEC PC-98 COPY KEY INTERRUPT
+Desc:   this is called when the user presses the COPY key on the keyboard.
+          this is the PC-98 equivalent to Print Screen on IBM keyboards.
 --------C-06---------------------------------
 INT 06 C - CPU-generated (80186+) - INVALID OPCODE
 Desc:	this interrupt is generated when the CPU attempts to execute an

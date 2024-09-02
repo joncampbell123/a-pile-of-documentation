@@ -489,6 +489,9 @@ version 1.0 (10/6/92).	Added by Ralf Brown, 10/31/93.
 Chicago VxD identifiers from "Undocumented Corner", _Dr._Dobb's_Journal_
 December 1993.	Added by Ralf Brown, 11/19/93.
 
+"Undocumented 9801, 9821 Volume 1" by Terumasa KODAKA, Takeshi KONO, 1994.
+Added by Jonathan Campbell 09/01/2024.
+
 SBSIM (SoundBlaster Simplified Interface Module) API extracted from file
 SBSIMDMO.C, distributed along with the other files for _SoundBlaster:_The_
 _Official_Book_.  Added by Ralf Brown, 1/22/94.
