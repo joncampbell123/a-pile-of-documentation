@@ -838,7 +838,11 @@ listed separately from the base code.  Values for keyboard make scan code, set 1
  E1h 1Dh 45h E1h 9Dh C5h	Pause (no codes sent on key release)
 
 }table
-Notes:	scan codes 56h-E1h are only available on the extended (101/102-key)
+Notes:	scan code set 1 is the PC/XT scan code set
+	at and ps/2 keyboards use scan code set 2 but the 8042 translates them
+	  to scan code set 1 by default, this translation can be disabled if
+	  desired.
+	scan codes 56h-E1h are only available on the extended (101/102-key)
 	  keyboard and Host Connected (122-key) keyboard; scan codes 5Bh-5Dh
 	  are only available on the 122-key keyboard and the Microsoft Natural
 	  Keyboard; scan codes 5Eh-76h are only available on the 122-key
