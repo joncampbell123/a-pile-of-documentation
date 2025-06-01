@@ -296,9 +296,9 @@ def parsemarkdown(lines):
 def dumpMD(md,level=0):
     indent=' '*level*2
     if isinstance(md,str):
-        print("-------STRING----------------------------------")
+        print(indent+"-------STRING----------------------------------")
         print(md)
-        print("-------END STRING------------------------------")
+        print(indent+"-------END STRING------------------------------")
     else:
         print(indent+str(md))
         for sm in md.sub:
