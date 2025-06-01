@@ -364,6 +364,8 @@ def parsemarkdown(lines):
             continue
 
         # unordered list
+        # WARNING: Some Markdown interpreters consider anything part of the list if it is indented the same with spaces.
+        #          We don't do that, we require the 4 spaces or tab that the Markdown Guide says it needs to be.
         if len(cline) > 1 and (cline[0] == '-' or cline[0] == '+' or cline[0] == '*') and cline[1] == ' ':
             match = cline[0]
             #
