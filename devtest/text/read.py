@@ -9,9 +9,13 @@ inFile = sys.argv[1]
 def rawtextsplitlines(blob):
     return re.split(b'\n\r|\r\n|\r|\n',blob)
 
-f = open(inFile,"rb")
-rawtxt = f.read()
-f.close()
+def rawtextloadfile(path):
+    f = open(inFile,"rb")
+    raw = f.read()
+    f.close()
+    return raw
+
+rawtxt = rawtextloadfile(inFile)
 
 print("-----RAW-----")
 for line in rawtextsplitlines(rawtxt):
