@@ -344,19 +344,16 @@ def parsemarkdown(lines):
             continue
 
         # block quote
-        if len(cline) > 0 and cline[0] == '>':
-            cline = cline[1:]
-            if len(cline) > 0 and cline[0] == ' ':
-              cline = cline[1:]
-            copylines = [ cline ]
+        if len(cline) > 1 and cline[0:2] == '> ':
+            copylines = [ cline[2:] ]
             while i < len(lines):
                 cline = lines[i]
-                if len(cline) > 0 and cline[0] == '>':
-                  cline = cline[1:]
-                  if len(cline) > 0 and cline[0] == ' ':
-                    cline = cline[1:]
-                  i += 1
-                  copylines.append(cline)
+                if len(cline) > 1 and cline[0:2] == '> ':
+                    copylines.append(cline[2:])
+                    i += 1
+                elif cline == '>' or cline[0:2] == '>>':
+                    copylines.append(cline[1:])
+                    i += 1
                 else:
                     break
             #
