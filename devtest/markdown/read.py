@@ -46,7 +46,7 @@ while i < len(lines):
         ce.level = 2
         ce.sub.append(cline)
         mdRoot.sub.append(ce)
-        next
+        continue
 
     # heading level 1
     #================
@@ -57,7 +57,7 @@ while i < len(lines):
         ce.level = 1
         ce.sub.append(cline)
         mdRoot.sub.append(ce)
-        next
+        continue
 
     # heading
     x = re.match(r'^(#+)',cline)
@@ -69,7 +69,26 @@ while i < len(lines):
         ce.level = level
         ce.sub.append(cline[span[1]:].strip())
         mdRoot.sub.append(ce)
-        next
+        continue
+
+    # code block (remember, this is why the regex above to convert four spaces into tabs)
+    if cline[0] == "\t":
+        ce = MarkdownElement()
+        ce.elemType = "codeblock"
+        code = re.sub(r'\t','    ',cline[1:]) # convert back to spaces after stripping tab
+        while i < len(lines):
+            cline = lines[i]
+            if cline == "":
+                code += "\n"
+                i += 1
+            elif cline[0] == "\t":
+                code += "\n" + re.sub(r'\t','    ',cline[1:])
+                i += 1
+            else:
+                break
+        ce.sub.append(code)
+        mdRoot.sub.append(ce)
+        continue
 
     # text in a paragraph can continue onto the next line
     while True:

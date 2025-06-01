@@ -22,6 +22,11 @@ def rawtexttoutf8gen(g):
         yield line.decode('utf-8')
     return None
 
+def spacestotabsgen(lit,tabs):
+    rex = r' ' * tabs;
+    for line in lit:
+        yield re.sub(rex,'\t',line)
+
 # load file
 
 def rawtextloadfile(path):
