@@ -39,7 +39,7 @@ while i < len(lines):
 
     # heading level 2
     #----------------
-    if len(cline) > 0 and re.match(r'^-+$',nline):
+    if len(cline) > 0 and re.match(r'^[^\-\*\#]',cline) and re.match(r'^-+$',nline):
         i += 1
         ce = MarkdownElement()
         ce.elemType = "heading"
@@ -50,12 +50,19 @@ while i < len(lines):
 
     # heading level 1
     #================
-    if len(cline) > 0 and re.match(r'^=+$',nline):
+    if len(cline) > 0 and re.match(r'^[^\-\*\#]',cline) and re.match(r'^=+$',nline):
         i += 1
         ce = MarkdownElement()
         ce.elemType = "heading"
         ce.level = 1
         ce.sub.append(cline)
+        mdRoot.sub.append(ce)
+        continue
+
+    # horizontal rule
+    if re.match(r'^[\*\-\_]{3,}$',cline):
+        ce = MarkdownElement()
+        ce.elemType = "hr"
         mdRoot.sub.append(ce)
         continue
 
