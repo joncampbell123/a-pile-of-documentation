@@ -185,7 +185,7 @@ def parsemarkdown(lines):
             ce = MarkdownElement()
             ce.elemType = "heading"
             ce.level = 2
-            ce.sub.append(cline)
+            ce.sub = markdownsubst(cline)
             mdRoot.sub.append(ce)
             continue
 
@@ -196,7 +196,7 @@ def parsemarkdown(lines):
             ce = MarkdownElement()
             ce.elemType = "heading"
             ce.level = 1
-            ce.sub.append(cline)
+            ce.sub = markdownsubst(cline)
             mdRoot.sub.append(ce)
             continue
 
@@ -215,7 +215,7 @@ def parsemarkdown(lines):
             ce = MarkdownElement()
             ce.elemType = "heading"
             ce.level = level
-            ce.sub.append(cline[span[1]:].strip())
+            ce.sub = markdownsubst(cline[span[1]:].strip())
             mdRoot.sub.append(ce)
             continue
 
