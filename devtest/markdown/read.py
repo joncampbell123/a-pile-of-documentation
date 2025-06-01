@@ -46,7 +46,7 @@ def findunescaped(line,what,start):
             break
     return ei
 
-def markdownsubst(line):
+def markdownsubst(line,mod={}):
     r = [ ]
     i = 0
     #
@@ -54,7 +54,7 @@ def markdownsubst(line):
     while i < len(line):
         beg = i
         end = len(line)
-        j = re.search(r'([\[\_\*]{1,3}|[\\\`])',line[beg:end])
+        j = re.search(r'([\[\_\*]{1,3}|\\|`{1,2})',line[beg:end])
         if j:
             span = j.span()
             span = [span[0]+beg,span[1]+beg]
@@ -67,9 +67,34 @@ def markdownsubst(line):
                 end = span[0]+2
                 accum += what[1]
             elif what == '`': # code
+                if "ignore code" in mod:
+                    end = span[0]+len(what)
+                    accum += line[beg:end]
+                else:
+                    end = span[0]
+                    accum += line[beg:end]
+                    end += len(what)
+                    #
+                    ei = findunescaped(line,what,end)
+                    if ei < 0:
+                        code = line[end:]
+                        end = len(line)
+                    else:
+                        code = line[end:ei]
+                        end = ei+1
+                    #
+                    if len(accum) > 0:
+                        r.append(accum)
+                        accum = ''
+                    #
+                    ce = MarkdownElement()
+                    ce.elemType = "code"
+                    ce.sub = markdownsubst(code,mod)
+                    r.append(ce)
+            elif what == '``': # escape code
                 end = span[0]
                 accum += line[beg:end]
-                end += 1
+                end += len(what)
                 #
                 ei = findunescaped(line,what,end)
                 if ei < 0:
@@ -83,10 +108,10 @@ def markdownsubst(line):
                     r.append(accum)
                     accum = ''
                 #
-                ce = MarkdownElement()
-                ce.elemType = "code"
-                ce.sub = markdownsubst(code)
-                r.append(ce)
+                smod = mod.copy()
+                smod['ignore code'] = True
+                for s in markdownsubst(code,smod): # no need for whole sub element, make it inline to the subs
+                    r.append(s)
             elif what == '*' or what == '_': # italic
                 end = span[0]
                 accum += line[beg:end]
@@ -106,7 +131,7 @@ def markdownsubst(line):
                 #
                 ce = MarkdownElement()
                 ce.elemType = "italic"
-                ce.sub = markdownsubst(code)
+                ce.sub = markdownsubst(code,mod)
                 r.append(ce)
             elif what == '**' or what == '__': # bold
                 end = span[0]
@@ -127,7 +152,7 @@ def markdownsubst(line):
                 #
                 ce = MarkdownElement()
                 ce.elemType = "bold"
-                ce.sub = markdownsubst(code)
+                ce.sub = markdownsubst(code,mod)
                 r.append(ce)
             elif re.match(r'^[\_\*]{3}$',what): # bold+italic
                 end = span[0]
@@ -148,7 +173,7 @@ def markdownsubst(line):
                 #
                 ce = MarkdownElement()
                 ce.elemType = "bold+italic"
-                ce.sub = markdownsubst(code)
+                ce.sub = markdownsubst(code,mod)
                 r.append(ce)
             else:
                 end = span[0]+1
