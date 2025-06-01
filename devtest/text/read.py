@@ -10,8 +10,7 @@ def splitlines(blob):
     return re.split(b'\n\r|\r\n|\r|\n',blob)
 
 f = open(inFile,"rb")
-rawtxt = f.read()
-rawtxtlines = splitlines(rawtxt)
-print(rawtxtlines)
+for line in splitlines(f.read()):
+    print(b"Line> \""+line+b"\" <eol>")
 f.close()
 
