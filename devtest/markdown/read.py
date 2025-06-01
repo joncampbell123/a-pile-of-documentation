@@ -192,6 +192,7 @@ def markdownsubst(line,mod={}):
                 ei = findunescaped(line,']',end)
                 if ei < 0:
                     raise Exception("failed to find end")
+                title = None
                 text = line[end:ei]
                 end = ei+len(what)
                 #
@@ -210,8 +211,16 @@ def markdownsubst(line,mod={}):
                     r.append(accum)
                     accum = ''
                 #
+                ei = url.find(' ')
+                if ei >= 0:
+                    x = url[ei:].strip()
+                    if x[0] == '\"' and x[-1] == '\"':
+                        title = x[1:len(x)-1]
+                    url = url[0:ei]
+                #
                 ce = MarkdownElement()
                 ce.elemType = "link"
+                ce.title = title
                 ce.text = text
                 ce.url = url
                 r.append(ce)
