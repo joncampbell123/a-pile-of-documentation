@@ -17,4 +17,7 @@ Hello \\ \* \` \[ \~ \= \{ \< \> \} \] \# \+ \- \. \! \| world *hello* **hello**
 Hello [title](http://url).
 Hello [title]  (http://url).
 Hello [title](http://url "this is a title").
+*Hello [title](http://url).*
+**Hello [title](http://url).**
+***Hello [title](http://url).***
 
