@@ -14,6 +14,7 @@ lines = list(spacestotabsgen(rawtexttoutf8gen(rawtextsplitlinesgen(rawtextloadfi
 class MarkdownElement:
     sub = None
     url = None
+    key = None
     text = None
     level = None
     title = None
@@ -23,6 +24,8 @@ class MarkdownElement:
         self.sub = [ ] # MarkdownElement or instance of str
     def __str__(self):
         r = "[MarkdownElement"
+        if not self.key == None:
+            r += " key="+str(self.key)
         if not self.url == None:
             r += " url="+str(self.url)
         if not self.text == None:
@@ -395,37 +398,92 @@ def parsemarkdown(lines):
             while i < len(lines):
                 cline = lines[i]
                 if len(cline) == 0 or cline == "\t":
-                  i += 1
+                    i += 1
                 elif len(cline) > 1 and cline[0] == match and cline[1] == ' ':
-                  cline = cline[2:]
-                  i += 1
-                  #
-                  ue = MarkdownElement()
-                  ue.elemType = 'item'
-                  ue.sub = markdownsubst(cline.strip())
-                  ce.sub.append(ue)
+                    cline = cline[2:]
+                    i += 1
+                    #
+                    ue = MarkdownElement()
+                    ue.elemType = 'item'
+                    ue.sub = markdownsubst(cline.strip())
+                    ce.sub.append(ue)
                 elif len(cline) > 0 and cline[0] == '\t':
-                  copylines = [ cline[1:] ]
-                  i += 1
-                  while i < len(lines):
-                    cline = lines[i]
-                    if len(cline) > 1 and cline[0] == '\t':
-                      cline = cline[1:]
-                      i += 1
-                      copylines.append(cline)
-                    elif len(cline) == 0 or cline == "\t":
-                      i += 1
-                    else:
-                        break
-                  #
-                  for se in parsemarkdown(copylines).sub:
-                    ce.sub.append(se)
-                #
+                    copylines = [ cline[1:] ]
+                    i += 1
+                    while i < len(lines):
+                        cline = lines[i]
+                        if len(cline) > 1 and cline[0] == '\t':
+                            cline = cline[1:]
+                            i += 1
+                            copylines.append(cline)
+                        elif len(cline) == 0 or cline == "\t":
+                            i += 1
+                        else:
+                            break
+                    #
+                    for se in parsemarkdown(copylines).sub:
+                        ce.sub.append(se)
+                    #
                 else:
-                  break
+                    break
             #
             mdRoot.sub.append(ce)
             continue
+
+        # ordered list
+        # the Markdown spec seems to imply the numbers don't matter, but to other interpreters it does.
+        if len(cline) > 0:
+            p = re.match(r'^(\d+)\. ',cline)
+            if p:
+                #
+                ce = MarkdownElement()
+                ce.elemType = "olist"
+                #
+                cline = cline[p.span()[1]:]
+                number = int(p.groups()[0])
+                ue = MarkdownElement()
+                ue.elemType = 'item'
+                ue.sub = markdownsubst(cline.strip())
+                ue.key = number
+                ce.sub.append(ue)
+                #
+                while i < len(lines):
+                    cline = lines[i]
+                    if len(cline) == 0 or cline == "\t":
+                        i += 1
+                    elif len(cline) > 0 and cline[0] == '\t':
+                        copylines = [ cline[1:] ]
+                        i += 1
+                        while i < len(lines):
+                            cline = lines[i]
+                            if len(cline) > 1 and cline[0] == '\t':
+                                cline = cline[1:]
+                                i += 1
+                                copylines.append(cline)
+                            elif len(cline) == 0 or cline == "\t":
+                                i += 1
+                            else:
+                                break
+                        #
+                        for se in parsemarkdown(copylines).sub:
+                            ce.sub.append(se)
+                    #
+                    else:
+                        p = re.match(r'^(\d+)\. ',cline)
+                        if p:
+                            cline = cline[p.span()[1]:]
+                            number = int(p.groups()[0])
+                            ue = MarkdownElement()
+                            ue.elemType = 'item'
+                            ue.sub = markdownsubst(cline.strip())
+                            ue.key = number
+                            ce.sub.append(ue)
+                            i += 1
+                        else:
+                            break
+                #
+                mdRoot.sub.append(ce)
+                continue
 
         # text in a paragraph can continue onto the next line
         while True:
