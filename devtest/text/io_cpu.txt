@@ -1,0 +1,366 @@
+Copyright(C) 1994,1995,1996,1997 Terumasa KODAKA , Takeshi KONO
+
+
+■I/O used by CPU
+Target           80286 equipped models, V33A equipped models (PC-98DO+), V50, V50HL
+                 equipped models
+
+Explanation    o The 80286 uses I/O 00F8 to 00FCh for communication with the
+                 numerical coprocessor. Therefore, users cannot use I/O addresses
+                 in this range.
+               o V33A has a register inside the CPU for extended mode that allows
+                 up to 16MB of address space to be used. Users should not manipulate
+                 this I/O.
+               o V50 and V50HL incorporate several peripheral chips inside the CPU.
+                 Therefore, in addition to I/O addresses to control these, there are
+                 also registers to perform various configurations of these peripheral
+                 circuits. Users should not manipulate this I/O.
+
+
+I/O              00F8～00FCh(WORD)
+Name             NPX(80287) for communication (intel RESERVE)
+Target           80286 CPU equipped machine
+Chip             80287
+Function
+                 ------------+-------+-----------------------------------------
+                 I/O address | Width | Content
+                 ------------+-------+-----------------------------------------
+                 00F8h       | WORD  | CPU←→NPX communication
+                 00FAh       | WORD  | CPU←→For NPX communication
+                 00FCh       | WORD  | CPU←→NPX communication
+                 00FEh       | WORD  | Reserve
+                ------------+-------+-----------------------------------------
+Description    o The 80286 CPU uses I/O 00F8 to 00FDh for communication with the math
+                 coprocessor 80287. This range of I/O cannot be used by other
+                 peripheral devices.
+               o The 80386 CPU uses I/O 800000F8h (32bit) and I/O 800000FCh (32bit)
+                 for communication with the numerical calculation coprocessor 80387.
+                 Note that this I/O address is exclusive to the coprocessor.
+
+
+I/O              FF00~FF7Eh(WORD),FF80h(BYTE)
+Name             V33A Internal I/O register for address expansion control
+Target           V33A equipped machine (PC-98DO+)
+Chip             V33A(μPD70136A)
+Function
+                 ------------+-------+-----+-----------------------------------------------
+                 I/O address | Width | R/W | Content
+                 ------------+-------+-----+-----------------------------------------------
+                 FF00~FF7Eh  | WORD  | R/W | PGR1~PGR64 (page register)
+                 FF80h       | BYTE  |  R  | bit 0: XAM (extended address mode register)
+                             |       |     |    1=Extended address mode (XA mode)
+                             |       |     |    0=Normal address mode (NA mode)
+                 ------------+-------+-----+-----------------------------------------------
+Description    o Register to control the address space expansion function of the V33A CPU.
+
+
+I/O              FF00～FFFFh(BYTE)
+Name             V50,V50HL system I/O area
+Applicable       machines equipped with V50 and V50HL
+Chip             V50(μPD70216),V50HL(μPD70216H)
+Function
+                 ------------+-------+-----+-----------------------------------------------
+                 I/O address | Width | R/W | Content
+                 ------------+-------+-----+-----------------------------------------------
+                 FF00～FFDFh | BYTE  |     | Reservation
+                 FFE0h       | BYTE  | R/W | Bank selection register *1
+                 FFE1h       | BYTE  | R/W | Bank address register *1
+                 FFE2～FFE8h | BYTE  |     | Reservation
+                 FFE9h       | BYTE  | R/W | Baud rate counter *1
+                 FFEah       | BYTE  | R/W | Programmable wait cycle number setting register 3 *1
+                 FFEBh       | BYTE  | R/W | Wait I/O block setting register *1
+                 FFECh       | BYTE  | R/W | Wait sub memory block setting register *1
+                 FFEDh       | BYTE  | R/W | Extended wait block selection register *1
+                 FFEE～FFEFh | BYTE  |     | Reservation
+                 FFF0h       | BYTE  | R/W | Timer clock selection register
+                 FFF1h       | BYTE  | R/W | Standby control register *1
+                 FFF2h       | BYTE  | R/W | Refresh control register
+                 FFF3h       | BYTE  |     | Reservation
+                 FFF4h       | BYTE  | R/W | Programmable wait memory area setting register
+                 FFF5h       | BYTE  | R/W | Programmable wait cycle number setting register 1
+                 FFF6h       | BYTE  | R/W | Programmable wait cycle number setting register 2
+                 FFF7h       | BYTE  | R/W | System control register *1
+                 FFF8h       | BYTE  | R/W | SCU row address register
+                 FFF9h       | BYTE  | R/W | TCU row address register
+                 FFFAh       | BYTE  | R/W | ICU row address register
+                 FFFBh       | BYTE  | R/W | DMAU row address register
+                 FFFCh       | BYTE  | R/W | On-chip peripheral high address register
+                 FFFDh       | BYTE  | R/W | On-chip peripheral selection register
+                 FFFEh       | BYTE  | R/W | On-chip peripheral connection register
+                 FFFFh       | BYTE  |     | Reservation
+                 ------------+-------+-----+-----------------------------------------------
+                 *1: Reserved for V50 (μPD70216)
+Description    o V50,V50HL Registers for controlling CPU built-in peripherals.
+
+
+■I/O used by CPU peripherals
+Explanation    o For machines equipped with a CPU of 80286 or higher, use the I/O port to
+                 reset the CPU. In addition to resetting the CPU, operations such as enabling
+                 the A20 line to access memory space of 1MB or more are also performed using
+                 the I/O port.
+
+
+-------------------------------------------------------------------------------
+I/O              00F0h
+Name             Machine status read/CPU shutdown
+Target           Machines equipped with a CPU of 80286 or higher (ITF equipped machines)
+Function
+                 [READ] Read machine status
+                 bit 7: Sister machine determination■[PC-9801NA,NA/C]
+                        1=PC-9801NA
+                        0=PC-9801NA/C
+                 bit 7: Sister machine determination■[PC-9821modelS1,S2]
+                        1=PC-9821modelS1
+                        0=PC-9821modelS2
+                 bit 7: Sister machine determination■[PC-9821CemodelS1,S2]
+                        1=PC-9821CemodelS1
+                        0=PC-9821CemodelS2
+                 bit 7: Sister machine determination■[PC-9821Xt･Xa]
+                        1=PC-9821Xt
+                        0=PC-9821Xa
+                 bit 7: CPU speed judgment■[PC-9821Ap･As･Ae･Af]
+                        1=CPU MODE is High/Low
+                        0=CPU MODE is Middle
+                 bit 6: ODP socket status■[PC-9821Ts]
+                        1=With ODP
+                        0=no ODP
+                 bit 6: Internal type (SCSI) HDD status
+                        ■[PC-9801RA21･RS･DA･DS･DX･ES･FA･FS･FX
+                          PC-9821 first generation・Ap・As・Ae・Ce・Af・Ap2・As2・An・Ap3・As3]
+                           1= No internal 55 type HDD
+                           0= Built-in 55 type HDD included
+                 bit 5: Internal type (SASI, IDE) HDD status
+                        ■[PC-9801RA21･RS･DA･DS･DX･ES･EX,PC-98DO+
+                          98NOTE,PC-9821,PC-9801BA･BX･BA2･BS2･BX2･BA3･BX3･BX4]
+                           1= No built-in 27 type HDD
+                           0= Built-in 27 types HDD included
+                 bit 4: Unknown
+                 bit 3: Internal additional RAM access
+                        1=Standard internal or expansion slot memory
+                        0= Internal additional memory
+                        * Indicates whether the previous RAM access was to internal additional RAM.
+                 bit 2: Refresh mode
+                        1=normal refresh
+                        0=fast refresh
+                 bit 1: CPU mode
+                        1=V30
+                        0=80286/80386
+                        * Indicates the value set in I/O 00F0h bit 0.
+                 bit 0: Internal RAM/expansion slot RAM determination
+                        1=internal memory
+                        0=Expansion slot memory
+                        * Indicates whether the previous RAM access was to internal RAM.
+
+                 [WRITE] CPU shutdown
+                 bit 7~3: unused
+                 bit 2: Refresh mode selection?
+                        1= Normal refresh (when V30 is selected)
+                        0=Fast refresh (when 80286/80386 is selected)
+                 bit 1: unknown
+                        1=When selecting V30
+                        0=When selecting 80286/386
+                 bit 0: CPU mode selection
+                        1=V30 selection
+                        0=80286/386 selection
+                        * You can switch between 80286 (386) and V30 depending on the output value.
+                          At that time, the reset terminal of the CPU (NDP) becomes active and A20
+                          becomes masked. The value set here is read from I/O 00F0h bit 1.
+
+Related          0000:0596h bit 0
+                 I/O 00F0h
+
+
+I/O              00F1h
+Name             IDE port F/F reset
+                 Undocumented
+Target           PC-9821Xa10･Xa9･Xa7･Xe10,PC-9801BX4
+Function
+                 [READ] None
+                 [WRITE]
+                 bit 7~0: arbitrary
+Opening        o A model that can connect IDE devices as master/slave to two IDE ports, primary and
+                 secondary, and is used to check whether a device is connected to each IDE port.
+               o When I/O 00F0h is read twice in succession after writing any value to this port,
+                 the primary IDE information will be the same in the first read and the secondary IDE
+                 information will be the same in the second read from bit 5. Can be obtained.
+Related          I/O 00F0h bit 5
+
+
+I/O              00F2h
+Name             CPU A20 Unmasked
+Target           Machines with CPU 80286 or higher
+Function
+                 [READ]
+                 bit 7~2: unused
+                 bit 1: unknown
+                 bit 0: A20 status■[Excluding H98]
+                        1=A20 mask status
+                        0=A20 unmasked state
+                 [WRITE] CPU A20 unmasking
+Explanation    o When an arbitrary value is output, the mask of the CPU's address bus A20 is released.
+                 To mask A20, output to 00F6h or 00F0h.
+Related          I/O 8B1Eh bit 6
+
+
+I/O              00F4h
+Name             DMA mode selection
+                 Undocumented
+Target           PC-9801DA or later
+Function
+                 [READ] Unknown
+	
+                 [WRITE]
+                 bit 7~0: DMA speed setting
+                          00000100b= DMA speed compatible
+                          00000101b= DMA speed fast
+
+Explanation    o Select the DMA controller clock
+Related          I/O 861Eh bit 4
+
+
+I/O              00F6h
+Name             A20 line control
+Applicable       To machines equipped with 386 or higher CPUs
+Function
+                 [READ]
+                 bit 7,6: unknown
+                 bit 5: unknown
+                 bit 4: Built-in HDD DMAch setting■[Excluding PC-98RL]
+                        1=ch0
+                        0=ch1
+                        Related I/O: 7FDBh bit 4■[PC-98RL]
+                 bit 3: unknown
+                 bit 2: unknown
+                 bit 1: NMI prohibition/permission status■[Excluding PC-H98]
+                        1=allowed
+                        0=prohibited
+                 bit 0: A20 mask status
+                        1=A20 is masked
+                        0=A20 is not masked
+
+                 [WRITE]
+                 bit 7～0: Various settings
+                           00000001b= Unknown■[PC-9801NA]
+                           0000001nb= Mask control of CPU address bus A20 ■ [386 machines after XL^2]
+                                      0(02h)= A20 unmasked
+                                      1(03h) = A20 mask setting
+                                      * The operation of OUT F6h,02h and OUT F2h,XXh is the same.
+                           0n000100b= DMA channel specification used by built-in SCSI I/F slot
+                                      1(44h) = SCSI I/F slot uses DMA #1
+                                      0(04h) = SCSI I/F slot uses DMA #0
+                                      *Write system setup menu settings
+                           0000010nb= Unknown
+                           1n100000b= 8x1Eh Software dip switch switching
+                                      1(E0h)= DIP switch table bank specification
+                                      0(A0h)= DIP switch back bank designation
+                                      * The software dip switches for I/O 841E to 8F1Eh are assigned to each I/O
+                                        address, with two sets of back and front. The method for selecting the
+                                        front and back varies depending on the model, but some models use
+                                        I/O 00F6h - A0h, E0h to select.
+
+Explanation      The A20 line cannot be turned ON/OFF using the method described in the technical data book.
+Related          0000:0484h bit 7,6
+                 I/O 00F0h
+                 I/O 00F2h
+                 I/O 861Eh bit 2
+                 I/O 841E~8F1Eh (front, back)
+
+
+I/O              0431h
+Name             Power supply, LED control, etc.
+                 Undocumented
+Target           PC-H98
+Function
+                 [READ]
+                 bit 7: Power OFF prohibited state
+                        1= Power off prohibited
+                        0= Power off allowed
+                 bit 6～0: unknown
+                
+                 [WRITE]
+                 bit 7,3: Power control
+                          11b= Force power off
+                          10b= Prohibit power OFF using power switch
+                          0xb= Power OFF permission by power switch
+                 bit 6~4: unknown
+                 bit 2: Main unit HDD access LED control
+                        1= lit
+                        0=off
+                 bit 1: unknown
+                 bit 0: Main unit power LED control
+                        1= lit
+                        0=off
+Description      Controls the power supply and main body LED.
+Related          INT 1Fh - Function 98h
+
+
+I/O              0534h
+Name             Unknown
+                 Undocumented
+Target           PC-9821Ap2･As2･Bp･Bs･Be･Bf･Cs2･Ce2･Ts,PC-9801BA2･BS2･BX2･BA3･BX3･BX4
+Function
+                 [READ/WRITE]
+                 bit 7: CPU external clock■[PC-9821Bp･Bs･Be･Cs2･Ce2]
+                        1=33MHz
+                        0=25MHz
+                        bit 6~4: unused
+                        bit 3: unknown
+                        bit 2: Text VRAM wait?
+                               1=no wait
+                               0=Insert wait
+                        bit 1: unknown
+                        bit 0: MIDDLE,LOW mode flag
+                               1=MIDDLE,LOW mode
+                               0=HIGH mode
+
+Explanation      Details unknown
+
+
+I/O              9892h
+Name             CPU wait adjustment
+                 Undocumented
+Target           PC-9801DA・DS・DX・FA・FS・FX・BA・BX・BA2・BS2・BX2・BA3・BX3
+                 98NOTE (Excluding PC-9801N･NV･NL,PC-9821Np･Ns･Ne2･Nd･Es･Ld･Lt･Nf･Nm)
+                 PC-H98, PC-9821
+Function
+                 [READ/WRITE]
+                 bit 7~4: unused
+                 bit 3～0: CPU wait value (lower 4 bits)
+Explanation    o Set the CPU operating speed in 128 steps. Maximum speed is 0000000b.
+               o Disabled when I/O 9894h bit 3 is 0.
+Related          I/O 9894h bit 3
+                 I/O 9894h bit 2～0
+
+
+I/O              9894h
+Name             CPU wait adjustment
+                 Undocumented
+Target           PC-9801DA・DS・DX・FA・FS・FX・BA・BX・BA2・BS2・BX2・BA3・BX3
+                 98NOTE (Excluding PC-9801N･NV･NL,PC-9821Np･Ns･Ne2･Nd･Es･Ld･Lt･Nf･Nm)
+                 PC-H98, PC-9821
+Function
+                 [READ/WRITE]
+                 bit 7~4: unused
+                 bit 3: CPU wait enabled
+                        1= insert wait
+                        0=do not insert waits
+                 bit 2～0: CPU wait value (upper 3 bits)
+Explanation    o Set the CPU operating speed in 128 steps. Maximum speed is 0000000b.
+               o Invalid when bit 3 is 0.
+Related          I/O 9892h bit 4～0
+                 I/O 00F0h bit 0
+
+
+I/O              9896h
+Name             CPU cache control
+                 Undocumented
+Target           PC-H98
+Function
+                 [READ] Unknown
+                 [WRITE]
+                 bit 7~0: Cache control
+                          00h=cache enabled
+                          04h=Cache enabled
+Description    o Control the cache.
+               o Details unknown
+
