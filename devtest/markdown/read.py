@@ -18,6 +18,16 @@ class MarkdownElement:
     elemType = None
     def __init__(self):
         self.sub = [ ] # MarkdownElement or instance of str
+    def __str__(self):
+        r = "[MarkdownElement"
+        if not self.level == None:
+            r += " level="+str(self.level)
+        if not self.syntax == None:
+            r += " syntax="+str(self.syntax)
+        if not self.elemType == None:
+            r += " elemType="+str(self.elemType)
+        r += "]"
+        return r
 
 def spanlen(span):
     if span:
@@ -147,4 +157,18 @@ while i < len(lines):
 
     # anything else is just text
     mdRoot.sub.append(cline)
+
+# dump
+def dumpMD(md,level=0):
+    indent=' '*level*2
+    if isinstance(md,str):
+        print("-------STRING----------------------------------")
+        print(md)
+        print("-------END STRING------------------------------")
+    else:
+        print(indent+str(md))
+        for sm in md.sub:
+            dumpMD(sm,level+1)
+
+dumpMD(mdRoot)
 
