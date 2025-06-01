@@ -1,19 +1,13 @@
 #!/usr/bin/python3
 
 import os
-import re
 import sys
 
+sys.path.append(os.path.join(os.path.dirname(__file__),'..','..'))
+
+from apodlib.docRawText import *
+
 inFile = sys.argv[1]
-
-def rawtextsplitlines(blob):
-    return re.split(b'\n\r|\r\n|\r|\n',blob)
-
-def rawtextloadfile(path):
-    f = open(inFile,"rb")
-    raw = f.read()
-    f.close()
-    return raw
 
 rawtxt = rawtextloadfile(inFile)
 
