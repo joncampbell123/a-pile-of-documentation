@@ -34,6 +34,135 @@ def spanlen(span):
         return span[1] - span[0]
     return 0
 
+def findunescaped(line,what,start):
+    ei = -1
+    i = line.find(what,start)
+    while True:
+        if i > 0 and line[i-1] == '\\':
+            start = i+1
+            i = line.find(what,start)
+        else:
+            ei = i
+            break
+    return ei
+
+def markdownsubst(line):
+    r = [ ]
+    i = 0
+    #
+    accum = ''
+    while i < len(line):
+        beg = i
+        end = len(line)
+        j = re.search(r'([\[\_\*]{1,3}|[\\\`])',line[beg:end])
+        if j:
+            span = j.span()
+            span = [span[0]+beg,span[1]+beg]
+            what = line[span[0]:span[1]]
+            #
+            if what[0] == '\\':
+                end = span[0]
+                accum += line[beg:end]
+                what = line[span[0]:span[0]+2]
+                end = span[0]+2
+                accum += what[1]
+            elif what == '`': # code
+                end = span[0]
+                accum += line[beg:end]
+                end += 1
+                #
+                ei = findunescaped(line,what,end)
+                if ei < 0:
+                    code = line[end:]
+                    end = len(line)
+                else:
+                    code = line[end:ei]
+                    end = ei+1
+                #
+                if len(accum) > 0:
+                    r.append(accum)
+                    accum = ''
+                #
+                ce = MarkdownElement()
+                ce.elemType = "code"
+                ce.sub = markdownsubst(code)
+                r.append(ce)
+            elif what == '*' or what == '_': # italic
+                end = span[0]
+                accum += line[beg:end]
+                end += len(what)
+                #
+                ei = findunescaped(line,what,end)
+                if ei < 0:
+                    code = line[end:]
+                    end = len(line)
+                else:
+                    code = line[end:ei]
+                    end = ei+len(what)
+                #
+                if len(accum) > 0:
+                    r.append(accum)
+                    accum = ''
+                #
+                ce = MarkdownElement()
+                ce.elemType = "italic"
+                ce.sub = markdownsubst(code)
+                r.append(ce)
+            elif what == '**' or what == '__': # bold
+                end = span[0]
+                accum += line[beg:end]
+                end += len(what)
+                #
+                ei = findunescaped(line,what,end)
+                if ei < 0:
+                    code = line[end:]
+                    end = len(line)
+                else:
+                    code = line[end:ei]
+                    end = ei+len(what)
+                #
+                if len(accum) > 0:
+                    r.append(accum)
+                    accum = ''
+                #
+                ce = MarkdownElement()
+                ce.elemType = "bold"
+                ce.sub = markdownsubst(code)
+                r.append(ce)
+            elif re.match(r'^[\_\*]{3}$',what): # bold+italic
+                end = span[0]
+                accum += line[beg:end]
+                end += len(what)
+                #
+                ei = findunescaped(line,what,end)
+                if ei < 0:
+                    code = line[end:]
+                    end = len(line)
+                else:
+                    code = line[end:ei]
+                    end = ei+len(what)
+                #
+                if len(accum) > 0:
+                    r.append(accum)
+                    accum = ''
+                #
+                ce = MarkdownElement()
+                ce.elemType = "bold+italic"
+                ce.sub = markdownsubst(code)
+                r.append(ce)
+            else:
+                end = span[0]+1
+                accum += line[beg:end]
+        else:
+            accum += line[beg:end]
+
+        i = end
+    #
+    if len(accum) > 0:
+        r.append(accum)
+        accum = ''
+    return r
+
 def parsemarkdown(lines):
     mdRoot = MarkdownElement()
     i = 0
@@ -159,7 +288,7 @@ def parsemarkdown(lines):
         # anything else is just text in a paragraph
         ce = MarkdownElement()
         ce.elemType = "paragraph"
-        ce.sub.append(cline)
+        ce.sub = markdownsubst(cline)
         mdRoot.sub.append(ce)
     #
     return mdRoot
