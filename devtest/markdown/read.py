@@ -14,6 +14,7 @@ lines = list(spacestotabsgen(rawtexttoutf8gen(rawtextsplitlinesgen(rawtextloadfi
 class MarkdownElement:
     sub = None
     url = None
+    text = None
     level = None
     title = None
     syntax = None
@@ -24,6 +25,8 @@ class MarkdownElement:
         r = "[MarkdownElement"
         if not self.url == None:
             r += " url="+str(self.url)
+        if not self.text == None:
+            r += " text="+str(self.text)
         if not self.level == None:
             r += " level="+str(self.level)
         if not self.title == None:
@@ -189,7 +192,7 @@ def markdownsubst(line,mod={}):
                 ei = findunescaped(line,']',end)
                 if ei < 0:
                     raise Exception("failed to find end")
-                title = line[end:ei]
+                text = line[end:ei]
                 end = ei+len(what)
                 #
                 while end < len(line) and (line[end] == ' ' or line[end] == '\t'):
@@ -209,7 +212,7 @@ def markdownsubst(line,mod={}):
                 #
                 ce = MarkdownElement()
                 ce.elemType = "link"
-                ce.title = title
+                ce.text = text
                 ce.url = url
                 r.append(ce)
             else:
