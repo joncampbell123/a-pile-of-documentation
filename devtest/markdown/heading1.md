@@ -100,3 +100,15 @@ Hello [title](http://url "this is a title").
 
 + And here's the third list item.
 
+- list1
+
+    should not break anything
+
+- list2
+
+* list1
+
+this should break it
+
+* list2
+
