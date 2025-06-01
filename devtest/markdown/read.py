@@ -343,6 +343,29 @@ def parsemarkdown(lines):
             mdRoot.sub.append(ce)
             continue
 
+        # block quote
+        if len(cline) > 0 and cline[0] == '>':
+            cline = cline[1:]
+            if len(cline) > 0 and cline[0] == ' ':
+              cline = cline[1:]
+            copylines = [ cline ]
+            while True:
+                cline = lines[i]
+                if len(cline) > 0 and cline[0] == '>':
+                  cline = cline[1:]
+                  if len(cline) > 0 and cline[0] == ' ':
+                    cline = cline[1:]
+                  i += 1
+                  copylines.append(cline)
+                else:
+                    break
+            #
+            ce = parsemarkdown(copylines)
+            ce.elemType = "blockquote"
+            mdRoot.sub.append(ce)
+            #
+            continue
+
         # text in a paragraph can continue onto the next line
         while True:
             if cline[-2:] == "  ": # ends in at least two spaces or tabs
