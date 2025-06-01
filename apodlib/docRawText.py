@@ -10,6 +10,20 @@ def rawtextsplitlines16le(blob):
 def rawtextsplitlines16be(blob):
     return re.split(b'\0\n\0\r|\0\r\0\n|\0\r|\0\n',blob)
 
+# with generators!
+
+def rawtextsplitlinesgen(blob):
+    for line in re.split(b'\n\r|\r\n|\r|\n',blob):
+        yield line
+    return None
+
+def rawtexttoutf8gen(g):
+    for line in g:
+        yield line.decode('utf-8')
+    return None
+
+# load file
+
 def rawtextloadfile(path):
     f = open(path,"rb")
     raw = f.read()
