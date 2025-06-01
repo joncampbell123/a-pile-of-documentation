@@ -349,7 +349,7 @@ def parsemarkdown(lines):
             if len(cline) > 0 and cline[0] == ' ':
               cline = cline[1:]
             copylines = [ cline ]
-            while True:
+            while i < len(lines):
                 cline = lines[i]
                 if len(cline) > 0 and cline[0] == '>':
                   cline = cline[1:]
@@ -381,9 +381,11 @@ def parsemarkdown(lines):
             ue.sub = markdownsubst(cline.strip())
             ce.sub.append(ue)
             #
-            while True:
+            while i < len(lines):
                 cline = lines[i]
-                if len(cline) > 0 and cline[0] == match:
+                if len(cline) == 0 or cline == "\t":
+                  i += 1
+                elif len(cline) > 0 and cline[0] == match:
                   cline = cline[1:]
                   if len(cline) > 0 and cline[0] == ' ':
                     cline = cline[1:]
@@ -393,6 +395,24 @@ def parsemarkdown(lines):
                   ue.elemType = 'item'
                   ue.sub = markdownsubst(cline.strip())
                   ce.sub.append(ue)
+                elif len(cline) > 1 and cline[0] == '\t' and cline[1] == match:
+                  copylines = [ cline[1:] ]
+                  i += 1
+                  while i < len(lines):
+                    cline = lines[i]
+                    if len(cline) > 1 and cline[0] == '\t' and cline[1] == match:
+                      cline = cline[1:]
+                      if len(cline) > 0 and cline[0] == ' ':
+                        cline = cline[1:]
+                      i += 1
+                      copylines.append(cline)
+                    else:
+                        break
+                    #
+                    se = parsemarkdown(copylines)
+                    se.elemType = "ulist"
+                    ce.sub.append(se)
+                #
                 else:
                     break
             #

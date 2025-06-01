@@ -57,6 +57,18 @@ Hello [title](http://url "this is a title").
 + list2
 + list3
 
+* list1
+
+* list2
+
+* list3
+
 - list *number 1* here
 - list _number 2_ there
+
+* list1
+* list2
+    * sublist1
+    * sublist2
+* list3
 
