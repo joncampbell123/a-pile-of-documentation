@@ -372,7 +372,7 @@ def parsemarkdown(lines):
                 break
             if nline == "":
                 break
-            if re.match(r'^[\-\*\#\~\`]',nline):
+            if re.match(r'^[\-\*\#\~\`\>]',nline):
                 break
             cline += " " + nline.strip()
             #
