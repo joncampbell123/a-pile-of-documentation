@@ -161,10 +161,6 @@ def parsemarkdown(lines):
     #
     return mdRoot
 
-# parse
-mdRoot = parsemarkdown(lines)
-
-# dump
 def dumpMD(md,level=0):
     indent=' '*level*2
     if isinstance(md,str):
@@ -176,5 +172,9 @@ def dumpMD(md,level=0):
         for sm in md.sub:
             dumpMD(sm,level+1)
 
+# parse
+mdRoot = parsemarkdown(lines)
+
+# dump
 dumpMD(mdRoot)
 
