@@ -13,15 +13,21 @@ lines = list(spacestotabsgen(rawtexttoutf8gen(rawtextsplitlinesgen(rawtextloadfi
 
 class MarkdownElement:
     sub = None
+    url = None
     level = None
+    title = None
     syntax = None
     elemType = None
     def __init__(self):
         self.sub = [ ] # MarkdownElement or instance of str
     def __str__(self):
         r = "[MarkdownElement"
+        if not self.url == None:
+            r += " url="+str(self.url)
         if not self.level == None:
             r += " level="+str(self.level)
+        if not self.title == None:
+            r += " title="+str(self.title)
         if not self.syntax == None:
             r += " syntax="+str(self.syntax)
         if not self.elemType == None:
@@ -54,7 +60,7 @@ def markdownsubst(line,mod={}):
     while i < len(line):
         beg = i
         end = len(line)
-        j = re.search(r'([\[\_\*]{1,3}|\\|`{1,2})',line[beg:end])
+        j = re.search(r'([\_\*]{1,3}|\\|`{1,2}|\[)',line[beg:end])
         if j:
             span = j.span()
             span = [span[0]+beg,span[1]+beg]
@@ -174,6 +180,26 @@ def markdownsubst(line,mod={}):
                 ce = MarkdownElement()
                 ce.elemType = "bold+italic"
                 ce.sub = markdownsubst(code,mod)
+                r.append(ce)
+            elif what == '[':
+                end = span[0]
+                accum += line[beg:end]
+                end += len(what)
+                #
+                ei = findunescaped(line,']',end)
+                if ei < 0:
+                    raise Exception("failed to find end")
+                else:
+                    title = line[end:ei]
+                    end = ei+len(what)
+                #
+                if len(accum) > 0:
+                    r.append(accum)
+                    accum = ''
+                #
+                ce = MarkdownElement()
+                ce.elemType = "link"
+                ce.title = title
                 r.append(ce)
             else:
                 end = span[0]+1
