@@ -43,7 +43,7 @@ Hello [title](http://url "this is a title").
 > - Revenue was off the chart.
 > - Profits were higher than ever.
 >
->  *Everything* is going according to **plan**.
+> *Everything* is going according to **plan**.
 
 - list1
 - list2
@@ -71,4 +71,25 @@ Hello [title](http://url "this is a title").
     * sublist1
     * sublist2
 * list3
+
+- list1
+- list2
+    - sublist1
+        - subsublist1
+    - sublist2
+        - subsublist1
+        - subsublist2
+- list3
+    - sublist1
+    - sublist2
+        - subsublist1
+    - sublist3
+- list4
+
+* list1
+
+    Something to note here
+
+* list2
+  Something else
 

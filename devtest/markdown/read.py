@@ -367,15 +367,13 @@ def parsemarkdown(lines):
             continue
 
         # unordered list
-        if len(cline) > 0 and (cline[0] == '-' or cline[0] == '+' or cline[0] == '*'):
+        if len(cline) > 1 and (cline[0] == '-' or cline[0] == '+' or cline[0] == '*') and cline[1] == ' ':
             match = cline[0]
             #
             ce = MarkdownElement()
             ce.elemType = "ulist"
             #
-            cline = cline[1:]
-            if len(cline) > 0 and cline[0] == ' ':
-              cline = cline[1:]
+            cline = cline[2:]
             ue = MarkdownElement()
             ue.elemType = 'item'
             ue.sub = markdownsubst(cline.strip())
@@ -385,36 +383,33 @@ def parsemarkdown(lines):
                 cline = lines[i]
                 if len(cline) == 0 or cline == "\t":
                   i += 1
-                elif len(cline) > 0 and cline[0] == match:
-                  cline = cline[1:]
-                  if len(cline) > 0 and cline[0] == ' ':
-                    cline = cline[1:]
+                elif len(cline) > 1 and cline[0] == match and cline[1] == ' ':
+                  cline = cline[2:]
                   i += 1
                   #
                   ue = MarkdownElement()
                   ue.elemType = 'item'
                   ue.sub = markdownsubst(cline.strip())
                   ce.sub.append(ue)
-                elif len(cline) > 1 and cline[0] == '\t' and cline[1] == match:
+                elif len(cline) > 0 and cline[0] == '\t':
                   copylines = [ cline[1:] ]
                   i += 1
                   while i < len(lines):
                     cline = lines[i]
-                    if len(cline) > 1 and cline[0] == '\t' and cline[1] == match:
+                    if len(cline) > 1 and cline[0] == '\t':
                       cline = cline[1:]
-                      if len(cline) > 0 and cline[0] == ' ':
-                        cline = cline[1:]
                       i += 1
                       copylines.append(cline)
+                    elif len(cline) == 0 or cline == "\t":
+                      i += 1
                     else:
                         break
-                    #
-                    se = parsemarkdown(copylines)
-                    se.elemType = "ulist"
+                  #
+                  for se in parsemarkdown(copylines).sub:
                     ce.sub.append(se)
                 #
                 else:
-                    break
+                  break
             #
             mdRoot.sub.append(ce)
             continue
