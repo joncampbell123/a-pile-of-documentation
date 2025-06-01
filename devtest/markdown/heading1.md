@@ -45,3 +45,18 @@ Hello [title](http://url "this is a title").
 >
 >  *Everything* is going according to **plan**.
 
+- list1
+- list2
+- list3
+
+* list1
+* list2
+* list3
+
++ list1
++ list2
++ list3
+
+- list *number 1* here
+- list _number 2_ there
+
