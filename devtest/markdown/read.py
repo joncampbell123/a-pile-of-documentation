@@ -39,7 +39,7 @@ while i < len(lines):
 
     # heading level 2
     #----------------
-    if len(cline) > 0 and re.match(r'^[^\-\*\#]',cline) and re.match(r'^-+$',nline):
+    if len(cline) > 0 and re.match(r'^[^\-\*\#\~\`]',cline) and re.match(r'^-+$',nline):
         i += 1
         ce = MarkdownElement()
         ce.elemType = "heading"
@@ -50,7 +50,7 @@ while i < len(lines):
 
     # heading level 1
     #================
-    if len(cline) > 0 and re.match(r'^[^\-\*\#]',cline) and re.match(r'^=+$',nline):
+    if len(cline) > 0 and re.match(r'^[^\-\*\#\~\`]',cline) and re.match(r'^=+$',nline):
         i += 1
         ce = MarkdownElement()
         ce.elemType = "heading"
@@ -93,6 +93,34 @@ while i < len(lines):
                 i += 1
             else:
                 break
+        ce.sub.append(code)
+        mdRoot.sub.append(ce)
+        continue
+
+    # fenced code block (with optional language for syntax highlighting)
+    x = re.match(r'^([\`\~]{3})([a-zA-Z0-9]*)',cline)
+    if x:
+        ce = MarkdownElement()
+        ce.elemType = "codeblock"
+        #
+        g = x.groups() # [```|~~~] and possible the lang
+        delim = g[0]
+        lang = None
+        if len(g) > 1:
+            lang = g[1]
+        #
+        code = ""
+        #
+        while i < len(lines):
+            cline = lines[i]
+            i += 1
+            #
+            if cline[0:len(delim)] == delim:
+                break
+            if not code == "":
+                code += "\n"
+            code += re.sub(r'\t','    ',cline)
+        #
         ce.sub.append(code)
         mdRoot.sub.append(ce)
         continue
