@@ -156,8 +156,11 @@ def parsemarkdown(lines):
             else:
                 nline = ''
 
-        # anything else is just text
-        mdRoot.sub.append(cline)
+        # anything else is just text in a paragraph
+        ce = MarkdownElement()
+        ce.elemType = "paragraph"
+        ce.sub.append(cline)
+        mdRoot.sub.append(ce)
     #
     return mdRoot
 
