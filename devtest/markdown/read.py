@@ -14,6 +14,7 @@ lines = list(spacestotabsgen(rawtexttoutf8gen(rawtextsplitlinesgen(rawtextloadfi
 class MarkdownElement:
     sub = None
     level = None
+    syntax = None
     elemType = None
     def __init__(self):
         self.sub = [ ] # MarkdownElement or instance of str
@@ -120,6 +121,9 @@ while i < len(lines):
             if not code == "":
                 code += "\n"
             code += re.sub(r'\t','    ',cline)
+        #
+        if not lang == None:
+            ce.syntax = lang
         #
         ce.sub.append(code)
         mdRoot.sub.append(ce)
