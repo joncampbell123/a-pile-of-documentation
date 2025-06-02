@@ -177,3 +177,10 @@ Visit my site at http://something.com/whoah/cool or https://something.com/blah t
 
 http://blah.com. hhttp://blah.com. http://blah.com. luiahsydrfoiuywerouiyqwefoiuyasdlkfjhasdlkjfhasdlkjhttp://blah.com.
 
+mailto:
+mailto:mail
+mailto:mail@
+mailto:mail@me
+mailto:mail@me.com
+Send me mail at mailto:mail@me.com.
+

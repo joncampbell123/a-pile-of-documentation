@@ -72,7 +72,7 @@ def markdownsubst(line,mod={}):
     while i < len(line):
         beg = i
         end = len(line)
-        j = re.search(r'([\_\*]{1,3}|\\|`{1,2}|\<|\[\!\[|\[|\!\[|(ftp|http|https)\:\/\/)',line[beg:end])
+        j = re.search(r'([\_\*]{1,3}|\\|`{1,2}|\<|\[\!\[|\[|\!\[|(ftp|http|https)\:\/\/|mailto:[a-zA-Z0-9%\:]+\@[a-zA-Z0-9])',line[beg:end])
         if j:
             span = j.span()
             span = [span[0]+beg,span[1]+beg]
@@ -102,7 +102,7 @@ def markdownsubst(line,mod={}):
                 ce.elemType = "link"
                 ce.url = url
                 r.append(ce)
-            elif what == 'ftp://' or what == 'http://' or what == 'https://': # auto URL conversion, except the trailing period is not counted.
+            elif what == 'ftp://' or what == 'http://' or what == 'https://' or what[0:7] == 'mailto:': # auto URL conversion, except the trailing period is not counted.
                 # make sure it's http://... and not zjklywqluiryuoiqwyrighttp://...
                 end = span[0]
                 if end == 0 or (end > 0 and line[end-1] == ' '):
