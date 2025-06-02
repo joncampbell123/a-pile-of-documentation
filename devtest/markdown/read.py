@@ -72,7 +72,7 @@ def markdownsubst(line,mod={}):
     while i < len(line):
         beg = i
         end = len(line)
-        j = re.search(r'([\_\*]{1,3}|\\|`{1,2}|\[\!\[|\[|\!\[)',line[beg:end])
+        j = re.search(r'([\_\*]{1,3}|\\|`{1,2}|\<|\[\!\[|\[|\!\[)',line[beg:end])
         if j:
             span = j.span()
             span = [span[0]+beg,span[1]+beg]
@@ -84,6 +84,24 @@ def markdownsubst(line,mod={}):
                 what = line[span[0]:span[0]+2]
                 end = span[0]+2
                 accum += what[1]
+            elif what == '<': # URL
+                end = span[0]
+                accum += line[beg:end]
+                end = span[0]+len(what)
+                ei = findunescaped(line,'>',end)
+                if ei < 0:
+                    raise Exception("failed to find end")
+                url = line[end:ei]
+                end = ei+1
+                #
+                if len(accum) > 0:
+                    r.append(accum)
+                    accum = ''
+                #
+                ce = MarkdownElement()
+                ce.elemType = "link"
+                ce.url = url
+                r.append(ce)
             elif what == '`': # code
                 if "ignore code" in mod:
                     end = span[0]+len(what)

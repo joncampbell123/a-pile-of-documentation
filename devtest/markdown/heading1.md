@@ -171,3 +171,5 @@ Hi [hobbit-hole] [theHobbit].
 
 ![Tux, the Linux mascot](/assets/images/tux.png)
 
+Send me to <http://someurl.com/blah> please, and mail me at <mailto:hello@hello.com>.
+
