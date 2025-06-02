@@ -66,7 +66,7 @@ def markdownsubst(line,mod={}):
     while i < len(line):
         beg = i
         end = len(line)
-        j = re.search(r'([\_\*]{1,3}|\\|`{1,2}|\[)',line[beg:end])
+        j = re.search(r'([\_\*]{1,3}|\\|`{1,2}|\[|\!\[)',line[beg:end])
         if j:
             span = j.span()
             span = [span[0]+beg,span[1]+beg]
@@ -187,7 +187,7 @@ def markdownsubst(line,mod={}):
                 ce.elemType = "bold+italic"
                 ce.sub = markdownsubst(code,mod)
                 r.append(ce)
-            elif what == '[':
+            elif what == '[' or what == '![':
                 end = span[0]
                 accum += line[beg:end]
                 end += len(what)
@@ -224,7 +224,12 @@ def markdownsubst(line,mod={}):
                         url = url[0:ei]
                 #
                 ce = MarkdownElement()
-                ce.elemType = "link"
+                #
+                if what == '![':
+                    ce.elemType = "imagelink"
+                else:
+                    ce.elemType = "link"
+                #
                 ce.title = title
                 ce.text = text
                 ce.url = url
