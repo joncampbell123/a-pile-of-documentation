@@ -169,3 +169,5 @@ Hi [hobbit-hole] [theHobbit].
 [1]: <https://en.wikipedia.org/wiki/Hobbit#Lifestyle> 'Hobbit lifestyles'
 [1]: <https://en.wikipedia.org/wiki/Hobbit#Lifestyle> (Hobbit lifestyles)
 
+![Tux, the Linux mascot](/assets/images/tux.png)
+
