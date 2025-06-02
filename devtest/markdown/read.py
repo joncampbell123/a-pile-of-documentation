@@ -197,7 +197,8 @@ def markdownsubst(line,mod={}):
                     raise Exception("failed to find end")
                 title = None
                 text = line[end:ei]
-                end = ei+len(what)
+                end = ei+1
+                url = None
                 #
                 while end < len(line) and (line[end] == ' ' or line[end] == '\t'):
                     end += 1
@@ -214,12 +215,13 @@ def markdownsubst(line,mod={}):
                     r.append(accum)
                     accum = ''
                 #
-                ei = url.find(' ')
-                if ei >= 0:
-                    x = url[ei:].strip()
-                    if x[0] == '\"' and x[-1] == '\"':
-                        title = x[1:len(x)-1]
-                    url = url[0:ei]
+                if not url == None:
+                    ei = url.find(' ')
+                    if ei >= 0:
+                        x = url[ei:].strip()
+                        if x[0] == '\"' and x[-1] == '\"':
+                            title = x[1:len(x)-1]
+                        url = url[0:ei]
                 #
                 ce = MarkdownElement()
                 ce.elemType = "link"
