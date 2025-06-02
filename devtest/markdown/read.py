@@ -20,6 +20,7 @@ class MarkdownElement:
     level = None
     title = None
     syntax = None
+    reflabel = None
     elemType = None
     def __init__(self):
         self.sub = [ ] # MarkdownElement or instance of str
@@ -39,6 +40,8 @@ class MarkdownElement:
             r += " title="+str(self.title)
         if not self.syntax == None:
             r += " syntax="+str(self.syntax)
+        if not self.reflabel == None:
+            r += " reflabel="+str(self.reflabel)
         if not self.elemType == None:
             r += " elemType="+str(self.elemType)
         r += "]"
@@ -198,6 +201,7 @@ def markdownsubst(line,mod={}):
                 ei = findunescaped(line,']',end)
                 if ei < 0:
                     raise Exception("failed to find end")
+                reflabel = None
                 title = None
                 text = line[end:ei]
                 link = None
@@ -207,7 +211,14 @@ def markdownsubst(line,mod={}):
                 while end < len(line) and (line[end] == ' ' or line[end] == '\t'):
                     end += 1
                 #
-                if end < len(line) and line[end] == '(':
+                if end < len(line) and line[end] == '[':
+                    end += 1
+                    ei = findunescaped(line,']',end)
+                    if ei < 0:
+                        raise Exception("failed to find end")
+                    reflabel = line[end:ei]
+                    end = ei+1
+                elif end < len(line) and line[end] == '(':
                     end += 1
                     ei = findunescaped(line,')',end)
                     if ei < 0:
@@ -231,6 +242,8 @@ def markdownsubst(line,mod={}):
                 #
                 if what == '![' or what == '[![':
                     ce.elemType = "imagelink"
+                elif not reflabel == None:
+                    ce.elemType = "reflink"
                 else:
                     ce.elemType = "link"
                 #
@@ -249,6 +262,7 @@ def markdownsubst(line,mod={}):
                     link = line[end:ei]
                     end = ei+1
                 #
+                ce.reflabel = reflabel
                 ce.title = title
                 ce.text = text
                 ce.link = link
