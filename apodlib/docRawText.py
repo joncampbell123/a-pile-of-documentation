@@ -27,6 +27,10 @@ def spacestotabsgen(lit,tabs):
     for line in lit:
         yield re.sub(rex,'\t',line)
 
+def tabstospacesgen(lit,tabs):
+    for line in lit:
+        yield re.sub('\t',' '*tabs,line)
+
 # load file
 
 def rawtextloadfile(path):
