@@ -72,7 +72,7 @@ def markdownsubst(line,mod={}):
     while i < len(line):
         beg = i
         end = len(line)
-        j = re.search(r'([\_\*]{1,3}|\\|`{1,2}|\<|\[\!\[|\[|\!\[)',line[beg:end])
+        j = re.search(r'([\_\*]{1,3}|\\|`{1,2}|\<|\[\!\[|\[|\!\[|(http|https)\:\/\/)',line[beg:end])
         if j:
             span = j.span()
             span = [span[0]+beg,span[1]+beg]
@@ -97,6 +97,30 @@ def markdownsubst(line,mod={}):
                 if len(accum) > 0:
                     r.append(accum)
                     accum = ''
+                #
+                ce = MarkdownElement()
+                ce.elemType = "link"
+                ce.url = url
+                r.append(ce)
+            elif what == 'http://' or what == 'https://': # auto URL conversion, except the trailing period is not counted.
+                end = span[0]
+                accum += line[beg:end]
+                #
+                if len(accum) > 0:
+                    r.append(accum)
+                    accum = ''
+                #
+                beg = end
+                spn = re.search(r'[ \"\(\)\[\]\{\}]',line[beg:])
+                if spn:
+                    end = spn.span()[0]+beg
+                else:
+                    end = len(line)
+                # trailing periods don't count
+                if end > 0 and line[end-1] == '.':
+                    end -= 1
+                #
+                url = line[beg:end]
                 #
                 ce = MarkdownElement()
                 ce.elemType = "link"
