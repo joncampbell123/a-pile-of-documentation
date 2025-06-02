@@ -173,5 +173,5 @@ Hi [hobbit-hole] [theHobbit].
 
 Send me to <http://someurl.com/blah> please, and mail me at <mailto:hello@hello.com>.
 
-Visit my site at http://something.com/whoah/cool or https://something.com/blah today. http://blah.com/blah.
+Visit my site at http://something.com/whoah/cool or https://something.com/blah today. http://blah.com/blah. ftp://something.com/blah.
 
