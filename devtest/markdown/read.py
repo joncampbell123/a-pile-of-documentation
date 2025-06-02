@@ -16,6 +16,7 @@ class MarkdownElement:
     url = None
     key = None
     text = None
+    link = None
     level = None
     title = None
     syntax = None
@@ -28,6 +29,8 @@ class MarkdownElement:
             r += " key="+str(self.key)
         if not self.url == None:
             r += " url="+str(self.url)
+        if not self.link == None:
+            r += " link="+str(self.link)
         if not self.text == None:
             r += " text="+str(self.text)
         if not self.level == None:
@@ -66,7 +69,7 @@ def markdownsubst(line,mod={}):
     while i < len(line):
         beg = i
         end = len(line)
-        j = re.search(r'([\_\*]{1,3}|\\|`{1,2}|\[|\!\[)',line[beg:end])
+        j = re.search(r'([\_\*]{1,3}|\\|`{1,2}|\[\!\[|\[|\!\[)',line[beg:end])
         if j:
             span = j.span()
             span = [span[0]+beg,span[1]+beg]
@@ -187,7 +190,7 @@ def markdownsubst(line,mod={}):
                 ce.elemType = "bold+italic"
                 ce.sub = markdownsubst(code,mod)
                 r.append(ce)
-            elif what == '[' or what == '![':
+            elif what == '[' or what == '![' or what == '[![':
                 end = span[0]
                 accum += line[beg:end]
                 end += len(what)
@@ -197,6 +200,7 @@ def markdownsubst(line,mod={}):
                     raise Exception("failed to find end")
                 title = None
                 text = line[end:ei]
+                link = None
                 end = ei+1
                 url = None
                 #
@@ -225,13 +229,29 @@ def markdownsubst(line,mod={}):
                 #
                 ce = MarkdownElement()
                 #
-                if what == '![':
+                if what == '![' or what == '[![':
                     ce.elemType = "imagelink"
                 else:
                     ce.elemType = "link"
                 #
+                if what == '[![':
+                    while end < len(line) and (line[end] == ' ' or line[end] == '\t'):
+                        end += 1
+                    if end < len(line) and line[end] == ']':
+                        end += 1
+                    while end < len(line) and (line[end] == ' ' or line[end] == '\t'):
+                        end += 1
+                    if end < len(line) and line[end] == '(':
+                        end += 1
+                    ei = findunescaped(line,')',end)
+                    if ei < 0:
+                        raise Exception("failed to find end")
+                    link = line[end:ei]
+                    end = ei+1
+                #
                 ce.title = title
                 ce.text = text
+                ce.link = link
                 ce.url = url
                 r.append(ce)
             else:
