@@ -201,6 +201,7 @@ def markdownsubst(line,mod={}):
                 ei = findunescaped(line,']',end)
                 if ei < 0:
                     raise Exception("failed to find end")
+                reflinktarget = None
                 reflabel = None
                 title = None
                 text = line[end:ei]
@@ -208,40 +209,81 @@ def markdownsubst(line,mod={}):
                 end = ei+1
                 url = None
                 #
-                while end < len(line) and (line[end] == ' ' or line[end] == '\t'):
-                    end += 1
-                #
-                if end < len(line) and line[end] == '[':
-                    end += 1
-                    ei = findunescaped(line,']',end)
-                    if ei < 0:
-                        raise Exception("failed to find end")
-                    reflabel = line[end:ei]
-                    end = ei+1
-                elif end < len(line) and line[end] == '(':
-                    end += 1
-                    ei = findunescaped(line,')',end)
-                    if ei < 0:
-                        raise Exception("failed to find end")
-                    url = line[end:ei]
-                    end = ei+1
-                #
                 if len(accum) > 0:
                     r.append(accum)
                     accum = ''
                 #
-                if not url == None:
-                    ei = url.find(' ')
-                    if ei >= 0:
-                        x = url[ei:].strip()
-                        if x[0] == '\"' and x[-1] == '\"':
-                            title = x[1:len(x)-1]
-                        url = url[0:ei]
+                if end < len(line) and line[end] == ':':
+                    reflabel = text
+                    text = None
+                    end += 1
+                    while end < len(line) and (line[end] == ' ' or line[end] == '\t'):
+                        end += 1
+                    #
+                    if end < len(line) and line[end] == '<':
+                        end += 1
+                        ei = findunescaped(line,'>',end)
+                        if ei < 0:
+                            raise Exception("failed to find end")
+                        url = line[end:ei]
+                        end = ei+1
+                    else:
+                        ei = findunescaped(line,' ',end)
+                        if ei < 0:
+                            ei = len(line)
+                        url = line[end:ei]
+                        end = ei
+                    reflinktarget = True
+                    #
+                    while end < len(line) and (line[end] == ' ' or line[end] == '\t'):
+                        end += 1
+                    #
+                    if end < len(line) and (line[end] == '\'' or line[end] == '\"' or line[end] == '('):
+                        if line[end] == '(':
+                            match = ')'
+                        else:
+                            match = line[end]
+                        end += 1
+                        #
+                        ei = findunescaped(line,match,end)
+                        if ei < 0:
+                            raise Exception("failed to find end")
+                        text = line[end:ei]
+                        end = ei+1
+                else:
+                    while end < len(line) and (line[end] == ' ' or line[end] == '\t'):
+                        end += 1
+                    #
+                    if end < len(line) and line[end] == '[':
+                        end += 1
+                        ei = findunescaped(line,']',end)
+                        if ei < 0:
+                            raise Exception("failed to find end")
+                        reflabel = line[end:ei]
+                        end = ei+1
+                    elif end < len(line) and line[end] == '(':
+                        end += 1
+                        ei = findunescaped(line,')',end)
+                        if ei < 0:
+                            raise Exception("failed to find end")
+                        url = line[end:ei]
+                        end = ei+1
+                    #
+                    if not url == None:
+                        ei = url.find(' ')
+                        if ei >= 0:
+                            x = url[ei:].strip()
+                            if x[0] == '\"' and x[-1] == '\"':
+                                title = x[1:len(x)-1]
+                            url = url[0:ei]
+                    #
                 #
                 ce = MarkdownElement()
                 #
                 if what == '![' or what == '[![':
                     ce.elemType = "imagelink"
+                elif reflinktarget == True:
+                    ce.elemType = "reflinktarget"
                 elif not reflabel == None:
                     ce.elemType = "reflink"
                 else:
@@ -268,6 +310,9 @@ def markdownsubst(line,mod={}):
                 ce.link = link
                 ce.url = url
                 r.append(ce)
+                #
+                if end < len(line) and (line[end] == ' ' or line[end] == '\t'):
+                    end += 1
             else:
                 end = span[0]+1
                 accum += line[beg:end]
