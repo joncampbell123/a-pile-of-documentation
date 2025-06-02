@@ -103,29 +103,34 @@ def markdownsubst(line,mod={}):
                 ce.url = url
                 r.append(ce)
             elif what == 'ftp://' or what == 'http://' or what == 'https://': # auto URL conversion, except the trailing period is not counted.
+                # make sure it's http://... and not zjklywqluiryuoiqwyrighttp://...
                 end = span[0]
-                accum += line[beg:end]
-                #
-                if len(accum) > 0:
-                    r.append(accum)
-                    accum = ''
-                #
-                beg = end
-                spn = re.search(r'[ \"\(\)\[\]\{\}]',line[beg:])
-                if spn:
-                    end = spn.span()[0]+beg
+                if end == 0 or (end > 0 and line[end-1] == ' '):
+                    accum += line[beg:end]
+                    #
+                    if len(accum) > 0:
+                        r.append(accum)
+                        accum = ''
+                    #
+                    beg = end
+                    spn = re.search(r'[ \"\(\)\[\]\{\}]',line[beg:])
+                    if spn:
+                        end = spn.span()[0]+beg
+                    else:
+                        end = len(line)
+                    # trailing periods don't count
+                    if end > 0 and line[end-1] == '.':
+                        end -= 1
+                    #
+                    url = line[beg:end]
+                    #
+                    ce = MarkdownElement()
+                    ce.elemType = "link"
+                    ce.url = url
+                    r.append(ce)
                 else:
-                    end = len(line)
-                # trailing periods don't count
-                if end > 0 and line[end-1] == '.':
-                    end -= 1
-                #
-                url = line[beg:end]
-                #
-                ce = MarkdownElement()
-                ce.elemType = "link"
-                ce.url = url
-                r.append(ce)
+                    end += len(what)
+                    accum += line[beg:end]
             elif what == '`': # code
                 if "ignore code" in mod:
                     end = span[0]+len(what)
