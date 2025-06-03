@@ -158,6 +158,7 @@ def emit_mde(md,mod={}):
                 if re.match(r'\"',md.url):
                     raise Exception("Quotes in markdown")
                 sys.stdout.write(" href=\""+md.url+"\"")
+            #
             if not md.title == None:
                 if re.match(r'\"',md.title):
                     raise Exception("Quotes in markdown")
@@ -165,7 +166,10 @@ def emit_mde(md,mod={}):
             #
             sys.stdout.write(">")
             #
-            if not md.text == None:
+            if len(md.sub) > 0:
+                for ent in md.sub:
+                    emit_mde(ent,smod)
+            elif not md.text == None:
                 sys.stdout.write(html_escape(md.text))
             elif not md.url == None:
                 sys.stdout.write(html_escape(md.url))

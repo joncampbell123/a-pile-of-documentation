@@ -359,6 +359,10 @@ def markdownsubst(line,mod={}):
                 ce.title = title
                 ce.text = text
                 ce.link = link
+                #
+                if not text == None:
+                    ce.sub = markdownsubst(text,mod)
+                #
                 ce.url = url
                 r.append(ce)
                 #
