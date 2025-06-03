@@ -9,7 +9,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__),'..','..'))
 from apodlib.docRawText import *
 
 inFile = sys.argv[1]
-lines = list(spacestotabsgen(rawtexttoutf8gen(rawtextsplitlinesgen(rawtextloadfile(inFile))),4))
+lines = list(tabstospacesgen(rawtexttoutf8gen(rawtextsplitlinesgen(rawtextloadfile(inFile))),4))
 
 class MarkdownElement:
     sub = None
@@ -264,7 +264,7 @@ def markdownsubst(line,mod={}):
                     reflabel = text
                     text = None
                     end += 1
-                    while end < len(line) and (line[end] == ' ' or line[end] == '\t'):
+                    while end < len(line) and line[end] == ' ':
                         end += 1
                     #
                     if end < len(line) and line[end] == '<':
@@ -282,7 +282,7 @@ def markdownsubst(line,mod={}):
                         end = ei
                     reflinktarget = True
                     #
-                    while end < len(line) and (line[end] == ' ' or line[end] == '\t'):
+                    while end < len(line) and line[end] == ' ':
                         end += 1
                     #
                     if end < len(line) and (line[end] == '\'' or line[end] == '\"' or line[end] == '('):
@@ -298,7 +298,7 @@ def markdownsubst(line,mod={}):
                         text = line[end:ei]
                         end = ei+1
                 else:
-                    while end < len(line) and (line[end] == ' ' or line[end] == '\t'):
+                    while end < len(line) and line[end] == ' ':
                         end += 1
                     #
                     if end < len(line) and line[end] == '[':
@@ -337,11 +337,11 @@ def markdownsubst(line,mod={}):
                     ce.elemType = "link"
                 #
                 if what == '[![':
-                    while end < len(line) and (line[end] == ' ' or line[end] == '\t'):
+                    while end < len(line) and line[end] == ' ':
                         end += 1
                     if end < len(line) and line[end] == ']':
                         end += 1
-                    while end < len(line) and (line[end] == ' ' or line[end] == '\t'):
+                    while end < len(line) and line[end] == ' ':
                         end += 1
                     if end < len(line) and line[end] == '(':
                         end += 1
@@ -358,7 +358,7 @@ def markdownsubst(line,mod={}):
                 ce.url = url
                 r.append(ce)
                 #
-                if end < len(line) and (line[end] == ' ' or line[end] == '\t'):
+                if end < len(line) and line[end] == ' ':
                     end += 1
             else:
                 end = span[0]+1

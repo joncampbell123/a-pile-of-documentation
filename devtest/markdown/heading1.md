@@ -106,6 +106,14 @@ Hello [title](http://url "this is a title").
 
 - list2
 
+Break
+
+- list1
+
+  should not break anything
+
+- list2
+
 * list1
 
 this should break it
