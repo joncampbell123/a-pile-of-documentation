@@ -78,7 +78,12 @@ def emit_mde(md,mod={}):
                 if ent.elemType == 'item':
                     if inItem:
                         sys.stdout.write("</li>")
-                    sys.stdout.write("<li>")
+                    #
+                    if not ent.key == None:
+                        sys.stdout.write("<li value=\""+str(ent.key)+"\">")
+                    else:
+                        sys.stdout.write("<li>")
+                    #
                     inItem = True
                 #
                 emit_mde(ent,smod)
