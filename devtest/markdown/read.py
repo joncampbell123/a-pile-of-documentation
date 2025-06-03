@@ -501,11 +501,8 @@ def parsemarkdown(lines):
             copylines = [ stcline[2:] ]
             while i < len(lines):
                 stcline = lines[i].lstrip()
-                if len(stcline) > 1 and stcline[0:2] == '> ':
-                    copylines.append(stcline[2:])
-                    i += 1
-                elif stcline == '>' or stcline[0:2] == '>>':
-                    copylines.append(stcline[1:])
+                if len(stcline) > 0 and stcline[0] == '>':
+                    copylines.append(stcline[1:].lstrip())
                     i += 1
                 else:
                     break
