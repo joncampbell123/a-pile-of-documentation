@@ -572,58 +572,64 @@ def parsemarkdown(lines):
 
         # ordered list
         # the Markdown spec seems to imply the numbers don't matter, but to other interpreters it does.
-        if len(cline) > 0:
-            p = re.match(r'^(\d+)\. ',cline)
+        if len(stcline) > 0:
+            p = re.match(r'^ *(\d+)\. ',cline)
             if p:
-                spc = p.span()[1]
+                this_spc = skipwhitespace(cline,0)
                 #
                 ce = MarkdownElement()
                 ce.elemType = "olist"
                 #
-                cline = cline[spc:]
                 number = int(p.groups()[0])
                 ue = MarkdownElement()
                 ue.elemType = 'item'
-                ue.sub = markdownsubst(cline.strip())
+                ue.sub = markdownsubst(cline[p.span()[1]:].strip())
                 ue.key = number
                 ce.sub.append(ue)
                 #
                 while i < len(lines):
                     cline = lines[i]
-                    if len(cline) == 0 or cline == (" "*len(cline)):
+                    spc = skipwhitespace(cline,0)
+                    stcline = cline[spc:]
+                    if len(stcline) == 0:
                         i += 1
-                    elif len(cline) > 0 and cline[0:spc] == (" "*spc):
-                        suspc = skipwhitespace(cline,spc)
-                        copylines = [ cline[suspc:] ]
-                        i += 1
-                        while i < len(lines):
-                            cline = lines[i]
-                            if re.match(r'^(\d+)\. ',cline):
-                                break
-                            elif len(cline) > 0 and cline[0:suspc] == (" "*suspc):
+                    else:
+                        if spc < this_spc:
+                            break
+                        elif spc >= (this_spc+4):
+                            suspc = spc
+                            #
+                            copylines = [ cline[suspc:] ]
+                            i += 1
+                            while i < len(lines):
+                                cline = lines[i]
+                                spc = skipwhitespace(cline,0)
+                                stcline = cline[spc:]
+                                #
+                                if len(stcline) > 0:
+                                    if spc < suspc:
+                                        break
+                                    copylines.append(cline[suspc:])
+                                else:
+                                    copylines.append(stcline)
                                 i += 1
-                                copylines.append(cline[suspc:])
-                            elif len(cline) == 0 or cline == (" "*len(cline)):
+                            #
+                            for se in parsemarkdown(copylines).sub:
+                                ce.sub.append(se)
+                            #
+                        else:
+                            p = re.match(r'^ *(\d+)\. ',cline)
+                            if p:
+                                cline = cline[p.span()[1]:]
+                                number = int(p.groups()[0])
+                                ue = MarkdownElement()
+                                ue.elemType = 'item'
+                                ue.sub = markdownsubst(cline.strip())
+                                ue.key = number
+                                ce.sub.append(ue)
                                 i += 1
                             else:
                                 break
-                        #
-                        for se in parsemarkdown(copylines).sub:
-                            ce.sub.append(se)
-                    #
-                    else:
-                        p = re.match(r'^(\d+)\. ',cline)
-                        if p:
-                            cline = cline[p.span()[1]:]
-                            number = int(p.groups()[0])
-                            ue = MarkdownElement()
-                            ue.elemType = 'item'
-                            ue.sub = markdownsubst(cline.strip())
-                            ue.key = number
-                            ce.sub.append(ue)
-                            i += 1
-                        else:
-                            break
                 #
                 mdRoot.sub.append(ce)
                 continue
