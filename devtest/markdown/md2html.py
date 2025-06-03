@@ -36,11 +36,12 @@ def html_escape(md):
             i = len(md)
     return r
 
-def emit_mde(md):
+def emit_mde(md,mod={}):
     if isinstance(md,str):
         sys.stdout.write(html_escape(md))
     else:
         tag = None
+        smod = mod.copy()
         #
         if md.elemType == None:
             True
@@ -60,13 +61,26 @@ def emit_mde(md):
             tag = 'code'
         elif md.elemType == 'codeblock':
             tag = 'codeblock'
+        elif md.elemType == 'table':
+            tag = 'table'
+        elif md.elemType == 'tableheadrow':
+            smod['tablerow'] = 'head'
+            tag = 'tr'
+        elif md.elemType == 'tablerow':
+            smod['tablerow'] = 'body'
+            tag = 'tr'
+        elif md.elemType == 'tablecell':
+            if smod['tablerow'] == "head":
+                tag = "th"
+            else:
+                tag = "td"
         else:
-            True
             #print("\n? "+str(md.elemType))
+            True
         #
         if tag == None:
             for ent in md.sub:
-                emit_mde(ent)
+                emit_mde(ent,smod)
         elif len(md.sub) > 0:
             if tag == 'b+i':
                 sys.stdout.write("<em><b>")
@@ -74,7 +88,7 @@ def emit_mde(md):
                 sys.stdout.write("<"+tag+">")
             #
             for ent in md.sub:
-                emit_mde(ent)
+                emit_mde(ent,smod)
             #
             if tag == 'b+i':
                 sys.stdout.write("</b></em>")
