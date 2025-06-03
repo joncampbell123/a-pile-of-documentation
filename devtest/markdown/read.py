@@ -390,6 +390,29 @@ def parsemarkdown(lines):
         else:
             nline = ''
 
+        # code block
+        if cline[0:4] == "    ":
+            spc = 4
+            ce = MarkdownElement()
+            ce.elemType = "codeblock"
+            code = cline[spc:]
+            while i < len(lines):
+                cline = lines[i]
+                if cline == "":
+                    code += "\n"
+                    i += 1
+                elif cline[0:spc] == (" "*spc):
+                    code += "\n" + cline[spc:]
+                    i += 1
+                else:
+                    break
+            ce.sub.append(code)
+            mdRoot.sub.append(ce)
+            continue
+
+        # all processing past this point no longer needs to know how many leading spaces
+        cline = cline.lstrip()
+
         # ignore blank lines
         if cline == "":
             continue
@@ -434,29 +457,6 @@ def parsemarkdown(lines):
             ce.sub = markdownsubst(cline[span[1]:].strip())
             mdRoot.sub.append(ce)
             continue
-
-        # code block
-        if cline[0:4] == "    ":
-            spc = 4 # or do we standardize on the specific spaces, use skipwhitespace(cline,4) ?
-            ce = MarkdownElement()
-            ce.elemType = "codeblock"
-            code = cline[spc:]
-            while i < len(lines):
-                cline = lines[i]
-                if cline == "":
-                    code += "\n"
-                    i += 1
-                elif cline[0:spc] == (" "*spc):
-                    code += "\n" + cline[spc:]
-                    i += 1
-                else:
-                    break
-            ce.sub.append(code)
-            mdRoot.sub.append(ce)
-            continue
-
-        # all processing past this point no longer needs to know how many leading spaces
-        cline = cline.lstrip()
 
         # fenced code block (with optional language for syntax highlighting)
         x = re.match(r'^([\`\~]{3})([a-zA-Z0-9]*)',cline)
