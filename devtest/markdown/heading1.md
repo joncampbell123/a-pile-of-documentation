@@ -316,3 +316,7 @@ abc|def
 |abc|def|
 |ghi|jkl|mmm
 
+|col1|col2|\|col3\||
+|---|---|---|
+|pipe\|char|hello|world|
+
