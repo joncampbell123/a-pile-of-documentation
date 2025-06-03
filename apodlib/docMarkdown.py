@@ -362,7 +362,6 @@ def markdownsubst(line,mod={}):
                 ce.url = url
                 r.append(ce)
                 #
-                end = skipwhitespace(line,end)
             else:
                 end = span[0]+1
                 accum += line[beg:end]
