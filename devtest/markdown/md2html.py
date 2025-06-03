@@ -38,33 +38,64 @@ def html_escape(md):
 
 def emit_mde(md):
     if isinstance(md,str):
-        print(html_escape(md))
+        sys.stdout.write(html_escape(md))
     else:
         tag = None
         #
-        if md.elemType == 'paragraph':
+        if md.elemType == None:
+            True
+        elif md.elemType == 'paragraph':
             tag = 'p'
         elif md.elemType == 'heading':
             tag = 'h'+str(md.level)
+        elif md.elemType == 'hr':
+            tag = 'hr'
+        elif md.elemType == 'italic':
+            tag = 'em'
+        elif md.elemType == 'bold':
+            tag = 'b'
+        elif md.elemType == 'bold+italic':
+            tag = 'b+i'
+        elif md.elemType == 'code':
+            tag = 'code'
+        elif md.elemType == 'codeblock':
+            tag = 'codeblock'
+        else:
+            True
+            #print("\n? "+str(md.elemType))
         #
         if tag == None:
             for ent in md.sub:
                 emit_mde(ent)
         elif len(md.sub) > 0:
-            print("<"+tag+">")
+            if tag == 'b+i':
+                sys.stdout.write("<em><b>")
+            else:
+                sys.stdout.write("<"+tag+">")
+            #
             for ent in md.sub:
                 emit_mde(ent)
-            print("</"+tag+">")
+            #
+            if tag == 'b+i':
+                sys.stdout.write("</b></em>")
+            else:
+                sys.stdout.write("</"+tag+">")
         else:
-            print("<"+tag+"/>")
+            if tag == 'b+i':
+                True
+            else:
+                sys.stdout.write("<"+tag+"/>")
 
-print("<!DOCTYPE html>")
-print("<html>")
-print("<head>")
-print("<meta charset=\"utf-8\">")
-print("</head>")
-print("<body>")
+sys.stdout.write("<!DOCTYPE html>")
+sys.stdout.write("<html>")
+sys.stdout.write("<head>")
+sys.stdout.write("<meta charset=\"utf-8\">\n")
+sys.stdout.write("<style>\n")
+sys.stdout.write("codeblock { white-space: pre-wrap; text-wrap-mode: nowrap; font-family: monospace, monospace; padding: 0.7em; display: block; }\n");
+sys.stdout.write("</style>\n")
+sys.stdout.write("</head>")
+sys.stdout.write("<body>")
 emit_mde(mdRoot)
-print("</body>")
-print("</html>")
+sys.stdout.write("</body>")
+sys.stdout.write("</html>")
 
