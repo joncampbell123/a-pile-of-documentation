@@ -384,11 +384,18 @@ def parsemarkdown(lines):
     i = 0
     while i < len(lines):
         cline = lines[i]
+        stcline = cline.lstrip()
         i += 1
+        #
         if i < len(lines):
             nline = lines[i]
         else:
             nline = ''
+        stnline = nline.lstrip()
+
+        # ignore blank lines
+        if stcline == "":
+            continue
 
         # code block
         if cline[0:4] == "    ":
@@ -410,56 +417,49 @@ def parsemarkdown(lines):
             mdRoot.sub.append(ce)
             continue
 
-        # all processing past this point no longer needs to know how many leading spaces
-        cline = cline.lstrip()
-
-        # ignore blank lines
-        if cline == "":
-            continue
-
         # heading level 2
         #----------------
-        if len(cline) > 0 and re.match(r'^[^\-\*\#\~\`]',cline) and re.match(r'^-+$',nline):
+        if len(stcline) > 0 and re.match(r'^[^\-\*\#\~\`]',stcline) and re.match(r'^-+$',stnline):
             i += 1
             ce = MarkdownElement()
             ce.elemType = "heading"
             ce.level = 2
-            ce.sub = markdownsubst(cline)
+            ce.sub = markdownsubst(stcline)
             mdRoot.sub.append(ce)
             continue
 
         # heading level 1
         #================
-        if len(cline) > 0 and re.match(r'^[^\-\*\#\~\`]',cline) and re.match(r'^=+$',nline):
+        if len(stcline) > 0 and re.match(r'^[^\-\*\#\~\`]',stcline) and re.match(r'^=+$',stnline):
             i += 1
             ce = MarkdownElement()
             ce.elemType = "heading"
             ce.level = 1
-            ce.sub = markdownsubst(cline)
+            ce.sub = markdownsubst(stcline)
             mdRoot.sub.append(ce)
             continue
 
         # horizontal rule
-        if re.match(r'^[\*\-\_]{3,}$',cline):
+        if re.match(r'^[\*\-\_]{3,}$',stcline):
             ce = MarkdownElement()
             ce.elemType = "hr"
             mdRoot.sub.append(ce)
             continue
 
         # heading
-        x = re.match(r'^(#+)',cline)
+        x = re.match(r'^(#+)',stcline)
         if x:
             span = x.span()
             level = spanlen(span)
             ce = MarkdownElement()
             ce.elemType = "heading"
             ce.level = level
-            ce.sub = markdownsubst(cline[span[1]:].strip())
+            ce.sub = markdownsubst(stcline[span[1]:].strip())
             mdRoot.sub.append(ce)
             continue
 
         # fenced code block (with optional language for syntax highlighting)
-        x = re.match(r'^([\`\~]{3})([a-zA-Z0-9]*)',cline)
+        x = re.match(r'^([\`\~]{3})([a-zA-Z0-9]*)',stcline)
         if x:
             ce = MarkdownElement()
             ce.elemType = "codeblock"
@@ -474,9 +474,10 @@ def parsemarkdown(lines):
             #
             while i < len(lines):
                 cline = lines[i]
+                stcline = cline.lstrip()
                 i += 1
                 #
-                if cline[0:len(delim)] == delim:
+                if stcline[0:len(delim)] == delim:
                     break
                 if not code == "":
                     code += "\n"
@@ -490,15 +491,15 @@ def parsemarkdown(lines):
             continue
 
         # block quote
-        if len(cline) > 1 and cline[0:2] == '> ':
-            copylines = [ cline[2:] ]
+        if len(stcline) > 1 and stcline[0:2] == '> ':
+            copylines = [ stcline[2:] ]
             while i < len(lines):
-                cline = lines[i]
-                if len(cline) > 1 and cline[0:2] == '> ':
-                    copylines.append(cline[2:])
+                stcline = lines[i].lstrip()
+                if len(stcline) > 1 and stcline[0:2] == '> ':
+                    copylines.append(stcline[2:])
                     i += 1
-                elif cline == '>' or cline[0:2] == '>>':
-                    copylines.append(cline[1:])
+                elif stcline == '>' or stcline[0:2] == '>>':
+                    copylines.append(stcline[1:])
                     i += 1
                 else:
                     break
@@ -633,6 +634,7 @@ def parsemarkdown(lines):
                 continue
 
         # text in a paragraph can continue onto the next line
+        cline = cline.lstrip()
         while True:
             if cline[-2:] == "  ": # ends in at least two spaces or tabs
                 break

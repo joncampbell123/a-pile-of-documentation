@@ -4,6 +4,12 @@ Hello
 Hello
 -----
 
+# hello
+   # hello
+
+   Hello
+------
+
 ---
 ------
 ***
@@ -44,6 +50,11 @@ Hello [title](http://url "this is a title").
 > - Profits were higher than ever.
 >
 > *Everything* is going according to **plan**.
+
+    code block
+    indent
+
+  this is not a code block
 
 - list1
 - list2
@@ -219,4 +230,9 @@ Break
 
   leading spaces
   should not factor in
+
+   ```
+code
+more code
+   ```
 
