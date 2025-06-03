@@ -611,6 +611,7 @@ def parsemarkdown(lines):
                 ue.sub = markdownsubst(cline[next_spc:].strip())
                 ue.key = number
                 ce.sub.append(ue)
+                pkey = number
                 #
                 while i < len(lines):
                     cline = lines[i]
@@ -650,8 +651,12 @@ def parsemarkdown(lines):
                                 ue = MarkdownElement()
                                 ue.elemType = 'item'
                                 ue.sub = markdownsubst(cline[next_spc:].strip())
-                                ue.key = number
+                                # in this interpreter, giving the same number again means auto count
+                                if not number == pkey:
+                                    ue.key = number
+                                #
                                 ce.sub.append(ue)
+                                pkey = number
                                 i += 1
                             else:
                                 break
