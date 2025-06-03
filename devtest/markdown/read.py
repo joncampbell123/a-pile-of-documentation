@@ -413,6 +413,12 @@ def parsemarkdown(lines):
                     i += 1
                 else:
                     break
+            # remove empty trailing lines
+            ei = len(code) - 1
+            while ei > 0 and code[ei-1] == '\n':
+                ei -= 1
+            code = code[0:ei]
+            #
             ce.sub.append(code)
             mdRoot.sub.append(ce)
             continue
