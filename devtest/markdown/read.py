@@ -573,9 +573,10 @@ def parsemarkdown(lines):
         # ordered list
         # the Markdown spec seems to imply the numbers don't matter, but to other interpreters it does.
         if len(stcline) > 0:
-            p = re.match(r'^ *(\d+)\. ',cline)
+            p = re.match(r'^ *(\d+)\. *',cline)
             if p:
                 this_spc = skipwhitespace(cline,0)
+                next_spc = p.span()[1]
                 #
                 ce = MarkdownElement()
                 ce.elemType = "olist"
@@ -583,7 +584,7 @@ def parsemarkdown(lines):
                 number = int(p.groups()[0])
                 ue = MarkdownElement()
                 ue.elemType = 'item'
-                ue.sub = markdownsubst(cline[p.span()[1]:].strip())
+                ue.sub = markdownsubst(cline[next_spc:].strip())
                 ue.key = number
                 ce.sub.append(ue)
                 #
@@ -596,7 +597,7 @@ def parsemarkdown(lines):
                     else:
                         if spc < this_spc:
                             break
-                        elif spc >= (this_spc+4):
+                        elif spc >= next_spc:
                             suspc = spc
                             #
                             copylines = [ cline[suspc:] ]
@@ -618,13 +619,13 @@ def parsemarkdown(lines):
                                 ce.sub.append(se)
                             #
                         else:
-                            p = re.match(r'^ *(\d+)\. ',cline)
+                            p = re.match(r'^ *(\d+)\. *',cline)
                             if p:
-                                cline = cline[p.span()[1]:]
                                 number = int(p.groups()[0])
+                                next_spc = p.span()[1]
                                 ue = MarkdownElement()
                                 ue.elemType = 'item'
-                                ue.sub = markdownsubst(cline.strip())
+                                ue.sub = markdownsubst(cline[next_spc:].strip())
                                 ue.key = number
                                 ce.sub.append(ue)
                                 i += 1
