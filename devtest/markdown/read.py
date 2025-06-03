@@ -64,6 +64,11 @@ def findunescaped(line,what,start):
             break
     return ei
 
+def skipwhitespace(line,end):
+    while end < len(line) and line[end] == ' ':
+        end += 1
+    return end
+
 def markdownsubst(line,mod={}):
     r = [ ]
     i = 0
@@ -264,8 +269,7 @@ def markdownsubst(line,mod={}):
                     reflabel = text
                     text = None
                     end += 1
-                    while end < len(line) and line[end] == ' ':
-                        end += 1
+                    end = skipwhitespace(line,end)
                     #
                     if end < len(line) and line[end] == '<':
                         end += 1
@@ -282,8 +286,7 @@ def markdownsubst(line,mod={}):
                         end = ei
                     reflinktarget = True
                     #
-                    while end < len(line) and line[end] == ' ':
-                        end += 1
+                    end = skipwhitespace(line,end)
                     #
                     if end < len(line) and (line[end] == '\'' or line[end] == '\"' or line[end] == '('):
                         if line[end] == '(':
@@ -298,8 +301,7 @@ def markdownsubst(line,mod={}):
                         text = line[end:ei]
                         end = ei+1
                 else:
-                    while end < len(line) and line[end] == ' ':
-                        end += 1
+                    end = skipwhitespace(line,end)
                     #
                     if end < len(line) and line[end] == '[':
                         end += 1
@@ -337,12 +339,10 @@ def markdownsubst(line,mod={}):
                     ce.elemType = "link"
                 #
                 if what == '[![':
-                    while end < len(line) and line[end] == ' ':
-                        end += 1
+                    end = skipwhitespace(line,end)
                     if end < len(line) and line[end] == ']':
                         end += 1
-                    while end < len(line) and line[end] == ' ':
-                        end += 1
+                    end = skipwhitespace(line,end)
                     if end < len(line) and line[end] == '(':
                         end += 1
                     ei = findunescaped(line,')',end)
@@ -358,8 +358,7 @@ def markdownsubst(line,mod={}):
                 ce.url = url
                 r.append(ce)
                 #
-                if end < len(line) and line[end] == ' ':
-                    end += 1
+                end = skipwhitespace(line,end)
             else:
                 end = span[0]+1
                 accum += line[beg:end]
