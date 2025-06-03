@@ -514,66 +514,58 @@ def parsemarkdown(lines):
             continue
 
         # unordered list
-        # WARNING: Some Markdown interpreters consider anything part of the list if it is indented the same with spaces.
-        #          For example:
-        #
-        #          - list item
-        #
-        #            something
-        #
-        #          - list item 2
-        #
-        #          We don't do that, we require the 4 spaces or tab that the Markdown Guide says it needs to be:
-        #
-        #          - list item
-        #
-        #              something indented by 4 spaces or tab
-        #
-        #          - list item 2
-        if len(cline) > 1 and (cline[0] == '-' or cline[0] == '+' or cline[0] == '*') and cline[1] == ' ':
-            spc = 2
-            match = cline[0]
+        if len(stcline) > 1 and (stcline[0] == '-' or stcline[0] == '+' or stcline[0] == '*') and stcline[1] == ' ':
+            this_spc = skipwhitespace(cline,0)
+            match = stcline[0]
             #
             ce = MarkdownElement()
             ce.elemType = "ulist"
             #
-            cline = cline[spc:]
             ue = MarkdownElement()
             ue.elemType = 'item'
-            ue.sub = markdownsubst(cline.strip())
+            ue.sub = markdownsubst(stcline[2:].strip())
             ce.sub.append(ue)
             #
             while i < len(lines):
                 cline = lines[i]
-                if len(cline) == 0 or cline == (" "*len(cline)):
+                spc = skipwhitespace(cline,0)
+                stcline = cline[spc:]
+                if len(stcline) == 0:
                     i += 1
-                elif len(cline) > 1 and cline[0] == match and cline[1] == ' ':
-                    cline = cline[spc:]
-                    i += 1
-                    #
-                    ue = MarkdownElement()
-                    ue.elemType = 'item'
-                    ue.sub = markdownsubst(cline.strip())
-                    ce.sub.append(ue)
-                elif len(cline) > 0 and cline[0:spc] == (" "*spc):
-                    suspc = skipwhitespace(cline,spc)
-                    copylines = [ cline[suspc:] ]
-                    i += 1
-                    while i < len(lines):
-                        cline = lines[i]
-                        if len(cline) > 0 and cline[0:suspc] == (" "*suspc):
+                else:
+                    if spc < this_spc:
+                        break
+                    elif spc >= (this_spc+4):
+                        suspc = spc
+                        #
+                        copylines = [ cline[suspc:] ]
+                        i += 1
+                        while i < len(lines):
+                            cline = lines[i]
+                            spc = skipwhitespace(cline,0)
+                            stcline = cline[spc:]
+                            #
+                            if len(stcline) > 0:
+                                if spc < suspc:
+                                    break
+                                copylines.append(cline[suspc:])
+                            else:
+                                copylines.append(stcline)
                             i += 1
-                            copylines.append(cline[suspc:])
-                        elif len(cline) == 0 or cline == (" "*len(cline)):
+                        #
+                        for se in parsemarkdown(copylines).sub:
+                            ce.sub.append(se)
+                        #
+                    else:
+                        if len(stcline) > 1 and stcline[0] == match and stcline[1] == ' ':
                             i += 1
+                            #
+                            ue = MarkdownElement()
+                            ue.elemType = 'item'
+                            ue.sub = markdownsubst(stcline[2:].strip())
+                            ce.sub.append(ue)
                         else:
                             break
-                    #
-                    for se in parsemarkdown(copylines).sub:
-                        ce.sub.append(se)
-                    #
-                else:
-                    break
             #
             mdRoot.sub.append(ce)
             continue
