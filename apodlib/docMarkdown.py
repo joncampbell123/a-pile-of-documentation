@@ -360,8 +360,9 @@ def markdownsubst(line,mod={}):
                 ce.text = text
                 ce.link = link
                 #
-                if not text == None:
-                    ce.sub = markdownsubst(text,mod)
+                if ce.elemType == 'link':
+                    if not text == None:
+                        ce.sub = markdownsubst(text,mod)
                 #
                 ce.url = url
                 r.append(ce)
