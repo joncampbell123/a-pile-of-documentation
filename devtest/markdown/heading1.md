@@ -292,3 +292,22 @@ break
        2. List12
    2. List2
 
+col1|col2
+----|----
+abc|def
+
+|col1|col2|
+|---|---|
+|abc|def|
+|ghi|jkl|
+
+|`col1`|`col2`|
+|---|---|
+|*abc*|_def_|
+|**ghi**|`jkl`|
+
+|col1|col2|col3
+|---|---|---|
+|abc|def|
+|ghi|jkl|mmm
+

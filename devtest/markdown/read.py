@@ -379,6 +379,34 @@ def markdownsubst(line,mod={}):
         accum = ''
     return r
 
+def splittablecols(line):
+    line = line.strip()
+    r = [ ]
+    i = 0
+    #
+    if len(line) > 0 and line[0] == '|':
+        line = line[1:]
+    #
+    if len(line) > 1 and line[-1] == '|' and not line[-2] == '\\|':
+        line = line[0:len(line)-1]
+    #
+    while i < len(line):
+        j = findunescaped(line,'|',i)
+        if j < 0:
+            j = len(line)
+        #
+        r.append(line[i:j])
+        i = j+1
+    #
+    return r
+
+def looksliketableseparators(cols):
+    for col in cols:
+        if not re.match(r'^[ \-\:]*-{3,}[ \-\:]*$',col):
+            return False
+    #
+    return True
+
 def parsemarkdown(lines):
     mdRoot = MarkdownElement()
     i = 0
@@ -634,6 +662,53 @@ def parsemarkdown(lines):
                 #
                 mdRoot.sub.append(ce)
                 continue
+
+        # table?
+        x = findunescaped(cline,'|',0)
+        if x >= 0:
+            headcols = splittablecols(cline)
+            sepcols = splittablecols(nline)
+            #
+            if len(headcols) > 0 and len(sepcols) >= len(headcols):
+                if looksliketableseparators(sepcols):
+                    ncols = len(headcols)
+                    tablecol = [ None ] * ncols
+                    i += 1
+                    #
+                    te = MarkdownElement()
+                    te.elemType = 'table'
+                    #
+                    he = MarkdownElement()
+                    he.elemType = 'tableheadrow'
+                    for col in headcols:
+                        ce = MarkdownElement()
+                        ce.elemType = 'tablecell'
+                        ce.sub = markdownsubst(col)
+                        he.sub.append(ce)
+                    #
+                    te.sub.append(he)
+                    #
+                    while i < len(lines):
+                        stcline = lines[i].strip()
+                        tabcols = splittablecols(stcline)
+                        if len(tabcols) <= 1:
+                            x = findunescaped(stcline,'|',0)
+                            if x < 0:
+                                break
+                        #
+                        he = MarkdownElement()
+                        he.elemType = 'tablerow'
+                        for col in tabcols:
+                            ce = MarkdownElement()
+                            ce.elemType = 'tablecell'
+                            ce.sub = markdownsubst(col)
+                            he.sub.append(ce)
+                        #
+                        te.sub.append(he)
+                        i += 1
+                    #
+                    mdRoot.sub.append(te)
+                    continue
 
         # text in a paragraph can continue onto the next line
         cline = cline.lstrip()
