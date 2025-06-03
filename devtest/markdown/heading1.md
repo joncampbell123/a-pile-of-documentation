@@ -311,3 +311,8 @@ abc|def
 |abc|def|
 |ghi|jkl|mmm
 
+|col1|col2|col3
+|:---|---:|:---:|
+|abc|def|
+|ghi|jkl|mmm
+

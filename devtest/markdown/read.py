@@ -17,6 +17,7 @@ class MarkdownElement:
     key = None
     text = None
     link = None
+    align = None
     level = None
     title = None
     syntax = None
@@ -34,6 +35,8 @@ class MarkdownElement:
             r += " link="+str(self.link)
         if not self.text == None:
             r += " text="+str(self.text)
+        if not self.align == None:
+            r += " align="+str(self.align)
         if not self.level == None:
             r += " level="+str(self.level)
         if not self.title == None:
@@ -672,17 +675,35 @@ def parsemarkdown(lines):
             if len(headcols) > 0 and len(sepcols) >= len(headcols):
                 if looksliketableseparators(sepcols):
                     ncols = len(headcols)
-                    tablecol = [ None ] * ncols
+                    tablealign = [ "left" ] * ncols
                     i += 1
+                    #
+                    for ci in range(0,min(ncols,min(len(sepcols),len(headcols)))):
+                        col = sepcols[ci]
+                        cleft = False
+                        cright = False
+                        if col[0] == ':':
+                            cleft = True
+                        if col[-1] == ':':
+                            cright = True
+                        #
+                        if cleft and cright:
+                            tablealign[ci] = "center"
+                        elif cleft:
+                            tablealign[ci] = "left"
+                        elif cright:
+                            tablealign[ci] = "right"
                     #
                     te = MarkdownElement()
                     te.elemType = 'table'
                     #
                     he = MarkdownElement()
                     he.elemType = 'tableheadrow'
-                    for col in headcols:
+                    for ci in range(0,ncols):
+                        col = headcols[ci]
                         ce = MarkdownElement()
                         ce.elemType = 'tablecell'
+                        ce.align = tablealign[ci]
                         ce.sub = markdownsubst(col)
                         he.sub.append(ce)
                     #
@@ -698,9 +719,11 @@ def parsemarkdown(lines):
                         #
                         he = MarkdownElement()
                         he.elemType = 'tablerow'
-                        for col in tabcols:
+                        for ci in range(0,min(ncols,len(tabcols))):
+                            col = tabcols[ci]
                             ce = MarkdownElement()
                             ce.elemType = 'tablecell'
+                            ce.align = tablealign[ci]
                             ce.sub = markdownsubst(col)
                             he.sub.append(ce)
                         #
