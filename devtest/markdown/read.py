@@ -425,7 +425,7 @@ def parsemarkdown(lines):
 
         # heading level 2
         #----------------
-        if len(stcline) > 0 and re.match(r'^[^\-\*\#\~\`]',stcline) and re.match(r'^-+$',stnline):
+        if len(stcline) > 0 and re.match(r'^[^\-\*\#\~\`\|]',stcline) and re.match(r'^-+$',stnline):
             i += 1
             ce = MarkdownElement()
             ce.elemType = "heading"
@@ -436,7 +436,7 @@ def parsemarkdown(lines):
 
         # heading level 1
         #================
-        if len(stcline) > 0 and re.match(r'^[^\-\*\#\~\`]',stcline) and re.match(r'^=+$',stnline):
+        if len(stcline) > 0 and re.match(r'^[^\-\*\#\~\`\|]',stcline) and re.match(r'^=+$',stnline):
             i += 1
             ce = MarkdownElement()
             ce.elemType = "heading"
