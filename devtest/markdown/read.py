@@ -65,9 +65,16 @@ def findunescaped(line,what,start):
     return ei
 
 def skipwhitespace(line,end):
-    while end < len(line) and line[end] == ' ':
-        end += 1
-    return end
+    if end >= len(line):
+        return end
+    if not line[end] == ' ':
+        return end
+    #
+    ei = re.search(r' +',line[end:])
+    if ei:
+        return end+ei.span()[1]
+    else:
+        return len(line)
 
 def markdownsubst(line,mod={}):
     r = [ ]
