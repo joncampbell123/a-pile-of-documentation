@@ -455,6 +455,9 @@ def parsemarkdown(lines):
             mdRoot.sub.append(ce)
             continue
 
+        # all processing past this point no longer needs to know how many leading spaces
+        cline = cline.lstrip()
+
         # fenced code block (with optional language for syntax highlighting)
         x = re.match(r'^([\`\~]{3})([a-zA-Z0-9]*)',cline)
         if x:

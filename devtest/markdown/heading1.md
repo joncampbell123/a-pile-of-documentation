@@ -204,3 +204,19 @@ mailto:mail@me
 mailto:mail@me.com
 Send me mail at mailto:mail@me.com.
 
+- list1
+- list2
+
+Break
+
+ - list1
+ - list2
+
+Break
+
+   - list1
+   - list2
+
+  leading spaces
+  should not factor in
+
