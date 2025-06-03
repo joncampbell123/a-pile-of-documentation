@@ -46,6 +46,48 @@ def emit_mde(md,mod={}):
         #
         if md.elemType == None:
             True
+        elif md.elemType == 'ulist':
+            sys.stdout.write("<ul>")
+            #
+            inItem = False
+            for ent in md.sub:
+                if isinstance(ent,str):
+                    continue
+                #
+                if ent.elemType == 'item':
+                    if inItem:
+                        sys.stdout.write("</li>")
+                    sys.stdout.write("<li>")
+                    inItem = True
+                #
+                emit_mde(ent,smod)
+            #
+            if inItem:
+                sys.stdout.write("</li>")
+            #
+            sys.stdout.write("</ul>")
+            return
+        elif md.elemType == 'olist':
+            sys.stdout.write("<ol>")
+            #
+            inItem = False
+            for ent in md.sub:
+                if isinstance(ent,str):
+                    continue
+                #
+                if ent.elemType == 'item':
+                    if inItem:
+                        sys.stdout.write("</li>")
+                    sys.stdout.write("<li>")
+                    inItem = True
+                #
+                emit_mde(ent,smod)
+            #
+            if inItem:
+                sys.stdout.write("</li>")
+            #
+            sys.stdout.write("</ol>")
+            return
         elif md.elemType == 'paragraph':
             tag = 'p'
         elif md.elemType == 'heading':
@@ -100,8 +142,11 @@ def emit_mde(md,mod={}):
             #
             if not md.text == None:
                 sys.stdout.write(html_escape(md.text))
+            elif not md.url == None:
+                sys.stdout.write(html_escape(md.url))
             #
             sys.stdout.write("</a>")
+            return
         else:
             #print("\n? "+str(md.elemType))
             True

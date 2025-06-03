@@ -559,7 +559,7 @@ def parsemarkdown(lines):
                 else:
                     if spc < this_spc:
                         break
-                    elif spc >= (this_spc+4):
+                    elif spc >= (this_spc+2):
                         suspc = spc
                         #
                         copylines = [ cline[suspc:] ]
