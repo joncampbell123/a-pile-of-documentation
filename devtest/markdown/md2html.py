@@ -41,6 +41,7 @@ def emit_mde(md,mod={}):
         sys.stdout.write(html_escape(md))
     else:
         tag = None
+        attr = ''
         smod = mod.copy()
         #
         if md.elemType == None:
@@ -74,6 +75,13 @@ def emit_mde(md,mod={}):
                 tag = "th"
             else:
                 tag = "td"
+            #
+            if md.align == 'left':
+                attr += ' class="leftalign"'
+            elif md.align == 'center':
+                attr += ' class="centeralign"'
+            elif md.align == 'right':
+                attr += ' class="rightalign"'
         else:
             #print("\n? "+str(md.elemType))
             True
@@ -85,7 +93,7 @@ def emit_mde(md,mod={}):
             if tag == 'b+i':
                 sys.stdout.write("<em><b>")
             else:
-                sys.stdout.write("<"+tag+">")
+                sys.stdout.write("<"+tag+attr+">")
             #
             for ent in md.sub:
                 emit_mde(ent,smod)
@@ -98,7 +106,7 @@ def emit_mde(md,mod={}):
             if tag == 'b+i':
                 True
             else:
-                sys.stdout.write("<"+tag+"/>")
+                sys.stdout.write("<"+tag+attr+"/>")
 
 sys.stdout.write("<!DOCTYPE html>")
 sys.stdout.write("<html>")
@@ -106,6 +114,9 @@ sys.stdout.write("<head>")
 sys.stdout.write("<meta charset=\"utf-8\">\n")
 sys.stdout.write("<style>\n")
 sys.stdout.write("codeblock { white-space: pre-wrap; text-wrap-mode: nowrap; font-family: monospace, monospace; padding: 0.7em; display: block; }\n");
+sys.stdout.write(".leftalign { text-align: left; }\n");
+sys.stdout.write(".centeralign { text-align: center; }\n");
+sys.stdout.write(".rightalign { text-align: right; }\n");
 sys.stdout.write("</style>\n")
 sys.stdout.write("</head>")
 sys.stdout.write("<body>")
