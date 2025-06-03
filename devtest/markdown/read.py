@@ -576,11 +576,12 @@ def parsemarkdown(lines):
         if len(cline) > 0:
             p = re.match(r'^(\d+)\. ',cline)
             if p:
+                spc = p.span()[1]
                 #
                 ce = MarkdownElement()
                 ce.elemType = "olist"
                 #
-                cline = cline[p.span()[1]:]
+                cline = cline[spc:]
                 number = int(p.groups()[0])
                 ue = MarkdownElement()
                 ue.elemType = 'item'
@@ -590,18 +591,20 @@ def parsemarkdown(lines):
                 #
                 while i < len(lines):
                     cline = lines[i]
-                    if len(cline) == 0 or cline == "\t":
+                    if len(cline) == 0 or cline == (" "*len(cline)):
                         i += 1
-                    elif len(cline) > 0 and cline[0] == '\t':
-                        copylines = [ cline[1:] ]
+                    elif len(cline) > 0 and cline[0:spc] == (" "*spc):
+                        suspc = skipwhitespace(cline,spc)
+                        copylines = [ cline[suspc:] ]
                         i += 1
                         while i < len(lines):
                             cline = lines[i]
-                            if len(cline) > 1 and cline[0] == '\t':
-                                cline = cline[1:]
+                            if re.match(r'^(\d+)\. ',cline):
+                                break
+                            elif len(cline) > 0 and cline[0:suspc] == (" "*suspc):
                                 i += 1
-                                copylines.append(cline)
-                            elif len(cline) == 0 or cline == "\t":
+                                copylines.append(cline[suspc:])
+                            elif len(cline) == 0 or cline == (" "*len(cline)):
                                 i += 1
                             else:
                                 break

@@ -141,6 +141,18 @@ Something
 Something
 
 1. List1
+
+   Paragraph
+   or so
+ 
+2. List2
+    1. Indent1
+    2. Indent2
+3. List3
+
+Something
+
+1. List1
 2. List2
     1. Indent1
         1. IndentIndent1
