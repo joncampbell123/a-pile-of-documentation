@@ -435,18 +435,19 @@ def parsemarkdown(lines):
             mdRoot.sub.append(ce)
             continue
 
-        # code block (remember, this is why the regex above to convert four spaces into tabs)
-        if cline[0] == "\t":
+        # code block
+        if cline[0:4] == "    ":
+            spc = 4 # or do we standardize on the specific spaces, use skipwhitespace(cline,4) ?
             ce = MarkdownElement()
             ce.elemType = "codeblock"
-            code = re.sub(r'\t','    ',cline[1:]) # convert back to spaces after stripping tab
+            code = cline[spc:]
             while i < len(lines):
                 cline = lines[i]
                 if cline == "":
                     code += "\n"
                     i += 1
-                elif cline[0] == "\t":
-                    code += "\n" + re.sub(r'\t','    ',cline[1:])
+                elif cline[0:spc] == (" "*spc):
+                    code += "\n" + cline[spc:]
                     i += 1
                 else:
                     break
@@ -476,7 +477,7 @@ def parsemarkdown(lines):
                     break
                 if not code == "":
                     code += "\n"
-                code += re.sub(r'\t','    ',cline)
+                code += cline
             #
             if not lang == None:
                 ce.syntax = lang
