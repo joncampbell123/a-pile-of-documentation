@@ -673,7 +673,7 @@ def parsemarkdown(lines):
                     i += 1
                     #
                     for ci in range(0,min(ncols,min(len(sepcols),len(headcols)))):
-                        col = sepcols[ci]
+                        col = sepcols[ci].strip()
                         cleft = False
                         cright = False
                         if col[0] == ':':
@@ -694,7 +694,7 @@ def parsemarkdown(lines):
                     he = MarkdownElement()
                     he.elemType = 'tableheadrow'
                     for ci in range(0,ncols):
-                        col = headcols[ci]
+                        col = headcols[ci].strip()
                         ce = MarkdownElement()
                         ce.elemType = 'tablecell'
                         ce.align = tablealign[ci]
@@ -714,7 +714,7 @@ def parsemarkdown(lines):
                         he = MarkdownElement()
                         he.elemType = 'tablerow'
                         for ci in range(0,min(ncols,len(tabcols))):
-                            col = tabcols[ci]
+                            col = tabcols[ci].strip()
                             ce = MarkdownElement()
                             ce.elemType = 'tablecell'
                             ce.align = tablealign[ci]
