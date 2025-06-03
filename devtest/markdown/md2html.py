@@ -183,8 +183,8 @@ sys.stdout.write("<html>")
 sys.stdout.write("<head>")
 sys.stdout.write("<meta charset=\"utf-8\">\n")
 sys.stdout.write("<style>\n")
-sys.stdout.write("codeblock { white-space: pre-wrap; text-wrap-mode: nowrap; font-family: monospace, monospace; padding: 0.7em; display: block; }\n");
-sys.stdout.write("blockquote { padding: 0.35em; padding-left: 0.75em; border-left: 1.0em solid #7f7f7f; display: block; background: #cfcfcf; }\n");
+sys.stdout.write("codeblock { white-space: pre-wrap; text-wrap-mode: nowrap; font-family: monospace, monospace; padding: 0.7em; display: block; background: #efefef; }\n");
+sys.stdout.write("blockquote { padding: 0.35em; padding-left: 0.75em; border-left: 1.0em solid #bfbfbf; display: block; background: #efefef; }\n");
 sys.stdout.write("table { border: 1px solid #9f9f9f; padding: 0.25em; border-collapse: collapse; margin-top: 0.75em; margin-bottom: 0.75em; }\n");
 sys.stdout.write("th { border: 1px solid #9f9f9f; padding: 0.25em; }\n");
 sys.stdout.write("td { border: 1px solid #9f9f9f; padding: 0.25em; }\n");
