@@ -131,6 +131,26 @@ def emit_mde(md,mod={}):
                 attr += ' class="centeralign"'
             elif md.align == 'right':
                 attr += ' class="rightalign"'
+        elif md.elemType == 'imagelink':
+            if not md.link == None:
+                if re.match(r'\"',md.link):
+                    raise Exception("Quotes in markdown")
+                sys.stdout.write("<a href=\""+md.link+"\">");
+            #
+            sys.stdout.write("<img");
+            #
+            if not md.url == None:
+                if re.match(r'\"',md.url):
+                    raise Exception("Quotes in markdown")
+                sys.stdout.write(" src=\""+md.url+"\"")
+            if not md.text == None:
+                if re.match(r'\"',md.text):
+                    raise Exception("Quotes in markdown")
+                sys.stdout.write(" alt=\""+md.text+"\"")
+            #
+            sys.stdout.write(" />");
+            if not md.link == None:
+                sys.stdout.write("</a>");
         elif md.elemType == 'link':
             sys.stdout.write("<a")
             #
