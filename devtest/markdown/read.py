@@ -524,12 +524,13 @@ def parsemarkdown(lines):
         #
         #          - list item 2
         if len(cline) > 1 and (cline[0] == '-' or cline[0] == '+' or cline[0] == '*') and cline[1] == ' ':
+            spc = 2
             match = cline[0]
             #
             ce = MarkdownElement()
             ce.elemType = "ulist"
             #
-            cline = cline[2:]
+            cline = cline[spc:]
             ue = MarkdownElement()
             ue.elemType = 'item'
             ue.sub = markdownsubst(cline.strip())
@@ -537,26 +538,26 @@ def parsemarkdown(lines):
             #
             while i < len(lines):
                 cline = lines[i]
-                if len(cline) == 0 or cline == "\t":
+                if len(cline) == 0 or cline == (" "*len(cline)):
                     i += 1
                 elif len(cline) > 1 and cline[0] == match and cline[1] == ' ':
-                    cline = cline[2:]
+                    cline = cline[spc:]
                     i += 1
                     #
                     ue = MarkdownElement()
                     ue.elemType = 'item'
                     ue.sub = markdownsubst(cline.strip())
                     ce.sub.append(ue)
-                elif len(cline) > 0 and cline[0] == '\t':
-                    copylines = [ cline[1:] ]
+                elif len(cline) > 0 and cline[0:spc] == (" "*spc):
+                    suspc = skipwhitespace(cline,spc)
+                    copylines = [ cline[suspc:] ]
                     i += 1
                     while i < len(lines):
                         cline = lines[i]
-                        if len(cline) > 1 and cline[0] == '\t':
-                            cline = cline[1:]
+                        if len(cline) > 0 and cline[0:suspc] == (" "*suspc):
                             i += 1
-                            copylines.append(cline)
-                        elif len(cline) == 0 or cline == "\t":
+                            copylines.append(cline[suspc:])
+                        elif len(cline) == 0 or cline == (" "*len(cline)):
                             i += 1
                         else:
                             break
