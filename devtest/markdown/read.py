@@ -153,21 +153,21 @@ def markdownsubst(line,mod={}):
                     end += len(what)
                     #
                     ei = findunescaped(line,what,end)
-                    if ei < 0:
-                        code = line[end:]
+                    if ei < 0: # not code
+                        beg = end - len(what)
                         end = len(line)
+                        accum += line[beg:end]
                     else:
                         code = line[end:ei]
                         end = ei+1
-                    #
-                    if len(accum) > 0:
-                        r.append(accum)
-                        accum = ''
-                    #
-                    ce = MarkdownElement()
-                    ce.elemType = "code"
-                    ce.sub = markdownsubst(code,mod)
-                    r.append(ce)
+                        if len(accum) > 0:
+                            r.append(accum)
+                            accum = ''
+                        #
+                        ce = MarkdownElement()
+                        ce.elemType = "code"
+                        ce.sub = markdownsubst(code,mod)
+                        r.append(ce)
             elif what == '``': # escape code
                 end = span[0]
                 accum += line[beg:end]
