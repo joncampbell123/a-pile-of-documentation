@@ -200,7 +200,7 @@ def markdownsubst(line,mod={}):
                     end = len(line)
                 else:
                     code = line[end:ei]
-                    end = ei+1
+                    end = ei+len(what)
                 #
                 if len(accum) > 0:
                     r.append(accum)
