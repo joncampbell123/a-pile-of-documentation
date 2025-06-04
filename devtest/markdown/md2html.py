@@ -206,16 +206,20 @@ def emit_mde(md,mod={}):
                     raise Exception("Quotes in markdown")
                 sys.stdout.write(" id=\""+md.reflabel.lower()+"\"")
             #
-            sys.stdout.write(" />")
+            sys.stdout.write("></a>")
             #
-            if not md.reflabel == None:
-                sys.stdout.write(html_escape("["+md.reflabel+"] "))
             if not md.url == None:
-                sys.stdout.write("<a href=\""+md.url+"\">"+html_escape(md.url)+"</a> ")
-            for ent in md.sub:
-                emit_mde(ent,smod)
+                if re.match(r'\"',md.url):
+                    raise Exception("Quotes in markdown")
+                sys.stdout.write("<a href=\""+md.url+"\"")
+                #
+                if not md.text == None:
+                    if re.match(r'\"',md.text):
+                        raise Exception("Quotes in markdown")
+                    sys.stdout.write(" title=\""+md.text+"\"")
+                #
+                sys.stdout.write(">"+html_escape(md.url)+"</a> ")
             #
-            sys.stdout.write("<br/>")
             return
         else:
             #print("\n? "+str(md.elemType))
