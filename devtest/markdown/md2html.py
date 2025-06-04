@@ -11,7 +11,9 @@ from apodlib.docMarkdown import *
 
 inFile = sys.argv[1]
 lines = list(tabstospacesgen(rawtexttoutf8gen(rawtextsplitlinesgen(rawtextloadfile(inFile))),4))
-mdRoot = parsemarkdown(lines)
+mdstate = MarkdownState()
+mdRoot = parsemarkdown(lines,mdstate)
+markdownreflinkfixup(mdRoot,mdstate)
 
 def html_escape(md):
     i = 0

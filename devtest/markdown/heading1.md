@@ -232,7 +232,7 @@ Hi [hobbit-hole] [theHobbit].
   [1d]: <https://en.wikipedia.org/wiki/Hobbit#Lifestyle> "Hobbit lifestyles"
   [1e]: <https://en.wikipedia.org/wiki/Hobbit#Lifestyle> 'Hobbit lifestyles'
   [1f]: <https://en.wikipedia.org/wiki/Hobbit#Lifestyle> (Hobbit lifestyles)
-[theHobbit]: https://en.wikipedia.org/wiki/Hobbit#Lifestyle
+[theHobbit]: https://en.wikipedia.org/wiki/Hobbit
 
 I get 10 times more traffic from [Google][] than from
 [Yahoo][] or [MSN][].

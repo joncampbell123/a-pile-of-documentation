@@ -820,3 +820,21 @@ def dumpMDstate(mdstate):
             md = mdstate.reflinktargets[key]
             print("    "+key+": "+str(md))
 
+def markdownreflinkfixup(md,mdstate):
+    if isinstance(md,str):
+        return
+    else:
+        if md.elemType == 'reflink': # which has text already processed into the sub array
+            if not md.reflabel == None:
+                key = md.reflabel.lower()
+                if key in mdstate.reflinktargets:
+                    rlt = mdstate.reflinktargets[key]
+                    if not rlt.url == None and md.url == None:
+                        md.url = rlt.url
+                    if not rlt.text == None and md.title == None:
+                        md.title = rlt.text
+                    md.elemType = 'link'
+        #
+        for ent in md.sub:
+            markdownreflinkfixup(ent,mdstate)
+

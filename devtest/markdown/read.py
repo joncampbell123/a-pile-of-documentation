@@ -15,6 +15,7 @@ lines = list(tabstospacesgen(rawtexttoutf8gen(rawtextsplitlinesgen(rawtextloadfi
 # parse
 mdstate = MarkdownState()
 mdRoot = parsemarkdown(lines,mdstate)
+markdownreflinkfixup(mdRoot,mdstate)
 
 # dump
 dumpMDstate(mdstate)
