@@ -176,6 +176,8 @@ def emit_mde(md,mod={}):
             #
             sys.stdout.write("</a>")
             return
+        elif md.elemType == 'item':
+            True # do nothing
         else:
             #print("\n? "+str(md.elemType))
             True
