@@ -225,14 +225,21 @@ Hi [hobbit-hole] [1].
 
 Hi [hobbit-hole] [theHobbit].
 
-- [1]: https://en.wikipedia.org/wiki/Hobbit#Lifestyle
-- [1]: https://en.wikipedia.org/wiki/Hobbit#Lifestyle "Hobbit lifestyles"
-- [1]: https://en.wikipedia.org/wiki/Hobbit#Lifestyle 'Hobbit lifestyles'
-- [1]: https://en.wikipedia.org/wiki/Hobbit#Lifestyle (Hobbit lifestyles)
-- [1]: <https://en.wikipedia.org/wiki/Hobbit#Lifestyle> "Hobbit lifestyles"
-- [1]: <https://en.wikipedia.org/wiki/Hobbit#Lifestyle> 'Hobbit lifestyles'
-- [1]: <https://en.wikipedia.org/wiki/Hobbit#Lifestyle> (Hobbit lifestyles)
-- [theHobbit]: https://en.wikipedia.org/wiki/Hobbit#Lifestyle
+[1a]: https://en.wikipedia.org/wiki/Hobbit#Lifestyle
+[1]: https://en.wikipedia.org/wiki/Hobbit#Lifestyle "Hobbit lifestyles"
+[1b]: https://en.wikipedia.org/wiki/Hobbit#Lifestyle 'Hobbit lifestyles'
+[1c]: https://en.wikipedia.org/wiki/Hobbit#Lifestyle (Hobbit lifestyles)
+  [1d]: <https://en.wikipedia.org/wiki/Hobbit#Lifestyle> "Hobbit lifestyles"
+  [1e]: <https://en.wikipedia.org/wiki/Hobbit#Lifestyle> 'Hobbit lifestyles'
+  [1f]: <https://en.wikipedia.org/wiki/Hobbit#Lifestyle> (Hobbit lifestyles)
+[theHobbit]: https://en.wikipedia.org/wiki/Hobbit#Lifestyle
+
+I get 10 times more traffic from [Google][] than from
+[Yahoo][] or [MSN][].
+
+  [google]: http://google.com/        "Google"
+  [yahoo]:  http://search.yahoo.com/  "Yahoo Search"
+  [msn]:    http://search.msn.com/    "MSN Search"
 
 ![Tux, the Linux mascot](/assets/images/tux.png)
 

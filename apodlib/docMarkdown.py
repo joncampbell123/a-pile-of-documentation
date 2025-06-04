@@ -363,6 +363,11 @@ def markdownsubst(line,mod={}):
                 if ce.elemType == 'link' or ce.elemType == 'reflink':
                     if not text == None:
                         ce.sub = markdownsubst(text,mod)
+                if ce.elemType == 'reflink':
+                    if ce.reflabel == None or ce.reflabel == "": # "implicit link name shortcut"
+                        ce.reflabel = ce.text
+                if ce.elemType == 'reflinktarget':
+                    end = skipwhitespace(line,end)
                 #
                 ce.url = url
                 r.append(ce)
