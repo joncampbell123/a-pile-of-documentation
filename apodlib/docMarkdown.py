@@ -73,6 +73,30 @@ def skipwhitespace(line,end):
     else:
         return len(line)
 
+def escapesubst(line):
+    i = 0
+    #
+    accum = ''
+    while i < len(line):
+        beg = i
+        end = len(line)
+        j = re.search(r'\\',line[beg:end])
+        if j:
+            span = j.span()
+            span = [span[0]+beg,span[1]+beg]
+            #
+            end = span[0]
+            accum += line[beg:end]
+            what = line[span[0]:span[0]+2]
+            end = span[0]+2
+            accum += what[1]
+        else:
+            accum += line[beg:end]
+
+        i = end
+    #
+    return accum
+
 def markdownsubst(line,mod={}):
     r = [ ]
     i = 0
@@ -163,7 +187,7 @@ def markdownsubst(line,mod={}):
                         #
                         ce = MarkdownElement()
                         ce.elemType = "code"
-                        ce.sub = markdownsubst(code,mod)
+                        ce.sub = [ escapesubst(code) ]
                         r.append(ce)
             elif what == '``': # escape code
                 end = span[0]
