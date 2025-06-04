@@ -179,47 +179,10 @@ def emit_mde(md,mod={}):
         elif md.elemType == 'item':
             True # do nothing
         elif md.elemType == 'reflink':
-            sys.stdout.write("<a")
-            #
-            if not md.reflabel == None:
-                if re.match(r'\"',md.reflabel):
-                    raise Exception("Quotes in markdown")
-                sys.stdout.write(" href=\"#"+md.reflabel.lower()+"\"")
-            #
-            sys.stdout.write(">")
-            #
-            if len(md.sub) > 0:
-                for ent in md.sub:
-                    emit_mde(ent,smod)
-            elif not md.text == None:
-                sys.stdout.write(html_escape(md.text))
-            elif not md.reflabel == None:
-                sys.stdout.write(html_escape(md.reflabel))
-            #
-            sys.stdout.write("</a>")
+            # should not see this
             return
         elif md.elemType == 'reflinktarget':
-            sys.stdout.write("<a")
-            #
-            if not md.reflabel == None:
-                if re.match(r'\"',md.reflabel):
-                    raise Exception("Quotes in markdown")
-                sys.stdout.write(" id=\""+md.reflabel.lower()+"\"")
-            #
-            sys.stdout.write("></a>")
-            #
-            if not md.url == None:
-                if re.match(r'\"',md.url):
-                    raise Exception("Quotes in markdown")
-                sys.stdout.write("<a href=\""+md.url+"\"")
-                #
-                if not md.text == None:
-                    if re.match(r'\"',md.text):
-                        raise Exception("Quotes in markdown")
-                    sys.stdout.write(" title=\""+md.text+"\"")
-                #
-                sys.stdout.write(">"+html_escape(md.url)+"</a> ")
-            #
+            # should not see this
             return
         else:
             #print("\n? "+str(md.elemType))

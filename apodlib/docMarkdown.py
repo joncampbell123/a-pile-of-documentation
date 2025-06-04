@@ -360,7 +360,7 @@ def markdownsubst(line,mod={}):
                 ce.text = text
                 ce.link = link
                 #
-                if ce.elemType == 'link' or ce.elemType == 'reflink' or ce.elemType == 'reflinktarget':
+                if ce.elemType == 'link' or ce.elemType == 'reflink':
                     if not text == None:
                         ce.sub = markdownsubst(text,mod)
                 #
