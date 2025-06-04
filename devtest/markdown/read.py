@@ -13,8 +13,9 @@ inFile = sys.argv[1]
 lines = list(tabstospacesgen(rawtexttoutf8gen(rawtextsplitlinesgen(rawtextloadfile(inFile))),4))
 
 # parse
-mdRoot = parsemarkdown(lines)
+mdstate = MarkdownState()
+mdRoot = parsemarkdown(lines,mdstate)
 
 # dump
+dumpMDstate(mdstate)
 dumpMD(mdRoot)
-

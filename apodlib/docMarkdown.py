@@ -5,6 +5,11 @@ import sys
 
 from apodlib.docRawText import *
 
+class MarkdownState:
+    reflinktargets = None
+    def __init__(self):
+        self.reflinktargets = { }
+
 class MarkdownElement:
     sub = None
     url = None
@@ -97,7 +102,7 @@ def escapesubst(line):
     #
     return accum
 
-def markdownsubst(line,mod={}):
+def markdownsubst(line,mdstate,mod={}):
     r = [ ]
     i = 0
     #
@@ -208,7 +213,7 @@ def markdownsubst(line,mod={}):
                 #
                 smod = mod.copy()
                 smod['ignore code'] = True
-                for s in markdownsubst(code,smod): # no need for whole sub element, make it inline to the subs
+                for s in markdownsubst(code,mdstate,smod): # no need for whole sub element, make it inline to the subs
                     r.append(s)
             elif what == '*' or what == '_': # italic
                 end = span[0]
@@ -229,7 +234,7 @@ def markdownsubst(line,mod={}):
                 #
                 ce = MarkdownElement()
                 ce.elemType = "italic"
-                ce.sub = markdownsubst(code,mod)
+                ce.sub = markdownsubst(code,mdstate,mod)
                 r.append(ce)
             elif what == '**' or what == '__': # bold
                 end = span[0]
@@ -250,7 +255,7 @@ def markdownsubst(line,mod={}):
                 #
                 ce = MarkdownElement()
                 ce.elemType = "bold"
-                ce.sub = markdownsubst(code,mod)
+                ce.sub = markdownsubst(code,mdstate,mod)
                 r.append(ce)
             elif re.match(r'^[\_\*]{3}$',what): # bold+italic
                 end = span[0]
@@ -271,7 +276,7 @@ def markdownsubst(line,mod={}):
                 #
                 ce = MarkdownElement()
                 ce.elemType = "bold+italic"
-                ce.sub = markdownsubst(code,mod)
+                ce.sub = markdownsubst(code,mdstate,mod)
                 r.append(ce)
             elif what == '[' or what == '![' or what == '[![':
                 end = span[0]
@@ -386,15 +391,20 @@ def markdownsubst(line,mod={}):
                 #
                 if ce.elemType == 'link' or ce.elemType == 'reflink':
                     if not text == None:
-                        ce.sub = markdownsubst(text,mod)
+                        ce.sub = markdownsubst(text,mdstate,mod)
                 if ce.elemType == 'reflink':
                     if ce.reflabel == None or ce.reflabel == "": # "implicit link name shortcut"
                         ce.reflabel = ce.text
-                if ce.elemType == 'reflinktarget':
-                    end = skipwhitespace(line,end)
                 #
                 ce.url = url
-                r.append(ce)
+                if ce.elemType == 'reflinktarget':
+                    end = skipwhitespace(line,end)
+                    if not ce.reflabel == None and not ce.reflabel == "":
+                        key = ce.reflabel.lower()
+                        if not key in mdstate.reflinktargets:
+                            mdstate.reflinktargets[key] = ce
+                else:
+                    r.append(ce)
                 #
             else:
                 end = span[0]+1
@@ -437,7 +447,7 @@ def looksliketableseparators(cols):
     #
     return True
 
-def parsemarkdown(lines):
+def parsemarkdown(lines,mdstate=MarkdownState()):
     mdRoot = MarkdownElement()
     i = 0
     while i < len(lines):
@@ -488,7 +498,7 @@ def parsemarkdown(lines):
             ce = MarkdownElement()
             ce.elemType = "heading"
             ce.level = 2
-            ce.sub = markdownsubst(stcline)
+            ce.sub = markdownsubst(stcline,mdstate)
             mdRoot.sub.append(ce)
             continue
 
@@ -499,7 +509,7 @@ def parsemarkdown(lines):
             ce = MarkdownElement()
             ce.elemType = "heading"
             ce.level = 1
-            ce.sub = markdownsubst(stcline)
+            ce.sub = markdownsubst(stcline,mdstate)
             mdRoot.sub.append(ce)
             continue
 
@@ -518,7 +528,7 @@ def parsemarkdown(lines):
             ce = MarkdownElement()
             ce.elemType = "heading"
             ce.level = level
-            ce.sub = markdownsubst(stcline[span[1]:].strip())
+            ce.sub = markdownsubst(stcline[span[1]:].strip(),mdstate)
             mdRoot.sub.append(ce)
             continue
 
@@ -565,7 +575,7 @@ def parsemarkdown(lines):
                 else:
                     break
             #
-            ce = parsemarkdown(copylines)
+            ce = parsemarkdown(copylines,mdstate)
             ce.elemType = "blockquote"
             mdRoot.sub.append(ce)
             #
@@ -581,7 +591,7 @@ def parsemarkdown(lines):
             #
             ue = MarkdownElement()
             ue.elemType = 'item'
-            ue.sub = markdownsubst(stcline[2:].strip())
+            ue.sub = markdownsubst(stcline[2:].strip(),mdstate)
             ce.sub.append(ue)
             #
             while i < len(lines):
@@ -611,7 +621,7 @@ def parsemarkdown(lines):
                                 copylines.append(stcline)
                             i += 1
                         #
-                        for se in parsemarkdown(copylines).sub:
+                        for se in parsemarkdown(copylines,mdstate).sub:
                             ce.sub.append(se)
                         #
                     else:
@@ -620,7 +630,7 @@ def parsemarkdown(lines):
                             #
                             ue = MarkdownElement()
                             ue.elemType = 'item'
-                            ue.sub = markdownsubst(stcline[2:].strip())
+                            ue.sub = markdownsubst(stcline[2:].strip(),mdstate)
                             ce.sub.append(ue)
                         else:
                             break
@@ -642,7 +652,7 @@ def parsemarkdown(lines):
                 number = int(p.groups()[0])
                 ue = MarkdownElement()
                 ue.elemType = 'item'
-                ue.sub = markdownsubst(cline[next_spc:].strip())
+                ue.sub = markdownsubst(cline[next_spc:].strip(),mdstate)
                 ue.key = number
                 ce.sub.append(ue)
                 pkey = number
@@ -674,7 +684,7 @@ def parsemarkdown(lines):
                                     copylines.append(stcline)
                                 i += 1
                             #
-                            for se in parsemarkdown(copylines).sub:
+                            for se in parsemarkdown(copylines,mdstate).sub:
                                 ce.sub.append(se)
                             #
                         else:
@@ -684,7 +694,7 @@ def parsemarkdown(lines):
                                 next_spc = p.span()[1]
                                 ue = MarkdownElement()
                                 ue.elemType = 'item'
-                                ue.sub = markdownsubst(cline[next_spc:].strip())
+                                ue.sub = markdownsubst(cline[next_spc:].strip(),mdstate)
                                 # in this interpreter, giving the same number again means auto count
                                 if not number == pkey:
                                     ue.key = number
@@ -736,7 +746,7 @@ def parsemarkdown(lines):
                         ce = MarkdownElement()
                         ce.elemType = 'tablecell'
                         ce.align = tablealign[ci]
-                        ce.sub = markdownsubst(col)
+                        ce.sub = markdownsubst(col,mdstate)
                         he.sub.append(ce)
                     #
                     te.sub.append(he)
@@ -756,7 +766,7 @@ def parsemarkdown(lines):
                             ce = MarkdownElement()
                             ce.elemType = 'tablecell'
                             ce.align = tablealign[ci]
-                            ce.sub = markdownsubst(col)
+                            ce.sub = markdownsubst(col,mdstate)
                             he.sub.append(ce)
                         #
                         te.sub.append(he)
@@ -785,8 +795,9 @@ def parsemarkdown(lines):
         # anything else is just text in a paragraph
         ce = MarkdownElement()
         ce.elemType = "paragraph"
-        ce.sub = markdownsubst(cline)
-        mdRoot.sub.append(ce)
+        ce.sub = markdownsubst(cline,mdstate)
+        if len(ce.sub) > 0:
+            mdRoot.sub.append(ce)
     #
     return mdRoot
 
@@ -800,4 +811,12 @@ def dumpMD(md,level=0):
         print(indent+str(md))
         for sm in md.sub:
             dumpMD(sm,level+1)
+
+def dumpMDstate(mdstate):
+    print("MD state:")
+    if len(mdstate.reflinktargets) > 0:
+        print("  Reflink targets:")
+        for key in mdstate.reflinktargets:
+            md = mdstate.reflinktargets[key]
+            print("    "+key+": "+str(md))
 
