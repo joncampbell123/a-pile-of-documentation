@@ -65,8 +65,35 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
         blob = blob[i:].decode('utf-16be').encode('utf-8')
         i = 0
     #
-    print(blob)
+    while i < len(blob):
+        p = re.search(b'(\<\-\-|\<\!|\<\/|\<\?|\<)',blob[i:])
+        if p:
+            what = p.groups()[0]
+            at = p.span()[0] + i
+            if i < at:
+                yield blob[i:at]
+            i = at
+            #
+            if what == '<--':
+                end = blob.find(b'-->',i)
+                if end >= 0:
+                    end += 3
+                else:
+                    end = len(blob)
+            else:
+                end = blob.find(b'>',i)
+                if end >= 0:
+                    end += 1
+                else:
+                    end = len(blob)
+            #
+            yield blob[i:end]
+            i = end
+        else:
+            yield blob[i:]
+            break
 
 llhtmlstate = HTMLllReaderState()
-llhtml = HTMLllParse(rawhtml,llhtmlstate)
+for ent in HTMLllParse(rawhtml,llhtmlstate):
+    print(ent)
 
