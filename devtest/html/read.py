@@ -198,9 +198,23 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                                         i += 1
                             #
                             ent.attr.append(nva)
+                        elif blob[i] == ord('\"') or blob[i] == ord('\''):
+                            nva = HTMLllAttr()
+                            nva.value = b''
+                            #
+                            match = blob[i]
+                            i += 1
+                            while i < len(blob) and not blob[i] == match:
+                                nva.value += blob[i:i+1]
+                                i += 1
+                            #
+                            if blob[i] == match:
+                                i += 1
+                            #
+                            ent.attr.append(nva)
                         else:
-                            allowAttr = False
-                            break
+                            while i < len(blob) and not HTMLllwhitespace(blob[i]):
+                                i += 1
                 #
                 i = HTMLllskipwhitespace(blob,i)
                 while i < len(blob):
