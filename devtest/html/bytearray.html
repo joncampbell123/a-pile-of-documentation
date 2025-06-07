@@ -1,0 +1,2814 @@
+﻿<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US" >
+
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=3.0"> 
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1' /><link rel="shortcut icon" href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_favicon.png" type="image/x-icon" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+<meta name="theme-color" content="#308D46" />
+<!-- <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1' /> -->
+
+<meta name="image" property="og:image" content="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200x200-min.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="200">
+<meta property="og:image:height" content="200">
+<meta name="facebook-domain-verification" content="xo7t4ve2wn3ywfkjdvwbrk01pvdond" />
+
+<meta property="og:title" content="bytearray() function - Python - GeeksforGeeks" />
+<meta name="description" content="Your All-in-One Learning Portal: GeeksforGeeks is a comprehensive educational platform that empowers learners across domains-spanning computer science and programming, school education, upskilling, commerce, software tools, competitive exams, and more." />
+<meta property="og:url" content="https://www.geeksforgeeks.org/python-bytearray-function/" />
+<meta name="keywords" content="bytearray, mutable sequence of bytes, binary data manipulation, file I/O, network programming, dynamic byte string, creating empty bytearray, bytearray from integer, bytearray from string, bytearray from iterable, copying bytearray, encoding errors handling, performance-sensitive applications, byte-level control" />
+<meta property="og:site_name" content="GeeksforGeeks" />
+<meta property="og:image" content="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200x200-min.png" />
+<meta property="article:section" content="Misc" />
+<meta property="article:tag" content="Python-Built-in-functions" />
+<meta property="article:tag" content="python" />
+<meta property="og:type" content="article" />
+<meta property="og:locale" content="en_US" />
+<meta property="article:published_time" content="2018-07-30 00:00:30+00:00" />
+<meta property="article:modified_time" content="2025-02-22 15:30:20+00:00" />
+<meta property="og:updated_time" content="2025-02-22 15:30:20+00:00" />
+<meta property="og:image:secure_url" content="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200x200-min.png" />
+<meta property="og:description" content="Your All-in-One Learning Portal: GeeksforGeeks is a comprehensive educational platform that empowers learners across domains-spanning computer science and programming, school education, upskilling, commerce, software tools, competitive exams, and more." />
+<script src="https://cdnads.geeksforgeeks.org/synchronously_gfg_ads.min.js"></script>
+<script defer src="https://apis.google.com/js/platform.js"></script>
+<!-- earlier require.js -->
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.min.js"></script> -->
+<!-- <script src="https://assets.geeksforgeeks.org/codetabs-dev/require.js"></script> -->
+<!-- Removed the below script from here to prevent loading google translate js at initial load
+<script async src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> -->
+
+<!-- FIXME:-  To be finalised whether we need to put this gpt script in header or footer  -->
+<!-- //gpt.js script -->
+<!-- <script async src='https://www.googletagservices.com/tag/js/gpt.js'></script> -->
+<script>
+   var IHPWT={}; //Initialize Namespace
+  var pbjs = pbjs || {};
+  pbjs.que = pbjs.que || [];
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+  var gptRan = false;
+</script>
+<script defer src="https://ads.pubmatic.com/AdServer/js/pwt/162080/12331/pwt.js"></script>
+      <script defer src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+  <script defer src="https://cdnads.geeksforgeeks.org/gfg_ads.min.js?ver=0.1"></script>
+<script defer src="https://cdnads.geeksforgeeks.org/prebid.js?ver=0.1"></script>
+
+                    <script> 
+                        var quizData = JSON.parse("{}");
+                    </script>
+                
+<!-- gfg tabs compatablity bundled js -->
+  <script defer src="https://assets.geeksforgeeks.org/codetabs/v4/codetabs.js" environment="production" domain="gfg" no-scroll></script>
+
+<title>bytearray() function &#8211; Python | GeeksforGeeks</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="" />
+<!--[if lt IE 9]>
+<script src="https://www.geeksforgeeks.org/wp-content/themes/iconic-one/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+
+
+<!-- Video Schema for posts only -->
+
+<!-- adding article schema markup -->
+
+
+<!--POST SCHEMA through API-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "id": "https://www.geeksforgeeks.org/python-bytearray-function/"
+  },
+  "headline": "bytearray() function Python",
+  "datePublished": "2018-07-30 12:00:30",
+  "dateModified": "2025-02-22 03:30:20",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://media.geeksforgeeks.org/wp-content/uploads/gfg_200X200-100x100.png",
+    "width": "100",
+    "height": "100"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "GeeksforGeeks",
+    "url": "https://www.geeksforgeeks.org/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://media.geeksforgeeks.org/wp-content/cdn-uploads/logo-new-2.svg",
+      "width": "301",
+      "height": "40"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "GeeksforGeeks",
+    "url": "https://www.geeksforgeeks.org/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://media.geeksforgeeks.org/wp-content/cdn-uploads/logo-new-2.svg",
+      "width": "301",
+      "height": "40"
+    }
+  },
+  "description": "The bytearray() function in Python creates a mutable sequence of bytes, which is essentially an array of integers in the range 0 to 255 (representing byte values). Unlike the immutable bytes type, bytearray allows us to modify its contents after creation, making it useful for tasks like binary data manipulation,",
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "Misc"
+    },
+    {
+      "@type": "Thing",
+      "name": "Python"
+    },
+    {
+      "@type": "Thing",
+      "name": "PythonBuiltInFunctions"
+    },
+    {
+      "@type": "Thing",
+      "name": "Python"
+    }
+  ]
+}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "GeeksforGeeks",
+  "url": "https://www.geeksforgeeks.org/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://www.geeksforgeeks.org/search/{search_term_string}/",
+    "query-input": "required name=search_term_string"
+  }
+}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "GeeksforGeeks",
+  "url": "https://www.geeksforgeeks.org/",
+  "logo": "https://media.geeksforgeeks.org/wp-content/cdn-uploads/20200817185016/gfg_complete_logo_2x-min.png",
+  "description": "Your All-in-One Learning Portal: GeeksforGeeks is a comprehensive educational platform that empowers learners across domains-spanning computer science and programming, school education, upskilling, commerce, software tools, competitive exams, and more.",
+  "founder": [
+    {
+      "@type": "Person",
+      "name": "Sandeep Jain",
+      "url": "https://in.linkedin.com/in/sandeep-jain-b3940815"
+    }
+  ],
+  "sameAs": [
+    "https://www.facebook.com/geeksforgeeks.org/",
+    "https://twitter.com/geeksforgeeks",
+    "https://www.linkedin.com/company/1299009",
+    "https://www.youtube.com/geeksforgeeksvideos/"
+  ]
+}</script>
+
+<script>
+    var arrPostCat = new Array();
+    var arrPostCatName="Python";
+            arrPostCat.push('4');
+            arrPostCat.push('1789');
+        var tIds = "4,1789,2694,4060";
+    var termsNames = "Misc,Python,PythonBuiltinfunctions,python,ProgrammingLanguage";
+    var tIdsInclusiveParents = "4,1789,2694,4060,2056";
+    var domain = 1;
+    var arrPost = new Array();
+    var post_id = "215308";
+    var post_type = "post";
+    var post_slug = window.location.href;
+    var ip = "64.252.71.232";
+    var post_title = `bytearray() function - Python`;
+    var post_status = "publish";
+    var practiceAPIURL="https://practiceapi.geeksforgeeks.org/";
+    var practiceURL="https://practice.geeksforgeeks.org/";
+    var post_date = "2018-07-30 18:20:59";
+    var commentSysUrl = "https://discuss.geeksforgeeks.org/commentEmbedV2.js";
+    //var postAdApiUrlString = "";
+    var link_on_code_run = '';
+    var link_search_modal_top = '';
+    var country_code_cf = "US";
+    
+    
+        var postAdApiUrlString = '2056/4/1789/2694/4060/';
+</script>
+
+
+
+<link rel='dns-prefetch' href='//cdn.geeksforgeeks.org' />
+<link rel='dns-prefetch' href='//s.w.org' />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.geeksforgeeks.org\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.8"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='custom-style-css'  href='https://www.geeksforgeeks.org/wp-content/themes/iconic-one/css/gfg.min.css?ver=12.05' type='text/css' media='all' />
+<script type='text/javascript' src='https://code.jquery.com/jquery-3.7.1.min.js?ver=3.7.1'></script>
+<script type='text/javascript' src='https://code.jquery.com/jquery-migrate-3.5.2.min.js?ver=3.5.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var gfgObject = {"authUrl":"https:\/\/auth.geeksforgeeks.org\/","writeApiUrl":"https:\/\/apiwrite.geeksforgeeks.org\/","writeUrl":"https:\/\/write.geeksforgeeks.org\/","utilUrl":"https:\/\/util.geeksforgeeks.org\/","apiUrl":"https:\/\/api.geeksforgeeks.org\/","cfApiUrl":"https:\/\/gfgapi.geeksforgeeks.org\/","baseCompilerURL":"https:\/\/codejudge.geeksforgeeks.org\/","idePageBaseUrl":"https:\/\/ide.geeksforgeeks.org\/","gfgApiScriptUrl":"https:\/\/apiscript.geeksforgeeks.org\/","gfgSiteUrl":"https:\/\/www.geeksforgeeks.org\/","curatedListId":"1","curatedListTitle":"SDE Sheet Problems","utilDjangoCfUrl":"https:\/\/utilapi.geeksforgeeks.org\/","premiumCheckoutSlug":"premium-plans-payment\/","premiumLandingSlug":"premium-plans\/","premiumCssUrl":"https:\/\/www.geeksforgeeks.org\/wp-content\/themes\/iconic-one\/css\/gfgpremium.min.css?ver=1.7","premiumJsUrl":"https:\/\/www.geeksforgeeks.org\/wp-content\/themes\/iconic-one\/js\/gfgpremium.min.js?ver=1.6","utilGoogleUrl":"https:\/\/ugprod.geeksforgeeks.org\/","communityApiUrl":"https:\/\/communityapi.geeksforgeeks.org\/","utilDjangoUrl":"https:\/\/gfgutil.geeksforgeeks.org\/","gfgPracticeUrl":"https:\/\/practiceapi.geeksforgeeks.org\/","gfgMediaUrl":"https:\/\/media.geeksforgeeks.org\/","authDjangoApiUrl":"https:\/\/authapi.geeksforgeeks.org\/","gfgMlApiUrl":"https:\/\/recommendations.geeksforgeeks.org\/","is_home":"","is_category":"","userlevelPremiumPlus":"2","practiceUrl":"https:\/\/practice.geeksforgeeks.org\/","gfgNotificationsApiUrl":"https:\/\/notificationsapi.geeksforgeeks.org\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' async="async" src='https://www.geeksforgeeks.org/wp-content/themes/iconic-one/js/gfg.min.js?ver=13.81'></script>
+
+<link rel="canonical" href="https://www.geeksforgeeks.org/python-bytearray-function/" />
+<style>
+#wpadminbar{
+background: #ff0000 !important;
+}
+</style>
+<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #ffffff; }
+</style>
+<link rel="icon" href="https://www.geeksforgeeks.org/wp-content/uploads/gfg_200X200-100x100.png" sizes="32x32" />
+<link rel="icon" href="https://www.geeksforgeeks.org/wp-content/uploads/gfg_200X200.png" sizes="192x192" />
+<link rel="apple-touch-icon-precomposed" href="https://www.geeksforgeeks.org/wp-content/uploads/gfg_200X200.png" />
+<meta name="msapplication-TileImage" content="https://www.geeksforgeeks.org/wp-content/uploads/gfg_200X200.png" />
+
+<!--
+<script type='text/javascript'>
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+  (function() {
+    var gads = document.createElement('script');
+    gads.async = true;
+    gads.type = 'text/javascript';
+    var useSSL = 'https:' == document.location.protocol;
+    gads.src = (useSSL ? 'https:' : 'http:') +
+      '//www.googletagservices.com/tag/js/gpt.js';
+    var node = document.getElementsByTagName('script')[0];
+    node.parentNode.insertBefore(gads, node);
+  })();
+</script>
+
+ AutoAds
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({
+google_ad_client: "ca-pub-9465609616171866",
+enable_page_level_ads: true
+});
+</script>
+-->
+
+
+
+
+<style>
+
+    #internal-promo-section{
+        display: none !important;
+    }
+    @media screen and (max-width:1500px) and (min-width:1280px){
+        body.single .article-page_flex .leftBar {
+            flex-basis: calc(100% - 605px);
+            max-width: calc(100% - 605px);
+            min-width: calc(100% - 605px);
+        }
+        
+        .sidebar_wrapper{
+            max-width: 300px;
+            min-width: 300px;
+        }
+        
+        div#secondary {
+            min-width: 300px;
+            max-width: 300px;
+        }
+        
+        .widget-area{
+            padding: 0px;
+        }
+        
+        .article-page_flex .rightBar{
+            padding: 20px 0px 0px 0px;
+        }
+        
+        .article--viewer_content .a-wrapper .content {
+            padding: 0px 10px 55px 20px;
+        }
+        
+        .oinLeftbar {
+            height: calc(100vh - 350px) !important;
+        }  
+    }
+    .autoLeftBar_oin_child{
+        height: 100% !important;
+    }
+    .autoLeftBar_oin_non_sticky{
+        height: unset !important;
+    }
+    .sideBar--wrap.newLeftbar > div[id^='GFG_AD_Leftsidebar_']:nth-of-type(1){
+        padding-top: 20px;
+    }
+    .sideBar--wrap.newLeftbar > div[id^='GFG_AD_Leftsidebar_']{
+        padding: 5px 0;
+    }
+
+@media (max-width:1043px) and (min-width:992px) {
+ .hide-1043992 {
+   display: none!important;
+ }
+}
+
+.mobile-header-list-item{
+    padding-left:30px; 
+    padding-right:10px;
+    margin-top:5px;
+}
+
+.mobile-header-list{
+    border-bottom: 1px solid rgba(158, 158, 158, 0.3) !important;
+}
+
+.mobile-header-list .dropdown-title{
+    border-bottom: none !important;
+    font-size: 16px!important; 
+    padding: 0px!important; 
+    padding-left: 45px!important; 
+    font-weight: normal;
+}
+
+.mobile-header-list .upside::after{
+    transform: rotate(180deg);
+}
+
+</style>
+<!-- End Google Tag Manager -->
+<!-- Global site tag (gtag.js) - Google Ads: 474915276 -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=AW-474915276"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-474915276');
+</script> -->
+
+</head>
+
+<body class="post-template-default single single-post postid-215308 single-format-standard custom-background custom-background-white">
+
+    <script>
+        // Dark mode script
+
+        const gfgThemeList = Object.freeze({
+            LIGHT: "gfgThemeLight",
+            DARK: "gfgThemeDark"
+        })
+        const getThemeFromCookie = () => {
+            let gfg_def_theme = "";
+            let cookies = document.cookie;
+            let cooks = cookies.split(";");
+        
+            for (let i = 0; i < cooks.length; i++) {   
+                let icook = cooks[i].split("=");
+                if (icook[0].trim() == "gfg_theme") {
+                    gfg_def_theme = icook[1].trim();
+                }
+            }
+            return gfg_def_theme
+        }
+        if(!(post_slug.includes('premium-plans-payment/') || post_slug.includes('premium-plans/'))){
+            var isDarkMode = getThemeFromCookie() == gfgThemeList.DARK ? true : false;
+            document.querySelector("body").setAttribute("data-dark-mode", isDarkMode);
+        }
+ 
+
+        function setSearchBarFocus() {
+          const myTimeout = setTimeout(searchBarFocus, 0);
+          function searchBarFocus() {
+            document.getElementById("gcse-search-input").focus();
+          }
+        }
+
+        
+    </script>
+
+    <!-- <div class="header-main__wrapper not-fixed"> -->
+    <nav>
+    <div class="header-main__wrapper">
+
+        <a class="gfg-stc" style="top:0" href="#main">Skip to content</a>
+
+        <a href="https://www.geeksforgeeks.org/" aria-label="Logo" class="header-main__logo">
+            <div class="_logo">
+                <!-- Original Logo -->
+                <img class="gfg_logo_img" style="height: 30px; width: 80px; max-width: fit-content;" src="https://media.geeksforgeeks.org/gfg-gg-logo.svg" alt="geeksforgeeks">
+            </div>
+        </a>
+        <div class="header-main__container">
+            <!-- for mobile only -->
+            
+        <!-- For Web view only -->
+        <ul class="header-main__list"><li class="header-main__list-item Header_1" data-parent="false" aria-expanded="true" data-expandable="true"><span>Courses</span><i class="gfg-icon gfg-icon_arrow-down gfg-icon_header"></i><ul class="mega-dropdown Screen_1"><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/dsa-to-development-coding-guide/" target="_self">DSA to Development</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/category/ibm-certification/" target="_self">Get IBM Certification</a></li><li class="mega-dropdown__list-item" data-parent="false" aria-expanded="true" data-expandable="true"><span>Newly Launched!</span><i class="gfg-icon gfg-icon_arrow-right"></i><ul class="mega-dropdown Screen_2"><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/mastering-django-framework-beginner-to-advance/" target="_self">Master Django Framework</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/search?query=AWS" target="_self">Become AWS Certified</a></li></ul></li><li class="mega-dropdown__list-item" data-parent="false" aria-expanded="true" data-expandable="true"><span>For Working Professionals</span><i class="gfg-icon gfg-icon_arrow-right"></i><ul class="mega-dropdown Screen_2"><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/interviewe-101-data-structures-algorithm-system-design/" target="_self">Interview 101: DSA & System Design</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/full-stack-applied-data-science-program/" target="_self">Data Science Training Program</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/Java-backend-live" target="_self">JAVA Backend Development (Live)</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/devops-live" target="_self">DevOps Engineering (LIVE)</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/Data-Structures-With-Python" target="_self">Data Structures & Algorithms in Python</a></li></ul></li><li class="mega-dropdown__list-item" data-parent="false" aria-expanded="true" data-expandable="true"><span>For Students</span><i class="gfg-icon gfg-icon_arrow-right"></i><ul class="mega-dropdown Screen_2"><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/placement-prep-live" target="_self">Placement Preparation Course</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/data-science-live" target="_self">Data Science (Live)</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/dsa-self-paced" target="_self">Data Structure & Algorithm-Self Paced (C++/JAVA)</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/competitive-programming-cp" target="_self">Master Competitive Programming (Live)</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/full-stack-node" target="_self">Full Stack Development with React & Node JS (Live)</a></li></ul></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/full-stack-node" target="_self">Full Stack Development</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/data-science-live" target="_self">Data Science Program</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses" target="_self">All Courses</a></li></ul></li><li class="header-main__list-item Header_2" data-parent="false" aria-expanded="true" data-expandable="true"><span>Tutorials</span><i class="gfg-icon gfg-icon_arrow-down gfg-icon_header"></i><ul class="mega-dropdown Screen_1"><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/learn-data-structures-and-algorithms-dsa-tutorial/" target="_self">Data Structures & Algorithms</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/ai-ml-and-data-science-tutorial-learn-ai-ml-and-data-science/" target="_self">ML & Data Science</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/interview-corner/" target="_self">Interview Corner</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/programming-language-tutorials/" target="_self">Programming Languages</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/web-technology/" target="_self">Web Development</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/articles-on-computer-science-subjects-gq/" target="_self">CS Subjects</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/devops-and-linux-tutorial/" target="_self">DevOps And Linux</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/geeksforgeeks-school/?ref=outind" target="_self">School Learning</a></li></ul></li><li class="header-main__list-item Header_3" data-parent="false" aria-expanded="true" data-expandable="true"><span>Practice</span><i class="gfg-icon gfg-icon_arrow-down gfg-icon_header"></i><ul class="mega-dropdown Screen_1"><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/courses/gfg-160-series" target="_self">GfG 160: Daily DSA</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/problem-of-the-day" target="_self">Problem of the Day</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/geeksforgeeks-practice-best-online-coding-platform/" target="_self">Practice Coding Problems</a></li><li class="mega-dropdown__list-item" data-child="true" aria-expanded="false" data-expandable="false"><a href="https://www.geeksforgeeks.org/sde-sheet-a-complete-guide-for-sde-preparation/" target="_self">GfG SDE Sheet</a></li></ul></li></ul>
+        <!-- right now only search is visible for mobile view because of css and all are visible for web view -->
+            <ul class="header-main__left-list" data-nl="false">
+                <li class="header-main__left-list-item gcse-search_li p-relative" aria-expanded="false" data-expandable="false">
+                    <div class="gcse-form-search-suggestion_wrapper">
+                                            <form id="gcse-form" class="gcse-form_class p-relative closeChatScreen gcse-form-web" data-sm="true">
+                            <span class="front-search-icon" style="display: block;"><i class="gfg-icon gfg-icon_search gfg-icon_white gcse-search__icon gcse-search-icon_grey"></i> </span>
+                            <input class="gcse-search-input__wrapper" id="gcse-search-input" aria-expanded="true" placeholder="Search..." autocomplete="off" />
+                            <i class="gfg-icon gfg-icon_times gfg-icon_white hide-search"></i>
+                            <button  aria-label="search" type="submit" class="gcse-search__btn" style="display: none;">
+                                <i class="gfg-icon gfg-icon_search gfg-icon_white gcse-search__icon"></i>
+                            </button>
+                        </form>
+                                            <div class="gfg-search-suggestion_wrapper" style="display:none"></div>
+                    <div>
+                </li>
+                                <li>
+                    <div class="darkMode-wrap" data-mode="Switch to Dark Mode">
+                        <button aria-label="toggle theme" data-gfg-action="toggleGFGTheme">
+                            <div id="darkMode-wrap-red-dot" style="height:12px;width:12px;background-color:#EB2222;border-radius:999999px;position:absolute;top:4px;right:0;display:none;"></div>
+                            <i class="gfg-icon gfg-icon_dark-mode"></i>
+                        </button>
+                        <span id="darkModeTooltipText"></span>
+                    </div>
+                </li>
+                                
+                <li class="header-main__left-list-item google-translate-parent-element" aria-expanded="false" data-expanded="true">
+                    <div class="translate" id="g_translater">
+                        <div id="google_translate_element" data-show="false"></div>
+                    </div>
+                    <i class ="gfg-icon gfg-icon_translate googleTranslateToggle" data-gfg-action="google_translate_element"></i>
+                    <!-- removed below code from here to load google translate js dynamically -->
+                    <!-- <script>
+                        var m = false;
+                        function googleTranslateElementInit() {
+                            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+                            setTimeout(function(){
+                                if (jQuery( window ).width() < 768){
+                                    m = true;
+                                     jQuery('#g_translater').detach().appendTo('#google_translate_mobile');                            
+                                }
+                            }, 7000);
+                        }
+                        jQuery( window ).resize(function() {
+                            if (jQuery( window ).width() < 768 && m == false){
+                                m = true;
+                                jQuery('#g_translater').detach().appendTo('#google_translate_mobile');  
+                            } else if (jQuery( window ).width() >= 768 && m == true){
+                                m = false;
+                                jQuery('#g_translater').detach().prependTo('.google-translate-parent-element');                            
+                            }
+                        });
+                    </script> -->
+                </li>
+                <li id="userProfileId" class="header-main__left-list-item p-relative" aria-expanded="false" data-expandable="false">
+                    <!-- Profile Section to be added via JS -->
+                </li>
+                            </ul>
+        </div>
+
+        <!-- for mobile only -->
+        
+        <!-- for mobile only -->
+               
+       </div>
+    </nav>
+    <div id="header-main__slider-outer-div">
+        <div class="header-main__slider">
+            <button aria-label="sub header slider previous" class="header-main__slider-arrow previous hideIt">
+                <i class="gfg-icon gfg-icon_arrow-left gicon-centered"></i>
+            </button>
+            <!-- main content for leftbar -->
+            <ul id="hslider">
+            <li><a href="https://www.geeksforgeeks.org/python-programming-language-tutorial/">Python Tutorial</a></li><li><a href="https://www.geeksforgeeks.org/python-interview-questions/">Interview Questions</a></li><li><a href="https://www.geeksforgeeks.org/python-quizzes/">Python Quiz</a></li><li><a href="https://www.geeksforgeeks.org/python-glossary/">Python Glossary</a></li><li><a href="https://www.geeksforgeeks.org/python-projects-beginner-to-advanced/">Python Projects</a></li><li><a href="https://www.geeksforgeeks.org/python-exercises-practice-questions-and-solutions/">Practice Python</a></li><li><a href="https://www.geeksforgeeks.org/data-science-with-python-tutorial/">Data Science With Python</a></li><li><a href="https://www.geeksforgeeks.org/python-web-development-django/">Python Web Dev</a></li><li><a href="https://www.geeksforgeeks.org/python-data-structures-and-algorithms/">DSA with Python</a></li><li><a href="https://www.geeksforgeeks.org/python-oops-concepts/">Python OOPs</a></li>            </ul>
+            <button aria-label="sub header slider next" class="header-main__slider-arrow next hideIt">
+                <i class="gfg-icon gfg-icon_arrow-right gicon-centered"></i>
+            </button>
+            <!-- <a type="button" class="header-main__signup login-modal-btn" href="https://www.geeksforgeeks.org/merge-sort/">Sign In</a> -->
+        </div>
+        <div id="sub-header__signup-outer-div">
+            <button id="sub-header__signup" class="login-modal-btn">Sign In</button>
+        </div>
+    </div>
+    
+    <button id="scrollTopBtn" title="Scroll to Top" type="button" class="btn btn-success">&#x25B2;</button>
+    <!-- .top-spacing to give space on single pages-->
+    <div id="main" class="wrapper single-page">
+
+<script>
+    if(post_slug.includes('premium-plans-payment/') || post_slug.includes('premium-plans/')){
+        $(".header-main__slider").remove();
+    }
+    //getting tags for the page type data
+    let mobileView = false;
+    let pageTags = JSON.parse('null');
+    let allTags = JSON.parse('["Misc","Python","PythonBuiltinfunctions","python","ProgrammingLanguage"]');
+</script>
+
+<script>
+    window.have_dsa_term = false;
+    // var practiceTab = ; 
+</script>
+
+<style>
+    .wrapper {
+        flex-direction: column !important;
+    }
+    /* spinner css */
+    @keyframes spinner {
+        to {transform: rotate(360deg);}
+    }
+    
+    .spinner:before {
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin-top: -10px;
+        margin-left: -10px;
+        border-radius: 50%;
+        border: 2px solid #ccc;
+        border-top-color: #000;
+        animation: spinner .6s linear infinite;
+    }
+
+    .report-loader{
+        position: relative;
+        
+    }
+
+    .report-loader.spinner{
+        margin-left: 16px;
+    }
+    .badges{
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+    .badges .gfg-badge-icon.md::after{
+        transform: scale(0.25);
+        position:relative;
+        top: 2px;
+        left: -2px;
+    }
+    .sep{
+        margin: 0px 5px;
+        font-size: 20px;
+        color: var(--badge-name-color);
+    }
+    .pub-count{
+        font-size: 14px;
+        font-family: var(--font-secondary);
+    }
+    .badge-details{
+        display:none;
+    }
+    .badges{
+        cursor: pointer;
+        position: relative;
+        /* width: 0px;
+        height: 20px;
+        top: -32px; */
+    }
+    .badge-icon{
+        display: flex;
+        align-items: center;
+    }
+    .badge-content{
+        margin-left: 9px;
+    }
+    .badge-name{
+        color: var(--badge-nam-color);
+        font-weight: 600;
+        font-size: 16px;
+        text-transform: capitalize;
+    }
+    .badge-data{
+        color: #A5A4A4;
+        font-size: 10px;
+    }
+    .badges:hover .badge-details{
+        display: block;
+        background: var(--badge-bg);
+        padding: 10px 18px 10px 18px;
+        position: absolute;
+        width: 175px;
+        top: -10px;
+        z-index: 10;
+        left: 112%;
+        box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+        border-radius: 5px;
+        /* transform-origin: top right; */
+    }
+    .badge-details::before {
+        content: "";
+        position: absolute;
+        transform: rotate(90deg);
+        /* transform-origin: right; */
+        left: -6px;
+        top: 50%;
+        margin-left: -17px;
+        border-width: 12px;
+        border-style: solid;
+        border-color: var(--badge-bg) transparent transparent transparent;
+        margin-top: -12px;
+    }
+    .badge-icon .icon{
+        border: 1px solid var(--icon-border-color);
+        padding: 4px 3px;
+        border-radius: 4px;
+        width: 22px;
+        height: 24px;
+        position: relative;
+    }
+    .b-icon-pos{
+        position: relative;
+        top: -34px;
+        left: -34px;
+    }
+    /* article viewer */
+    .article--viewer .a-wrapper{
+        margin-top: 0px !important;
+    }
+    .content{
+        padding-top: 10px !important;
+    }
+    .u-name{
+        font-size: 14px;
+    }
+    .article--viewer_content .a-wrapper .content{
+        padding-bottom: 10px !important;
+    }
+    .likeTooltipBottom{
+        font-size: 14px;
+    }
+    @media (max-width: 434px) {
+        .article-buttons.show-bg{
+            margin-top: 56px !important;
+        }
+    }
+    @media (max-width: 730px),
+            ((min-width: 992px) and (max-width:1100px))  {
+        .article--viewer .media{
+            position: relative;
+        }
+        .article--viewer .media{
+            margin-bottom: 0px !important;
+        }
+        .badges:hover .badge-details{
+            top: -56px;
+            left: 62px;
+        }
+        .badge-details::before{
+            transform: rotate(0deg);
+            left: 10%;
+            top: 117%;
+        }
+        .article-buttons.show-bg{
+            margin-top: 22px;
+            top: 0px !important;
+        }
+    }
+    @media ((min-width:731px) and (max-width:1223px)) {
+        .article-buttons.show-bg{
+            top: 18px;
+        }
+    }
+    @media ((min-width:993px) and (max-width:1190px)) {
+        .article--viewer .media{
+            position: relative;
+        }
+        .article--viewer .media{
+            margin-bottom: 25px !important;
+        }
+    }
+</style>
+<!-- Survey modal implementation -->
+<script>
+    function getCookie(name) {
+        function escape(s) { return s.replace(/([.*+?\^$(){}|\[\]\/\\])/g, '\\$1'); }
+        var match = document.cookie.match(RegExp('(?:^|;\\s*)' + escape(name) + '=([^;]*)'));
+        return match ? match[1] : null;
+    }
+</script>
+<!-- END Survey modal implementation-->
+
+<!-- Open in App Button and CSS-->
+
+<!-- Above code is for old openInApp pop-up with open in app and continue buttons-->
+
+<div id='openInApp-modal' class='openInApp'>
+    <a href = 'https://geeksforgeeksapp.page.link/?link=https://www.geeksforgeeks.org/python-bytearray-function/?type%3Darticle%26id%3D215308&apn=free.programming.programming&isi=1641848816&ibi=org.geeksforgeeks.GeeksforGeeksDev&efr=1' class='openInAppLink'>
+        <span style='color: #fff;'>Open In App</span>
+    </a>
+</div>
+    <script>
+        var consentValue = localStorage.getItem("gfg_cc");
+        var isIOS = !!navigator.platform && /iPad|iPhone|iPod|MacIntel/.test(navigator.platform) && navigator.maxTouchPoints > 0;
+        const isSafari = navigator.userAgent.indexOf("Safari") > -1;
+        const isMozilla = navigator.userAgent.indexOf("Mozilla") > -1;
+        if(consentValue){
+            if(window.innerHeight > window.innerWidth && navigator.maxTouchPoints > 1 && (isSafari || isMozilla || navigator.userAgentData.mobile)){
+                $('.openInApp').css({
+                    display: "block"
+                });
+                $('#scrollTopBtn').css({
+                    bottom: "44px"
+                });
+                //adding a new class to check stats for clicks on iOS and Android
+                isIOS ? jQuery('.openInAppLink').addClass("oia-iOS") : $('.openInAppLink').addClass("oia-android");      //for openInApp Link
+            }
+        }
+        
+    </script>
+    <style>
+        .openInApp{
+            display: none;
+            bottom: 0px;
+            width: 100%;
+            position: fixed;
+            z-index: 1025;
+            opacity: 0.93;
+        }
+        .openInAppLink{
+            height: 44px;
+            background: var(--color-gfg);
+            font-weight: bold;
+            display: block;
+            text-align: center;
+            padding: 12px;
+            font-size: large;
+        }
+        .openInAppLink, .openInAppLink:hover, .openInAppLink:active, .openInAppLink:visited, .openInAppLink:focus {
+            text-decoration:none;
+        }
+    </style>
+<!-- END Open in App Button and CSS-->
+
+            <script>
+                companyTagsArray = JSON.parse('[]');
+                categoryTagsArray = JSON.parse('["Misc","python","python"]');
+            </script>
+            <div class="container-fluid bg-light" id="home-page" style="position: relative; max-width:100%;">
+    <div class="article-page_flex">
+            <div class="sidebar_wrapper  auto_leftbar ">
+                                            <a href="https://www.geeksforgeeks.org/numpy-fromiter-function-python/" class="next_article_leftbar_container">
+                                    <div class="next_article_leftbar_content">
+                                            <span class="next_article_text">Next Article:</span>
+                                        <div class="next_article_title">numpy.fromiter() function – Python</div>
+                                    </div>
+                                    <img src="https://media.geeksforgeeks.org/auth-dashboard-uploads/ep_right.svg" alt="Next article icon" />
+                                </a>
+                                      <div class="sideBar autoLeftBar_oin_non_sticky" style="height: unset !important">
+                <!-- <div class="sideBar--wrap newLeftbar oinLeftbar autoLeftBar_oin_child"> -->
+                <div class="sideBar--wrap newLeftbar autoLeftBar_oin_child">
+                                        <div id="GFG_AD_Leftsidebar_300x250_chained_1"></div>
+                        <div id="GFG_AD_Leftsidebar_300x250_chained_2"></div>
+                        <div id="GFG_AD_Leftsidebar_300x250_chained_3"></div>
+                        <div id="GFG_AD_Leftsidebar_300x600_chained_1"></div>
+                    </div>
+                               </div>
+             <div id="GFG_AD_Desktop_LeftSideBar_Docked_160x600" style="max-width:160px; max-height:600px"></div>
+        </div>
+                <div class="leftBar">
+            <div class="article--viewer">
+                <div class="article--viewer_content">
+                    <div class="a-wrapper">
+                        <div class="" style="z-index:9999 !important;position:relative;">
+                        </div>
+                        <article class="content post-215308 post type-post status-publish format-standard hentry category-python tag-python tag-python-built-in-functions" id="post-215308">
+                                                                                   <!-- when comment system will be scalable from practice side then we will display  Article/Discussion tab-->
+                            <div class="main_wrapper" style="display:flex;">
+                                                                <div style="width: 100%;">
+                                        <div class="article-title">
+                                            <h1>bytearray() function - Python</h1>
+                                        </div>
+                                                                                    <div class="last_updated_parent">
+                                                <div>
+                                                    <span class="strong">Last Updated : </span>
+                                                    <span>22 Feb, 2025</span>
+                                                </div>
+
+                                                 <!-- three dot menu -->
+                                                <div class="three_dot_dropdown"> 
+                                                                                                            <div style="display: flex;">
+                                                                                                                    <!-- summarized button is removed on 03/04/25 for task T1G-3293 -->
+                                                            <!-- <div pid="215308" ptitle="bytearray() function - Python" class="top-summary-icon-div ">
+                                                                <div class="three_dot_dropdown_div tooltip">
+                                                                    <span class="summary_tooltiptext">Summarize</span>
+                                                                    <div class="summarize_header">
+                                                                    <i class= "summary_button" style="position: relative;"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div> -->
+                                                            <!-- share button is placed on 03/04/25 for task T1G-3293 -->
+                                                              <div pid="215308" class="article--viewer_share tooltip">
+                                                <div class="three_dot_dropdown_div three_dot_dropdown_share"onmouseleave="closeShareModal()" onmouseenter="openShareModal()">
+                                                    <div style="display: flex;align-items: center;" class="three_dot_dropdown_inner_div_share" data-gfg-action="share-article" data-bookmark-value="0">
+                                                        <i class="gfg-share-icon"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                                                                                                                                                        <div pid="215308" ptitle="bytearray() function - Python" class="article--viewer_comment tooltip top-comment-icon-div">
+                                                                    <span class="comment_tooltiptext">Comments</span>
+                                                                    <div class="three_dot_dropdown_div" data-gfg-action='loadComments'>
+                                                                        <div class="comment_header">
+                                                                        <i class= "discussion_button" style="position: relative; transform: scale(0.9);"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div pid="215308" ptitle="bytearray() function - Python" class="article--viewer_improve tooltip">
+                                                                <span class="improve_tooltiptext">Improve</span>
+                                                                <div class="three_dot_dropdown_div three_dot_dropdown_improve" onclick="improveArticleCall()">
+                                                                    <div class="improve_wrapper_top">
+                                                                    <i class="gfg-icon gfg-icon-pencil  gfg-icon_edit" style="position: relative; z-index: 3;"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div> 
+                                                                                                                        
+                                                                                                                    <!-- three dots -->
+                                                        <ul class="dropbtn icons btn-right showLeft" onclick="showDropdown()">
+                                                            <li>
+                                                                                                                            </li>
+                                                            <li></li>
+                                                            <li></li>
+                                                        </ul>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                                                            </div>
+                                                            </div>
+                            <!-- menu -->
+                            <div id="myDropdown" class="three_dot_dropdown_content">
+                            <div class="article-buttons drop" onmouseleave="closeKebabMenu()">
+                                            <!-- If the status of the summary API is true than we are showing the summarize button otherwise not  -->
+                                            <!--  -->
+                                             <div pid="215308" ptitle="bytearray() function - Python" class="improve_article--viewer tooltip">
+                                                <div class="three_dot_dropdown_div three_dot_dropdown_improve" onclick="suggestionArticleCall()" style="margin-top: 1px;">
+                                                    <div class="three_dot_dropdown_inner_div improve_dot_dropdown_inner_div">
+                                                        <i class="gfg-icon gfg-icon_suggest_changes gfg-icon_edit"></i>
+                                                        <span>Suggest changes</span>
+                                                    </div>
+                                                </div>
+                                            </div>                                                                                          <div pid="215308" class="article--viewer_like tooltip">
+                                            <div class="three_dot_dropdown_div three_dot_dropdown_likearticle" onmouseleave='toggleLikeElementVisibility("showLikesContainer", false)'  onmouseenter='toggleLikeElementVisibility("showLikesContainer", true)'>
+                                                    <div class="showLikesContainer"> 
+                                                        <span class="likeTooltip">Like Article</span>
+                                                    </div>
+                                                    <div class="three_dot_dropdown_inner_div" data-gfg-action="like-article" data-bookmark-value="0">
+                                                        <i class="gfg-icon gfg-icon_thumbs"></i>
+                                                        <span>Like</span>
+                                                    </div>
+                                                </div>
+<!-- <button data-gfg-action="like-article" data-bookmark-value="0">
+                                                    <i class="gfg-icon gfg-icon_thumbs"></i>
+                                                </button> -->
+                                            </div>
+                                            
+                                            <!-- share button is removed from here for web view and placed at the place of summarize on 03/04/25 for task T1G-3293 -->
+
+                                            <!-- <div pid="215308" class="article--viewer_share tooltip">
+                                                <div class="three_dot_dropdown_div three_dot_dropdown_share" onmouseleave="closeShareModal()" onmouseenter="openShareModal()">
+                                                    <div style="display: flex;align-items: center;" class="three_dot_dropdown_inner_div" data-gfg-action="share-article" data-bookmark-value="0">
+                                                        <i class="gfg-share-icon"></i>
+                                                        <span>Share</span>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <div class="article--viewer_report tooltip">
+                                                <div class="three_dot_dropdown_div three_dot_dropdown_reportarticle">
+                                                    <div class="three_dot_dropdown_inner_div" data-gfg-action="report-article" onclick="report_article();">
+                                                        <i class="gfg-icon gfg-icon_report"></i>
+                                                        <span>Report</span>
+                                                    </div>
+                                                </div>
+<!-- <button data-gfg-action="like-article" data-bookmark-value="0">
+                                                    <i class="gfg-icon gfg-icon_thumbs"></i>
+                                                </button> -->
+                                            </div>
+                                            <!-- follow button is removed on 07/04/25 for task T1G-3307 -->
+                                            <!-- <div class="article--viewer_Gnews tooltip">
+                                                <a class="three_dot_dropdown_inner_div Gnews_wrapper" href ='https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&gl=IN&ceid=IN%3Aen' target="_blank">
+                                                    <img class="gfg-icon_Gnews no-zoom-in-cursor" src=https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg  loading="lazy" alt="News"></img>
+                                                    <span class='kebab_menu_news_text'>Follow</span>
+                                                </a>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                            <div class="text">
+                                                                <p dir="ltr"><span>The bytearray() function in Python creates a </span><a href="https://www.geeksforgeeks.org/mutable-vs-immutable-objects-in-python/" target="_blank" rel="noopener"><span>mutable </span></a><span>sequence of bytes, which is essentially an </span><a href="https://www.geeksforgeeks.org/what-is-array/" target="_blank" rel="noopener"><span>array </span></a><span>of integers in the range 0 to 255 (representing byte values). Unlike the </span><a href="https://www.geeksforgeeks.org/mutable-vs-immutable-objects-in-python/" target="_blank" rel="noopener"><span>immutable </span></a><span>bytes type, bytearray allows us to modify its contents after creation, making it useful for tasks like binary data manipulation, file I/O, or network programming. It’s a </span><a href="https://www.geeksforgeeks.org/python-built-in-functions/" target="_blank" rel="noopener"><span>built-in </span></a><span>function that returns a bytearray object, and its flexibility makes it a powerful tool when we need to work with byte-level data that might change. Think of it as a dynamic, editable version of a byte string, commonly used in low-level programming or when interfacing with systems that require byte data.</span></p><h3 style="text-align:left"><span>Example:</span></h3><gfg-tabs allow-code-exec=true  data-run-ide="true" data-mode="light">
+            <gfg-tab slot="tab">Python</gfg-tab>
+<gfg-panel slot="panel" data-code-lang="python3" data-main-code-start="None" data-main-code-end="None">
+    <code class="language-python3"><div class=highlight><pre><span></span><span class=c1># Create a bytearray from a string</span>
+<span class=n>ba</span> <span class=o>=</span> <span class=nb>bytearray</span><span class=p>(</span><span class=s2>&quot;Geeks for geeks!&quot;</span><span class=p>,</span> <span class=s2>&quot;utf-8&quot;</span><span class=p>)</span>
+<span class=nb>print</span><span class=p>(</span><span class=n>ba</span><span class=p>)</span>  <span class=c1># Output: bytearray(b&#39;geeks for geeks!&#39;)</span>
+
+<span class=c1># Modify the bytearray </span>
+<span class=n>ba</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>=</span> <span class=mi>105</span>  <span class=c1># &#39;i&#39; in ASCII is 105</span>
+<span class=nb>print</span><span class=p>(</span><span class=n>ba</span><span class=p>)</span>  
+</pre></div></code>
+</gfg-panel></gfg-tabs><div class="code-output"><br><strong>Output</strong><pre>bytearray(b'Geeks for geeks!')
+bytearray(b'Gieks for geeks!')
+</pre></div><h3 style="text-align:left"><span>Syntax:</span></h3><blockquote><p dir="ltr"><span>bytearray([source[, encoding[, errors]]])</span></p></blockquote><ul><li value="1"><b><strong>source:</strong></b><span> This can be an integer (to create an array of that size filled with zeros), a string (to convert to bytes), an iterable of integers (0-255), or nothing (for an empty bytearray).</span></li><li value="2"><b><strong>encoding: </strong></b><span>Specifies the encoding (e.g., 'utf-8') if source is a string. Ignored otherwise.</span></li><li value="3"><b><strong>errors:</strong></b><span> Defines how encoding errors are handled (e.g., 'strict', 'replace'), only used with strings.</span></li></ul><h2 style="text-align:left"><span>Different ways to create bytearray()</span></h2><h3 style="text-align:left"><span>1. Creating an empty bytearray</span></h3><p dir="ltr"><span>We can create an empty bytearray by calling bytearray() with no arguments. This produces a bytearray of length 0, ready to be populated later using methods like </span><a href="https://www.geeksforgeeks.org/python-list-append-method/" target="_blank" rel="noopener"><span>append</span></a><span>() or </span><a href="https://www.geeksforgeeks.org/append-extend-python/" target="_blank" rel="noopener"><span>extend</span></a><span>(). It’s the simplest starting point when we don’t yet know the data but plan to build it incrementally. Think of it as an empty canvas for byte data, useful in dynamic applications where data arrives over time, such as reading from a stream.</span></p><gfg-tabs allow-code-exec=true  data-run-ide="true" data-mode="light">
+            <gfg-tab slot="tab">Python</gfg-tab>
+<gfg-panel slot="panel" data-code-lang="python3" data-main-code-start="None" data-main-code-end="None">
+    <code class="language-python3"><div class=highlight><pre><span></span><span class=n>ba</span> <span class=o>=</span> <span class=nb>bytearray</span><span class=p>()</span>
+<span class=nb>print</span><span class=p>(</span><span class=n>ba</span><span class=p>)</span>         
+<span class=nb>print</span><span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=n>ba</span><span class=p>))</span>    
+<span class=n>ba</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=mi>97</span><span class=p>)</span>     
+<span class=nb>print</span><span class=p>(</span><span class=n>ba</span><span class=p>)</span>         
+</pre></div></code>
+</gfg-panel></gfg-tabs><div class="code-output"><br><strong>Output</strong><pre>bytearray(b'')
+0
+bytearray(b'a')
+</pre></div><p dir="ltr"><span>Here, ba starts empty (bytearray(b'')). It has no initial content, but we can add bytes later. This is memory-efficient for scenarios where we are gathering data piece by piece.</span></p><h3 style="text-align:left"><span>2. Creatiing a bytearray from an integer</span></h3><p dir="ltr"><span>Passing an integer to bytearray() creates an array of that size, initialized with null bytes(\x00, or 0). this is useful when we know how many bytes we will need and want to pre-allocate space, avoiding resizing overhead. Each element is set to 0 by default, and we can overwrite them later. It's a common approach in performance-sensitive application, like buffering data a preparing a fixed-length binary structure.</span></p><gfg-tabs allow-code-exec=true  data-run-ide="true" data-mode="light">
+            <gfg-tab slot="tab">Python</gfg-tab>
+<gfg-panel slot="panel" data-code-lang="python3" data-main-code-start="None" data-main-code-end="None">
+    <code class="language-python3"><div class=highlight><pre><span></span><span class=n>ba</span> <span class=o>=</span> <span class=nb>bytearray</span><span class=p>(</span><span class=mi>4</span><span class=p>)</span>
+<span class=nb>print</span><span class=p>(</span><span class=n>ba</span><span class=p>)</span>        
+<span class=nb>print</span><span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=n>ba</span><span class=p>))</span>   
+<span class=n>ba</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>=</span> <span class=mi>65</span>       
+<span class=nb>print</span><span class=p>(</span><span class=n>ba</span><span class=p>)</span>        
+</pre></div></code>
+</gfg-panel></gfg-tabs><div class="code-output"><br><strong>Output</strong><pre>bytearray(b'\x00\x00\x00\x00')
+4
+bytearray(b'A\x00\x00\x00')
+</pre></div><p dir="ltr"><span>bytearray(4) creates a 4-byte array filled with zeros. You can modify any byte by index, as shown with ba[0] = 65. This method ensures a fixed initial size, which you can then customize.</span></p><h3 style="text-align:left"><span>3. Creating a bytearray from a string with encoding</span></h3><p dir="ltr"><span>We can create a bytearray from a string by providing the string and an encoding (e.g., 'utf-8', 'ascii'). The string is converted to its byte representation based on the encoding, and the result is a mutable bytearray. This is handy when working with text that needs to be processed as bytes, like preparing data for a file or network transmission. The optional errors parameter lets us handle invalid characters (e.g., 'ignore' skips them).</span></p><gfg-tabs allow-code-exec=true  data-run-ide="true" data-mode="light">
+            <gfg-tab slot="tab">Python</gfg-tab>
+<gfg-panel slot="panel" data-code-lang="python3" data-main-code-start="None" data-main-code-end="None">
+    <code class="language-python3"><div class=highlight><pre><span></span><span class=n>ba</span> <span class=o>=</span> <span class=nb>bytearray</span><span class=p>(</span><span class=s2>&quot;Hello&quot;</span><span class=p>,</span> <span class=s2>&quot;utf-8&quot;</span><span class=p>)</span>
+<span class=nb>print</span><span class=p>(</span><span class=n>ba</span><span class=p>)</span>         
+<span class=nb>print</span><span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=n>ba</span><span class=p>))</span>    
+<span class=n>ba</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>=</span> <span class=mi>105</span>       
+<span class=nb>print</span><span class=p>(</span><span class=n>ba</span><span class=p>)</span>        
+</pre></div></code>
+</gfg-panel></gfg-tabs><div class="code-output"><br><strong>Output</strong><pre>bytearray(b'Hello')
+5
+bytearray(b'Hillo')
+</pre></div><p dir="ltr"><span>"Hello" is encoded to bytes using UTF-8, producing b'Hello'. The resulting bytearray has 5 bytes (one per character in this case), and you can modify it, as shown by changing the second byte. If you omit encoding, you’ll get a TypeError.</span></p><h3 style="text-align:left"><span>4. Creating a bytearray from an iterable of integers</span></h3><p dir="ltr"><span>Passing an iterable (like a list, tuple, or set) of integers (0-255) to bytearray() creates a bytearray where each integer becomes a byte. This is perfect when we already have a collection of byte values, such as ASCII codes or raw binary data, and want to work with them as a mutable sequence. Each value must be in the valid byte range (0-255), or Python raises a </span><a href="https://www.geeksforgeeks.org/how-to-fix-valueerror-exceptions-in-python/" target="_blank" rel="noopener"><span>ValueError</span></a><span>. It’s a direct way to construct a bytearray from numeric data.</span></p><gfg-tabs allow-code-exec=true  data-run-ide="true" data-mode="light">
+            <gfg-tab slot="tab">Python</gfg-tab>
+<gfg-panel slot="panel" data-code-lang="python3" data-main-code-start="None" data-main-code-end="None">
+    <code class="language-python3"><div class=highlight><pre><span></span><span class=n>ba</span> <span class=o>=</span> <span class=nb>bytearray</span><span class=p>([</span><span class=mi>72</span><span class=p>,</span> <span class=mi>101</span><span class=p>,</span> <span class=mi>108</span><span class=p>,</span> <span class=mi>108</span><span class=p>,</span> <span class=mi>111</span><span class=p>])</span>
+<span class=nb>print</span><span class=p>(</span><span class=n>ba</span><span class=p>)</span>         
+<span class=nb>print</span><span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=n>ba</span><span class=p>))</span>   
+<span class=n>ba</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>=</span> <span class=mi>87</span>       
+<span class=nb>print</span><span class=p>(</span><span class=n>ba</span><span class=p>)</span>         
+</pre></div></code>
+</gfg-panel></gfg-tabs><div class="code-output"><br><strong>Output</strong><pre>bytearray(b'Hello')
+5
+bytearray(b'Wello')
+</pre></div><p dir="ltr"><span>The list [72, 101, 108, 108, 111] corresponds to the ASCII values for "Hello". The bytearray is initialized with these values, and you can modify them, as shown with ba[0] = 87. This method is explicit and precise for byte-level control.</span></p><h3 style="text-align:left"><span>5. Creating a bytearray from another bytearray or byte object</span></h3><p dir="ltr"><span>We can create a bytearray by passing an existing bytearray or bytes object to bytearray(). This copies the data into a new bytearray, giving us a mutable version of the original. It’s useful when we have immutable bytes data (e.g., from a file or network) that we need to edit. The new bytearray is independent, so changes don’t affect the source. No encoding is needed since the input is already in byte form.</span></p><gfg-tabs allow-code-exec=true  data-run-ide="true" data-mode="light">
+            <gfg-tab slot="tab">Python</gfg-tab>
+<gfg-panel slot="panel" data-code-lang="python3" data-main-code-start="None" data-main-code-end="None">
+    <code class="language-python3"><div class=highlight><pre><span></span><span class=n>original</span> <span class=o>=</span> <span class=sa>b</span><span class=s2>&quot;Python&quot;</span>
+<span class=n>ba</span> <span class=o>=</span> <span class=nb>bytearray</span><span class=p>(</span><span class=n>original</span><span class=p>)</span>
+<span class=nb>print</span><span class=p>(</span><span class=n>ba</span><span class=p>)</span>         
+<span class=n>ba</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>=</span> <span class=mi>66</span>        
+<span class=nb>print</span><span class=p>(</span><span class=n>ba</span><span class=p>)</span>         
+<span class=nb>print</span><span class=p>(</span><span class=n>original</span><span class=p>)</span>   
+</pre></div></code>
+</gfg-panel></gfg-tabs><div class="code-output"><br><strong>Output</strong><pre>bytearray(b'Python')
+bytearray(b'Bython')
+b'Python'
+</pre></div><p dir="ltr"><span>The bytes object b"Python" is copied into a bytearray. Modifying ba doesn’t affect original because it’s a separate copy. This method bridges immutable bytes to mutable bytearray workflows.</span></p>
+                            <!-- Quiz Carousel -->
+                            
+                        <div class='article_bottom_text'></div><br>
+                                                                              <div id="video-tab-content" class="video-tab-content">
+                                        <div style="text-align: center; margin: 20px 0px;" id="GFG_AD_InContent_Desktop_728x280"></div>
+                                                                                </div>
+                                                                <div class="d-row content-bw article-pgnavi v-divider-gfg"style="margin-top: 20px;">
+                            <div class="article-pgnavi_prev"><div class="comment_div" data-title="Comments"><button class="author_footer_btn" data-gfg-action="loadComments">
+    <div class='discussion_panel'>
+        <i class='discussion_button'>
+        </i>
+        Comment
+    </div></button></div><div class="trigger-div"><button class="author_footer_btn"><div class="more_info">More info<span class="more_info_uparrow gfg-icon gfg-icon_arrow-down-thin"></span></div></button></div><a href="https://www.geeksforgeeks.org/about/contact-us/?listicles" target="_blank" class="advertise-with-us-div"><button class="advertise-with-us-btn"><span class="advertise-with-us-text">Advertise with us</span></button></a></div>                                <div class="article-pgnavi_next">
+                                <a href="https://www.geeksforgeeks.org/numpy-fromiter-function-python/" class="pg-head">
+                                        <span>Next Article</span>
+                                        <span class="gfg-icon gfg-icon_next"></span>
+                                    </a>
+                                    <!-- <div class="pg-meta">8 Min Read&ensp;|&ensp;<a href="#">Java</a></div> -->
+                                    <div class="pg-main">
+                                        <a href="https://www.geeksforgeeks.org/numpy-fromiter-function-python/">numpy.fromiter() function – Python</a>
+                                    </div>
+                                </div>
+                                                        </div>
+                        <div class="more-info hidden-div ">
+                            <div class="article-meta-author-details ">
+                                        <div class="article-meta-author-details-block">
+                                            <div class="article-meta-author-details-profile-display">
+                                                <div class="author_info">
+                                                <div class="article-meta-author-details-profile-display-icon">
+                                                    <a href="https://www.geeksforgeeks.org/user/Shivam_k/" style="text-decoration: none;"><div class="image-wrap" style="position: relative"><p class="profileCard-profile-picture" style="background-color:#B0DAFF;  margin:0px;">S</p>
+        <div style="position: absolute;top: -35px; left: -13px;">
+            <i class="gfg-badge-icon md master"></i>
+        </div>
+        </div>
+</a>                                                </div>
+                                                <div class="article-meta-author-details-profile-display-name" >
+                                                    <a aria-label="author profile" href="https://www.geeksforgeeks.org/user/Shivam_k/" style="display: block;overflow: hidden;width: 65px;text-decoration: none;text-overflow: ellipsis;color: var(--gfg-title-color);font-weight: bold;white-space: nowrap;">Shivam_k</a>                                                </div>
+                                                </div>
+                                                <div class="author_follow_btn"><div class="article-meta-author-details-follow-button">
+            <div class="follow-container">
+            <div class="follow-btn" >
+<button id="followAuthor" type="button" onclick ="followOrUnfollowAuthor()" value="Shivam_k">
+<span role="img" aria-label="plus" class="plus-icon"><svg viewBox="64 64 896 896" focusable="false" data-icon="plus" width="1em" height="1em" fill="currentColor" aria-hidden="true"><defs><style></style></defs><path d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"></path><path d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"></path></svg></span> <span>Follow</span></button></div></div></div></div>                                            </div>
+                                            
+                                        </div>
+                                        <div class="article_bottom_suggestion_wrapper">
+                                            <!-- <div class="article_bottom_suggestion" data-title="Follow">
+                                                <a href='https://news.google.com/publications/CAAqBwgKMLTrzwsw44bnAw?hl=en-IN&gl=IN&ceid=IN%3Aen' target="_blank">
+                                                    <img class="gfg-icon_Gnews no-zoom-in-cursor" src=https://media.geeksforgeeks.org/auth-dashboard-uploads/Google-news.svg  loading="lazy" alt="News"></img>
+                                                </a>
+                                            </div>  -->
+                                            <div pid="215308" class="article--viewer_like tooltip tooltipBottom" data-title="Like Article">
+                                                <!-- <span class="tooltiptext likeTooltipBottom">Like Article</span> -->
+                                                <button id="likeButton" aria-label="like article" data-gfg-action="like-article" data-bookmark-value="0" data-liked="false" style="color: #5B5A5A !important; display: flex; align-items: center; background-color: unset; margin: 0px !important; padding: 5px 0px;">
+                                                    <i class="author-badge-like-button"></i>
+                                                    <figure id="likeCount" style="margin-left: 3px; margin-top: 4px; color: var(--like-count-color); font-size: 14px; font-weight: 600;" class="favoriteText"></figure>
+                                                </button>
+                                            </div>
+                                            
+                                                                            <div class="article_bottom_suggestion" onclick="improveArticleCall()" data-title="Improve">
+                                    <span class="improveTooltipBottom">Improve</span>
+                                    <i class="author-badge-improvement-button"></i>
+                                </div>
+                            
+                                        </div>
+                        </div>
+                                                <div class="bottom-wrap" style="margin-top: 12px; margin-bottom: 25px;">
+                                                            <div class="improved">
+                                    <div class="t-head">Article Tags : </div>
+                                    <ul>
+                                        
+            <li style="border-radius: 25px;" class="">
+                <a href="https://www.geeksforgeeks.org/category/misc/">Misc</a>
+            </li>
+            <li style="border-radius: 25px;" class="">
+                <a href="https://www.geeksforgeeks.org/category/programming-language/python/">Python</a>
+            </li>
+            <li style="border-radius: 25px;" class="">
+                <a href="https://www.geeksforgeeks.org/tag/python-built-in-functions/">Python-Built-in-functions</a>
+            </li>
+            <li style="border-radius: 25px;" class="">
+                <a href="https://www.geeksforgeeks.org/tag/python/">python</a>
+            </li>                                    </ul>
+                                                                    </div>
+                                                                                        <div class="improved">
+                                    <div class="t-head">Practice Tags : </div>
+                                    <ul class="practice-tags">
+                                        <li><a href="https://www.geeksforgeeks.org/explore?category=Misc">Misc</a></li><li><a href="https://www.geeksforgeeks.org/explore?category=python">python</a></li><li><a href="https://www.geeksforgeeks.org/explore?category=python">python</a></li>                                    </ul>
+                                                                    </div>
+                                                    </div>
+                                                </div>
+
+                                                </article>
+                        
+                                                                          <div class="article--recommended article--recommended_wrapper" id="similar-reads">
+                                                         <h3 class="new-top-bar top-bar-title">Similar Reads</h3>
+                                <div class="gfg-similar-reads-list">
+                                    <ul class="similarReadLeftBarList"><div class="second"><li class="similarReadDropdownItem"><a href="https://www.geeksforgeeks.org/pandas-array-function-in-python/"><div class="gfg-similar-read-item-content">
+                    <div class="gfg-similar-read-item-heading">pandas.array() function in Python
+                    </div>
+                    <div class="gfg-similar-read-item-subheading">This method is used to create an array from a sequence in desired data type. Syntax : pandas.array(data: Sequence[object], dtype: Union[str, numpy.dtype, pandas.core.dtypes.base.ExtensionDtype, NoneType] = None, copy: bool = True) Parameters : data : Sequence of objects. The scalars inside `data` sh</div>
+                </div>
+                <div class="reading-time">
+                    <i class="reading-time-icon" data-gfg-action="readingtime"></i>
+                    <span style="color: var(--recommendation-card-text-color);font-size: 14px;font-weight: 500;line-height: 17px;">2 min read</span>
+                </div>
+                </a></li><li class="similarReadDropdownItem"><a href="https://www.geeksforgeeks.org/convert-bytearray-to-bytes-in-python/"><div class="gfg-similar-read-item-content">
+                    <div class="gfg-similar-read-item-heading">Convert Bytearray To Bytes In Python
+                    </div>
+                    <div class="gfg-similar-read-item-subheading">In Python, dealing with binary data is a common task, and understanding how to convert between different binary representations is crucial. One such conversion is from a bytearray to bytes. In this article, we will explore five simple methods to achieve this conversion, along with code examples for</div>
+                </div>
+                <div class="reading-time">
+                    <i class="reading-time-icon" data-gfg-action="readingtime"></i>
+                    <span style="color: var(--recommendation-card-text-color);font-size: 14px;font-weight: 500;line-height: 17px;">3 min read</span>
+                </div>
+                </a></li><li class="similarReadDropdownItem"><a href="https://www.geeksforgeeks.org/numpy-byte_bounds-function-python/"><div class="gfg-similar-read-item-content">
+                    <div class="gfg-similar-read-item-heading">numpy.byte_bounds() function &acirc;&#128;&#147; Python
+                    </div>
+                    <div class="gfg-similar-read-item-subheading">numpy.byte_bounds() function returns pointers to the end-points of an array. Syntax : numpy.byte_bounds(arr) Parameters : arr : [ndarray] Input array. Return : [tuple of 2 integers] The first integer is the first byte of the array, the second integer is just past the last byte of the array. If arr i</div>
+                </div>
+                <div class="reading-time">
+                    <i class="reading-time-icon" data-gfg-action="readingtime"></i>
+                    <span style="color: var(--recommendation-card-text-color);font-size: 14px;font-weight: 500;line-height: 17px;">1 min read</span>
+                </div>
+                </a></li><li class="similarReadDropdownItem"><a href="https://www.geeksforgeeks.org/numpy-fromiter-function-python/"><div class="gfg-similar-read-item-content">
+                    <div class="gfg-similar-read-item-heading">numpy.fromiter() function &acirc;&#128;&#147; Python
+                    </div>
+                    <div class="gfg-similar-read-item-subheading">NumPy's fromiter() function is a handy tool for creating a NumPy array from an iterable object. This iterable can be any Python object that provides elements one at a time. The function is especially useful when you need to convert data from a custom data source, like a file or generator, into a Num</div>
+                </div>
+                <div class="reading-time">
+                    <i class="reading-time-icon" data-gfg-action="readingtime"></i>
+                    <span style="color: var(--recommendation-card-text-color);font-size: 14px;font-weight: 500;line-height: 17px;">2 min read</span>
+                </div>
+                </a></li><li class="similarReadDropdownItem"><a href="https://www.geeksforgeeks.org/python-array-length/"><div class="gfg-similar-read-item-content">
+                    <div class="gfg-similar-read-item-heading">Python Array length
+                    </div>
+                    <div class="gfg-similar-read-item-subheading">Finding the length of an array in Python means determining how many elements are present in the array. For example, given an array like [1, 2, 3, 4, 5], you might want to calculate the length, which is 5. Let's explore different methods to efficiently. Using len()len() function is the most efficient</div>
+                </div>
+                <div class="reading-time">
+                    <i class="reading-time-icon" data-gfg-action="readingtime"></i>
+                    <span style="color: var(--recommendation-card-text-color);font-size: 14px;font-weight: 500;line-height: 17px;">2 min read</span>
+                </div>
+                </a></li><li class="similarReadDropdownItem"><a href="https://www.geeksforgeeks.org/python-str-function/"><div class="gfg-similar-read-item-content">
+                    <div class="gfg-similar-read-item-heading">Python str() function
+                    </div>
+                    <div class="gfg-similar-read-item-subheading">The str() function in Python is an in-built function that takes an object as input and returns its string representation. It can be used to convert various data types into strings, which can then be used for printing, concatenation, and formatting. Let&acirc;&#128;&#153;s take a simple example to converting an Intege</div>
+                </div>
+                <div class="reading-time">
+                    <i class="reading-time-icon" data-gfg-action="readingtime"></i>
+                    <span style="color: var(--recommendation-card-text-color);font-size: 14px;font-weight: 500;line-height: 17px;">3 min read</span>
+                </div>
+                </a></li><li class="similarReadDropdownItem"><a href="https://www.geeksforgeeks.org/python-len-function/"><div class="gfg-similar-read-item-content">
+                    <div class="gfg-similar-read-item-heading">Python len() Function
+                    </div>
+                    <div class="gfg-similar-read-item-subheading">The len() function in Python is used to get the number of items in an object. It is most commonly used with strings, lists, tuples, dictionaries and other iterable or container types. It returns an integer value representing the length or the number of elements. Example:Pythons = "GeeksforGeeks" # G</div>
+                </div>
+                <div class="reading-time">
+                    <i class="reading-time-icon" data-gfg-action="readingtime"></i>
+                    <span style="color: var(--recommendation-card-text-color);font-size: 14px;font-weight: 500;line-height: 17px;">2 min read</span>
+                </div>
+                </a></li><li class="similarReadDropdownItem"><a href="https://www.geeksforgeeks.org/numpy-frombuffer-function-python/"><div class="gfg-similar-read-item-content">
+                    <div class="gfg-similar-read-item-heading">numpy.frombuffer() function &acirc;&#128;&#147; Python
+                    </div>
+                    <div class="gfg-similar-read-item-subheading">numpy.frombuffer() function interpret a buffer as a 1-dimensional array. Syntax : numpy.frombuffer(buffer, dtype = float, count = -1, offset = 0) Parameters : buffer : [buffer_like] An object that exposes the buffer interface. dtype : [data-type, optional] Data-type of the returned array, default da</div>
+                </div>
+                <div class="reading-time">
+                    <i class="reading-time-icon" data-gfg-action="readingtime"></i>
+                    <span style="color: var(--recommendation-card-text-color);font-size: 14px;font-weight: 500;line-height: 17px;">1 min read</span>
+                </div>
+                </a></li><li class="similarReadDropdownItem"><a href="https://www.geeksforgeeks.org/numpy-recarray-byteswap-function-python/"><div class="gfg-similar-read-item-content">
+                    <div class="gfg-similar-read-item-heading">Numpy recarray.byteswap() function | Python
+                    </div>
+                    <div class="gfg-similar-read-item-subheading">In numpy, arrays may have a data-types containing fields, analogous to columns in a spreadsheet. An example is [(a, int), (b, float)], where each entry in the array is a pair of (int, float). Normally, these attributes are accessed using dictionary lookups such as arr['a'] and arr['b']. Record array</div>
+                </div>
+                <div class="reading-time">
+                    <i class="reading-time-icon" data-gfg-action="readingtime"></i>
+                    <span style="color: var(--recommendation-card-text-color);font-size: 14px;font-weight: 500;line-height: 17px;">2 min read</span>
+                </div>
+                </a></li><li class="similarReadDropdownItem"><a href="https://www.geeksforgeeks.org/python-operations-on-numpy-arrays/"><div class="gfg-similar-read-item-content">
+                    <div class="gfg-similar-read-item-heading">Python: Operations on Numpy Arrays
+                    </div>
+                    <div class="gfg-similar-read-item-subheading">NumPy is a Python package which means 'Numerical Python'. It is the library for logical computing, which contains a powerful n-dimensional array object, gives tools to integrate C, C++ and so on. It is likewise helpful in linear based math, arbitrary number capacity and so on. NumPy exhibits can lik</div>
+                </div>
+                <div class="reading-time">
+                    <i class="reading-time-icon" data-gfg-action="readingtime"></i>
+                    <span style="color: var(--recommendation-card-text-color);font-size: 14px;font-weight: 500;line-height: 17px;">3 min read</span>
+                </div>
+                </a></li></div></ul>
+                                </div>
+                            </div>
+                            
+                        
+
+
+                                                <div class="vote-wrap">
+                                <div style="display:none;align-items:center;justify-content:center;width:100%;">
+                                    <button aria-label="like" data-type="like" class="vote-this" style="margin-right: 0; margin-left:0 ;">
+                                        <i class="gfg-icon gfg-icon_like favoriteIcon"></i>
+                                        <span class="favoriteLike">Like</span>
+                                        <figure class="favoriteText"></figure>
+                                    </button>
+                                                                    </div>
+                            </div>
+
+                        </div>
+                            <div class="article-meta">
+                                                                                    <div class="bottom-wrap">
+                              <div id="GFG_AD_InContent_Desktop_BTF_650x250" style="text-align:center;max-height: 300px;"></div>
+                            </div>
+                                                        <!-- end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div id="report_modal_content" class="report_modal_content" style="display:hidden;"></div>
+        <div class="onopen-discussion-panel">
+            <div class="discussion-tab">
+                <div class="discussion_heading">
+                    <div></div>
+                    <i class="gfg-icon close-tab-icon"></i>
+                </div> 
+                <div class="discussion_content">                            <div style="height:100%">
+                                <div style="height:100%" id="comment-system"></div>
+                            </div>
+
+                            
+</div>
+            </div>
+        </div>  
+
+        <div class="rightBar" style="padding-right: 5px;">
+                
+<style>
+	.article--container_content{
+		align-items: unset !important;
+	}
+	.sideBar {
+		position: sticky !important;
+	}
+	.gfg-icon_switch::after {
+		background-position: -40px -281px !important;
+	}
+	.gfg-icon_transaction::after {
+		background-position: -40px -321px !important;
+	}
+	.header-main__profile.selected+.mega-dropdown{
+		width: 225px !important;
+	}
+	#courses-container .course-price{
+		display:none;
+	}
+	/* .side--container_wscard .card-content .content .meta:empty, .practiceBannerFromPlugin{
+		display:none !important;
+	} */
+	.side--container_wscard .card-content .content .meta{
+		display:block !important;
+	}
+	.side--container_wscard .card-content .content .meta p{
+		background-color: rgba(254, 212, 91, 0.6);
+		font-size: 10pt;
+		font-weight: bold;
+		display: inline-block;
+		color: var(--color-black);
+		margin-top: 15px;
+		padding: 0px 5px;
+	}
+	#try-it{
+		display:initial !important;
+	}
+	#try-it .try-it-div{
+		line-height: 34px;
+	}
+	.gfg-icon_dark-mode::after {
+		background-position: -40px -680px;
+	}
+	.side--container_wscard .head{
+		font-size: 14px !important;
+	}
+	.nineDot-menu, .gfg-icon_ndot{
+		display: none;
+	}
+	#text-15{
+		flex-direction: column;
+	}
+	.mtq_correct_marker, .mtq_wrong_marker{
+		display: none;
+	}
+	.sidebar_wrapper > :last-child{
+		margin: unset !important;
+		margin-left: 5px !important;
+		margin-top: 20px !important;
+		top: 70px !important;
+	}
+	.darkMode-wrap{
+		bottom:1% !important;
+	}
+	#secondary .textwidget{
+		margin-left: auto;
+		margin-right: 0;
+		text-align: right;
+	}
+	#secondary .widget_text:last-child{
+		top: 70px !important;
+	}
+	@media(max-width:768px){
+		#scrollTopBtn{
+			display:none !important;
+		}
+	}
+	.rightbar_loggedin_promo_cta{
+		display:flex;
+		cursor:pointer;
+		margin-bottom:20px;
+	}
+</style>
+
+<div id="secondary" class="widget-area">
+	
+	<!------------------------ text-15 (for Ads) ------------------------ -->
+	<aside id="text-15" class="widget widget_text">
+		<div class="textwidget">
+					<div id="_GFG_ABP_Desktop_RightSideBar_ATF_300x600_2"></div>
+			<div id="GFG_AD_Desktop_RightSideBar_ATF_300x250_2" style="min-width: 300px;margin-bottom:10px;"></div>
+			<div id='GFG_AD_Desktop_RightSideBar_ATF_300x600' style='min-width: 300px; min-height: 600px;margin-bottom:10px;'></div>
+					</div>
+	</aside>
+
+	<!------------------------ text-16 (For Ads)------------------------ -->
+	<aside id="text-16" class="widget widget_text">
+		<div class="textwidget">
+					<div id="_GFG_ABP_Desktop_RightSideBar_MTF_300x600"></div>
+			<div id='GFG_AD_Desktop_RightSideBar_MTF_300x250' style='min-width: 300px;'></div>
+			<div id="_GFG_ABP_Desktop_RightSideBar_BTF_300x600"></div>
+			<div id="_GFG_ABP_Desktop_RightSideBar_BTF_300x600_3"></div>
+				</div>
+	</aside>
+	<!-- ---------------------- courses section ------------------------- -->
+	    <!-- <script>
+        var rightBarExploreMoreList = ``
+	</script> -->
+
+	<!-------------------------------- Text-18 (explore more section + ads) --------------------------->
+	<aside id="text-18" class="widget widget_text">
+		<div class="textwidget">
+					<div id='GFG_AD_Desktop_RightSideBar_BTF_Sticky_300x250' style='min-width: 300px;margin-bottom:10px'></div>
+			<div id='GFG_AD_Desktop_RightSideBar_Docked_160x600' style='min-width: 160px;'></div><div id='GFG_AD_Desktop_RightSideBar_BTFdocked_300x600' style='min-width: 300px;'></div>
+			</aside>
+
+	<!-------------------------- Text -20 (For maintaining some CSS) ---------------------- -->
+	<aside id="text-20" class="widget widget_text">
+		<div class="textwidget">
+		 <!-- Please do not delete this div -->
+		</div>
+	</aside>
+</div>
+
+                <div id="user-personal-note" style="display: none;"></div>
+        </div>
+    </div>
+    <section class="disqus-section">
+        <div class="article-page_flex">
+            <div class="leftBar">
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="video-popup" style="display:none"></div>
+
+<link rel="stylesheet" href='https://www.geeksforgeeks.org/wp-content/themes/iconic-one/css/articleList.min.css?ver=1.7'>
+
+<script>
+$(document).ready(function() {
+    var isfollowingApiCall = false;
+    if ($('.follow-btn').length) {
+        var articleRecommendedTop = $(".article--recommended").offset().top;
+        var articleRecommendedBottom = articleRecommendedTop + $(".article--recommended").outerHeight();
+        $(window).scroll(function() {
+            var top_of_element = $(".article--recommended").offset().top;
+            var bottom_of_element = $(".article--recommended").offset().top + $(".article--recommended").outerHeight();
+            var bottom_of_screen = $(window).scrollTop() + $(window).innerHeight();
+            var top_of_screen = $(window).scrollTop();
+            if ((bottom_of_screen > top_of_element && top_of_screen < bottom_of_element) || 
+                (bottom_of_screen > articleRecommendedTop && top_of_screen < articleRecommendedBottom) ||
+                (top_of_screen > articleRecommendedBottom)) {
+                if (!isfollowingApiCall) {
+                    isfollowingApiCall = true;
+                    setTimeout(function(){
+                        if (loginData && loginData.isLoggedIn) {
+                            if (loginData.userName !== $('#followAuthor').val()) {
+                                is_following();
+                            } else {
+                                $('.profileCard-profile-picture').css('background-color', '#E7E7E7');
+                            }
+                        } else {
+                            $('.follow-btn').removeClass('hideIt');
+                        }
+                    }, 3000);
+                }
+            }
+        });
+    }
+    
+    $(".accordion-header").click(function() {
+        var arrowIcon = $(this).find('.bottom-arrow-icon');
+        arrowIcon.toggleClass('rotate180');
+    });
+
+});
+
+window.isReportArticle = false;
+function report_article(){
+    if (!loginData || !loginData.isLoggedIn) {
+        const loginModalButton = $('.login-modal-btn')
+            if (loginModalButton.length) {
+                loginModalButton.click();
+            }
+    return;
+}
+
+    if(!window.isReportArticle){
+            //to add loader
+            $('.report-loader').addClass('spinner');
+            jQuery('#report_modal_content').load(gfgSiteUrl+'wp-content/themes/iconic-one/report-modal.php', {
+                PRACTICE_API_URL: practiceAPIURL,
+                PRACTICE_URL:practiceURL
+            },function(responseTxt, statusTxt, xhr){
+                if(statusTxt == "error"){
+                    alert("Error: " + xhr.status + ": " + xhr.statusText);
+                }
+            });
+    }else{
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        $("#report_modal_content").show();
+    }
+} 
+
+function closeShareModal() {
+    const shareOption = document.querySelector('[data-gfg-action="share-article"]');
+    shareOption.classList.remove("hover_share_menu");
+    let shareModal = document.querySelector(".hover__share-modal-container");
+    shareModal && shareModal.remove();
+}
+
+function openShareModal() {
+    closeShareModal(); // Remove existing modal if any
+
+    let shareModal = document.querySelector(".three_dot_dropdown_share");
+    shareModal.appendChild(Object.assign(document.createElement("div"), { className: "hover__share-modal-container" }));
+
+    document.querySelector(".hover__share-modal-container").append(
+        Object.assign(document.createElement('div'), { className: "share__modal" }),
+    );
+
+    document.querySelector(".share__modal").append(Object.assign(document.createElement('h1'), { className: "share__modal-heading" }, { textContent: "Share to" }));
+    const socialOptions = ["LinkedIn", "WhatsApp","Twitter", "Copy Link"];
+
+    socialOptions.forEach((socialOption) => {
+        const socialContainer = Object.assign(document.createElement('div'), { className: "social__container" });
+        const icon = Object.assign(document.createElement("div"), { className: `share__icon share__${socialOption.split(" ").join("")}-icon` });
+        const socialText = Object.assign(document.createElement("span"), { className: "share__option-text" }, { textContent: `${socialOption}` });
+        const shareLink = (socialOption === "Copy Link") ? 
+            Object.assign(document.createElement('div'), { role: "button", className: "link-container CopyLink" }) : 
+            Object.assign(document.createElement('a'), { className: "link-container" });
+
+       
+        if (socialOption === "LinkedIn") {
+            shareLink.setAttribute('href', `https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`);
+            shareLink.setAttribute('target', '_blank');
+        }
+        if (socialOption === "WhatsApp") {
+            shareLink.setAttribute('href', `https://api.whatsapp.com/send?text=${window.location.href}`); 
+            shareLink.setAttribute('target', "_blank");
+        }
+        if (socialOption === "Twitter") {
+            shareLink.setAttribute('href', `https://twitter.com/intent/tweet?url=${window.location.href}`); 
+            shareLink.setAttribute('target', "_blank");
+        }
+
+        shareLink.append(icon, socialText);
+        socialContainer.append(shareLink);
+        document.querySelector(".share__modal").appendChild(socialContainer);
+
+        //adding copy url functionality
+        if(socialOption === "Copy Link") {
+            shareLink.addEventListener("click", function() {
+                var tempInput = document.createElement("input");
+                tempInput.value = window.location.href; 
+                document.body.appendChild(tempInput); 
+                tempInput.select();
+                tempInput.setSelectionRange(0, 99999); // For mobile devices
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                this.querySelector(".share__option-text").textContent = "Copied"
+            })
+        }
+    });
+    // document.querySelector(".hover__share-modal-container").addEventListener("mouseover", () => document.querySelector('[data-gfg-action="share-article"]').classList.add("hover_share_menu"));
+}
+function toggleLikeElementVisibility(selector, show) {
+    document.querySelector(`.${selector}`).style.display = show ? "block" : "none";
+}
+
+function closeKebabMenu(){
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+</script>
+<!-- Script for the new design of similar read  -->
+<script>
+$(document).ready(function() {
+
+    $("#showMoreTagsBtn").click(function() {
+        $('.articles-hidden-tags').show();
+        $(this).hide();
+    });
+
+    $("#showMorePracticeTagsBtn").click(function() {
+        $(".practice-tags li:nth-child(n+5)").show();
+        $(this).hide();
+    });
+});
+</script>
+<!-- Script end for similar read -->
+
+<style>
+        .grecaptcha-badge {
+            visibility: hidden !important;
+        }
+        .thank-you-message {
+            height: 100%;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .thank-you-message-content {
+            margin-top: 17px;
+            font: 400 20px var(--font-secondary);
+            color: var(--improve-modal-text);
+            line-height: 180%;
+            text-align: center;
+        }
+        .thank-you-message-content h2{
+          font-family: var(--font-secondary);
+        }
+        .all-footer-information{
+          width: 100% !important;;
+        }
+        .footer-wrapper_links-list{
+           margin-block-start: 0em !important;
+           width: 16% !important; 
+           padding-inline-start: 18px !important;
+        }
+        .link-head{
+               margin-bottom: 0px;
+        }
+        @media only screen and (max-width:1340px) {
+              .footer-wrapper_links-list{
+              overflow-wrap: break-word;
+          }
+        }
+        @media screen and (min-width: 991px)  {
+              .all-footer-information{
+                padding-left:15px;
+          }
+        }
+        @media only screen and (max-width:980px) {
+          .footer-wrapper_branding-address{
+               padding-top: 10px;
+          }
+        }
+        @media (max-width: 750px) {
+            .thank-you-message-content{
+                font-size: 14px;
+                line-height: 170%;
+            }
+        }
+
+        /* CSS variable meant to handle the dark and light mode icon for three 90 event in header courses dropdown */
+        :root{
+          --three90headericon : url('https://media.geeksforgeeks.org/auth-dashboard-uploads/three90daylogocompressed.svg');
+          --three90headericonposition : 0px -40px;
+          --three90leftbarimggrid : url('https://media.geeksforgeeks.org/auth-dashboard-uploads/three90leftbarspritecompressed.svg');
+          --three90leftbarimgposition : -5px -55px;
+          --three90leftbarbgcolour : #b3abd0;
+        }
+
+        body[data-dark-mode="true"]{
+          --three90leftbarimgposition : -6px 1px;
+          --three90headericonposition : 0px 0px;
+          --three90leftbarbgcolour: #8c82b9;
+        }
+
+        .three90leftbarimg{
+          margin-left: -5px;
+          height: 30px;
+          background-image: var(--three90leftbarimggrid);
+          background-repeat: no-repeat;
+          background-position: var(--three90leftbarimgposition);
+          background-size: 212px;
+        }
+
+        .courseTabShimmer{
+          position: absolute;
+          height: 110%;
+          width: 0;
+          opacity: .7;
+          -webkit-animation: courseShimmer 2s cubic-bezier(0,0,.07,.61) infinite;
+          animation: courseShimmer 2s cubic-bezier(0,0,.07,.61) infinite;
+          box-shadow: 0 0 25px 5px #dddcdc;
+          -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+          padding:0px !important;
+          border:unset !important;
+        }
+
+        @keyframes courseShimmer{
+          0% {
+              left: 0;
+          }
+          55% {
+              left: 100%;
+          }
+          99% {
+              left: 110%;
+          }
+        }
+
+</style>
+
+
+	</div><!-- #main .wrapper -->
+  <div id="displayModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- <div class="upper-box">
+        <h3 style="font: normal normal bold 18px/31px var(--font-primary); color: var(--color-black);">Improve your Coding Skills with Practice</h3>
+        <button class="upper-box-btn"><a style="color: white !important;" href="https://practice.geeksforgeeks.org/explore?page=1&sortBy=submissions">Try It!</a></button>
+      </div> -->
+      <div class="modal-content">
+        <div class="error-message"></div>
+        <!-- <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" data-modal="displayModal">&times;</button>
+          <h2 class="modal-title" id="dmTitle"></h2>
+        </div> -->
+        <div class="modal-body" id="dmBody">
+            <div id="modal-dm-content"></div>
+              <div class="modal-overlay" aria-hidden=true>
+                <span class="loader__animation"></span>
+              </div>
+            <!-- body -->
+        </div>
+      </div>
+    </div>
+  </div>  
+  <div id="displayModalBackdrop" class="backdrop"></div>
+  <!-- Footer start -->
+  <footer class="gfg-footer" id="gfg-footer">
+      <div class="footer-wrapper">
+          <div class="footer-wrapper_branding">
+              <a class="footer-wrapper_branding-anchor" aria-label="GeeksforGeeks Logo" href="https://www.geeksforgeeks.org/">
+                <img loading="lazy" style="height: 32px; width: 230px; max-width: fit-content;" class="footer-wrapper_branding-nlogo" src="https://media.geeksforgeeks.org/auth-dashboard-uploads/gfgFooterLogo.png" alt="geeksforgeeks-footer-logo"/>
+              </a>
+              <div class="footer-wrapper_branding-address">
+                  <div class="address_section">
+                    <div class="address-icon-wrapper">
+                      <i class="gfg-icon gfg-icon_pin"></i> 
+                    <div class="address_div">
+                     
+                      <div class="address_name">Corporate & Communications Address:</div>
+                                            <div class="footer-address">
+                      A-143, 7th Floor, Sovereign Corporate Tower, Sector- 136, Noida, Uttar Pradesh (201305)                    </div>
+                    </div>
+                  </div>
+                     
+                      <div class="address-icon-wrapper">
+                      <i class="gfg-icon gfg-icon_pin"></i>  
+                      <div class="address_div">
+                        <div class="address_name">Registered Address:</div>
+                        K 061, Tower K, Gulshan Vivante Apartment, Sector 137, Noida, Gautam Buddh Nagar, Uttar Pradesh, 201305                      </div>
+                    </div>
+                                      </div>
+              </div>
+              <div class="footer-wrapper_branding-social">
+                  <a href="https://www.facebook.com/geeksforgeeks.org/" rel="noopener noreferrer" aria-label="GeeksforGeeks Facebook" target="_blank">
+                      <div class="facebook"></div>
+                  </a>
+                  <a href="https://www.instagram.com/geeks_for_geeks/" rel="noopener noreferrer" aria-label="GeeksforGeeks Instagram" target="_blank">
+                      <div class="instagram"></div>
+                  </a>
+                  <a href="https://in.linkedin.com/company/geeksforgeeks" rel="noopener noreferrer" aria-label="GeeksforGeeks LinkedIn" target="_blank">
+                      <div class="linkedin"></div>
+                  </a>
+                  <a href="https://twitter.com/geeksforgeeks" rel="noopener noreferrer" aria-label="GeeksforGeeks Twitter" target="_blank">
+                      <div class="twitter"></div>
+                  </a>
+                  <a href="https://www.youtube.com/geeksforgeeksvideos" rel="noopener noreferrer" aria-label="GeeksforGeeks YouTube" target="_blank">
+                      <div class="youtube"></div>
+                  </a>
+              </div>
+              <div class="footer-wrapper_branding-app">
+                  <a aria-label="GeeksforGeeks App Link" href="https://geeksforgeeksapp.page.link/gfg-app" target="_blank" ><img src="https://media.geeksforgeeks.org/auth-dashboard-uploads/googleplay.png" alt="GFG App on Play Store" id="gplay" loading="lazy"></a>
+                  <a aria-label="GeeksforGeeks App Link" href="https://geeksforgeeksapp.page.link/gfg-app" target="_blank"><img src="https://media.geeksforgeeks.org/auth-dashboard-uploads/appstore.png" alt="GFG App on App Store" id="appstore" loading="lazy"></a>
+              </div>
+              <div class="footer_advertise_btn_box">
+                <a href="https://www.geeksforgeeks.org/advertise-with-us/" target="_blank" class="footer_advertise_btn">Advertise with us</a>
+              </div> 
+          </div>
+        <div class="all-footer-information">
+          <div class="footer-wrapper_links" style="justify-content: space-between; text-align: -webkit-left;"><ul class="footer-wrapper_links-list" ><li>Company</li><li><a href=https://www.geeksforgeeks.org/about/>About Us</a></li><li><a href=https://www.geeksforgeeks.org/legal/>Legal</a></li><li><a href=https://www.geeksforgeeks.org/legal/privacy-policy/>Privacy Policy</a></li><li><a href=https://www.geeksforgeeks.org/press-release/>In Media</a></li><li><a href=https://www.geeksforgeeks.org/about/contact-us/>Contact Us</a></li><li><a href=https://www.geeksforgeeks.org/advertise-with-us/>Advertise with us</a></li><li><a href=https://www.geeksforgeeks.org/gfg-corporate-solution/>GFG Corporate Solution</a></li><li><a href=https://www.geeksforgeeks.org/campus-training-program/>Placement Training Program</a></li></ul><ul class="footer-wrapper_links-list" ><li><a class="link-head" href=https://www.geeksforgeeks.org/introduction-to-programming-languages/>Languages</a></li><li><a href=https://www.geeksforgeeks.org/python-programming-language/>Python</a></li><li><a href=https://www.geeksforgeeks.org/java/>Java</a></li><li><a href=https://www.geeksforgeeks.org/c-plus-plus/>C++</a></li><li><a href=https://www.geeksforgeeks.org/php-tutorials/>PHP</a></li><li><a href=https://www.geeksforgeeks.org/golang/>GoLang</a></li><li><a href=https://www.geeksforgeeks.org/sql-tutorial/>SQL</a></li><li><a href=https://www.geeksforgeeks.org/r-tutorial/>R Language</a></li><li><a href=https://www.geeksforgeeks.org/android-tutorial/>Android Tutorial</a></li><li><a href=https://www.geeksforgeeks.org/geeksforgeeks-online-tutorials-free/>Tutorials Archive</a></li></ul><ul class="footer-wrapper_links-list" ><li><a class="link-head" href=https://www.geeksforgeeks.org/learn-data-structures-and-algorithms-dsa-tutorial/>DSA</a></li><li><a href=https://www.geeksforgeeks.org/data-structures/>Data Structures</a></li><li><a href=https://www.geeksforgeeks.org/fundamentals-of-algorithms/>Algorithms</a></li><li><a href=https://www.geeksforgeeks.org/complete-guide-to-dsa-for-beginners/>DSA for Beginners</a></li><li><a href=https://www.geeksforgeeks.org/basic-coding-problems-in-dsa-for-beginners/>Basic DSA Problems</a></li><li><a href=https://www.geeksforgeeks.org/complete-roadmap-to-learn-dsa-from-scratch/>DSA Roadmap</a></li><li><a href=https://www.geeksforgeeks.org/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/>Top 100 DSA Interview Problems</a></li><li><a href=https://www.geeksforgeeks.org/dsa-roadmap-for-beginner-to-advanced-by-sandeep-jain/>DSA Roadmap by Sandeep Jain</a></li><li><a href=https://www.geeksforgeeks.org/geeksforgeeks-master-sheet-list-of-all-cheat-sheets/>All Cheat Sheets</a></li></ul><ul class="footer-wrapper_links-list" ><li><a class="link-head" href=https://www.geeksforgeeks.org/ai-ml-ds/>Data Science & ML</a></li><li><a href=https://www.geeksforgeeks.org/data-science-tutorial/>Data Science With Python</a></li><li><a href=https://www.geeksforgeeks.org/data-science-for-beginners/>Data Science For Beginner</a></li><li><a href=https://www.geeksforgeeks.org/machine-learning/>Machine Learning</a></li><li><a href=https://www.geeksforgeeks.org/machine-learning-mathematics/>ML Maths</a></li><li><a href=https://www.geeksforgeeks.org/python-data-visualization-tutorial/>Data Visualisation</a></li><li><a href=https://www.geeksforgeeks.org/pandas-tutorial/>Pandas</a></li><li><a href=https://www.geeksforgeeks.org/numpy-tutorial/>NumPy</a></li><li><a href=https://www.geeksforgeeks.org/natural-language-processing-nlp-tutorial/>NLP</a></li><li><a href=https://www.geeksforgeeks.org/deep-learning-tutorial/>Deep Learning</a></li></ul><ul class="footer-wrapper_links-list" ><li><a class="link-head" href=https://www.geeksforgeeks.org/web-technology/>Web Technologies</a></li><li><a href=https://www.geeksforgeeks.org/html/>HTML</a></li><li><a href=https://www.geeksforgeeks.org/css/>CSS</a></li><li><a href=https://www.geeksforgeeks.org/javascript/>JavaScript</a></li><li><a href=https://www.geeksforgeeks.org/typescript/>TypeScript</a></li><li><a href=https://www.geeksforgeeks.org/learn-reactjs/>ReactJS</a></li><li><a href=https://www.geeksforgeeks.org/nextjs/>NextJS</a></li><li><a href=https://www.geeksforgeeks.org/bootstrap/>Bootstrap</a></li><li><a href=https://www.geeksforgeeks.org/web-design/>Web Design</a></li></ul><ul class="footer-wrapper_links-list" ><li><a class="link-head" href=https://www.geeksforgeeks.org/python-programming-language/>Python Tutorial</a></li><li><a href=https://www.geeksforgeeks.org/python-programming-examples/>Python Programming Examples</a></li><li><a href=https://www.geeksforgeeks.org/python-projects-beginner-to-advanced/>Python Projects</a></li><li><a href=https://www.geeksforgeeks.org/python-tkinter-tutorial/>Python Tkinter</a></li><li><a href=https://www.geeksforgeeks.org/python-web-scraping-tutorial/>Python Web Scraping</a></li><li><a href=https://www.geeksforgeeks.org/opencv-python-tutorial/>OpenCV Tutorial</a></li><li><a href=https://www.geeksforgeeks.org/python-interview-questions/>Python Interview Question</a></li><li><a href=https://www.geeksforgeeks.org/django-tutorial/>Django</a></li></ul></div><div class="footer-wrapper_links" style="justify-content: space-between; text-align: -webkit-left;"><ul class="footer-wrapper_links-list" style="margin-block-start: 0em; width:16%; padding-inline-start: 18px;"><li>Computer Science</li><li><a href=https://www.geeksforgeeks.org/operating-systems/>Operating Systems</a></li><li><a href=https://www.geeksforgeeks.org/computer-network-tutorials/>Computer Network</a></li><li><a href=https://www.geeksforgeeks.org/dbms/>Database Management System</a></li><li><a href=https://www.geeksforgeeks.org/software-engineering/>Software Engineering</a></li><li><a href=https://www.geeksforgeeks.org/digital-electronics-logic-design-tutorials/>Digital Logic Design</a></li><li><a href=https://www.geeksforgeeks.org/engineering-mathematics-tutorials/>Engineering Maths</a></li><li><a href=https://www.geeksforgeeks.org/software-development/>Software Development</a></li><li><a href=https://www.geeksforgeeks.org/software-testing-tutorial/>Software Testing</a></li></ul><ul class="footer-wrapper_links-list" ><li><a class="link-head" href=https://www.geeksforgeeks.org/devops-tutorial/>DevOps</a></li><li><a href=https://www.geeksforgeeks.org/git-tutorial/>Git</a></li><li><a href=https://www.geeksforgeeks.org/linux-tutorial/>Linux</a></li><li><a href=https://www.geeksforgeeks.org/aws-tutorial/>AWS</a></li><li><a href=https://www.geeksforgeeks.org/docker-tutorial/>Docker</a></li><li><a href=https://www.geeksforgeeks.org/kubernetes-tutorial/>Kubernetes</a></li><li><a href=https://www.geeksforgeeks.org/microsoft-azure/>Azure</a></li><li><a href=https://www.geeksforgeeks.org/google-cloud-platform-tutorial/>GCP</a></li><li><a href=https://www.geeksforgeeks.org/devops-roadmap/>DevOps Roadmap</a></li></ul><ul class="footer-wrapper_links-list" ><li><a class="link-head" href=https://www.geeksforgeeks.org/system-design-tutorial/>System Design</a></li><li><a href=https://www.geeksforgeeks.org/what-is-high-level-design-learn-system-design/>High Level Design</a></li><li><a href=https://www.geeksforgeeks.org/what-is-low-level-design-or-lld-learn-system-design/>Low Level Design</a></li><li><a href=https://www.geeksforgeeks.org/unified-modeling-language-uml-introduction/>UML Diagrams</a></li><li><a href=https://www.geeksforgeeks.org/system-design-interview-guide/>Interview Guide</a></li><li><a href=https://www.geeksforgeeks.org/software-design-patterns/>Design Patterns</a></li><li><a href=https://www.geeksforgeeks.org/object-oriented-analysis-and-design/>OOAD</a></li><li><a href=https://www.geeksforgeeks.org/system-design-interview-bootcamp-guide/>System Design Bootcamp</a></li><li><a href=https://www.geeksforgeeks.org/most-commonly-asked-system-design-interview-problems-questions/>Interview Questions</a></li></ul><ul class="footer-wrapper_links-list" ><li><a class="link-head" href=https://www.geeksforgeeks.org/technical-interview-preparation/>Inteview Preparation</a></li><li><a href=https://www.geeksforgeeks.org/competitive-programming-a-complete-guide/>Competitive Programming</a></li><li><a href=https://www.geeksforgeeks.org/top-algorithms-and-data-structures-for-competitive-programming/>Top DS or Algo for CP</a></li><li><a href=https://www.geeksforgeeks.org/company-wise-recruitment-process/>Company-Wise Recruitment Process</a></li><li><a href=https://www.geeksforgeeks.org/company-preparation/>Company-Wise Preparation</a></li><li><a href=https://www.geeksforgeeks.org/aptitude-questions-and-answers/>Aptitude Preparation</a></li><li><a href=https://www.geeksforgeeks.org/puzzles/>Puzzles</a></li></ul><ul class="footer-wrapper_links-list" ><li>School Subjects</li><li><a href=https://www.geeksforgeeks.org/maths/>Mathematics</a></li><li><a href=https://www.geeksforgeeks.org/physics/>Physics</a></li><li><a href=https://www.geeksforgeeks.org/chemistry/>Chemistry</a></li><li><a href=https://www.geeksforgeeks.org/biology/>Biology</a></li><li><a href=https://www.geeksforgeeks.org/social-science/>Social Science</a></li><li><a href=https://www.geeksforgeeks.org/english-grammar/>English Grammar</a></li><li><a href=https://www.geeksforgeeks.org/commerce/>Commerce</a></li><li><a href=https://www.geeksforgeeks.org/tag/world-general-knowledge/>World GK</a></li></ul><ul class="footer-wrapper_links-list" ><li><a class="link-head" href=https://www.geeksforgeeks.org/videos/>GeeksforGeeks Videos</a></li><li><a href=https://www.geeksforgeeks.org/videos/category/sde-sheet/>DSA</a></li><li><a href=https://www.geeksforgeeks.org/videos/category/python/>Python</a></li><li><a href=https://www.geeksforgeeks.org/videos/category/java-w6y5f4/>Java</a></li><li><a href=https://www.geeksforgeeks.org/videos/category/c/>C++</a></li><li><a href=https://www.geeksforgeeks.org/videos/category/web-development/>Web Development</a></li><li><a href=https://www.geeksforgeeks.org/videos/category/data-science/>Data Science</a></li><li><a href=https://www.geeksforgeeks.org/videos/category/cs-subjects/>CS Subjects</a></li></ul></div>        </div> 
+      </div>
+            <!-- Jobs Fair 2024 related CSS changes -->
+
+<style>
+  :root{
+    --home-jobs-section-jf-logo: url('https://media.geeksforgeeks.org/auth-dashboard-uploads/JobFair2024Logo.svg');
+  }
+
+  body[data-dark-mode="true"]
+  {
+    --home-jobs-section-jf-logo: url('https://media.geeksforgeeks.org/auth-dashboard-uploads/JobFair2024LogoDark.svg');
+  }
+
+  .hp_job_section_jf_logo, .job-a-thon-jf-sticky-header-logo{
+    background: var(--home-jobs-section-jf-logo);
+    height: 50px;
+    background-repeat: no-repeat;
+    width: 105px;
+    background-size: 100px;
+  }
+
+  @keyframes challenge {
+	0%{
+		transform: scale(1);
+	}
+	50%{
+		transform: scale(1.03);
+	}
+	100%{
+		transform: scale(1);
+	}
+  }
+
+  .job-a-thon-jf-sticky-header-logo{
+    height: 45px;
+  }
+
+</style>
+
+<!-- ---------------------------------- -->
+      <div class="footer-strip" >
+          <div class="copyright">
+              <a href="https://www.geeksforgeeks.org/" rel="noopener noreferrer" target="_blank">@GeeksforGeeks, Sanchhaya Education Private Limited</a><span>, <a href="https://www.geeksforgeeks.org/copyright-information/">All rights reserved</a></span>
+          </div>
+          <div class="social-links">
+          </div>
+      </div>
+  </footer>
+</div><!-- #page -->
+<script type='text/javascript' src='https://www.geeksforgeeks.org/wp-includes/js/wp-embed.min.js?ver=4.9.8'></script>
+
+<!-- Cookie Consent Div-->
+<div class="cookie-consent hide-consent">
+    <span class="cookie-text">
+        We use cookies to ensure you have the best browsing experience on our website. By using our site, you
+        acknowledge that you have read and understood our
+        <a href="https://www.geeksforgeeks.org/cookie-policy/" target="_blank"><u>Cookie Policy</u></a> &
+        <a href="https://www.geeksforgeeks.org/privacy-policy/" target="_blank"><u>Privacy Policy</u></a>
+            </span>
+    <button class="consent-btn">
+        Got It !
+    </button>
+</div>
+<!-- Cookie Consent Div ends -->
+
+<!--Light Box Div starts-->
+<div class="lightbox-target">
+   <img id="lightbox-image" src="" alt="Lightbox"/>
+   <span class="lightbox-close"></span>
+</div>
+<!--Light Box Div ends-->
+
+<!-- <link rel="stylesheet" href="https://use.typekit.net/mrg0hpc.css"/> -->
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<script>
+  if(post_slug.includes('premium-plans-payment/') || post_slug.includes('premium-plans/')){
+    $('.darkMode-wrap').remove();
+    $('.toggle-darkMode').remove(); 
+  }
+
+function setGoogleRecaptcha() {
+    var captchaSiteKey = '6LdMFNUZAAAAAIuRtzg0piOT-qXCbDF-iQiUi9KY';
+    grecaptcha.ready(function() {
+        grecaptcha.execute(captchaSiteKey).then(function(token) {
+            document.getElementById('g-recaptcha-response-suggestion-form').value = token;
+            suggestionCall();
+        });
+    });
+}
+
+</script>
+
+        <div class="improve-modal--overlay" style="display: none;">
+            <div class="improve-modal--improvement" status="locked">
+                <div class="improve-modal--improve-header">
+                    <div class="improve-header-fst-child">Improvement</div>
+                    <div class="improve-header-sec-child">
+                        <i class="gfg-icon improve-cross-icon"></i>
+                    </div>
+                </div>
+                <div class="locked-status--impove-modal">
+                    <div class="improve-modal--improve-content error-message"></div>                    
+                    <div class="improve-modal--improve-bottom">
+                        <button class="improve-bottom-btn" type="button">Suggest changes</button>
+                    </div>
+                </div>
+                <div class="unlocked-status--improve-modal-content">
+                  <div class="suggest-change_wrapper">
+                    <div class="suggest-change-content_wrapper">
+                      <div class="suggest-change">Suggest Changes</div>
+                      <div class="suggest-changes-about">Help us improve. Share your suggestions to enhance the article. Contribute your expertise and make a difference in the GeeksforGeeks portal.</div>
+                    </div>
+                    <div class="suggest-change-icon_wrapper">
+                      <img loading="lazy" class="suggest-change-icon" src="https://media.geeksforgeeks.org/auth-dashboard-uploads/suggestChangeIcon.png" alt="geeksforgeeks-suggest-icon"/>
+                    </div>
+                  </div>
+                  <div class="create-improvement_wrapper">
+                    <div class="create-improvement-content_wrapper">
+                      <div class="create-improvement">Create Improvement</div>
+                      <div class="create-improvements-about">Enhance the article with your expertise. Contribute to the GeeksforGeeks community and help create better learning resources for all.</div>
+                    </div>
+                    <div class="create-improvement-icon_wrapper">
+                    <img loading="lazy" class="create-improvement-icon" src="https://media.geeksforgeeks.org/auth-dashboard-uploads/createImprovementIcon.png" alt="geeksforgeeks-improvement-icon"/>
+                    </div>
+                  </div>
+                  <div class="error-status"></div>
+                </div>
+            </div>
+            <div class="improve-modal--suggestion" style="display: none;">
+                <!-- Header of improve-modal--improvement and improve-modal--suggestion have same CSS rule that's why I use same class name -->
+                <div class="improve-modal--improve-header">
+                  <div class="left-arrow-icon_suggest_wrapper">
+                    <div class="left-arrow-icon_wrapper">
+                      <i class="gfg-icon improve-left-arrow-icon"></i>
+                    </div>
+                    <div class="improve-header-fst-child">Suggest Changes</div>
+                  </div>
+                  <div class="improve-header-sec-child">
+                        <i class="gfg-icon improve-cross-icon"></i>
+                  </div>
+                </div>
+                <div class="suggestion-modal-section">
+                        <div class="suggestion-section">min 4 words, max Words Limit:1000</div>
+                        <div id="suggestion-section-textarea">
+                        </div>
+                        <input type="hidden" name="g-recaptcha-suggestion-response" id="g-recaptcha-response-suggestion-form">
+                        <div class="thank-you-message" style="text-align: center; display:none">
+                              <h2>Thank You!</h2>
+                              <div class="thank-you-message-content">Your suggestions are valuable to us.</div>
+                        </div>
+                </div> 
+                <!-- Button of improve-modal--improvement and improve-modal--suggestion have same CSS rule that's why I use same class name -->
+                <div class="improve-modal--improve-bottom suggestion-btn">
+                    <p><span id="suggestion-modal-alert" style="display: none;"></span></p>
+                    <button class="suggest-bottom-btn" type="button"></button>
+                </div>
+            </div>
+            <a href="#" style="visibility:hidden" class="create-improvement-redirection-to-write" target="_blank"></a>
+        </div>
+        <script>
+
+            //code to add text editor on click in suggestion modal in improvements
+            let suggestEditorInstance=null; //global variable to access editor instance
+            let editorLoaded = false;
+            $('.suggest-change_wrapper,.improve_dot_dropdown_inner_div, .locked-status--impove-modal .improve-bottom-btn ,#user-personal-note ').one('click',function() {
+            //editor already loaded then return
+            if(editorLoaded){
+            return;
+            }
+            // if($('.spinner-loading-overlay:eq(0)').length){
+            // $('.spinner-loading-overlay:eq(0)').remove();
+            // }
+            // $('body').append('<div class="spinner-loading-overlay"></div>');
+            // $('.spinner-loading-overlay').show();
+            let script = document.createElement('script');
+            script.src = 'https://assets.geeksforgeeks.org/v2/editor-prod/static/js/bundle.min.js';
+            script.defer = true
+            document.head.appendChild(script);
+            script.onload = function() {
+            suggestionModalEditor() //to add editor in suggestion modal
+            if(loginData && loginData.premiumConsent){
+              personalNoteEditor() //to load editor in personal note
+            }
+            }
+            script.onerror = function() {
+            if($('.editorError').length){
+            $('.editorError').remove();
+            }
+            var messageDiv = $('<div class="editorError"></div>').text('Editor not loaded due to some issues');
+            $('#suggestion-section-textarea').append(messageDiv);
+            $('.suggest-bottom-btn').hide();
+            $('.suggestion-section').hide();
+            editorLoaded = false;
+            }
+            });
+            //suggestion modal editor
+            function suggestionModalEditor(){
+            // editor params
+            const params = {
+            data: undefined,
+            plugins: ["BOLD", "ITALIC", "UNDERLINE", "PREBLOCK"],
+            }
+            // loading editor
+            try {
+            suggestEditorInstance = new GFGEditorWrapper("suggestion-section-textarea", params, { appNode: true })
+            suggestEditorInstance._createEditor("")
+            $('.spinner-loading-overlay:eq(0)').remove();
+            editorLoaded = true;
+            }
+            catch (error) {
+            $('.spinner-loading-overlay:eq(0)').remove();
+            editorLoaded = false;
+            }
+            }
+            //personal note editor
+            function personalNoteEditor(){
+            // editor params
+            const params = {
+            data: undefined,
+            plugins: ["UNDO", "REDO", "BOLD", "ITALIC", "NUMBERED_LIST", "BULLET_LIST", "TEXTALIGNMENTDROPDOWN"],
+            placeholderText: "Description to be......",
+            }
+            // loading editor
+            try {
+            let notesEditorInstance = new GFGEditorWrapper("pn-editor", params, { appNode: true })
+            notesEditorInstance._createEditor(loginData&&loginData.user_personal_note?loginData.user_personal_note:"")
+            $('.spinner-loading-overlay:eq(0)').remove();
+            editorLoaded = true;
+            }
+            catch (error) {
+            $('.spinner-loading-overlay:eq(0)').remove();
+            editorLoaded = false;
+            }
+}
+
+            var lockedCasesHtml = `<span class="improve-modal--improve-content-modified"></span><span>You can suggest the changes for now and it will be under 'My Suggestions' Tab on Write.</span><br><br><span>You will be notified via email once the article is available for improvement. Thank you for your valuable feedback!</span>`;
+            var badgesRequiredHtml = `<span>It seems that you do not meet the eligibility criteria to create improvements for this article, as only users who have earned specific badges are permitted to do so.</span><br><br><span>However, you can still create improvements through the <a href="https://write.geeksforgeeks.org/pick-improvements/pick" target='_blank'>Pick for Improvement</a> section.</span>`;
+            jQuery('.improve-header-sec-child').on('click', function(){
+                jQuery('.improve-modal--overlay').hide();
+                $('.improve-modal--suggestion').hide();
+                jQuery('#suggestion-modal-alert').hide();
+            });
+
+            $('.suggest-change_wrapper, .locked-status--impove-modal .improve-bottom-btn').on('click',function(){ // when suggest changes option is clicked
+              $('.ContentEditable__root').text("");
+              $('.suggest-bottom-btn').html("Suggest changes");
+              $('.thank-you-message').css("display","none");  
+              $('.improve-modal--improvement').hide();
+              $('.improve-modal--suggestion').show();
+              $('#suggestion-section-textarea').show();
+              jQuery('#suggestion-modal-alert').hide();
+              if(suggestEditorInstance !== null){
+                suggestEditorInstance.setEditorValue("");
+                }
+              $('.suggestion-section').css('display', 'block');
+              jQuery('.suggest-bottom-btn').css("display","block");
+            });
+
+            $('.create-improvement_wrapper').on('click',function(){  // when create improvement option clicked then improvement reason will be shown
+              if(loginData && loginData.isLoggedIn) {
+                $('body').append('<div class="spinner-loading-overlay"></div>');
+                $('.spinner-loading-overlay').show();
+                jQuery.ajax({
+                  url: writeApiUrl + 'create-improvement-post/?v=1',
+                  type: "POST",
+                  contentType: 'application/json; charset=utf-8',
+                  dataType: 'json',
+                  xhrFields: {
+                    withCredentials: true
+                  },
+                  data: JSON.stringify({
+                    gfg_id: post_id
+                  }),
+                  success:function(result) {
+                    $('.spinner-loading-overlay:eq(0)').remove();
+                    $('.improve-modal--overlay').hide();
+                    $('.unlocked-status--improve-modal-content').css("display","none");
+                    $('.create-improvement-redirection-to-write').attr('href',writeUrl + 'improve-post/' + `${result.id}` + '/', '_blank');
+                    $('.create-improvement-redirection-to-write')[0].click();
+                  },
+                  error:function(e) {
+                    showErrorMessage(e.responseJSON,e.status)
+                  },
+                });
+              }
+              else {
+               if(loginData && !loginData.isLoggedIn) {
+                   $('.improve-modal--overlay').hide();
+                if ($('.header-main__wrapper').find('.header-main__signup.login-modal-btn').length) {
+                $('.header-main__wrapper').find('.header-main__signup.login-modal-btn').click();
+                 }
+                return;
+                }
+              }
+            });
+            $('.left-arrow-icon_wrapper').on('click',function(){
+              if($('.improve-modal--suggestion').is(":visible"))
+              $('.improve-modal--suggestion').hide();
+              else{
+              }
+
+              $('.improve-modal--improvement').show();
+            });
+            const showErrorMessage = (result,statusCode) => {
+                if(!result)
+                return;
+                $('.spinner-loading-overlay:eq(0)').remove();
+                if(statusCode == 403) {
+                    $('.improve-modal--improve-content.error-message').html(result.message);
+                    jQuery('.improve-modal--overlay').show();
+                    jQuery('.improve-modal--improvement').show();
+                    $('.locked-status--impove-modal').css("display","block");
+                    $('.unlocked-status--improve-modal-content').css("display","none");
+                    $('.improve-modal--improvement').attr("status","locked");
+                    return;
+                }
+                            }
+            function suggestionCall() {   
+                var editorValue = suggestEditorInstance.getValue();
+                var suggest_val = $(".ContentEditable__root").find("[data-lexical-text='true']").map(function() {
+                                    return $(this).text().trim();
+                                    }).get().join(' ');
+                suggest_val = suggest_val.replace(/\s+/g, ' ').trim();     
+                var array_String= suggest_val.split(" ") //array of words
+                var gCaptchaToken = $("#g-recaptcha-response-suggestion-form").val();
+                var error_msg = false;
+                if(suggest_val != "" && array_String.length >=4){
+                    if(editorValue.length <= 2000){
+                        var payload = {
+                                    "gfg_post_id" : `${post_id}`,
+                                    "suggestion" : `${editorValue}`,
+                                }
+                        if(!loginData || !loginData.isLoggedIn)                  // User is not logged in
+                        payload["g-recaptcha-token"] = gCaptchaToken
+                        jQuery.ajax({
+                            type:'post',
+                            url:  "https://apiwrite.geeksforgeeks.org/suggestions/auth/create/",
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            crossDomain: true,
+                            contentType:'application/json',
+                            data: JSON.stringify(payload),
+                            success:function(data) {
+                                if(!loginData || !loginData.isLoggedIn) {
+                                  grecaptcha.reset();
+                                }
+                                jQuery('.spinner-loading-overlay:eq(0)').remove();
+                                jQuery('.suggest-bottom-btn').css("display","none");
+                                $('#suggestion-section-textarea').hide()
+                                $('.thank-you-message').css('display', 'flex');
+                                $('.suggestion-section').css('display', 'none');
+                                jQuery('#suggestion-modal-alert').hide();
+                            },
+                            error:function(data) {
+                                if(!loginData || !loginData.isLoggedIn) {
+                                  grecaptcha.reset();
+                                }
+                                jQuery('.spinner-loading-overlay:eq(0)').remove();
+                                jQuery('#suggestion-modal-alert').html("Something went wrong.");
+                                jQuery('#suggestion-modal-alert').show();
+                                error_msg = true;
+                            }
+                        });
+                    }
+                    else{
+                        jQuery('.spinner-loading-overlay:eq(0)').remove();
+                        jQuery('#suggestion-modal-alert').html("Minimum 4 Words and Maximum Words limit is 1000.");
+                        jQuery('#suggestion-modal-alert').show();
+                        jQuery('.ContentEditable__root').focus();
+                        error_msg = true;
+                    }
+                }
+                else{
+                    jQuery('.spinner-loading-overlay:eq(0)').remove();
+                    jQuery('#suggestion-modal-alert').html("Enter atleast four words !");
+                    jQuery('#suggestion-modal-alert').show();
+                    jQuery('.ContentEditable__root').focus();
+                    error_msg = true;
+                }
+                if(error_msg){
+                    setTimeout(() => {
+                        jQuery('.ContentEditable__root').focus();
+                        jQuery('#suggestion-modal-alert').hide();
+                    }, 3000);
+                }
+            }
+            
+            document.querySelector('.suggest-bottom-btn').addEventListener('click', function(){
+              jQuery('body').append('<div class="spinner-loading-overlay"></div>');
+              jQuery('.spinner-loading-overlay').show();
+              if(loginData && loginData.isLoggedIn) {
+                 suggestionCall();
+                 return;
+              }
+              // script for grecaptcha loaded in loginmodal.html and call function to set the token
+              setGoogleRecaptcha();
+            });
+            $('.improvement-bottom-btn.create-improvement-btn').click(function() {  //create improvement button is clicked
+              $('body').append('<div class="spinner-loading-overlay"></div>');
+              $('.spinner-loading-overlay').show();
+              // send this option via create-improvement-post api
+              jQuery.ajax({
+                url: writeApiUrl + 'create-improvement-post/?v=1',
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                xhrFields: {
+                  withCredentials: true
+                },
+                data: JSON.stringify({
+                  gfg_id: post_id
+                }),
+                success:function(result) {
+                  $('.spinner-loading-overlay:eq(0)').remove();
+                  $('.improve-modal--overlay').hide();
+                  $('.create-improvement-redirection-to-write').attr('href',writeUrl + 'improve-post/' + `${result.id}` + '/', '_blank');
+                  $('.create-improvement-redirection-to-write')[0].click();
+                },
+                error:function(e) {
+                  showErrorMessage(e.responseJSON,e.status);
+                },
+              });
+            });
+        </script>
+    <script>
+var AdblockPlus = new function() {
+     this.detect = function(px, callback) {
+         var detected = false;
+         var checksRemain = 2;
+         var error1 = false;
+         var error2 = false;
+         if (typeof callback != "function") return;
+         px += "?ch=*&rn=*";
+
+         function beforeCheck(callback, timeout) {
+             if (checksRemain == 0 || timeout > 1E3) callback(checksRemain == 0 && detected);
+             else setTimeout(function() {
+                 beforeCheck(callback, timeout * 2)
+             }, timeout * 2)
+         }
+
+         function checkImages() {
+             if (--checksRemain) return;
+             detected = !error1 && error2
+         }
+         var random = Math.random() * 11;
+         var img1 = new Image;
+         img1.onload = checkImages;
+         img1.onerror = function() {
+             error1 = true;
+             checkImages()
+         };
+         img1.src = px.replace(/\*/, 1).replace(/\*/, random);
+         var img2 = new Image;
+         img2.onload = checkImages;
+         img2.onerror = function() {
+             error2 = true;
+             checkImages()
+         };
+         img2.src = px.replace(/\*/, 2).replace(/\*/, random);
+         beforeCheck(callback, 250)
+     }
+ };
+
+/*
+AdblockPlus.detect("https://cdnads.geeksforgeeks.org/res/px.gif", function(abp){
+    window.googletag = window.googletag || {cmd: []};
+    window.abp=abp;
+    var elms = [...document.querySelectorAll('div[id^=_GFG_ABP_]')];
+    const units=elms.map(elem=>elem.id)
+    if(abp) {
+        for(let curr_unit of units) {
+            const iframe = document.createElement('iframe');
+            iframe.setAttribute('src',"https://aa.geeksforgeeks.org/iframe.html?code="+curr_unit.substr(1))
+            const elem = document.getElementById(curr_unit)
+            const div = document.createElement('div');
+            div.setAttribute('id',curr_unit.substr(1))
+            let sizes = curr_unit.split("_");
+            sizes = sizes.filter(val => val.includes('x'));
+            let [width, height] = sizes[0].split("x");
+            iframe.style.width = `${+width+20}px`
+            iframe.style.height = `${+height+20}px`
+            if(elem) {
+                elem.appendChild(iframe);
+            }
+        }
+        var gfgAdDivs = [...document.querySelectorAll('div[id^=GFG_AD_]')];
+        gfgAdDivs.forEach(gfgDiv => document.getElementById(gfgDiv.id).removeAttribute("style"));
+        jQuery('#secondary .widget_text:last-child').css({"position": "unset"});
+    }
+});*/
+    AdblockPlus.detect("https://cdnads.geeksforgeeks.org/res/px.gif", function(abp){
+    window.googletag = window.googletag || {cmd: []};
+    window.abp=abp;
+    var elms = [...document.querySelectorAll('div[id^=_GFG_ABP_]')];
+    //const units=elms.map(elem=>elem.id)
+    const units = elms
+      .filter(elem => !(window.innerWidth < 1500 && elem.id === "_GFG_ABP_Incontent_728x90"))
+      .map(elem => elem.id);
+    if(abp) {
+        isAdBlockerPresent = true;
+        for(let curr_unit of units) {
+            const iframe = document.createElement('iframe');
+            iframe.addEventListener("load", () => {
+              iframe.contentWindow.postMessage(JSON.stringify({host: window.location.host,category: window.arrPostCatName,parentWidth: window.innerWidth}),'https://aa.geeksforgeeks.org');
+            });
+            iframe.setAttribute('src',"https://aa.geeksforgeeks.org/iframe.html?code="+curr_unit.substr(1))
+            const elem = document.getElementById(curr_unit)
+            const div = document.createElement('div');
+            div.setAttribute('id',curr_unit.substr(1))
+            let sizes = curr_unit.split("_");
+            sizes = sizes.filter(val => val.includes('x'));
+            let [width, height] = sizes[0].split("x");
+            iframe.style.width = `${+width+20}px`
+            iframe.style.height = `${+height+20}px`
+            if(elem) {
+                elem.appendChild(iframe);
+            }
+        }
+        var gfgAdDivs = [...document.querySelectorAll('div[id^=GFG_AD_]')];
+        gfgAdDivs.forEach(gfgDiv => document.getElementById(gfgDiv.id).removeAttribute("style"));
+        jQuery('#secondary .widget_text:last-child').css({"position": "unset"});
+    }
+    else{
+      try {
+        var isAdblockEnabled = t =>
+            fetch(
+                new Request('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', {
+                    method: 'HEAD',
+                    mode: 'no-cors'
+                })
+            ).catch(t);
+          isAdblockEnabled(() => {
+            // here goes modal pop-up code
+            isAdBlockerPresent = true;
+          });
+      } catch (err) {console.error(err);}
+    }
+});
+
+  function closeAdBlockPopupModal(){
+    const modal = document.getElementById("adBlockerModal");
+    $('body').removeClass('body-for-ad-blocker');
+    $('#adBlockerModal').remove()
+    localStorage.setItem('gfgAdBlockPopup',new Date())
+  }
+  function showAdblockerModal(){
+    let randomNumberForButtonText = Math.round(Math.random()); 
+    let currTime = new Date();
+    let lastTime = new Date(localStorage.getItem('gfgAdBlockPopup'));
+    if(((currTime-lastTime)/(1000*60*60))<1)
+    {
+      return;
+    }
+    const adBlockerModal = `<div id="adBlockerModal" class="ad-blocker-modal">
+      <div id="ad-blocker-modal-overlay">
+        <div id="ad-blocker-outer-div">
+          <div id="ad-blocker-div">
+          <p id="ad-blocker-div-warning" style="margin-bottom: 30px;">It seems that you are using an ad blocker.<br><span style="font-size: 22px;font-weight: normal;">Please disable it to support us!</span></p>
+              <div id="ad-blocker-div-btns">
+                  <button id="ad-blocker-div-button1" onclick="handleAdBlockerClick('disabled')">
+                      I disabled my ad blocker
+                  </button>
+                  <a href="https://www.geeksforgeeks.org/geeksforgeeks-premium-subscription" target="_blank">
+                      <button
+                          id="ad-blocker-div-button2"
+                          style="
+                              background: linear-gradient(45deg, #f0bd36, #bf873f);
+                              border: 1px solid transparent;
+                              color: white;
+                          "
+                      >
+                          ${randomNumberForButtonText === 1 ? "Go Ad-Free with Premium" : "Upgrade for No Ads"}
+                      </button>
+                  </a>
+              </div>
+              <div id="ad-blocker-div-continue-premium-promo-text">
+                  "For an ad-free experience and exclusive features, subscribe to our Premium Plan!"<br>
+              </div>
+              <div id="ad-blocker-div-continue-btn-div">
+                  <a id="ad-blocker-div-continue-btn" href="#" onclick="closeAdBlockPopupModal()">Continue without supporting</a>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+    $('body').append(adBlockerModal);
+    $('body').addClass('body-for-ad-blocker');
+    const modal = document.getElementById("adBlockerModal");
+    modal.style.display = "block";
+  }
+  function handleAdBlockerClick(type){
+      if(type == 'disabled'){
+        window.location.reload();
+      }
+      else if(type == 'info'){
+        document.getElementById("ad-blocker-div").style.display = "none";
+        document.getElementById("ad-blocker-info-div").style.display = "flex";
+        handleAdBlockerIconClick(0);
+      }
+  }
+  var lastSelected= null;
+  //Mapping of name and video URL with the index.
+  const adBlockerVideoMap = [
+    ['Ad Block Plus','https://media.geeksforgeeks.org/auth-dashboard-uploads/abp-blocker-min.mp4'],
+    ['Ad Block','https://media.geeksforgeeks.org/auth-dashboard-uploads/Ad-block-min.mp4'],
+    ['uBlock Origin','https://media.geeksforgeeks.org/auth-dashboard-uploads/ub-blocke-min.mp4'],
+    ['uBlock','https://media.geeksforgeeks.org/auth-dashboard-uploads/U-blocker-min.mp4'],
+  ]
+  function handleAdBlockerIconClick(currSelected){
+    const videocontainer = document.getElementById('ad-blocker-info-div-gif');
+    const videosource = document.getElementById('ad-blocker-info-div-gif-src');
+    if(lastSelected != null){
+      document.getElementById("ad-blocker-info-div-icons-"+lastSelected).style.backgroundColor = "white";  
+      document.getElementById("ad-blocker-info-div-icons-"+lastSelected).style.borderColor = "#D6D6D6";
+    }
+    document.getElementById("ad-blocker-info-div-icons-"+currSelected).style.backgroundColor = "#D9D9D9";
+    document.getElementById("ad-blocker-info-div-icons-"+currSelected).style.borderColor = "#848484";
+    document.getElementById('ad-blocker-info-div-name-span').innerHTML = adBlockerVideoMap[currSelected][0]
+    videocontainer.pause();
+    videosource.setAttribute('src', adBlockerVideoMap[currSelected][1]);
+    videocontainer.load();
+    videocontainer.play();
+    lastSelected = currSelected;
+  }
+</script>
+<!-- <script async src="https://www.googleoptimize.com/optimize.js?id=OPT-5PGZ8MN"></script> -->
+
+<style>
+/* Temporary CSS for Three90 pop up modal (START)*/
+    .three90popup__container {
+      width: 100vw;
+      height: 100vh; 
+      position: fixed;
+      top:0px;
+      background: var(--job-tab-faded-background);
+      z-index: 1024;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .three90modal__wrapper{
+      background-color: white;
+      max-width: 350px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 10px;
+      overflow: hidden;
+
+    }
+    .three90modal__message-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: var(--font-primary);
+    }
+    .three90modal__subheading {
+      margin-top: 20px;
+      font-size: 22px;
+      font-weight: 600;
+    }
+    .three90modal__text-message {
+      margin-top: 20px;
+      font-size: 15px;
+      font-weight: 400;
+      text-align: center;
+      padding: 0 5px;
+    }
+    .three90__modal__button-wrapper {
+      width: 100%;
+      padding: 20px 0px;
+      display: flex;
+      justify-content: space-evenly;
+    }
+    .three90__modal__button-wrapper > button {
+      width: 105px;
+      height: 35px;
+      border-radius: 13px;
+      border:none;
+      font-weight: 600;
+      cursor: pointer;
+    } 
+    #three90__modal-close-btn:hover {
+      background-color: #cacbcd;
+    }
+    #three90__modal-explore-btn {
+      background-color: #0a0727;
+      color: white
+    }
+
+    @media screen and (max-width: 441px) {
+      .three90modal__wrapper {
+        max-width: 300px;
+      }
+    }
+
+  /* Temporary CSS for Three90 pop up modal (END)*/
+</style>
+
+<script type="text/javascript" >
+    const coursePromotionCities = JSON.parse(`{"NCR":{"LOCATIONS":["Noida","Greater Noida","Ghaziabad","Faridabad","Delhi","New Delhi"],"COURSES":[{"name":"Data Science Course","url":"https:\/\/www.geeksforgeeks.org\/courses\/data-science-classroom-program?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"Data Analytics Course","url":"https:\/\/www.geeksforgeeks.org\/courses\/complete-data-analytics-program?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"Complete Backend Development Course","url":"https:\/\/www.geeksforgeeks.org\/courses\/complete-java-backend-development-program?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"DSA for Interview Preparation","url":"https:\/\/www.geeksforgeeks.org\/courses\/dsa-interview-preparation-classroom?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"MERN Full Stack Web Development Course","url":"https:\/\/www.geeksforgeeks.org\/courses\/mern-full-stack-development-classroom?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"All Courses","url":"https:\/\/www.geeksforgeeks.org\/courses\/offline-courses?city=noida?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"}]},"NON_NCR":{"Bengaluru":[{"name":"Data Science Course","url":"https:\/\/www.geeksforgeeks.org\/courses\/data-science-classroom-program?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"Complete Data Analytics Program","url":"https:\/\/www.geeksforgeeks.org\/courses\/complete-data-analytics-program?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"Complete Backend Development Course","url":"https:\/\/www.geeksforgeeks.org\/courses\/complete-java-backend-development-program?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"DSA For Interview Preparation","url":"https:\/\/www.geeksforgeeks.org\/courses\/dsa-interview-preparation-classroom?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"MERN Full Stack Web Development Course","url":"https:\/\/www.geeksforgeeks.org\/courses\/mern-full-stack-development-classroom?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"All Courses","url":"https:\/\/www.geeksforgeeks.org\/courses\/offline-courses?city=bengaluru?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"}],"Pune":[{"name":"Data Analytics Course","url":"https:\/\/www.geeksforgeeks.org\/courses\/complete-data-analytics-program?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"DSA For Interview Preparation","url":"https:\/\/www.geeksforgeeks.org\/courses\/dsa-interview-preparation-classroom?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"MERN Full Stack Web Development Course","url":"https:\/\/www.geeksforgeeks.org\/courses\/mern-full-stack-development-classroom?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"All Courses","url":"https:\/\/www.geeksforgeeks.org\/courses\/offline-courses?city=pune?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"}],"Hyderabad":[{"name":"Complete Data Analytics Program","url":"https:\/\/www.geeksforgeeks.org\/courses\/complete-data-analytics-program?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"Complete Backend Development Course","url":"https:\/\/www.geeksforgeeks.org\/courses\/complete-java-backend-development-program?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"DSA for Interview Preparation","url":"https:\/\/www.geeksforgeeks.org\/courses\/dsa-interview-preparation-classroom?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"MERN Full Stack Web Development Course","url":"https:\/\/www.geeksforgeeks.org\/courses\/mern-full-stack-development-classroom?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"},{"name":"All Courses","url":"https:\/\/www.geeksforgeeks.org\/courses\/offline-courses?city=hyderabad?itm_source=geeksforgeeks&itm_medium=main_header&itm_campaign=courses"}]}}`);
+    const offlineCourseTermMapper = JSON.parse(`{"ALL_TERMIDS":["2058","6263","2628","1745","1789","2601","2057","5037","2971","2023","2162","2795"],"COURSE_TERMID_MAP":{"JAVA":["2058"],"DATA_ANALYTICS":["1745","1789","2601","2057","5037","2971","2023","2162","2795"],"DSA":["6263"],"MERN":["2628"]}}`);
+</script>
+
+<script async src="https://www.geeksforgeeks.org/wp-content/themes/iconic-one/js/event-promotion.min.js?ver=4.8"></script>
+  
+<!-- gfg tabs compatablity bundled js -->
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KDVRCT5');</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DWCCJLKX3X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+//  gtag('config', 'AW-474915276');
+  gtag('config', 'G-DWCCJLKX3X');
+  gtag('config', 'AW-796001856');
+</script>
+
+<!-- fancybar ad code start -->
+<div id="GFG_AD_Desktop_Stickyunit_1x1"></div>
+<!-- fancybar ad code ends -->
+<!-- <div id="GFG_AD_gfg_mobile_320x50"></div> -->
+<style>
+    :root {
+        --com-extra-icons-mobile-image: url(https://media.geeksforgeeks.org/auth-dashboard-uploads/Com-Extra-Icons13.svg);
+        --write-experience-card-1: #ECF5F5;
+        --write-experience-card-icon-1: #21898C;
+        --write-experience-card-2: #EAF2F7;
+        --write-experience-card-icon-2: #3079AC;
+        --write-experience-card-3: #FDEFE6;
+        --write-experience-card-icon-3: #F5A572;
+        --write-experience-card-4: #F1F8F5;
+        --write-experience-card-icon-4: #91C4AD;
+        --write-experience-card-5: #EEE7FF;
+        --write-experience-card-icon-5: #8B72C9;
+        --write-experience-card-6: #F2F8E6;
+        --write-experience-card-icon-6: #78C57F;
+        --editor-button-text-color: #6E6E73;
+        --write-modal-background: #fefefe;
+        --experience-sidebar: #000;
+        --left-bar-background: #FFFFFF;
+        --write-redirect-container:#EAF2F7;
+        --write-redirect-container-hover:#d6e7f2;
+        
+    }
+
+    /* Dark Mode */
+    body[data-dark-mode="true"] {
+        --write-modal-background: #161c23;
+        --experience-sidebar: #000;
+        --left-bar-background: #F0F3F5;
+    }
+
+    .popup-main {
+        padding: 20px 18px 20px 18px;
+        border-radius: 8px;
+    }
+
+    .popup-main .popup-heading {
+        display: flex;
+        align-items: center;
+        color: #E9E9EA;
+        margin-bottom: 10px;
+        justify-content: space-between;
+    }
+
+    .popup-main .close-icon {
+        background-image: var(--com-extra-icons-mobile-image);background-position: -15px -1651px;height: 22px;width: 22px;transform: scale(1);
+        margin-bottom: 12px;
+        cursor: pointer;
+    }
+
+    .popup-main .experience-card {
+        color: #000;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        /* margin-bottom:10px; */
+    }
+
+    .popup-main a:hover,
+    .popup-main a:active,
+    .popup-main a:visited {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .popup-main .exp-card1,
+    .popup-main .exp-card2,
+    .popup-main .exp-card3,
+    .popup-main .exp-card4,
+    .popup-main .exp-card5,
+    .popup-main .exp-card6 {
+        display: flex;
+        align-items: center;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .popup-main .exp-card1 .icon1,
+    .popup-main .exp-card2 .icon2,
+    .popup-main .exp-card3 .icon3,
+    .popup-main .exp-card4 .icon4,
+    .popup-main .exp-card5 .icon5,
+    .popup-main .exp-card6 .icon6 {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px 0px 0px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--write-experience-card-icon-1);
+    }
+
+    .popup-main .exp-card1 .icon1,
+    .popup-main .exp-card2 .icon2,
+    .popup-main .exp-card3 .icon3,
+    .popup-main .exp-card4 .icon4,
+    .popup-main .exp-card5 .icon5,
+    .popup-main .exp-card6 .icon6 {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px 0px 0px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .popup-main .exp-card1 .icon1 {
+        background: var(--write-experience-card-icon-1);
+    }
+
+    .popup-main .exp-card2 .icon2 {
+        background: var(--write-experience-card-icon-2);
+    }
+
+    .popup-main .exp-card3 .icon3 {
+        background: var(--write-experience-card-icon-3);
+    }
+
+    .popup-main .exp-card4 .icon4 {
+        background: var(--write-experience-card-icon-4);
+    }
+
+    .popup-main .exp-card5 .icon5 {
+        background: var(--write-experience-card-icon-5);
+    }
+
+    .popup-main .exp-card6 .icon6 {
+        background: var(--write-experience-card-icon-6);
+    }
+
+    .popup-main .exp-card6 .icon6-image {
+        background-image: url(https://media.geeksforgeeks.org/auth-dashboard-uploads/compass.svg);
+        width: 46px;
+        height: 30px;
+        background-size: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .popup-main .exp-card1 .icon1-image {
+        background-image: var(--com-extra-icons-mobile-image);
+        width: 46px;
+        height: 28px;
+        background-position: -4px -812px;
+    }
+
+    .popup-main .exp-card2 .icon2-image {
+        background-image: var(--com-extra-icons-mobile-image);
+        width: 46px;
+        height: 28px;
+        background-position: -4px -888px;
+    }
+
+    .popup-main .exp-card3 .icon3-image {
+        background-image: var(--com-extra-icons-mobile-image);
+        width: 46px;
+        height: 28px;
+        background-position: -4px -848px;
+    }
+
+    .popup-main .exp-card4 .icon4-image {
+        background-image: url(https://media.geeksforgeeks.org/auth-dashboard-uploads/competitive.svg);
+        width: 46px;
+        height: 30px;
+        background-size: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .popup-main .exp-card5 .icon5-image {
+        background-image: var(--com-extra-icons-mobile-image);
+        width: 46px;
+        height: 33px;
+        background-position: -4px -1217px;
+    }
+
+
+    .popup-main .exp-card1 .exp-card1-text,
+    .popup-main .exp-card2 .exp-card2-text,
+    .popup-main .exp-card3 .exp-card3-text,
+    .popup-main .exp-card4 .exp-card4-text,
+    .popup-main .exp-card5 .exp-card5-text,
+    .popup-main .exp-card6 .exp-card6-text {
+        display: flex;
+        align-items: center;
+        border-radius: 0px 10px 10px 0px;
+        height: 80px;
+        width: calc(100% - 80px);
+    }
+
+    .popup-main .exp-card1 {
+        justify-content: flex-start;
+        background: var(--write-experience-card-1);
+    }
+
+    .popup-main .exp-card2 {
+        justify-content: flex-start;
+        background: var(--write-experience-card-2);
+    }
+
+    .popup-main .exp-card3 {
+        justify-content: flex-start;
+        background: var(--write-experience-card-3);
+    }
+
+    .popup-main .exp-card4 {
+        justify-content: flex-start;
+        background: var(--write-experience-card-4);
+    }
+
+    .popup-main .exp-card5 {
+        justify-content: flex-start;
+        background: var(--write-experience-card-5);
+    }
+
+    .popup-main .exp-card6 {
+        justify-content: flex-start;
+        background: var(--write-experience-card-6);
+    }
+
+    .popup-main span {
+        font-family: var(--font-primary);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    #popup {
+        display: none;
+        background-color: var(--write-modal-background);
+        padding: 20px;
+        text-align: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1026;
+        width: min(650px, calc(100% - 20px));
+    }
+    .link-container-write{
+        display:flex;
+        flex-direction:column;
+    }
+    .link-container-write > a {
+        margin:7px 0px;
+    }
+    .phrase__container{
+        color:var(--color-gfg);
+        border-radius: 6px;
+        width: 100%;
+        background-color:var(--write-redirect-container);
+        padding: 15px;
+        text-align: justify;
+        font-size:14px;
+    }
+    .phrase__container:hover {
+        color:var(--color-gfg) !important;
+        background-color:var(--write-redirect-container-hover);
+    }
+</style>
+<div class="popup-container">
+        <div id="popup" accesskey="" class="popup-main">
+            <div class="popup-heading">
+                <h2>What kind of Experience do you want to share?</h2>
+                <div class="close-icon share-experience-modal-close"></div>
+            </div>
+            <!-- <span class="description"style="color: #BEBEC2;">Tell us your type of experiences which can help other fellow Geeks for their future events and preparations.</span> -->
+            <div class="experience-card">
+                <a class="exp-card5" href= "https://write.geeksforgeeks.org/posts-new?cid=e8fc46fe-75e7-4a4b-be3c-0c862d655ed0" target="_blank">
+                    <div class="icon5">
+                        <div class="icon5-image"></div>
+                    </div>
+                    <div class="exp-card5-text">
+                        <span style="color: #000;">Interview Experiences</span>
+                    </div>
+                </a>
+                <a class="exp-card1" href="https://write.geeksforgeeks.org/posts-new?cid=82536bdb-84e6-4661-87c3-e77c3ac04ede" target="_blank">
+                    <div class="icon1">
+                        <div class="icon1-image"></div>
+                    </div>
+                    <div class="exp-card1-text">
+                        <span style="color: #000;">Admission Experiences</span>
+                    </div>
+                </a>
+                <a class="exp-card6" href= "https://write.geeksforgeeks.org/posts-new?cid=5219b0b2-7671-40a0-9bda-503e28a61c31" target="_blank">
+                    <div class="icon6">
+                        <div class="icon6-image"></div>
+                    </div>
+                    <div class="exp-card6-text">
+                        <span style="color: #000;">Career Journeys</span>
+                    </div>
+                </a>
+                <a class="exp-card2" href="https://write.geeksforgeeks.org/posts-new?cid=22ae3354-15b6-4dd4-a5b4-5c7a105b8a8f" target="_blank">
+                    <div class="icon2">
+                        <div class="icon2-image"></div>
+                    </div>
+                    <div class="exp-card2-text">
+                        <span style="color: #000;">Work Experiences</span>
+                    </div>
+                </a>
+                <a class="exp-card3" href= "https://write.geeksforgeeks.org/posts-new?cid=c5e1ac90-9490-440a-a5fa-6180c87ab8ae" target="_blank">
+                    <div class="icon3">
+                        <div class="icon3-image"></div>
+                    </div>
+                    <div class="exp-card3-text">
+                        <span style="color: #000;">Campus Experiences</span>
+                    </div>
+                </a>
+                <a class="exp-card4" href= "https://write.geeksforgeeks.org/posts-new?cid=5ebb8fe9-b980-4891-af07-f2d62a9735f2" target="_blank">
+                    <div class="icon4">
+                        <div class="icon4-image"></div>
+                    </div>
+                    <div class="exp-card4-text">
+                        <span style="color: #000;">Competitive Exam Experiences</span>
+                    </div>
+                </a>
+            </div>
+        <!--    <div class="link-container-write">
+                <a href="https://write.geeksforgeeks.org/pick-article?taxonomy=10261&page=1">
+                    <div role="span" class="phrase__container">
+                        Can't choose a topic to write? click here for suggested topics
+                    </div>
+                </a>
+                <a href="https://write.geeksforgeeks.org/posts-new">
+                    <div role="span" class="phrase__container">
+                       Write and publish your own Article
+                    </div>
+                </a>
+            </div> -->
+        </div>
+        <div id="overlay" onclick="toggleExperiencePopup()" style="display: block;min-height: 100vh;min-width: 100vw;position: fixed;top: 0;bottom: 0;right: 0;left: 0;display: none;justify-content: center;align-items: center;background: rgba(0,0,0,.702);z-index: 1025 !important;backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);word-break: keep-all;"></div>
+    </div>
+
+    <script>
+        $('.share-experience-modal').click(function(e){
+            e.preventDefault();
+            var link = $(this).attr('href');
+            toggleExperiencePopup(link);
+        });
+        function toggleExperiencePopup(link) {
+            var popup = document.getElementById("popup");
+            var overlay = document.getElementById("overlay");
+
+            if (window.innerWidth < 992) {
+                window.location.href = link;
+            } else {
+                popup.style.display = (popup.style.display === "block") ? "none" : "block";
+                overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
+            }
+        }
+        $('.share-experience-modal-close').click(function(e){
+            var popup = document.getElementById("popup");
+            popup.style.display = 'none';
+            var overlay = document.getElementById("overlay");
+            overlay.style.display = 'none';
+        });
+</script>
+</div><!-- Chat bot is being shown for these category articles (8 -> linked-list 9172 -> AI-ML-DS, 1789 -> python  4667 -> math)  -->
+
+</body>
+</html>
+
+
+<!-- Dynamic page generated in 0.537 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2025-06-06 12:46:31 -->
+
+<!-- Compression = gzip -->
+<!-- super cache -->
