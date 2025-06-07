@@ -140,8 +140,9 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                 elif what == b'<?':
                     ent.elemType = 'procinst'
                 elif what == b'</':
-                    ent.tagInfo = 'close'
                     allowAttr = False
+                    ent.elemType = 'tag'
+                    ent.tagInfo = 'close'
                 else:
                     begin = i = at + 1
                     ent.elemType = 'tag'
