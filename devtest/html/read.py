@@ -118,6 +118,8 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
     while i < len(blob):
         if state.taglock == 'script':
             p = re.search(b'(\<\!\-\-|\<\/script)',blob[i:])
+        elif state.taglock == 'style':
+            p = re.search(b'(\<\!\-\-|\<\/style)',blob[i:])
         else:
             p = re.search(b'(\<\!\-\-|\<\!|\<\?|\<\/|\<[a-zA-Z])',blob[i:])
         #
@@ -134,7 +136,7 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
             #
             begin = i = at + len(what)
             #
-            if what == b"</script":
+            if what == b"</script" or what == b"</style":
                 what = b"</"
                 begin = i = at + 2
             #
