@@ -53,14 +53,19 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
             if len(blob) >= 6:
                 if blob[0:6] == UTF16LE_XMLDECL:
                     state.encoding = 'utf16le'
-                    i = 6
                 if blob[0:6] == UTF16BE_XMLDECL:
                     state.encoding = 'utf16be'
-                    i = 6
         if state.encoding == None:
             state.encoding = 'binary'
     #
-    print(state.encoding)
+    if state.encoding == 'utf16le':
+        blob = blob[i:].decode('utf-16le').encode('utf-8')
+        i = 0
+    elif state.encoding == 'utf16be':
+        blob = blob[i:].decode('utf-16be').encode('utf-8')
+        i = 0
+    #
+    print(blob)
 
 llhtmlstate = HTMLllReaderState()
 llhtml = HTMLllParse(rawhtml,llhtmlstate)
