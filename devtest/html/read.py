@@ -225,7 +225,7 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                             #
                             ent.attr.append(nva)
                         else:
-                            while i < len(blob) and not HTMLllwhitespace(blob[i]):
+                            while i < len(blob) and not HTMLllwhitespace(blob[i]) and not blob[i] == ord('/') and not blob[i] == ord('>'):
                                 i += 1
                 #
                 i = HTMLllskipwhitespace(blob,i)
