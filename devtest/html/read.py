@@ -28,8 +28,15 @@ UTF16BE_XMLDECL = bytearray([0x00, 0x3C, 0x00, 0x3F, 0x00, 0x78])
 
 class HTMLllReaderState:
     encoding = None # 'binary' 'utf8' 'utf16le' 'utf16be'
+
+class HTMLllToken:
+    elemType = None # 'text' 'comment' <!-- --> 'tag' <tag> </tag> <tag/> 'procinst' <?
+    tagInfo = None # 'open' 'close' 'self'
+    text = None
+    tag = None
+    attr = None
     def __init__(self):
-        self.encoding = None
+        attr = [ ]
 
 def HTMLwhitespace(c):
     return c == 0x09 or c == 0x0A or c == 0x0C or c == 0x0D or c == 0x20
@@ -66,30 +73,34 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
         i = 0
     #
     while i < len(blob):
-        p = re.search(b'(\<\-\-|\<\!|\<\/|\<\?|\<)',blob[i:])
+        p = re.search(b'(\<\!\-\-|\<\!|\<\/|\<\?|\<)',blob[i:])
         if p:
             what = p.groups()[0]
             at = p.span()[0] + i
+            # HTML text
             if i < at:
                 yield blob[i:at]
-            i = at
             #
-            if what == '<--':
+            begin = i = at + len(what)
+            if what == b'<!--':
                 end = blob.find(b'-->',i)
                 if end >= 0:
-                    end += 3
+                    i = end + 3
                 else:
-                    end = len(blob)
+                    i = end = len(blob)
+                #
+                yield blob[begin:end]
             else:
                 end = blob.find(b'>',i)
                 if end >= 0:
-                    end += 1
+                    i = end + 1
                 else:
-                    end = len(blob)
+                    i = end = len(blob)
+                #
+                yield blob[begin:end]
             #
-            yield blob[i:end]
-            i = end
         else:
+            # HTML text
             yield blob[i:]
             break
 
