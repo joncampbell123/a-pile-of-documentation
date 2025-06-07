@@ -12,6 +12,8 @@ def rawhtmlloadfile(path):
 
 sys.path.append(os.path.join(os.path.dirname(__file__),'..','..'))
 
+from apodlib.docBOM import *
+
 inFile = sys.argv[1]
 rawhtml = rawhtmlloadfile(inFile)
 
@@ -19,12 +21,6 @@ rawhtml = rawhtmlloadfile(inFile)
 # returns a flat sequence of HTML tags, or text.
 # concerns itself only with whether the text is UTF-16 or not.
 # it's up to you to turn the stream of tags into a DOM hierarchy and convert from whatever charset to UTF-8.
-
-UTF16LE_BOM = bytearray([0xFF, 0xFE])
-UTF16BE_BOM = bytearray([0xFE, 0xFF])
-UTF8_BOM = bytearray([0xEF, 0xBB, 0xBF])
-UTF16LE_XMLDECL = bytearray([0x3C, 0x00, 0x3F, 0x00, 0x78, 0x00])
-UTF16BE_XMLDECL = bytearray([0x00, 0x3C, 0x00, 0x3F, 0x00, 0x78])
 
 class HTMLllReaderState:
     encoding = None # 'binary' 'utf8' 'utf16le' 'utf16be'
