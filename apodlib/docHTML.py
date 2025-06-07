@@ -267,3 +267,55 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
             yield ent
             break
 
+def HTMLllTokenToHTML(ent):
+    if ent.elemType == 'text':
+        if not ent.text == None:
+            return ent.text
+    if ent.elemType == 'comment':
+        if not ent.text == None:
+            return b'<!--'+ent.text+b'-->'
+    if ent.elemType == 'doctype':
+        r = b'<!'
+        if not ent.tag == None:
+            r += ent.tag
+        #
+        for a in ent.attr:
+            r += b' '
+            if not a.name == None:
+                r += a.name
+                if not a.value == None:
+                    r += b'='
+            #
+            if not a.value == None:
+                r += b'"'+a.value+b'"'
+        #
+        r += b'>'
+        return r
+    if ent.elemType == 'tag':
+        if ent.tagInfo == 'close':
+            r = b'</'
+        else:
+            r = b'<'
+        #
+        if not ent.tag == None:
+            r += ent.tag
+        #
+        for a in ent.attr:
+            r += b' '
+            if not a.name == None:
+                r += a.name
+                if not a.value == None:
+                    r += b'='
+            #
+            if not a.value == None:
+                r += b'"'+a.value+b'"'
+        #
+        if ent.tagInfo == 'self':
+            r += b'/>'
+        else:
+            r += b'>'
+        #
+        return r
+    #
+    return b''
+
