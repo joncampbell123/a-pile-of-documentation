@@ -70,14 +70,12 @@ def HTMLllwhitespace(c):
 def HTMLllskipwhitespace(line,end):
     if end >= len(line):
         return end
-    if not line[end] == ord(' '):
-        return end
     #
-    ei = re.search(b'[\x09\x0A\0x0C\x0D\x20]+',line[end:])
+    ei = re.match(b'[\x09\x0A\x0C\x0D\x20]+',line[end:])
     if ei:
         return end+ei.span()[1]
     else:
-        return len(line)
+        return end
 
 def HTMLllParse(blob,state=HTMLllReaderState()):
     i = 0
