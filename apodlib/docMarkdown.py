@@ -69,14 +69,12 @@ def findunescaped(line,what,start):
 def skipwhitespace(line,end):
     if end >= len(line):
         return end
-    if not line[end] == ' ':
-        return end
     #
-    ei = re.search(r' +',line[end:])
+    ei = re.match(r' +',line[end:])
     if ei:
         return end+ei.span()[1]
     else:
-        return len(line)
+        return end
 
 def escapesubst(line):
     i = 0
