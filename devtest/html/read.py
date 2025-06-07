@@ -186,7 +186,7 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                                 if blob[i] == ord('\"') or blob[i] == ord('\''):
                                     match = blob[i]
                                     i += 1
-                                    while i < len(blob) and not HTMLllwhitespace(blob[i]) and not blob[i] == match:
+                                    while i < len(blob) and not blob[i] == match:
                                         nva.value += blob[i:i+1]
                                         i += 1
                                     #
