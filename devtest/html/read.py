@@ -29,6 +29,7 @@ UTF16BE_XMLDECL = bytearray([0x00, 0x3C, 0x00, 0x3F, 0x00, 0x78])
 class HTMLllReaderState:
     encoding = None # 'binary' 'utf8' 'utf16le' 'utf16be'
     taglock = None # None 'script' 'style' because HTML tag parsing must be restricted within these tags
+    inForm = None # None 'html' 'xml'
 
 class HTMLllAttr:
     name = None
@@ -250,13 +251,26 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                         i = HTMLllskipwhitespace(blob,i)
                 #
                 state.taglock = None
-                if ent.tagInfo == 'open':
-                    # <script> needs special processing not to misinterpret js as HTML because wrapping it in <!-- --> is so 1990s apparently.
-                    if ent.tag.lower() == b'script':
-                        state.taglock = 'script'
-                    # <style> should be handled specially too so CSS doesn't get confused with HTML
-                    if ent.tag.lower() == b'style':
-                        state.taglock = 'style'
+                if ent.elemType == 'tag':
+                    if ent.tagInfo == 'open':
+                        if state.inForm == 'html':
+                            # <script> needs special processing not to misinterpret js as HTML because wrapping it in <!-- --> is so 1990s apparently.
+                            if ent.tag.lower() == b'script':
+                                state.taglock = 'script'
+                            # <style> should be handled specially too so CSS doesn't get confused with HTML
+                            if ent.tag.lower() == b'style':
+                                state.taglock = 'style'
+                        elif state.inForm == None:
+                            if ent.tag.lower() == b'html':
+                                state.inForm = 'html'
+                    elif ent.tagInfo == 'close':
+                        if state.inForm == 'html':
+                            if ent.tag.lower() == b'html':
+                                state.inForm = None
+                elif ent.elemType == 'procinst':
+                    if state.inForm == None:
+                        if ent.tag.lower() == b'xml':
+                            state.inForm = 'xml'
                 #
                 yield ent
             #
