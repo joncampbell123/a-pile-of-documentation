@@ -249,6 +249,41 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                             # <style> should be handled specially too so CSS doesn't get confused with HTML
                             if ent.tag.lower() == b'style':
                                 state.taglock = 'style'
+                            # we would like to know the encoding
+                            if ent.tag.lower() == b'meta':
+                                charset = None
+                                content = None
+                                httpequiv = None
+                                for a in ent.attr:
+                                    if a.name.lower() == b'charset':
+                                        if charset == None:
+                                            charset = a.value
+                                    elif a.name.lower() == b'http-equiv':
+                                        if httpequiv == None:
+                                            httpequiv = a.value
+                                    elif a.name.lower() == b'content':
+                                        if content == None:
+                                            content = a.value
+                                #
+                                if (state.encoding == None or state.encoding == 'binary') and state.memencoding == None:
+                                    if not charset == None:
+                                        state.encoding = charset.lower()
+                                    elif not httpequiv == None and httpequiv.lower() == b'content-type' and not content == None:
+                                        x = list(re.split(b'; *',content))
+                                        if len(x) > 0 and x[0].lower() == b'text/html':
+                                            x = x[1:]
+                                            for xem in x:
+                                                xi = xem.find(ord('='))
+                                                if xi >= 0:
+                                                    name = xem[0:xi]
+                                                    value = xem[xi+1:]
+                                                else:
+                                                    name = xem
+                                                    value = ''
+                                                #
+                                                if name.lower() == b'charset':
+                                                    if len(value) > 0:
+                                                        state.encoding = value.lower()
                         elif state.inForm == None:
                             if ent.tag.lower() == b'html':
                                 state.inForm = 'html'
