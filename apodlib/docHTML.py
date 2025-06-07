@@ -12,6 +12,7 @@ from apodlib.docBOM import *
 
 class HTMLllReaderState:
     encoding = None # 'binary' 'utf8' 'utf16le' 'utf16be'
+    memencoding = None # encoding stored in memory
     taglock = None # None 'script' 'style' because HTML tag parsing must be restricted within these tags
     inForm = None # None 'html' 'xml'
 
@@ -95,10 +96,14 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
     #
     if state.encoding == 'utf16le':
         blob = blob[i:].decode('utf-16le').encode('utf-8')
+        state.memencoding = 'utf-8'
         i = 0
     elif state.encoding == 'utf16be':
         blob = blob[i:].decode('utf-16be').encode('utf-8')
+        state.memencoding = 'utf-8'
         i = 0
+    elif state.encoding == 'utf8':
+        state.memencoding = 'utf-8'
     #
     while i < len(blob):
         if state.taglock == 'script':
