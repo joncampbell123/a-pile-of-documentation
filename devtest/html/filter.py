@@ -21,5 +21,5 @@ llhtmlstate = HTMLllReaderState()
 
 sys.stdout.buffer.flush()
 for ent in HTMLllParse(rawhtml,llhtmlstate):
-    sys.stdout.buffer.write(HTMLllTokenToHTML(ent))
+    sys.stdout.buffer.write(HTMLllTokenToHTML(ent,llhtmlstate))
 

@@ -267,13 +267,20 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
             yield ent
             break
 
-def HTMLllTokenToHTML(ent):
+def HTMLllTokenToHTML(ent,state=HTMLllReaderState()):
+    if state.encoding == 'utf16be':
+        encfunc = lambda x : x.decode('utf-8').encode('utf-16be')
+    elif state.encoding == 'utf16le':
+        encfunc = lambda x : x.decode('utf-8').encode('utf-16le')
+    else:
+        encfunc = lambda x : x
+    #
     if ent.elemType == 'text':
         if not ent.text == None:
-            return ent.text
+            return encfunc(ent.text)
     if ent.elemType == 'comment':
         if not ent.text == None:
-            return b'<!--'+ent.text+b'-->'
+            return encfunc(b'<!--'+ent.text+b'-->')
     if ent.elemType == 'doctype':
         r = b'<!'
         if not ent.tag == None:
@@ -290,7 +297,7 @@ def HTMLllTokenToHTML(ent):
                 r += b'"'+a.value+b'"'
         #
         r += b'>'
-        return r
+        return encfunc(r)
     if ent.elemType == 'tag':
         if ent.tagInfo == 'close':
             r = b'</'
@@ -315,7 +322,7 @@ def HTMLllTokenToHTML(ent):
         else:
             r += b'>'
         #
-        return r
+        return encfunc(r)
     #
     return b''
 
