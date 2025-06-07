@@ -111,7 +111,7 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
         i = 0
     #
     while i < len(blob):
-        p = re.search(b'(\<\!\-\-|\<\!|\<\/|\<\?|\<)',blob[i:])
+        p = re.search(b'(\<\!\-\-|\<\!|\<\?|\<\/|\<[a-zA-Z])',blob[i:])
         if p:
             what = p.groups()[0]
             at = p.span()[0] + i
@@ -141,13 +141,13 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                     ent.elemType = 'doctype'
                 elif what == b'<?':
                     ent.elemType = 'procinst'
+                elif what == b'</':
+                    ent.tagInfo = 'close'
+                    allowAttr = False
                 else:
+                    begin = i = at + 1
                     ent.elemType = 'tag'
-                    if what == b'</':
-                        ent.tagInfo = 'close'
-                        allowAttr = False
-                    else:
-                        ent.tagInfo = 'open'
+                    ent.tagInfo = 'open'
                 #
                 if i < len(blob):
                     i = HTMLllskipwhitespace(blob,i)
