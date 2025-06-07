@@ -28,6 +28,7 @@ UTF16BE_XMLDECL = bytearray([0x00, 0x3C, 0x00, 0x3F, 0x00, 0x78])
 
 class HTMLllReaderState:
     encoding = None # 'binary' 'utf8' 'utf16le' 'utf16be'
+    taglock = None # None 'script' 'style' because HTML tag parsing must be restricted within these tags
 
 class HTMLllAttr:
     name = None
@@ -115,7 +116,11 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
         i = 0
     #
     while i < len(blob):
-        p = re.search(b'(\<\!\-\-|\<\!|\<\?|\<\/|\<[a-zA-Z])',blob[i:])
+        if state.taglock == 'script':
+            p = re.search(b'(\<\!\-\-|\<\/script)',blob[i:])
+        else:
+            p = re.search(b'(\<\!\-\-|\<\!|\<\?|\<\/|\<[a-zA-Z])',blob[i:])
+        #
         if p:
             what = p.groups()[0]
             at = p.span()[0] + i
@@ -128,6 +133,11 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                 yield ent
             #
             begin = i = at + len(what)
+            #
+            if what == b"</script":
+                what = b"</"
+                begin = i = at + 2
+            #
             if what == b'<!--':
                 end = blob.find(b'-->',i)
                 if end >= 0:
@@ -236,6 +246,15 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                     else:
                         i += 1
                         i = HTMLllskipwhitespace(blob,i)
+                #
+                state.taglock = None
+                if ent.tagInfo == 'open':
+                    # <script> needs special processing not to misinterpret js as HTML because wrapping it in <!-- --> is so 1990s apparently.
+                    if ent.tag.lower() == b'script':
+                        state.taglock = 'script'
+                    # <style> should be handled specially too so CSS doesn't get confused with HTML
+                    if ent.tag.lower() == b'style':
+                        state.taglock = 'style'
                 #
                 yield ent
             #
