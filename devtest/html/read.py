@@ -32,12 +32,15 @@ class HTMLllReaderState:
 class HTMLllAttr:
     name = None
     value = None
+    offset = None # byte offset in data this occurred
     def __str__(self):
         r = '[HTMLllAttr'
         if not self.name == None:
             r += ' name='+str(self.name)
         if not self.value == None:
             r += ' value='+str(self.value)
+        if not self.offset == None:
+            r += ' offset='+str(self.offset)
         r += ']'
         return r
 
@@ -47,6 +50,7 @@ class HTMLllToken:
     text = None
     tag = None
     attr = None
+    offset = None # byte offset in data this occurred
     def __init__(self):
         self.attr = [ ]
     def __str__(self):
@@ -59,6 +63,8 @@ class HTMLllToken:
             r += ' tag='+str(self.tag)
         if not self.text == None:
             r += ' text='+str(self.text)
+        if not self.offset == None:
+            r += ' offset='+str(self.offset)
         for a in self.attr:
             r += ' attr='+str(a)
         r += ']'
@@ -118,6 +124,7 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                 ent = HTMLllToken()
                 ent.elemType = 'text'
                 ent.text = blob[i:at]
+                ent.offset = i
                 yield ent
             #
             begin = i = at + len(what)
@@ -130,11 +137,13 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                 #
                 ent = HTMLllToken()
                 ent.elemType = 'comment'
+                ent.offset = begin
                 ent.text = blob[begin:end]
                 yield ent
             else:
                 allowAttr = True
                 ent = HTMLllToken()
+                ent.offset = at
                 if what == b'<!':
                     ent.elemType = 'doctype'
                 elif what == b'<?':
@@ -173,6 +182,7 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                         #
                         if re.match(b'[a-zA-Z0-9]',blob[i:i+1]):
                             nva = HTMLllAttr()
+                            nva.offset = i
                             nva.name = b''
                             #
                             while i < len(blob) and not HTMLllwhitespace(blob[i]) and not blob[i] == ord('/') and not blob[i] == ord('>') and not blob[i] == ord('='):
@@ -201,6 +211,7 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                             ent.attr.append(nva)
                         elif blob[i] == ord('\"') or blob[i] == ord('\''):
                             nva = HTMLllAttr()
+                            nva.offset = i
                             nva.value = b''
                             #
                             match = blob[i]
@@ -233,6 +244,7 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
             ent = HTMLllToken()
             ent.elemType = 'text'
             ent.text = blob[i:]
+            ent.offset = i
             yield ent
             break
 
