@@ -311,8 +311,8 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                                 state.inForm = None
                 elif ent.elemType == 'procinst':
                     if state.inForm == None:
-                        if ent.tag.lower() == b'xml':
-                            state.inForm = 'xml'
+                        if ent.tag.lower() == b'xml' or ent.tag.lower() == b'xml-stylesheet':
+                            state.inForm = ent.tag.lower().decode('ascii')
                             # some XML documents specify the encoding in this tag
                             for a in ent.attr:
                                 if a.name.lower() == b'encoding':

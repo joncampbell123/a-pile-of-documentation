@@ -13,8 +13,10 @@ inFile = sys.argv[1]
 rawhtml = rawhtmlloadfile(inFile)
 
 def bin2unicode(v,encoding):
-    if encoding == None or encoding == 'binary' or v == None or not isinstance(v, (bytes, bytearray)):
+    if v == None or not isinstance(v, (bytes, bytearray)):
         return v
+    if encoding == None or encoding == 'binary':
+        return v.decode('iso-8859-1','replace')
     return v.decode(encoding,'replace')
 
 def HTMLgetEntity(e):
@@ -86,6 +88,9 @@ def HTMLmidGuessEncoding(state):
         if state.dtd == None:
             return 'utf-8' # anything new enough to use HTML 5 <!DOCTYPE HTML> is probably using UTF-8
     #
+    if state.doctype == 'xml' or state.doctype == 'xml-stylesheet':
+        return 'utf-8' # XML these days is likely UTF-8
+    #
     return 'iso-8859-1' # reasonable guess for old HTML files without a DOCTYPE
 
 def HTMLmidParse(blob,state=HTMLmidReaderState()):
@@ -132,9 +137,12 @@ def HTMLmidParse(blob,state=HTMLmidReaderState()):
                     True
         #
         elif ent.elemType == 'procinst':
-            if ent.tag.lower() == b'xml':
+            if ent.tag.lower() == b'xml' or ent.tag.lower() == b'xml-stylesheet':
                 if state.doctype == None:
-                    state.doctype = 'xml'
+                    state.doctype = ent.tag.lower().decode('ascii')
+                    if state.encoding == None:
+                        state.encoding = HTMLmidGuessEncoding(state)
+                    break
     #
     for ent in initTags:
         yield HTMLmidToken(ent,state.encoding)
