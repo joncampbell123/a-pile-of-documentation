@@ -295,6 +295,11 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                     if state.inForm == None:
                         if ent.tag.lower() == b'xml':
                             state.inForm = 'xml'
+                            # some XML documents specify the encoding in this tag
+                            for a in ent.attr:
+                                if a.name.lower() == b'encoding':
+                                    if state.encoding == None or state.encoding == 'binary' and not a.value == None:
+                                        state.encoding = a.value.decode('iso-8859-1').lower()
                 #
                 yield ent
             #
