@@ -17,6 +17,15 @@ from apodlib.docHTML import *
 inFile = sys.argv[1]
 rawhtml = rawhtmlloadfile(inFile)
 
+class HTMLmidAttr(HTMLllAttr):
+    def __init__(self,llattr):
+        super().__init__(llattr)
+
+class HTMLmidToken(HTMLllToken):
+    def __init__(self,lltoken):
+        super().__init__(lltoken)
+        self.attr = map(lambda a: HTMLmidAttr(a), self.attr)
+
 class HTMLmidReaderState:
     llstate = None
     initTags = None
@@ -39,47 +48,68 @@ def HTMLmidGuessEncoding(state):
     #
     return 'iso-8859-1' # reasonable guess for old HTML files without a DOCTYPE
 
-midhtmlstate = HTMLmidReaderState()
-
-for ent in HTMLllParse(rawhtml,midhtmlstate.llstate):
-    midhtmlstate.initTags.append(ent)
-    if ent.elemType == 'tag':
-        # on <body> opening tag, stop scanning for charset encoding.
-        # arabic.html: also stop on </head> because this HTML document doesn't have a <body> tag
-        if ent.tagInfo == 'close':
-            if ent.tag.lower() == b'head':
-                if midhtmlstate.encoding == None:
-                    midhtmlstate.encoding = HTMLmidGuessEncoding(midhtmlstate)
-                break
-        elif ent.tagInfo == 'open':
-            if ent.tag.lower() == b'body':
-                if midhtmlstate.encoding == None:
-                    midhtmlstate.encoding = HTMLmidGuessEncoding(midhtmlstate)
-                break
-    elif ent.elemType == 'doctype':
-        if midhtmlstate.doctype == None:
-            ai = iter(ent.attr)
-            try:
-                a = next(ai)
-                if a.name.lower() == b'html':
-                    midhtmlstate.doctype = 'html'
+def HTMLmidParseScanEncoding(blob,state=HTMLmidReaderState()):
+    for ent in HTMLllParse(blob,state.llstate):
+        state.initTags.append(ent)
+        #
+        if not (state.llstate.encoding == None or state.llstate.encoding == 'binary'):
+            if not state.llstate.memencoding == None:
+                state.encoding = state.llstate.memencoding
+            else:
+                state.encoding = state.llstate.encoding
+            #
+            break
+        #
+        if ent.elemType == 'tag':
+            # on <body> opening tag, stop scanning for charset encoding.
+            # arabic.html: also stop on </head> because this HTML document doesn't have a <body> tag
+            if ent.tagInfo == 'close':
+                if ent.tag.lower() == b'head':
+                    if state.encoding == None:
+                        state.encoding = HTMLmidGuessEncoding(state)
+                    break
+            elif ent.tagInfo == 'open':
+                if ent.tag.lower() == b'body':
+                    if state.encoding == None:
+                        state.encoding = HTMLmidGuessEncoding(state)
+                    break
+        #
+        elif ent.elemType == 'doctype':
+            if state.doctype == None:
+                ai = iter(ent.attr)
+                try:
                     a = next(ai)
-                    if a.name.lower() == b'public': # PUBLIC "-HTMLblahblah"
+                    if a.name.lower() == b'html':
+                        state.doctype = 'html'
                         a = next(ai)
-                        if a.name == None and not a.value == None:
-                            midhtmlstate.dtd = a.value.decode('iso-8859-1')
-            except StopIteration:
-                True
-    elif ent.elemType == 'procinst':
-        if ent.tag.lower() == b'xml':
-            if midhtmlstate.doctype == None:
-                midhtmlstate.doctype = 'xml'
-    if not (midhtmlstate.llstate.encoding == None or midhtmlstate.llstate.encoding == 'binary'):
-        if not midhtmlstate.llstate.memencoding == None:
-            midhtmlstate.encoding = midhtmlstate.llstate.memencoding
-        else:
-            midhtmlstate.encoding = midhtmlstate.llstate.encoding
-        break
+                        if a.name.lower() == b'public': # PUBLIC "-HTMLblahblah"
+                            a = next(ai)
+                            if a.name == None and not a.value == None:
+                                state.dtd = a.value.decode('iso-8859-1')
+                except StopIteration:
+                    True
+        #
+        elif ent.elemType == 'procinst':
+            if ent.tag.lower() == b'xml':
+                if state.doctype == None:
+                    state.doctype = 'xml'
+
+def HTMLmidParse(blob,state=HTMLmidReaderState()):
+    if state.state == state.WAIT_ENCODING:
+        HTMLmidParseScanEncoding(blob,state)
+        state.state = state.NORMAL
+        #
+        for ent in state.initTags:
+            yield HTMLmidToken(ent)
+        #
+        state.initTags = [ ]
+    #
+    for ent in HTMLllParse(blob,state.llstate):
+        yield HTMLmidToken(ent)
+
+midhtmlstate = HTMLmidReaderState()
+for ent in HTMLmidParse(rawhtml,midhtmlstate):
+    print(ent)
 
 print("Encoding: "+str(midhtmlstate.encoding))
 print("Doctype: "+str(midhtmlstate.doctype))
