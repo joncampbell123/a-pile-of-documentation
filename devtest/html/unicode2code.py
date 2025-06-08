@@ -94,8 +94,6 @@ x = "HTMLu2ent=[\n"
 acount = 0
 for idx in range(0,len(unicode2entity)):
     d = unicode2entity[idx]
-    if not d:
-        continue
     #
     if acount > 0:
         x += ',\n'
