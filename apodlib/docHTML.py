@@ -10,6 +10,12 @@ from apodlib.docBOM import *
 # concerns itself only with whether the text is UTF-16 or not.
 # it's up to you to turn the stream of tags into a DOM hierarchy and convert from whatever charset to UTF-8.
 
+def rawhtmlloadfile(path):
+    f = open(path,"rb")
+    raw = f.read()
+    f.close()
+    return raw
+
 class HTMLllReaderState:
     encoding = None # 'binary' 'utf8' 'utf16le' 'utf16be'
     memencoding = None # encoding stored in memory
