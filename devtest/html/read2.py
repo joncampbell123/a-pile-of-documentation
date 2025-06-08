@@ -20,7 +20,7 @@ rawhtml = rawhtmlloadfile(inFile)
 class HTMLmidReaderState:
     llstate = None
     initTags = None
-    encoding = None
+    encoding = None # encoding of text presented by the low level state
     doctype = None
     state = None
     dtd = None
@@ -75,7 +75,10 @@ for ent in HTMLllParse(rawhtml,midhtmlstate.llstate):
             if midhtmlstate.doctype == None:
                 midhtmlstate.doctype = 'xml'
     if not (midhtmlstate.llstate.encoding == None or midhtmlstate.llstate.encoding == 'binary'):
-        midhtmlstate.encoding = midhtmlstate.llstate.encoding
+        if not midhtmlstate.llstate.memencoding == None:
+            midhtmlstate.encoding = midhtmlstate.llstate.memencoding
+        else:
+            midhtmlstate.encoding = midhtmlstate.llstate.encoding
         break
 
 print("Encoding: "+str(midhtmlstate.encoding))
