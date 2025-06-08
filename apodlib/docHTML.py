@@ -20,8 +20,13 @@ class HTMLllAttr:
     name = None
     value = None
     offset = None # byte offset in data this occurred
+    def __init__(self,what=None):
+        if not what == None:
+            self.name = what.name
+            self.value = what.value
+            self.offset = what.offset
     def __str__(self):
-        r = '[HTMLllAttr'
+        r = '['+type(self).__name__
         if not self.name == None:
             r += ' name='+str(self.name)
         if not self.value == None:
@@ -38,10 +43,17 @@ class HTMLllToken:
     tag = None
     attr = None
     offset = None # byte offset in data this occurred
-    def __init__(self):
+    def __init__(self,what=None):
         self.attr = [ ]
+        if not what == None:
+            self.elemType = what.elemType
+            self.tagInfo = what.tagInfo
+            self.text = what.text
+            self.tag = what.tag
+            self.attr = what.attr.copy()
+            self.offset = what.offset
     def __str__(self):
-        r = '[HTMLllToken'
+        r = '['+type(self).__name__
         if not self.elemType == None:
             r += ' elemType='+str(self.elemType)
         if not self.tagInfo == None:
