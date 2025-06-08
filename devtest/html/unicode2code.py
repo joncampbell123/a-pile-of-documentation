@@ -75,6 +75,9 @@ def strescchar(x):
         return '\\'+x
     return x
 
+of = open("docHTMLentities.py","w",encoding="utf-8")
+of.write("# auto generated, see unicode2code.py. approve and move to ../../apodlib/\n")
+
 # emit
 x = "HTMLent2u={"
 count = 0
@@ -83,8 +86,8 @@ for (ent,uc) in entity2unicode.items():
         x += ","
     x += "'"+''.join(map(strescchar,ent))+"':'"+''.join(map(strescchar,uc))+"'"
     count += 1
-x += "}"
-print(x)
+x += "}\n"
+of.write(x)
 
 # emit
 x = "HTMLu2ent=[\n"
@@ -107,6 +110,7 @@ for idx in range(0,len(unicode2entity)):
     x += "}"
     acount += 1
     #
-x += "\n]"
-print(x)
+x += "\n]\n"
+of.write(x)
 
+of.close()
