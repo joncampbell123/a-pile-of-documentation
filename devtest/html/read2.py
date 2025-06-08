@@ -7,6 +7,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__),'..','..'))
 
 from apodlib.docHTML import *
+from apodlib.docHTMLentities import *
 
 inFile = sys.argv[1]
 rawhtml = rawhtmlloadfile(inFile)
@@ -22,7 +23,11 @@ def HTMLgetEntity(e):
             return chr(int(e[2:],16))
         if re.match(r'^\#[0-9]+$',e):
             return chr(int(e[1:],10))
-    return ''
+    #
+    if e in HTMLent2u:
+        return HTMLent2u[e]
+    #
+    return '&'+e+';' # most browsers seem to just not replace it at all
 
 def HTMLdecodeEntities(html):
     i = 0
