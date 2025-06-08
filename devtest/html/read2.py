@@ -17,14 +17,23 @@ from apodlib.docHTML import *
 inFile = sys.argv[1]
 rawhtml = rawhtmlloadfile(inFile)
 
+def bin2unicode(v,encoding):
+    if encoding == None or encoding == 'binary' or v == None or not isinstance(v, (bytes, bytearray)):
+        return v
+    return v.decode(encoding,'replace')
+
 class HTMLmidAttr(HTMLllAttr):
-    def __init__(self,llattr):
+    def __init__(self,llattr,encoding):
         super().__init__(llattr)
+        self.value = bin2unicode(self.value,encoding)
+        self.name = bin2unicode(self.name,encoding)
 
 class HTMLmidToken(HTMLllToken):
-    def __init__(self,lltoken):
+    def __init__(self,lltoken,encoding):
         super().__init__(lltoken)
-        self.attr = map(lambda a: HTMLmidAttr(a), self.attr)
+        self.text = bin2unicode(self.text,encoding)
+        self.tag = bin2unicode(self.tag,encoding)
+        self.attr = map(lambda a: HTMLmidAttr(a,encoding), self.attr)
 
 class HTMLmidReaderState:
     llstate = None
@@ -100,12 +109,12 @@ def HTMLmidParse(blob,state=HTMLmidReaderState()):
         state.state = state.NORMAL
         #
         for ent in state.initTags:
-            yield HTMLmidToken(ent)
+            yield HTMLmidToken(ent,state.encoding)
         #
         state.initTags = [ ]
     #
     for ent in HTMLllParse(blob,state.llstate):
-        yield HTMLmidToken(ent)
+        yield HTMLmidToken(ent,state.encoding)
 
 midhtmlstate = HTMLmidReaderState()
 for ent in HTMLmidParse(rawhtml,midhtmlstate):
