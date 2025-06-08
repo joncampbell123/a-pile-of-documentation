@@ -40,14 +40,12 @@ class HTMLmidReaderState:
     initTags = None
     encoding = None # encoding of text presented by the low level state
     doctype = None
-    state = None
     dtd = None
     #
     WAIT_ENCODING = 0
     NORMAL = 1
     def __init__(self):
         self.llstate = HTMLllReaderState()
-        self.state = self.WAIT_ENCODING
         self.initTags = [ ]
 
 def HTMLmidGuessEncoding(state):
@@ -57,9 +55,11 @@ def HTMLmidGuessEncoding(state):
     #
     return 'iso-8859-1' # reasonable guess for old HTML files without a DOCTYPE
 
-def HTMLmidParseScanEncoding(blob,state=HTMLmidReaderState()):
-    for ent in HTMLllParse(blob,state.llstate):
-        state.initTags.append(ent)
+def HTMLmidParse(blob,state=HTMLmidReaderState()):
+    initTags = [ ]
+    llit = iter(HTMLllParse(blob,state.llstate))
+    for ent in llit:
+        initTags.append(ent)
         #
         if not (state.llstate.encoding == None or state.llstate.encoding == 'binary'):
             if not state.llstate.memencoding == None:
@@ -102,18 +102,11 @@ def HTMLmidParseScanEncoding(blob,state=HTMLmidReaderState()):
             if ent.tag.lower() == b'xml':
                 if state.doctype == None:
                     state.doctype = 'xml'
-
-def HTMLmidParse(blob,state=HTMLmidReaderState()):
-    if state.state == state.WAIT_ENCODING:
-        HTMLmidParseScanEncoding(blob,state)
-        state.state = state.NORMAL
-        #
-        for ent in state.initTags:
-            yield HTMLmidToken(ent,state.encoding)
-        #
-        state.initTags = [ ]
     #
-    for ent in HTMLllParse(blob,state.llstate):
+    for ent in initTags:
+        yield HTMLmidToken(ent,state.encoding)
+    #
+    for ent in llit:
         yield HTMLmidToken(ent,state.encoding)
 
 midhtmlstate = HTMLmidReaderState()
