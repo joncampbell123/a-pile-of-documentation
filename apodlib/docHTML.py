@@ -267,7 +267,7 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                                 #
                                 if (state.encoding == None or state.encoding == 'binary') and state.memencoding == None:
                                     if not charset == None:
-                                        state.encoding = charset.lower()
+                                        state.encoding = charset.decode('iso-8859-1').lower()
                                     elif not httpequiv == None and httpequiv.lower() == b'content-type' and not content == None:
                                         x = list(re.split(b'; *',content))
                                         if len(x) > 0 and x[0].lower() == b'text/html':
@@ -283,7 +283,7 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                                                 #
                                                 if name.lower() == b'charset':
                                                     if len(value) > 0:
-                                                        state.encoding = value.lower()
+                                                        state.encoding = value.decode('iso-8859-1').lower()
                         elif state.inForm == None:
                             if ent.tag.lower() == b'html':
                                 state.inForm = 'html'
