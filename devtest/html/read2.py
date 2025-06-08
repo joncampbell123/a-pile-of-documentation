@@ -22,6 +22,33 @@ def bin2unicode(v,encoding):
         return v
     return v.decode(encoding,'replace')
 
+def HTMLgetEntity(e):
+    if len(e) >= 2 and e[0] == '#':
+        if re.match(r'^\#x[a-fA-F0-9]+$',e):
+            return chr(int(e[2:],16))
+        if re.match(r'^\#[0-9]+$',e):
+            return chr(int(e[1:],10))
+    return ''
+
+def HTMLdecodeEntities(html):
+    i = 0
+    r = ''
+    while i < len(html):
+        p = re.search(r'\&([a-zA-Z0-9\#]+);',html[i:])
+        if p:
+            beg = p.span()[0]+i
+            end = p.span()[1]+i
+            if i < beg:
+                r += html[i:beg]
+            entity = p.groups()[0]
+            r += HTMLgetEntity(entity)
+            i = end
+        else:
+            r += html[i:]
+            i = len(html)
+            break
+    return r
+
 class HTMLmidAttr(HTMLllAttr):
     def __init__(self,llattr,encoding):
         super().__init__(llattr)
@@ -34,6 +61,13 @@ class HTMLmidToken(HTMLllToken):
         self.text = bin2unicode(self.text,encoding)
         self.tag = bin2unicode(self.tag,encoding)
         self.attr = map(lambda a: HTMLmidAttr(a,encoding), self.attr)
+        if self.elemType == 'text':
+            if not self.text == None:
+                self.text = HTMLdecodeEntities(self.text)
+        elif self.elemType == 'tag':
+            if not (self.tag == 'script' or self.tag == 'style'):
+                if not self.text == None:
+                    self.text = HTMLdecodeEntities(self.text)
 
 class HTMLmidReaderState:
     llstate = None
