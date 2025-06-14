@@ -26,7 +26,21 @@ class HTMLhiToken(HTMLmidToken):
     def __str__(self):
         return super().__str__()
 
+htmlTagsInfoNoClose = 0x01
+htmlTagsInfoSameLevelRepeat = 0x02
+
+htmlTagsInfo = {
+        'br': htmlTagsInfoNoClose,
+        'img': htmlTagsInfoNoClose,
+        'input': htmlTagsInfoNoClose,
+        'meta': htmlTagsInfoSameLevelRepeat,
+        'option': htmlTagsInfoSameLevelRepeat,
+        'p': htmlTagsInfoSameLevelRepeat
+}
+
 class HTMLhiReaderState:
+    global htmlTagsNoClosing
+    parseMode = None
     midstate = None
     rootNode = None
     stackNodes = None
@@ -43,8 +57,27 @@ class HTMLhiReaderState:
             return
         #
         hent = HTMLhiToken(ment) #HTMLmidToken to HTMLhiToken
+        #
+        if self.parseMode == None:
+            if self.midstate.doctype == 'html' or self.midstate.doctype == 'xml':
+                self.parseMode = self.midstate.doctype
+        #
         if hent.elemType == 'tag':
             if hent.tagInfo == 'open':
+                if hent.tag.lower() == 'html' or self.parseMode == None:
+                    self.parseMode = 'html'
+                #
+                if self.parseMode == 'html':
+                    if hent.tag.lower() in htmlTagsInfo:
+                        nfo = htmlTagsInfo[hent.tag.lower()]
+                        if (nfo & htmlTagsInfoNoClose):
+                            self.stackNodes[-1].children.append(hent)
+                            return
+                        if (nfo & htmlTagsInfoSameLevelRepeat):
+                            if hent.tag.lower() == self.stackNodes[-1].tag.lower():
+                                self.stackNodes[-1].children.append(hent)
+                                return
+                #
                 self.stackNodes[-1].children.append(hent)
                 self.stackNodes.append(hent)
                 return
@@ -59,6 +92,9 @@ class HTMLhiReaderState:
                 #
                 if i >= 0:
                     self.stackNodes = self.stackNodes[0:i]
+                #
+                if hent.tag == 'htnl' and self.parseMode == 'html':
+                    self.parseMode = None
                 #
                 return
         #
