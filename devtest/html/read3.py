@@ -45,12 +45,10 @@ class HTMLhiReaderState:
         hent = HTMLhiToken(ment) #HTMLmidToken to HTMLhiToken
         if hent.elemType == 'tag':
             if hent.tagInfo == 'open':
-                print("Open tag "+hent.tag)
                 self.stackNodes[-1].children.append(hent)
                 self.stackNodes.append(hent)
                 return
             elif hent.tagInfo == 'close':
-                print("Close tag "+hent.tag)
                 shouldbe = i = len(self.stackNodes) - 1
                 while i >= 0:
                     if self.stackNodes[i].elemType == 'tag' and self.stackNodes[i].tagInfo == 'open':
@@ -61,33 +59,19 @@ class HTMLhiReaderState:
                             shouldbe = i - 1
                     i -= 1
                 #
-                if i < shouldbe:
-                    print("WARNING: Closing tag "+hent.tag+" match not at expected place in tag")
-                    #
-                    skips = ""
-                    for j in range(shouldbe,i,-1):
-                        if not skips == "":
-                            skips += " "
-                        skips += self.stackNodes[j].tag
-                    print("  Skips: "+skips)
-                    #
-                    skips = ""
-                    for j in range(len(self.stackNodes)-1,-1,-1):
-                        if not skips == "":
-                            skips += " "
-                        skips += self.stackNodes[j].tag
-                    print("  Stack: "+skips)
-                #
                 if i >= 0:
                     self.stackNodes = self.stackNodes[0:i]
-                else:
-                    print("WARNING: Unable to match closing tag "+hent.tag)
                 #
                 return
         #
         self.stackNodes[-1].children.append(hent)
 
+def HTMLhiParse(blob,state):
+    for ent in HTMLmidParse(blob,state.midstate):
+        yield HTMLhiToken(ent)
+
 hihtmlstate = HTMLhiReaderState()
-for ent in HTMLmidParse(rawhtml,hihtmlstate.midstate):
-    hihtmlstate.addNode(HTMLhiToken(ent))
+for ent in HTMLhiParse(rawhtml,hihtmlstate):
+    hihtmlstate.addNode(ent)
+    print(ent)
 
