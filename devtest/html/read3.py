@@ -49,14 +49,12 @@ class HTMLhiReaderState:
                 self.stackNodes.append(hent)
                 return
             elif hent.tagInfo == 'close':
-                shouldbe = i = len(self.stackNodes) - 1
+                i = len(self.stackNodes) - 1
                 while i >= 0:
                     if self.stackNodes[i].elemType == 'tag' and self.stackNodes[i].tagInfo == 'open':
                         if self.stackNodes[i].tag.lower() == hent.tag.lower():
                             break;
-                        # some tags are just used in open-only form and it's just expected
-                        if self.stackNodes[i].tag.lower() == 'br' or self.stackNodes[i].tag.lower() == 'img' or self.stackNodes[i].tag.lower() == 'option' or self.stackNodes[i].tag.lower() == 'input' or self.stackNodes[i].tag.lower() == 'link' or self.stackNodes[i].tag.lower() == 'meta' or self.stackNodes[i].tag.lower() == 'hr' or self.stackNodes[i].tag.lower() == 'source' or self.stackNodes[i].tag.lower() == 'picture':
-                            shouldbe = i - 1
+                    #
                     i -= 1
                 #
                 if i >= 0:
@@ -70,8 +68,10 @@ def HTMLhiParse(blob,state):
     for ent in HTMLmidParse(blob,state.midstate):
         yield HTMLhiToken(ent)
 
+def HTMLhiParseAll(blob,state):
+    for ent in HTMLhiParse(blob,state):
+        state.addNode(ent)
+
 hihtmlstate = HTMLhiReaderState()
-for ent in HTMLhiParse(rawhtml,hihtmlstate):
-    hihtmlstate.addNode(ent)
-    print(ent)
+HTMLhiParseAll(rawhtml,hihtmlstate)
 
