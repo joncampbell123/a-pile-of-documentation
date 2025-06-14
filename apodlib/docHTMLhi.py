@@ -49,7 +49,10 @@ htmlTagsInfo = {
             'also closes': [ 'dd' ]
         },
         'br': htmlTagsInfoNoClose,
-        'hr': htmlTagsInfoNoClose,
+        'hr': {
+            'flags': htmlTagsInfoNoClose,
+            'also closes': [ 'p' ]
+        },
         'img': htmlTagsInfoNoClose,
         'input': htmlTagsInfoNoClose,
         'li': htmlTagsInfoSameLevelRepeat|htmlTagsInfoUpLevelUnclosedRepeat,
@@ -107,17 +110,20 @@ class HTMLhiReaderState:
                         nfo = htmlTagsInfo[hent.tag.lower()]
                         if isinstance(nfo,dict):
                             if 'also closes' in nfo:
-                                i = len(self.stackNodes) - 1
+                                cut = len(self.stackNodes)
+                                i = cut - 1
                                 while i >= 0:
                                     if self.stackNodes[i].elemType == 'tag' and self.stackNodes[i].tagInfo == 'open':
+                                        if self.stackNodes[i].tag.lower() == hent.tag.lower():
+                                            break;
                                         ii = list(filter(lambda a: a.lower() == self.stackNodes[i].tag.lower(),nfo['also closes']))
                                         if len(ii) > 0:
-                                            break;
+                                            cut = i
                                     #
                                     i -= 1
                                 #
-                                if i >= 0:
-                                    self.stackNodes = self.stackNodes[0:i]
+                                if cut >= 0:
+                                    self.stackNodes = self.stackNodes[0:cut]
                                 #
                             if 'flagfunction' in nfo:
                                 nfo = nfo['flagfunction'](hent)
