@@ -75,3 +75,14 @@ def HTMLhiParseAll(blob,state):
 hihtmlstate = HTMLhiReaderState()
 HTMLhiParseAll(rawhtml,hihtmlstate)
 
+def HTMLhiDump(state,node=None,indent=0):
+    if node == None:
+        node = state.getRoot()
+    #
+    spc = "  " * indent
+    print(spc+str(node))
+    for ent in node.children:
+        HTMLhiDump(state,ent,indent+1)
+
+HTMLhiDump(hihtmlstate)
+
