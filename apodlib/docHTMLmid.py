@@ -7,24 +7,30 @@ from apodlib.docHTML import *
 from apodlib.docHTMLentities import *
 
 class HTMLmidAttr(HTMLllAttr):
-    def __init__(self,llattr,encoding):
+    def __init__(self,llattr=HTMLllAttr(),encoding=None):
         super().__init__(llattr)
-        self.value = HTMLbin2unicode(self.value,encoding)
-        self.name = HTMLbin2unicode(self.name,encoding)
+        if not encoding == None:
+            self.value = HTMLbin2unicode(self.value,encoding)
+            self.name = HTMLbin2unicode(self.name,encoding)
+    def __str__(self):
+        return super().__str__()
 
 class HTMLmidToken(HTMLllToken):
-    def __init__(self,lltoken,encoding):
+    def __init__(self,lltoken=HTMLllToken(),encoding=None):
         super().__init__(lltoken)
-        self.text = HTMLbin2unicode(self.text,encoding)
-        self.tag = HTMLbin2unicode(self.tag,encoding)
-        self.attr = map(lambda a: HTMLmidAttr(a,encoding), self.attr)
-        if self.elemType == 'text':
-            if not self.text == None:
-                self.text = HTMLdecodeEntities(self.text)
-        elif self.elemType == 'tag':
-            if not (self.tag == 'script' or self.tag == 'style'):
+        if not encoding == None:
+            self.text = HTMLbin2unicode(self.text,encoding)
+            self.tag = HTMLbin2unicode(self.tag,encoding)
+            self.attr = list(map(lambda a: HTMLmidAttr(a,encoding), self.attr))
+            if self.elemType == 'text':
                 if not self.text == None:
                     self.text = HTMLdecodeEntities(self.text)
+            elif self.elemType == 'tag':
+                if not (self.tag == 'script' or self.tag == 'style'):
+                    if not self.text == None:
+                        self.text = HTMLdecodeEntities(self.text)
+    def __str__(self):
+        return super().__str__()
 
 class HTMLmidReaderState:
     llstate = None
