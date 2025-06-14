@@ -36,6 +36,18 @@ htmlTagsInfo = {
         'a': {
             'flagfunction': HTMLAnchorFlagTest
         },
+        'dd': {
+            'flags': htmlTagsInfoSameLevelRepeat|htmlTagsInfoUpLevelUnclosedRepeat,
+            'also closes': [ 'dt' ]
+        },
+        'dl': {
+            'flags': htmlTagsInfoSameLevelRepeat,
+            'also closes': [ 'dt', 'dd' ]
+        },
+        'dt': {
+            'flags': htmlTagsInfoSameLevelRepeat|htmlTagsInfoUpLevelUnclosedRepeat,
+            'also closes': [ 'dd' ]
+        },
         'br': htmlTagsInfoNoClose,
         'hr': htmlTagsInfoNoClose,
         'img': htmlTagsInfoNoClose,
@@ -44,6 +56,15 @@ htmlTagsInfo = {
         'meta': htmlTagsInfoSameLevelRepeat,
         'option': htmlTagsInfoSameLevelRepeat,
         'p': htmlTagsInfoSameLevelRepeat,
+        'td': htmlTagsInfoSameLevelRepeat|htmlTagsInfoUpLevelUnclosedRepeat,
+        'tr': {
+            'flags': htmlTagsInfoSameLevelRepeat|htmlTagsInfoUpLevelUnclosedRepeat,
+            'also closes': [ 'td' ]
+        },
+        'th': {
+            'flags': htmlTagsInfoSameLevelRepeat|htmlTagsInfoUpLevelUnclosedRepeat,
+            'also closes': [ 'td' ]
+        },
         'ul': {
             'also closes': [ 'li' ]
         },
