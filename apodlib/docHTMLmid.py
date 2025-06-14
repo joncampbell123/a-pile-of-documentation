@@ -6,31 +6,28 @@ import sys
 from apodlib.docHTML import *
 from apodlib.docHTMLentities import *
 
-class HTMLmidAttr(HTMLllAttr):
-    def __init__(self,llattr=HTMLllAttr(),encoding=None):
-        super().__init__(llattr)
-        if not encoding == None:
-            self.value = HTMLbin2unicode(self.value,encoding)
-            self.name = HTMLbin2unicode(self.name,encoding)
-    def __str__(self):
-        return super().__str__()
+def HTMLAttrllToMidIP(attr,encoding=None):
+    if not encoding == None:
+        attr.value = HTMLbin2unicode(attr.value,encoding)
+        attr.name = HTMLbin2unicode(attr.name,encoding)
+    #
+    return attr
 
-class HTMLmidToken(HTMLllToken):
-    def __init__(self,lltoken=HTMLllToken(),encoding=None):
-        super().__init__(lltoken)
-        if not encoding == None:
-            self.text = HTMLbin2unicode(self.text,encoding)
-            self.tag = HTMLbin2unicode(self.tag,encoding)
-            self.attr = list(map(lambda a: HTMLmidAttr(a,encoding), self.attr))
-            if self.elemType == 'text':
-                if not self.text == None:
-                    self.text = HTMLdecodeEntities(self.text)
-            elif self.elemType == 'tag':
-                if not (self.tag == 'script' or self.tag == 'style'):
-                    if not self.text == None:
-                        self.text = HTMLdecodeEntities(self.text)
-    def __str__(self):
-        return super().__str__()
+def HTMLTokenllToMidIP(tok,encoding=None):
+    if not encoding == None:
+        tok.text = HTMLbin2unicode(tok.text,encoding)
+        tok.tag = HTMLbin2unicode(tok.tag,encoding)
+        tok.attr = list(map(lambda a: HTMLAttrllToMidIP(a,encoding), tok.attr))
+        #
+        if tok.elemType == 'text':
+            if not tok.text == None:
+                tok.text = HTMLdecodeEntities(tok.text)
+        elif tok.elemType == 'tag':
+            if not (tok.tag == 'script' or tok.tag == 'style'):
+                if not tok.text == None:
+                    tok.text = HTMLdecodeEntities(tok.text)
+    #
+    return tok
 
 class HTMLmidReaderState:
     llstate = None
@@ -145,8 +142,8 @@ def HTMLmidParse(blob,state=HTMLmidReaderState()):
                     break
     #
     for ent in initTags:
-        yield HTMLmidToken(ent,state.encoding)
+        yield HTMLTokenllToMidIP(ent,state.encoding)
     #
     for ent in llit:
-        yield HTMLmidToken(ent,state.encoding)
+        yield HTMLTokenllToMidIP(ent,state.encoding)
 

@@ -75,21 +75,6 @@ htmlTagsInfo = {
         }
 }
 
-class HTMLhiAttr(HTMLmidAttr):
-    def __init__(self,midattr=HTMLmidAttr()):
-        super().__init__(midattr)
-    def __str__(self):
-        return super().__str__()
-
-class HTMLhiToken(HTMLmidToken):
-    children = None
-    def __init__(self,midtoken=HTMLmidToken()):
-        super().__init__(midtoken)
-        self.attr = list(map(lambda a: HTMLhiAttr(a), self.attr))
-        self.children = [ ]
-    def __str__(self):
-        return super().__str__()
-
 class HTMLhiReaderState:
     global htmlTagsNoClosing
     parseMode = None
@@ -98,17 +83,15 @@ class HTMLhiReaderState:
     stackNodes = None
     def __init__(self):
         self.midstate = HTMLmidReaderState()
-        self.rootNode = HTMLhiToken()
+        self.rootNode = HTMLToken()
         self.rootNode.tag = 'root'
         self.rootNode.elemType = 'root'
         self.stackNodes = [ self.rootNode ]
     def getRoot(self):
         return self.rootNode
-    def addNode(self,ment):
+    def addNode(self,hent):
         if len(self.stackNodes) == 0:
             return
-        #
-        hent = HTMLhiToken(ment) #HTMLmidToken to HTMLhiToken
         #
         if self.parseMode == None:
             if self.midstate.doctype == 'html' or self.midstate.doctype == 'xml':
@@ -190,11 +173,7 @@ class HTMLhiReaderState:
         #
         self.stackNodes[-1].children.append(hent)
 
-def HTMLhiParse(blob,state):
-    for ent in HTMLmidParse(blob,state.midstate):
-        yield HTMLhiToken(ent)
-
 def HTMLhiParseAll(blob,state):
-    for ent in HTMLhiParse(blob,state):
+    for ent in HTMLmidParse(blob,state.midstate):
         state.addNode(ent)
 

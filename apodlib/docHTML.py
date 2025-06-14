@@ -22,7 +22,7 @@ class HTMLllReaderState:
     taglock = None # None 'script' 'style' because HTML tag parsing must be restricted within these tags
     inForm = None # None 'html' 'xml'
 
-class HTMLllAttr:
+class HTMLAttr:
     name = None
     value = None
     offset = None # byte offset in data this occurred
@@ -42,15 +42,17 @@ class HTMLllAttr:
         r += ']'
         return r
 
-class HTMLllToken:
+class HTMLToken:
     elemType = None # 'text' 'comment' <!-- --> 'tag' <tag> </tag> <tag/> 'procinst' <? 'doctype' <!
     tagInfo = None # 'open' 'close' 'self'
     text = None
     tag = None
     attr = None
     offset = None # byte offset in data this occurred
+    children = None
     def __init__(self,what=None):
         self.attr = [ ]
+        self.children = [ ]
         if not what == None:
             self.elemType = what.elemType
             self.tagInfo = what.tagInfo
@@ -70,6 +72,8 @@ class HTMLllToken:
             r += ' text='+str(self.text)
         if not self.offset == None:
             r += ' offset='+str(self.offset)
+        if len(self.children) > 0:
+            r += " children="+str(len(self.children))
         for a in self.attr:
             r += ' attr='+str(a)
         r += ']'
@@ -136,7 +140,7 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
             at = p.span()[0] + i
             # HTML text
             if i < at:
-                ent = HTMLllToken()
+                ent = HTMLToken()
                 ent.elemType = 'text'
                 ent.text = blob[i:at]
                 ent.offset = i
@@ -155,14 +159,14 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                 else:
                     i = end = len(blob)
                 #
-                ent = HTMLllToken()
+                ent = HTMLToken()
                 ent.elemType = 'comment'
                 ent.offset = begin
                 ent.text = blob[begin:end]
                 yield ent
             else:
                 allowAttr = True
-                ent = HTMLllToken()
+                ent = HTMLToken()
                 ent.offset = at
                 if what == b'<!':
                     ent.elemType = 'doctype'
@@ -201,7 +205,7 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                             break
                         #
                         if re.match(b'[a-zA-Z0-9]',blob[i:i+1]):
-                            nva = HTMLllAttr()
+                            nva = HTMLAttr()
                             nva.offset = i
                             nva.name = b''
                             #
@@ -230,7 +234,7 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                             #
                             ent.attr.append(nva)
                         elif blob[i] == ord('\"') or blob[i] == ord('\''):
-                            nva = HTMLllAttr()
+                            nva = HTMLAttr()
                             nva.offset = i
                             nva.value = b''
                             #
@@ -323,7 +327,7 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
             #
         else:
             # HTML text
-            ent = HTMLllToken()
+            ent = HTMLToken()
             ent.elemType = 'text'
             ent.text = blob[i:]
             ent.offset = i
