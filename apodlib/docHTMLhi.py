@@ -53,9 +53,11 @@ htmlTagsInfo = {
         'img': htmlTagsInfoNoClose,
         'input': htmlTagsInfoNoClose,
         'li': htmlTagsInfoSameLevelRepeat|htmlTagsInfoUpLevelUnclosedRepeat,
+        'link': htmlTagsInfoSameLevelRepeat,
         'meta': htmlTagsInfoSameLevelRepeat,
         'option': htmlTagsInfoSameLevelRepeat,
         'p': htmlTagsInfoSameLevelRepeat,
+        'source': htmlTagsInfoNoClose,
         'td': htmlTagsInfoSameLevelRepeat|htmlTagsInfoUpLevelUnclosedRepeat,
         'tr': {
             'flags': htmlTagsInfoSameLevelRepeat|htmlTagsInfoUpLevelUnclosedRepeat,
