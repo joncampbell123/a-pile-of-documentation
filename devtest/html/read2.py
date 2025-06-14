@@ -12,7 +12,7 @@ from apodlib.docHTMLentities import *
 inFile = sys.argv[1]
 rawhtml = rawhtmlloadfile(inFile)
 
-def bin2unicode(v,encoding):
+def HTMLbin2unicode(v,encoding):
     if v == None or not isinstance(v, (bytes, bytearray)):
         return v
     if encoding == None or encoding == 'binary':
@@ -53,14 +53,14 @@ def HTMLdecodeEntities(html):
 class HTMLmidAttr(HTMLllAttr):
     def __init__(self,llattr,encoding):
         super().__init__(llattr)
-        self.value = bin2unicode(self.value,encoding)
-        self.name = bin2unicode(self.name,encoding)
+        self.value = HTMLbin2unicode(self.value,encoding)
+        self.name = HTMLbin2unicode(self.name,encoding)
 
 class HTMLmidToken(HTMLllToken):
     def __init__(self,lltoken,encoding):
         super().__init__(lltoken)
-        self.text = bin2unicode(self.text,encoding)
-        self.tag = bin2unicode(self.tag,encoding)
+        self.text = HTMLbin2unicode(self.text,encoding)
+        self.tag = HTMLbin2unicode(self.tag,encoding)
         self.attr = map(lambda a: HTMLmidAttr(a,encoding), self.attr)
         if self.elemType == 'text':
             if not self.text == None:
