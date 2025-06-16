@@ -33,6 +33,7 @@ class HTMLmidReaderState:
     llstate = None
     initTags = None
     encoding = None # encoding of text presented by the low level state
+    hasDocType = None
     doctype = None
     dtd = None
     #
@@ -81,7 +82,7 @@ def HTMLdecodeEntities(html):
     return r
 
 def HTMLmidGuessEncoding(state):
-    if state.doctype == 'html':
+    if state.hasDocType == 'html':
         if state.dtd == None:
             return 'utf-8' # anything new enough to use HTML 5 <!DOCTYPE HTML> is probably using UTF-8
     #
@@ -96,26 +97,14 @@ def HTMLmidParse(blob,state=HTMLmidReaderState()):
     for ent in llit:
         initTags.append(ent)
         #
-        if not (state.llstate.encoding == None or state.llstate.encoding == 'binary'):
-            if not state.llstate.memencoding == None:
-                state.encoding = state.llstate.memencoding
-            else:
-                state.encoding = state.llstate.encoding
-            #
-            break
-        #
         if ent.elemType == 'tag':
             # on <body> opening tag, stop scanning for charset encoding.
             # arabic.html: also stop on </head> because this HTML document doesn't have a <body> tag
             if ent.tagInfo == 'close':
-                if ent.tag.lower() == b'head':
-                    if state.encoding == None:
-                        state.encoding = HTMLmidGuessEncoding(state)
+                if ent.tag.lower() == b'head' and state.llstate.inForm == 'html':
                     break
             elif ent.tagInfo == 'open':
-                if ent.tag.lower() == b'body':
-                    if state.encoding == None:
-                        state.encoding = HTMLmidGuessEncoding(state)
+                if ent.tag.lower() == b'body' and state.llstate.inForm == 'html':
                     break
         #
         elif ent.elemType == 'doctype':
@@ -124,7 +113,7 @@ def HTMLmidParse(blob,state=HTMLmidReaderState()):
                 try:
                     a = next(ai)
                     if a.name.lower() == b'html':
-                        state.doctype = 'html'
+                        state.hasDocType = 'html'
                         a = next(ai)
                         if a.name.lower() == b'public': # PUBLIC "-HTMLblahblah"
                             a = next(ai)
@@ -133,13 +122,17 @@ def HTMLmidParse(blob,state=HTMLmidReaderState()):
                 except StopIteration:
                     True
         #
-        elif ent.elemType == 'procinst':
-            if ent.tag.lower() == b'xml' or ent.tag.lower() == b'xml-stylesheet':
-                if state.doctype == None:
-                    state.doctype = ent.tag.lower().decode('ascii')
-                    if state.encoding == None:
-                        state.encoding = HTMLmidGuessEncoding(state)
-                    break
+        if not (state.llstate.encoding == None or state.llstate.encoding == 'binary') and not state.llstate.inForm == None:
+            break
+    #
+    state.doctype = state.llstate.inForm
+    if not state.llstate.memencoding == None:
+        state.encoding = state.llstate.memencoding
+    elif not (state.llstate.encoding == None or state.llstate.encoding == 'binary'):
+        state.encoding = state.llstate.encoding
+    #
+    if state.encoding == None:
+        state.encoding = HTMLmidGuessEncoding(state)
     #
     for ent in initTags:
         yield HTMLTokenllToMidIP(ent,state.encoding)

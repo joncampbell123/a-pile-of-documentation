@@ -309,10 +309,6 @@ def HTMLllParse(blob,state=HTMLllReaderState()):
                         elif state.inForm == None:
                             if ent.tag.lower() == b'html':
                                 state.inForm = 'html'
-                    elif ent.tagInfo == 'close':
-                        if state.inForm == 'html':
-                            if ent.tag.lower() == b'html':
-                                state.inForm = None
                 elif ent.elemType == 'procinst':
                     if state.inForm == None:
                         if ent.tag.lower() == b'xml' or ent.tag.lower() == b'xml-stylesheet':

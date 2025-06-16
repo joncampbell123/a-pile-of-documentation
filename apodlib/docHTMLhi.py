@@ -82,8 +82,12 @@ class HTMLhiReaderState:
     global htmlTagsNoClosing
     parseMode = None
     midstate = None
+    docType = None
     rootNode = None
     stackNodes = None
+    htmlElement = None
+    headElement = None
+    bodyElement = None
     def __init__(self):
         self.midstate = HTMLmidReaderState()
         self.rootNode = HTMLToken()
@@ -98,7 +102,7 @@ class HTMLhiReaderState:
         #
         if self.parseMode == None:
             if self.midstate.doctype == 'html' or self.midstate.doctype == 'xml':
-                self.parseMode = self.midstate.doctype
+                self.docType = self.parseMode = self.midstate.doctype
         #
         if hent.elemType == 'tag':
             if hent.tagInfo == 'open':
@@ -171,9 +175,6 @@ class HTMLhiReaderState:
                 #
                 if i >= 0:
                     self.stackNodes = self.stackNodes[0:i]
-                #
-                if hent.tag == 'htnl' and self.parseMode == 'html':
-                    self.parseMode = None
                 #
                 return
         #

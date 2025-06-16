@@ -15,6 +15,7 @@ llhtmlstate = HTMLllReaderState()
 for ent in HTMLllParse(rawhtml,llhtmlstate):
     print(ent)
 
+print("InForm: "+str(llhtmlstate.inForm))
 print("Encoding: "+str(llhtmlstate.encoding))
 print("In-memory encoding: "+str(llhtmlstate.memencoding))
 
