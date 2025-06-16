@@ -197,10 +197,9 @@ def HTMLhiParseAll(blob,state):
         if not state.htmlElement == None:
             scanstate = None
             preBody = [ ]
+            shouldHead = [ ]
             chl = state.htmlElement.children
             chlf = False
-            indexHead = None
-            indexBody = None
             for enti in range(0,len(chl)):
                 ent = chl[enti]
                 if ent.elemType == 'tag':
@@ -208,14 +207,21 @@ def HTMLhiParseAll(blob,state):
                         if scanstate == None:
                             state.headElement = ent
                             scanstate = 'head'
-                            indexHead = enti
                             continue
                     #
                     elif ent.tag.lower() == 'body':
                         if scanstate == 'head' or scanstate == None:
                             state.bodyElement = ent
                             scanstate = 'body'
-                            indexBody = enti
+                            continue
+                #
+                if scanstate == None and state.headElement == None:
+                    if ent.elemType == 'tag':
+                        if ent.tag.lower() == 'meta' or ent.tag.lower() == 'link' or ent.tag.lower() == 'title':
+                            # parsing.html: BODY tag with no HEAD, but HEAD-like tags in the body or before the body
+                            shouldHead.append(ent)
+                            chl[enti] = None
+                            chlf = True
                             continue
                 #
                 if scanstate == 'head' or scanstate == None:
@@ -229,12 +235,13 @@ def HTMLhiParseAll(blob,state):
                     preBody.append(ent)
                     chl[enti] = None
                     chlf = True
+                    continue
             #
             if chlf:
                 state.htmlElement.children = list(filter(lambda a: not a == None,state.htmlElement.children))
             #
-            if len(preBody) > 0 and state.bodyElement == None: # test case arabic.html, no BODY tag at all, so make one
-                state.fixups.append('noBodyTagSoIMadeOne')
+            if state.bodyElement == None: # test case arabic.html, no BODY tag at all, so make one
+                state.fixups.append('noBodyMakeBody')
                 #
                 fakeBodyTag = HTMLToken()
                 fakeBodyTag.elemType = 'tag'
@@ -243,14 +250,27 @@ def HTMLhiParseAll(blob,state):
                 #
                 state.htmlElement.children.append(fakeBodyTag)
                 state.bodyElement = fakeBodyTag
-                #
-                fakeBodyTag.children = preBody
-                preBody = [ ]
-            if len(preBody) > 0 and not state.bodyElement == None:
+            #
+            if len(preBody) > 0:
                 state.fixups.append('mergePreBodyIntoBody')
                 #
                 state.bodyElement.children = preBody + state.bodyElement.children
                 preBody = [ ]
-            if len(preBody) > 0:
-                raise Exception("Failed to merge preBody into body")
+            #
+            if state.headElement == None:
+                state.fixups.append('noHeadMakeHead')
+                #
+                fakeHeadTag = HTMLToken()
+                fakeHeadTag.elemType = 'tag'
+                fakeHeadTag.tagInfo = 'open'
+                fakeHeadTag.tag = 'head'
+                #
+                state.htmlElement.children = [ fakeHeadTag ] + state.htmlElement.children
+                state.headElement = fakeHeadTag
+            #
+            if len(shouldHead) > 0:
+                state.fixups.append('mergeShouldHeadIntoHead')
+                #
+                state.headElement.children = shouldHead + state.headElement.children
+                shouldHead = [ ]
 
