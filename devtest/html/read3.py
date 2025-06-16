@@ -25,3 +25,9 @@ def HTMLhiDump(state,node=None,indent=0):
 
 HTMLhiDump(hihtmlstate)
 
+print("----Info----")
+print("DocType: "+str(hihtmlstate.docType))
+print("HTML element: "+str(hihtmlstate.htmlElement))
+print("HEAD element: "+str(hihtmlstate.headElement))
+print("BODY element: "+str(hihtmlstate.bodyElement))
+
