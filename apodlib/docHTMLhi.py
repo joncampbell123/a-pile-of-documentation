@@ -36,6 +36,9 @@ htmlTagsInfo = {
         'a': {
             'flagfunction': HTMLAnchorFlagTest
         },
+        'center': {
+            'flags': htmlTagsInfoSameLevelRepeat|htmlTagsInfoUpLevelUnclosedRepeat
+        },
         'dd': {
             'flags': htmlTagsInfoSameLevelRepeat|htmlTagsInfoUpLevelUnclosedRepeat,
             'also closes': [ 'dt' ]
@@ -56,8 +59,8 @@ htmlTagsInfo = {
         'img': htmlTagsInfoNoClose,
         'input': htmlTagsInfoNoClose,
         'li': htmlTagsInfoSameLevelRepeat|htmlTagsInfoUpLevelUnclosedRepeat,
-        'link': htmlTagsInfoSameLevelRepeat,
-        'meta': htmlTagsInfoSameLevelRepeat,
+        'link': htmlTagsInfoNoClose,
+        'meta': htmlTagsInfoNoClose,
         'option': htmlTagsInfoSameLevelRepeat,
         'p': htmlTagsInfoSameLevelRepeat,
         'source': htmlTagsInfoNoClose,
@@ -83,6 +86,7 @@ class HTMLhiReaderState:
     parseMode = None
     midstate = None
     docType = None
+    fixups = [ ]
     rootNode = None
     stackNodes = None
     htmlElement = None
@@ -183,4 +187,70 @@ class HTMLhiReaderState:
 def HTMLhiParseAll(blob,state):
     for ent in HTMLmidParse(blob,state.midstate):
         state.addNode(ent)
+    #
+    if state.docType == 'html':
+        for ent in state.rootNode.children:
+            if ent.elemType == 'tag' and ent.tagInfo == 'open':
+                if ent.tag.lower() == 'html':
+                    state.htmlElement = ent
+        #
+        if not state.htmlElement == None:
+            scanstate = None
+            preBody = [ ]
+            chl = state.htmlElement.children
+            chlf = False
+            indexHead = None
+            indexBody = None
+            for enti in range(0,len(chl)):
+                ent = chl[enti]
+                if ent.elemType == 'tag':
+                    if ent.tag.lower() == 'head':
+                        if scanstate == None:
+                            state.headElement = ent
+                            scanstate = 'head'
+                            indexHead = enti
+                            continue
+                    #
+                    elif ent.tag.lower() == 'body':
+                        if scanstate == 'head' or scanstate == None:
+                            state.bodyElement = ent
+                            scanstate = 'body'
+                            indexBody = enti
+                            continue
+                #
+                if scanstate == 'head' or scanstate == None:
+                    if not chlf:
+                        if ent.elemType == 'comment':
+                            continue
+                        if ent.elemType == 'text':
+                            if re.match(r'^[\n\r\t ]+$',ent.text):
+                                continue
+                    #
+                    preBody.append(ent)
+                    chl[enti] = None
+                    chlf = True
+            #
+            if chlf:
+                state.htmlElement.children = list(filter(lambda a: not a == None,state.htmlElement.children))
+            #
+            if len(preBody) > 0 and state.bodyElement == None: # test case arabic.html, no BODY tag at all, so make one
+                state.fixups.append('noBodyTagSoIMadeOne')
+                #
+                fakeBodyTag = HTMLToken()
+                fakeBodyTag.elemType = 'tag'
+                fakeBodyTag.tagInfo = 'open'
+                fakeBodyTag.tag = 'body'
+                #
+                state.htmlElement.children.append(fakeBodyTag)
+                state.bodyElement = fakeBodyTag
+                #
+                fakeBodyTag.children = preBody
+                preBody = [ ]
+            if len(preBody) > 0 and not state.bodyElement == None:
+                state.fixups.append('mergePreBodyIntoBody')
+                #
+                state.bodyElement.children = preBody + state.bodyElement.children
+                preBody = [ ]
+            if len(preBody) > 0:
+                raise Exception("Failed to merge preBody into body")
 
