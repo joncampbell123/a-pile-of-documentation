@@ -18,6 +18,7 @@ def rawcssloadfile(path):
 
 class CSSllToken:
     token = None
+    value = None
     text = None
     #
     def __init__(self):
@@ -26,6 +27,8 @@ class CSSllToken:
         r = "[CSSllToken"
         if not self.token == None:
             r += " token="+str(self.token)
+        if not self.value == None:
+            r += " value="+str(self.value)
         if not self.text == None:
             r += " text="+str(self.text)
         r += "]"
@@ -237,6 +240,12 @@ def CSSllparse(blob,state=CSSllState()):
             t = CSSllToken()
             t.token = 'number'
             t.text = blob[begin:end]
+            #
+            if re.search(r'[\.eE]',t.text):
+                t.value = float(t.text)
+            else:
+                t.value = int(t.text)
+            #
             yield t
             continue
         #
