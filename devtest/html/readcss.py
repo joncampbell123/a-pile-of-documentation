@@ -83,6 +83,14 @@ def CSSllidentescapereadchar(blob,i,first):
                 return [i,chr(fv)]
             else:
                 v = blob[i]
+                if v == 't':
+                    v = '\t'
+                elif v == 'n':
+                    v = '\n'
+                elif v == 'r':
+                    v = '\r'
+                elif v == 'f':
+                    v = '\f'
                 i += 1
                 return [i,v]
         elif re.match(r'[a-zA-Z_]',blob[i]) or (not first and re.match(r'[0-9]',blob[i])) or ord(blob[i]) >= 0x80:
