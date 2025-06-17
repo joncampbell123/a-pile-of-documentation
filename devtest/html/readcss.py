@@ -92,6 +92,32 @@ def CSSllidentescapereadchar(blob,i,first):
     #
     return [i,None]
 
+def CSSllIsIdentifier(blob,i):
+    return re.match(r'^(\\|-{0,1}[a-zA-Z_\u0080-\uFFFFFF\\]|--[a-zA-Z0-9_\u0080-\uFFFFFF\\])',blob[i:])
+
+def CSSllParseIdentifier(r,blob,i):
+    t = CSSllToken()
+    t.token = 'ident'
+    t.text = ''
+    #
+    first = True
+    if blob[i:i+2] == '--':
+        t.text += '--'
+        first = False
+        i += 2
+    elif blob[i] == '-':
+        t.text += '-'
+        i += 1
+    #
+    while True:
+        [i,cc] = CSSllidentescapereadchar(blob,i,first)
+        if cc == None:
+            break
+        t.text += cc
+        first = False
+    #
+    return [i,t]
+
 def CSSllparse(blob,state=CSSllState()):
     i = 0
     # NTS: You should set encoding to the value given from the HTML parser, if possible
@@ -120,28 +146,9 @@ def CSSllparse(blob,state=CSSllState()):
             yield t
             continue
         #
-        r = re.match(r'^(\\|-{0,1}[a-zA-Z_\u0080-\uFFFFFF\\]|--[a-zA-Z0-9_\u0080-\uFFFFFF\\])',blob[i:])
+        r = CSSllIsIdentifier(blob,i)
         if r:
-            t = CSSllToken()
-            t.token = 'ident'
-            t.text = ''
-            #
-            first = True
-            if blob[i:i+2] == '--':
-                t.text += '--'
-                first = False
-                i += 2
-            elif blob[i] == '-':
-                t.text += '-'
-                i += 1
-            #
-            while True:
-                [i,cc] = CSSllidentescapereadchar(blob,i,first)
-                if cc == None:
-                    break
-                t.text += cc
-                first = False
-            #
+            [i,t] = CSSllParseIdentifier(r,blob,i)
             yield t
             continue
         #
