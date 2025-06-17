@@ -74,6 +74,10 @@ def CSSllescapereadchar(blob,i):
             count += 1
             if count >= 6:
                 break
+        #
+        if blob[i] == ' ': # if a space terminates the hex code, it is not left in the buffer as part of the text
+            i += 1
+        #
         return [i,chr(fv)]
     else:
         v = blob[i]
