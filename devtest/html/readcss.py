@@ -81,14 +81,6 @@ def CSSllescapereadchar(blob,i):
         return [i,chr(fv)]
     else:
         v = blob[i]
-        if v == 't':
-            v = '\t'
-        elif v == 'n':
-            v = '\n'
-        elif v == 'r':
-            v = '\r'
-        elif v == 'f':
-            v = '\f'
         i += 1
         return [i,v]
 
