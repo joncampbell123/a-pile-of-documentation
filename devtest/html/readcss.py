@@ -185,6 +185,19 @@ def CSSllparse(blob,state=CSSllState()):
             yield t
             continue
         #
+        if blob[i:i+4] == "<!--":
+            i += 4
+            t = CSSllToken()
+            t.token = 'cdo'
+            yield t
+            continue
+        if blob[i:i+3] == "-->":
+            i += 3
+            t = CSSllToken()
+            t.token = 'cdc'
+            yield t
+            continue
+        #
         if blob[i:i+4] == "url(":
             i += 4
             i = CSSskipwhitespace(blob,i)
