@@ -93,7 +93,7 @@ def CSSllidentescapereadchar(blob,i,first):
                     v = '\f'
                 i += 1
                 return [i,v]
-        elif re.match(r'[a-zA-Z_]',blob[i]) or (not first and re.match(r'[0-9]',blob[i])) or ord(blob[i]) >= 0x80:
+        elif re.match(r'[a-zA-Z_]',blob[i]) or (not first and re.match(r'[0-9\-]',blob[i])) or ord(blob[i]) >= 0x80:
             v = blob[i]
             i += 1
             return [i,v]
@@ -122,6 +122,27 @@ def CSSllParseIdentifier(r,blob,i):
     #
     while True:
         [i,cc] = CSSllidentescapereadchar(blob,i,first)
+        if cc == None:
+            break
+        t.text += cc
+        first = False
+    #
+    return [i,t]
+
+def CSSllIsHash(blob,i):
+    return re.match(r'^\#([a-zA-Z0-9_\u0080-\uFFFFFF\\\-])',blob[i:])
+
+def CSSllParseHash(r,blob,i):
+    t = CSSllToken()
+    t.token = 'hash'
+    t.text = ''
+    #
+    if not blob[i] == '#':
+        raise Exception("bug!")
+    i += 1
+    #
+    while True:
+        [i,cc] = CSSllidentescapereadchar(blob,i,False)
         if cc == None:
             break
         t.text += cc
@@ -172,6 +193,12 @@ def CSSllparse(blob,state=CSSllState()):
             t = CSSllToken()
             t.token = 'number'
             t.text = blob[begin:end]
+            yield t
+            continue
+        #
+        r = CSSllIsHash(blob,i)
+        if r:
+            [i,t] = CSSllParseHash(r,blob,i)
             yield t
             continue
         #
