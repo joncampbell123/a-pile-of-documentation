@@ -92,6 +92,9 @@ def CSSllidentescapereadchar(blob,i,first):
     #
     return [i,None]
 
+def CSSllIsNumber(blob,i):
+    return re.match(r'^[+-]?([0-9]*\.[0-9]+|[0-9]+)([eE][+-]?[0-9]+)?',blob[i:])
+
 def CSSllIsIdentifier(blob,i):
     return re.match(r'^(\\|-{0,1}[a-zA-Z_\u0080-\uFFFFFF\\]|--[a-zA-Z0-9_\u0080-\uFFFFFF\\])',blob[i:])
 
@@ -149,6 +152,18 @@ def CSSllparse(blob,state=CSSllState()):
         r = CSSllIsIdentifier(blob,i)
         if r:
             [i,t] = CSSllParseIdentifier(r,blob,i)
+            yield t
+            continue
+        #
+        r = CSSllIsNumber(blob,i)
+        if r:
+            begin = i
+            end = r.span()[1] + i
+            i = end
+            #
+            t = CSSllToken()
+            t.token = 'number'
+            t.text = blob[begin:end]
             yield t
             continue
         #
