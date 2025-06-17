@@ -21,6 +21,8 @@ class CSSllToken:
     value = None
     text = None
     #
+    def __bool__(self):
+        return (not self.token == None) or (not self.value == None) or (not self.text == None)
     def __init__(self):
         True
     def __str__(self):
