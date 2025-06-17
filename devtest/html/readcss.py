@@ -59,6 +59,35 @@ def CSSllishexdigit(c):
     #
     return None
 
+def CSSllescapereadchar(blob,i):
+    hv = CSSllishexdigit(blob[i])
+    if not hv == None:
+        fv = hv
+        i += 1
+        count = 1
+        while True:
+            hv = CSSllishexdigit(blob[i])
+            if hv == None:
+                break
+            fv = (fv << 4) + hv
+            i += 1
+            count += 1
+            if count >= 6:
+                break
+        return [i,chr(fv)]
+    else:
+        v = blob[i]
+        if v == 't':
+            v = '\t'
+        elif v == 'n':
+            v = '\n'
+        elif v == 'r':
+            v = '\r'
+        elif v == 'f':
+            v = '\f'
+        i += 1
+        return [i,v]
+
 def CSSllidentescapereadchar(blob,i,first):
     if i < len(blob):
         if blob[i] == '\\':
@@ -66,33 +95,7 @@ def CSSllidentescapereadchar(blob,i,first):
                 return [i,None]
             #
             i += 1
-            hv = CSSllishexdigit(blob[i])
-            if not hv == None:
-                fv = hv
-                i += 1
-                count = 1
-                while True:
-                    hv = CSSllishexdigit(blob[i])
-                    if hv == None:
-                        break
-                    fv = (fv << 4) + hv
-                    i += 1
-                    count += 1
-                    if count >= 6:
-                        break
-                return [i,chr(fv)]
-            else:
-                v = blob[i]
-                if v == 't':
-                    v = '\t'
-                elif v == 'n':
-                    v = '\n'
-                elif v == 'r':
-                    v = '\r'
-                elif v == 'f':
-                    v = '\f'
-                i += 1
-                return [i,v]
+            return CSSllescapereadchar(blob,i)
         elif re.match(r'[a-zA-Z_]',blob[i]) or (not first and re.match(r'[0-9\-]',blob[i])) or ord(blob[i]) >= 0x80:
             v = blob[i]
             i += 1
@@ -199,6 +202,29 @@ def CSSllparse(blob,state=CSSllState()):
         r = CSSllIsHash(blob,i)
         if r:
             [i,t] = CSSllParseHash(r,blob,i)
+            yield t
+            continue
+        #
+        if blob[i] == '\"' or blob[i] == '\'':
+            match = blob[i]
+            i += 1
+            #
+            t = CSSllToken()
+            t.token = 'string'
+            t.text = ''
+            #
+            while i < len(blob):
+                if blob[i] == match:
+                    i += 1
+                    break
+                #
+                if blob[i] == '\\':
+                    [i,v] = CSSllescapereadchar(blob,i+1)
+                    t.text += v
+                else:
+                    t.text += blob[i]
+                    i += 1
+            #
             yield t
             continue
         #
