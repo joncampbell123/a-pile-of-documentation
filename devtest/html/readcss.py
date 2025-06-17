@@ -207,8 +207,13 @@ def CSSllparse(blob,state=CSSllState()):
                 #
                 if begin < i:
                     t.text += blob[begin:i]
-                #
-                if blob[i] == '\\':
+                # CSS 2.x allows quotation marks in url() i.e. url("http://example.com");
+                # CSS 3.x considers it a syntax error to have " ' ( ) \ whitespace or newline in the string.
+                # What we'll do is just ignore " ' ( ), handle escapes anyway, and ignore newlines
+                if blob[i] == '\"' or blob[i] == '\'' or blob[i] == '(' or blob[i] == ')' or blob[i] == '\n' or blob[i] == '\r' or blob[i] == '\t' or blob[i] == '\f':
+                    i += 1
+                    continue
+                elif blob[i] == '\\':
                     [i,v] = CSSllescapereadchar(blob,i+1)
                     t.text += v
                 else:
