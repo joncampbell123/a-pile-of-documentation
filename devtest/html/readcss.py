@@ -183,15 +183,21 @@ def CSSllparse(blob,state=CSSllState()):
         #
         if blob[i:i+4] == "url(":
             i += 4
+            i = CSSskipwhitespace(blob,i)
             #
             t = CSSllToken()
             t.token = 'url'
             t.text = ''
             #
             while i < len(blob):
+                begin = i
+                i = CSSskipwhitespace(blob,i)
                 if blob[i] == ')':
                     i += 1
                     break
+                #
+                if begin < i:
+                    t.text += blob[begin:i]
                 #
                 if blob[i] == '\\':
                     [i,v] = CSSllescapereadchar(blob,i+1)

@@ -10,5 +10,5 @@
 ident _ident_ _ident192_ -ident --ident123 -ident➜  --123ident -ident-alt-blah-etc ident1 pause ident\31 pause ident\000031 done ➜ testing 123 1.2 1.442 -133 -.5 .5 1e2 -1e2 1e-4 @ident @-ident @ident\31 @--ident-- #abc #ident #999 #55aa55 #_hash_ #ident\31 #ident➜ #--ident-- #--ident--blah-_
 idname: ident;
 "string" 'string' "string\nline" 'string\nline' 'string\
-line' "string\tstring\tstring\n\tstring \"thing\" 'thing'" url() url(http://google.com) url(url\31\32\33);
+line' "string\tstring\tstring\n\tstring \"thing\" 'thing'" url() url(http://google.com) url(url\31\32\33) url(  spaces in this   ) url(		spaces		) url(\t\tspaces\t\t) url(\20\20spaces\20\20);
 
