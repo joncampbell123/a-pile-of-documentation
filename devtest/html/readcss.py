@@ -181,6 +181,28 @@ def CSSllparse(blob,state=CSSllState()):
             yield t
             continue
         #
+        if blob[i:i+4] == "url(":
+            i += 4
+            #
+            t = CSSllToken()
+            t.token = 'url'
+            t.text = ''
+            #
+            while i < len(blob):
+                if blob[i] == ')':
+                    i += 1
+                    break
+                #
+                if blob[i] == '\\':
+                    [i,v] = CSSllescapereadchar(blob,i+1)
+                    t.text += v
+                else:
+                    t.text += blob[i]
+                    i += 1
+            #
+            yield t
+            continue
+        #
         r = CSSllIsIdentifier(blob,i)
         if r:
             [i,t] = CSSllParseIdentifier(r,blob,i)
