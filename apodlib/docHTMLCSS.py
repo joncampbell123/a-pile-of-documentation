@@ -227,9 +227,23 @@ def CSSllparse(blob,state=CSSllState()):
             yield t
             continue
         #
+        if blob[i] == '@':
+            r = CSSllIsIdentifier(blob,i+1)
+            if r:
+                [i,t] = CSSllParseIdentifier(r,blob,i+1)
+                t.token = 'at-keyword'
+                yield t
+                continue
+        #
         r = CSSllIsIdentifier(blob,i)
         if r:
             [i,t] = CSSllParseIdentifier(r,blob,i)
+            #
+            if i < len(blob):
+                if blob[i] == '(':
+                    i += 1
+                    t.token = 'function'
+            #
             yield t
             continue
         #

@@ -19,5 +19,8 @@ with tab"
 "string\9
 with tab"
 
+func1();
+func2(4.5, 3.3);
+
 { causta: "}" + ({7} * '\'') }
 

@@ -13,7 +13,9 @@ class CSSmidState:
     bliter = None
     llstate = None
     lookahead = None
+    comments = None
     def __init__(self):
+        self.comments = [ ]
         self.lookahead = [ ]
         self.llstate = CSSllState()
     def start(self,blob):
@@ -22,7 +24,11 @@ class CSSmidState:
     def peek(self,i=0):
         while len(self.lookahead) <= i:
             try:
-                self.lookahead.append(next(self.bliter))
+                t = next(self.bliter)
+                if t.token == 'comment':
+                    self.comments.append(t)
+                else:
+                    self.lookahead.append(t)
             except StopIteration:
                 self.lookahead.append(CSSllToken())
         #
@@ -48,6 +54,7 @@ def CSSmidparse(blob,state=CSSmidState()):
         t = state.get()
         if not t:
             break
+        #
         yield t
 
 for ent in CSSmidparse(rawcss,state):
