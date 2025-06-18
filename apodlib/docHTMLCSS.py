@@ -227,6 +227,17 @@ def CSSllparse(blob,state=CSSllState()):
             yield t
             continue
         #
+        if blob[i] == '!':
+            i2 = CSSskipwhitespace(blob,i+1)
+            r = CSSllIsIdentifier(blob,i2)
+            if r:
+                [i2,t] = CSSllParseIdentifier(r,blob,i2)
+                if t.text == 'important':
+                    t.token = 'bang'
+                    yield t
+                    i = i2
+                    continue
+        #
         if blob[i] == '@':
             r = CSSllIsIdentifier(blob,i+1)
             if r:

@@ -55,16 +55,6 @@ def CSSmidparse(blob,state=CSSmidState()):
         if not t:
             break
         #
-        if t.token == 'char' and t.text == '!':
-            # token t was already read and discarded, look at next one
-            t2 = state.peek()
-            if t2.token == 'ident' and t2.text == 'important':
-                t.token = '!important'
-                t.text = None
-                state.discard()
-                yield t
-                continue
-        #
         yield t
 
 for ent in CSSmidparse(rawcss,state):
