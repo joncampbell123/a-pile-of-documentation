@@ -42,9 +42,6 @@ class CSSllToken:
 class CSSllState:
     encoding = None
 
-inFile = sys.argv[1]
-rawcss = rawcssloadfile(inFile)
-
 def CSSskipwhitespace(blob,i):
     r = re.match(r'[ \t\n\r\f]+',blob[i:])
     if r:
@@ -158,11 +155,13 @@ def CSSllParseHash(r,blob,i):
 
 def CSSllparse(blob,state=CSSllState()):
     i = 0
-    # NTS: You should set encoding to the value given from the HTML parser, if possible
-    if state.encoding == None:
-        state.encoding = "utf-8"
-    #
-    blob = blob.decode(state.encoding)
+    # NTS: We allow blob already as a string
+    if not isinstance(blob,str):
+        # NTS: You should set encoding to the value given from the HTML parser, if possible
+        if state.encoding == None:
+            state.encoding = "utf-8"
+        #
+        blob = blob.decode(state.encoding)
     #
     while i < len(blob):
         j = CSSskipwhitespace(blob,i)

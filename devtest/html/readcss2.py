@@ -57,6 +57,9 @@ class CSSmidState:
         #
         self.lookahead = self.lookahead[1:]
 
+inFile = sys.argv[1]
+rawcss = rawcssloadfile(inFile)
+
 state = CSSmidState()
 
 def CSSmidparse(blob,state=CSSmidState()):
