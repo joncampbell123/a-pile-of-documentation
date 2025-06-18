@@ -17,6 +17,7 @@ def rawcssloadfile(path):
     return raw
 
 class CSSllToken:
+    children = None
     token = None
     value = None
     text = None
@@ -24,7 +25,7 @@ class CSSllToken:
     def __bool__(self):
         return (not self.token == None) or (not self.value == None) or (not self.text == None)
     def __init__(self):
-        True
+        self.children = [ ]
     def __str__(self):
         r = "[CSSllToken"
         if not self.token == None:
@@ -33,6 +34,8 @@ class CSSllToken:
             r += " value="+str(self.value)
         if not self.text == None:
             r += " text="+str(self.text)
+        if len(self.children) > 0:
+            r += " children="+str(len(self.children))
         r += "]"
         return r
 
