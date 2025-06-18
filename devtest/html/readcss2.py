@@ -84,18 +84,10 @@ def CSSmidparse(blob,state=CSSmidState()):
                     continue # skip
             #
             tn = state.peek()
-            if tn.token == 'char' and tn.text == '.':
+            if tn.token == 'class':
                 yield t
             elif tn.token == 'hash':
                 yield t
-            continue
-        # .class?
-        if t.token == 'char' and t.text == '.':
-            t = state.get()
-            if not t:
-                break
-            t.token = 'class'
-            yield t
             continue
         #
         yield t

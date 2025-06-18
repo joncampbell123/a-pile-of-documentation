@@ -256,6 +256,14 @@ def CSSllparse(blob,state=CSSllState()):
                 yield t
                 continue
         #
+        if blob[i] == '.':
+            r = CSSllIsIdentifier(blob,i+1)
+            if r:
+                [i,t] = CSSllParseIdentifier(r,blob,i+1)
+                t.token = 'class'
+                yield t
+                continue
+        #
         r = CSSllIsIdentifier(blob,i)
         if r:
             [i,t] = CSSllParseIdentifier(r,blob,i)
