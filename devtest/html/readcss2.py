@@ -69,26 +69,6 @@ def CSSmidparse(blob,state=CSSmidState()):
         t = state.get()
         if not t:
             break
-        # eat whitespace here unless the next token is '.' or '#' because
-        # whitespace matters to determine whether you're requiring them all
-        # to match i.e. .class1.class2 to require "class1 class2" or .class1 .class2
-        # that one should appear as a child to the other. Apparently .class1#id2
-        # is also valid to require class="class1" and id="id2".
-        #
-        # it also matters, the difference between: "p.class" and "p .class"
-        if t.token == 'ws':
-            #
-            tp = state.prev
-            if not tp == None:
-                if tp.token == 'char' and (tp.text == '{' or tp.text == '}' or tp.text == ':'): # if it follows these tokens there is no chance of chaining # and .
-                    continue # skip
-            #
-            tn = state.peek()
-            if tn.token == 'class':
-                yield t
-            elif tn.token == 'hash':
-                yield t
-            continue
         #
         yield t
 
