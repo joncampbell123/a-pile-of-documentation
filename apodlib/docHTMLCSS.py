@@ -165,7 +165,15 @@ def CSSllparse(blob,state=CSSllState()):
     blob = blob.decode(state.encoding)
     #
     while i < len(blob):
-        i = CSSskipwhitespace(blob,i)
+        j = CSSskipwhitespace(blob,i)
+        # argh, apparently I must tokenize whitespace
+        if i < j:
+            t = CSSllToken()
+            t.token = 'ws'
+            t.text = blob[i:j]
+            yield t
+            i = j
+        #
         if i >= len(blob):
             break
         #
