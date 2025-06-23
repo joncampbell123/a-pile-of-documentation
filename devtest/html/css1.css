@@ -119,3 +119,7 @@ h1 {
 	name:value;
 }
 
+p::selected {
+	name:value;
+}
+

@@ -79,17 +79,21 @@ class CSSAttributeSelector:
         return r
 
 class CSSSimpleSelector:
+    pseudoElementSelectors = None
     pseudoClassSelectors = None
     classSelectors = None
     attrSelectors = None
     typeSelector = None
     idSelectors = None
     def __init__(self):
+        self.pseudoElementSelectors = [ ]
         self.pseudoClassSelectors = [ ]
         self.classSelectors = [ ]
         self.attrSelectors = [ ]
         self.idSelectors = [ ]
     def __bool__(self):
+        if len(self.pseudoElementSelectors) > 0:
+            return True
         if len(self.pseudoClassSelectors) > 0:
             return True
         if len(self.classSelectors) > 0:
@@ -136,6 +140,15 @@ class CSSSimpleSelector:
             r += " pseudoClassSelector=("
             c = 0
             for ent in self.pseudoClassSelectors:
+                if c > 0:
+                    r += " "
+                r += str(ent)
+                c += 1
+            r += ")"
+        if not self.pseudoElementSelectors == None:
+            r += " pseudoElementSelector=("
+            c = 0
+            for ent in self.pseudoElementSelectors:
                 if c > 0:
                     r += " "
                 r += str(ent)
@@ -223,11 +236,22 @@ def CSSParseSimpleSelector(state,ss): # CSSSimpleSelector
         t = state.peek()
         if t.token == 'char' and t.text == ':':
             t = state.peek(1)
-            if t.token == 'ident':
-                ss.pseudoClassSelectors.append(t.text)
-                state.discard() # discard :
-                state.discard() # discard ident
-                continue
+            if t.token == 'char' and t.text == ':':
+                # ::pseudoelement
+                t = state.peek(2)
+                if t.token == 'ident':
+                    ss.pseudoElementSelectors.append(t.text)
+                    state.discard() # discard :
+                    state.discard() # discard :
+                    state.discard() # discard ident
+                    continue
+            else:
+                # :pseudoclass
+                if t.token == 'ident':
+                    ss.pseudoClassSelectors.append(t.text)
+                    state.discard() # discard :
+                    state.discard() # discard ident
+                    continue
         break
     #
     return ss
