@@ -93,5 +93,10 @@ h1 {
 	name: value;
 }
 
+h1 {
+	@bruh what?;
+	name: value;
+}
+
 @bruh model { }
 

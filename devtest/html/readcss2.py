@@ -365,6 +365,8 @@ def CSSLooksAheadSelectorsAndBlock(state):
             True
         elif t.token == 'char' and (t.text == '+' or t.text == '>' or t.text == '*'):
             True
+        elif t.token == 'at-keyword':
+            return True
         elif t.token == 'char' and t.text == '{':
             return True
         else:
