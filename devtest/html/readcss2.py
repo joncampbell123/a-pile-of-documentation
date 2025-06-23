@@ -104,6 +104,15 @@ class CSSSimpleSelector:
                 r += str(ent)
                 c += 1
             r += ")"
+        if not self.attrSelectors == None:
+            r += " attrSelector=("
+            c = 0
+            for ent in self.attrSelectors:
+                if c > 0:
+                    r += " "
+                r += str(ent)
+                c += 1
+            r += ")"
         if not self.classSelectors == None:
             r += " classSelector=("
             c = 0
@@ -140,7 +149,60 @@ def CSSParseSimpleSelector(state,ss): # CSSSimpleSelector
         elif t.token == 'class': # .class
             ss.classSelectors.append(t.text)
             state.discard()
-        else: # TODO: [attribute]
+        elif t.token == 'char' and t.text == '[': # [attribute]
+            attr = CSSAttributeSelector()
+            state.discard()
+            #
+            t = state.peek()
+            if t.token == 'ident':
+                attr.attribute = t.text
+                state.discard()
+            else:
+                raise Exception("CSS attribute selector parsing error "+str(t))
+            #
+            t = state.peek(0)
+            t2 = state.peek(1)
+            if not t:
+                break
+            if t.token == 'char' and t.text == '=':
+                attr.howMatch = 'exact'
+                state.discard()
+            elif t.token == 'char' and t.text == '~' and t2.token == 'char' and t2.text == '=':
+                attr.howMatch = 'any'
+                state.discard()
+                state.discard()
+            elif t.token == 'char' and t.text == '|' and t2.token == 'char' and t2.text == '=':
+                attr.howMatch = 'begin-dash'
+                state.discard()
+                state.discard()
+            elif t.token == 'char' and t.text == '^' and t2.token == 'char' and t2.text == '=':
+                attr.howMatch = 'begins'
+                state.discard()
+                state.discard()
+            elif t.token == 'char' and t.text == '$' and t2.token == 'char' and t2.text == '=':
+                attr.howMatch = 'ends'
+                state.discard()
+                state.discard()
+            elif t.token == 'char' and t.text == '*' and t2.token == 'char' and t2.text == '=':
+                attr.howMatch = 'substr'
+                state.discard()
+                state.discard()
+            #
+            if not attr.howMatch == None:
+                t = state.peek()
+                if t.token == 'ident' or t.token == 'string':
+                    attr.value = t.text
+                    state.discard()
+                else:
+                    raise Exception("CSS attribute selector expected value "+str(t))
+            #
+            t = state.peek()
+            if t.token == 'char' and t.text == ']':
+                state.discard()
+                break
+            else:
+                raise Exception("CSS attribute selector expected closure "+str(t))
+        else:
             break
     #
     while True:
