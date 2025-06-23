@@ -29,15 +29,6 @@ class CSSmidState:
                 t = next(self.bliter)
                 if t.token == 'comment':
                     self.comments.append(t)
-                elif t.token == 'ws': # append the 'ws' token, then pull additional tokens and loop while they are 'ws'
-                    self.lookahead.append(t)
-                    while True:
-                        t = next(self.bliter)
-                        if t.token == 'comment': # skip comments as we go
-                            continue
-                        elif not t.token == 'ws': # if not 'ws' then stop, else just ignore it
-                            self.lookahead.append(t)
-                            break
                 else:
                     self.lookahead.append(t)
             except StopIteration:
@@ -56,6 +47,9 @@ class CSSmidState:
             raise Exception("OOPS")
         #
         self.lookahead = self.lookahead[1:]
+    def skipwhitespace(self):
+        while self.peek().token == 'ws':
+            self.discard()
 
 inFile = sys.argv[1]
 rawcss = rawcssloadfile(inFile)
@@ -66,6 +60,7 @@ def CSSmidparse(blob,state=CSSmidState()):
     state.start(blob)
     #
     while True:
+        state.skipwhitespace()
         t = state.get()
         if not t:
             break
