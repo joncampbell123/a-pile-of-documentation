@@ -369,6 +369,48 @@ def CSSBlockNVParse(state,css): # CSSBlock
         #
         css.nvlist[nv.name] = nv
 
+def CSSSelectorParse(state,css):
+    while True:
+        sel = CSSSelector()
+        while True:
+            ss = CSSSimpleSelector()
+            CSSParseSimpleSelector(state,ss) # reads and discards tokens
+            if ss:
+                sel.rules.append(ss)
+            else:
+                break
+            #
+            ws = False
+            t = state.peek()
+            if t.token == 'ws':
+                state.discard()
+                ws = True
+            #
+            state.skipwhitespace()
+            t = state.peek()
+            if t.token == 'char':
+                if t.text == '>' or t.text == '+':
+                    sel.rules.append(t.text)
+                    state.discard()
+                    continue
+                if t.text == '{' or t.text == ';':
+                    break
+            if ws:
+                sel.rules.append(' ')
+                continue
+        #
+        if sel:
+            css.rule.rules.append(sel)
+        else:
+            state.skipwhitespace()
+            t = state.peek()
+            if t.token == 'char':
+                if t.text == ',':
+                    state.discard()
+                    continue
+            #
+            break
+
 def CSSmidparse(blob,state=CSSmidState()):
     state.start(blob)
     #
@@ -395,45 +437,7 @@ def CSSmidparse(blob,state=CSSmidState()):
             yield css;
             continue
         # selectors
-        while True:
-            sel = CSSSelector()
-            while True:
-                ss = CSSSimpleSelector()
-                CSSParseSimpleSelector(state,ss) # reads and discards tokens
-                if ss:
-                    sel.rules.append(ss)
-                else:
-                    break
-                #
-                ws = False
-                t = state.peek()
-                if t.token == 'ws':
-                    state.discard()
-                    ws = True
-                #
-                state.skipwhitespace()
-                t = state.peek()
-                if t.token == 'char':
-                    if t.text == '>' or t.text == '+':
-                        sel.rules.append(t.text)
-                        state.discard()
-                        continue
-                    if t.text == '{' or t.text == ';':
-                        break
-                if ws:
-                    sel.rules.append(' ')
-                    continue
-            if sel:
-                css.rule.rules.append(sel)
-            else:
-                state.skipwhitespace()
-                t = state.peek()
-                if t.token == 'char':
-                    if t.text == ',':
-                        state.discard()
-                        continue
-                #
-                break
+        CSSSelectorParse(state,css)
         #
         state.skipwhitespace()
         t = state.peek()
