@@ -564,7 +564,7 @@ def CSSOneBlock(state):
                 if len(subs) == 0:
                     break
             elif t.token == 'char' and t.text == '{':
-                if css.atrule.name == 'layer':
+                if css.atrule.name == 'layer' or css.atrule.name == 'media':
                     while True:
                         state.skipwhitespace()
                         t = state.peek()
