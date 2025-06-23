@@ -259,13 +259,24 @@ class CSSSelector:
 
 class CSSAtRule:
     name = None
+    blocks = None
     tokens = None
     def __init__(self):
         self.tokens = [ ]
+        self.blocks = [ ]
     def __str__(self):
         r = "[CSSAtRule"
         if not self.name == None:
             r += " name="+str(self.name)
+        if not self.blocks == None:
+            r += " blocks=("
+            c = 0
+            for ent in self.blocks:
+                if c > 0:
+                    r += " "
+                r += str(ent)
+                c += 1
+            r += ")"
         if not self.tokens == None:
             r += " tokens=("
             c = 0
@@ -482,6 +493,20 @@ def CSSOneBlock(state):
             if not t:
                 break
             if t.token == 'char' and t.text == ';':
+                break
+            elif t.token == 'char' and t.text == '{':
+                while True:
+                    state.skipwhitespace()
+                    t = state.peek()
+                    if not t:
+                        break
+                    if t.token == 'char' and t.text == '}':
+                        state.discard()
+                        break
+                    subcss = CSSOneBlock(state)
+                    if subcss == None:
+                        break
+                    css.atrule.blocks.append(subcss)
                 break
             #
             css.atrule.tokens.append(t)

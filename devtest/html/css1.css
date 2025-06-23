@@ -100,3 +100,18 @@ h1 {
 
 @bruh model { }
 
+@bruh model {
+	h1 {
+		name: value;
+	}
+}
+
+@bruh model {
+	h1 {
+		name: value;
+	}
+	h2, h3 {
+		name: value;
+	}
+}
+
