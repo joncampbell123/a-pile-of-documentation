@@ -426,7 +426,6 @@ def CSSmidparse(blob,state=CSSmidState()):
             if sel:
                 css.rule.rules.append(sel)
             else:
-                # for farther parsing below
                 state.skipwhitespace()
                 t = state.peek()
                 if t.token == 'char':
@@ -435,6 +434,9 @@ def CSSmidparse(blob,state=CSSmidState()):
                         continue
                 #
                 break
+        #
+        state.skipwhitespace()
+        t = state.peek()
         # block parsing
         if t.token == 'char' and t.text == '{':
             state.discard() # discard peek() result
