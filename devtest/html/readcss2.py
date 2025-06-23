@@ -290,13 +290,10 @@ class CSSMatchRule:
 class CSSNameValue:
     name = None
     value = None
-    valueType = None # 'block'=CSSBlock 'tokens'=list of tokens
     def __str__(self):
         r = "[CSSNameValue"
         if not self.name == None:
             r += " name="+self.name
-        if not self.valueType == None:
-            r += " valueType="+self.valueType
         if not self.value == None:
             if self.valueType == 'tokens':
                 r += " tokens=("
@@ -313,8 +310,10 @@ class CSSNameValue:
 class CSSBlock:
     rule = None # CSSMatchRule
     nvlist = None # CSSNameValue
+    subblocklist = [ ] # CSSBlock
     def __init__(self):
         self.rule = CSSMatchRule()
+        self.subblocklist = [ ]
         self.nvlist = { }
     def __str__(self):
         r = "[CSSBlock"
@@ -330,24 +329,62 @@ class CSSBlock:
                 r += str(name)+":"+str(val)
                 c += 1
             r += ")"
+        if not self.subblocklist == None:
+            r += " subblocklist=("
+            c = 0
+            for ent in self.subblocklist:
+                if c > 0:
+                    r += " "
+                r += str(ent)
+                c += 1
+            r += ")"
+
         r += "]"
         return r
+
+def CSSLooksAheadSelectorsAndBlock(state):
+    i = 0
+    while True:
+        t = state.peek(i)
+        i += 1
+        #
+        if t.token == 'ident' or t.token == 'class' or t.token == 'hash' or t.token == 'ws':
+            True
+        elif t.token == 'char' and (t.text == '+' or t.text == '>' or t.text == '*'):
+            True
+        elif t.token == 'char' and t.text == '{':
+            return True
+        else:
+            break
+    #
+    return False
 
 def CSSBlockNVParse(state,css): # CSSBlock
     # already took { token
     while True:
         state.skipwhitespace()
-        nv = CSSNameValue()
+        #
+        if CSSLooksAheadSelectorsAndBlock(state):
+            #
+            # do NOT discard tokens, the block parser needs them
+            #
+            subcss = CSSOneBlock(state)
+            if subcss == None:
+                break
+            css.subblocklist.append(subcss)
+            continue
+        #
         t = state.get()
         if not t:
             break
         if t.token == 'char' and t.text == '}':
             break
         # name
+        nv = CSSNameValue()
         if t.token == 'ident':
             nv.name = t.text
         else:
-            raise Exception("CSS parsing error expect name")
+            raise Exception("CSS parsing error expect name "+str(t))
         # value
         state.skipwhitespace()
         t = state.get()
@@ -463,5 +500,6 @@ def CSSmidparse(blob,state=CSSmidState()):
         yield css
 
 for ent in CSSmidparse(rawcss,state):
+    print("----CSS block----")
     print(ent)
 
