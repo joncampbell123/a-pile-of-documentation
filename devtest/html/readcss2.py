@@ -126,6 +126,7 @@ class CSSSimpleSelector:
         return r
 
 def CSSParseSimpleSelector(state,ss): # CSSSimpleSelector
+    state.skipwhitespace()
     t = state.peek()
     if t.token == 'ident' or (t.token == 'char' and t.text == '*'):
         ss.typeSelector = t.text
@@ -171,7 +172,10 @@ class CSSSelector:
             for ent in self.rules:
                 if c > 0:
                     r += " "
-                r += str(ent)
+                if isinstance(ent,str):
+                    r += "\""+ent+"\""
+                else:
+                    r += str(ent)
                 c += 1
             r += ")"
         r += "]"
@@ -338,12 +342,36 @@ def CSSmidparse(blob,state=CSSmidState()):
                     sel.rules.append(ss)
                 else:
                     break
+                #
+                ws = False
+                t = state.peek()
+                if t.token == 'ws':
+                    state.discard()
+                    ws = True
+                #
+                state.skipwhitespace()
+                t = state.peek()
+                if t.token == 'char':
+                    if t.text == '>' or t.text == '+':
+                        sel.rules.append(t.text)
+                        state.discard()
+                        continue
+                    if t.text == '{' or t.text == ';':
+                        break
+                if ws:
+                    sel.rules.append(' ')
+                    continue
             if sel:
                 css.rule.rules.append(sel)
             else:
                 # for farther parsing below
                 state.skipwhitespace()
                 t = state.peek()
+                if t.token == 'char':
+                    if t.text == ',':
+                        state.discard()
+                        continue
+                #
                 break
         # block parsing
         if t.token == 'char' and t.text == '{':

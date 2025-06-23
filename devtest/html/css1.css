@@ -1,7 +1,7 @@
 @bruh;
 @test 1 2 3 "asdf";
 h1 {
-	asdf: ass;
+	asdf: donkey;
 }
 h1.class.cl2#id#id2:hover:first-child {
 	name: pingas;
@@ -10,9 +10,37 @@ h1.class.cl2#id#id2:hover:first-child {
 
 {
 	yay: ;
-	ass: auto;
+	donkey: auto;
 	bruh: hah;
 }
 
 h2;
+
+h1, h2 {
+	name: value;
+}
+
+h1 h2 {
+	name: value;
+}
+
+h1 + h2 {
+	name: value;
+}
+
+h1 > h2 {
+	name: value;
+}
+
+h1 * h2 {
+	name: value;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	name: value;
+}
+
+h1.c1, h2.c1.c2, h3:hover, h4.cls#id:hover, h5, h6 {
+	name: value;
+}
 
