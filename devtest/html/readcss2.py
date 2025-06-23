@@ -421,6 +421,9 @@ def CSSBlockNVParse(state,css): # CSSBlock
             nv.value = [ ]
             while True:
                 state.skipwhitespace()
+                t = state.peek()
+                if t.token == 'char' and t.text == '}': # *sigh* minified CSS tends to omit ; if closing a block
+                    break
                 t = state.get()
                 if t.token == 'char' and t.text == ';':
                     break
@@ -487,27 +490,43 @@ def CSSOneBlock(state):
         css.atrule.name = t.text
         state.discard() # discard peek() result
         #
+        subs = [ ]
+        #
         while True:
             state.skipwhitespace()
             t = state.get()
             if not t:
                 break
             if t.token == 'char' and t.text == ';':
-                break
+                if len(subs) == 0:
+                    break
             elif t.token == 'char' and t.text == '{':
-                while True:
-                    state.skipwhitespace()
-                    t = state.peek()
-                    if not t:
+                if css.atrule.name == 'layer':
+                    while True:
+                        state.skipwhitespace()
+                        t = state.peek()
+                        if not t:
+                            break
+                        if t.token == 'char' and t.text == '}':
+                            state.discard()
+                            break
+                        subcss = CSSOneBlock(state)
+                        if subcss == None:
+                            break
+                        css.atrule.blocks.append(subcss)
+                    break
+                else:
+                    subs.append(t.text)
+            elif t.token == 'char' and t.text == '(':
+                subs.append(t.text)
+            elif t.token == 'char' and t.text == ')':
+                if len(subs) > 0 and subs[-1] == '(':
+                    subs.pop()
+            elif t.token == 'char' and t.text == '}':
+                if len(subs) > 0 and subs[-1] == '{':
+                    subs.pop()
+                    if len(subs) == 0:
                         break
-                    if t.token == 'char' and t.text == '}':
-                        state.discard()
-                        break
-                    subcss = CSSOneBlock(state)
-                    if subcss == None:
-                        break
-                    css.atrule.blocks.append(subcss)
-                break
             #
             css.atrule.tokens.append(t)
         #
