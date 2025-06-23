@@ -279,16 +279,11 @@ class CSSAtRule:
         return r;
 
 class CSSMatchRule:
-    atrule = None # CSSAtRule
     rules = None # CSSSelector
     def __init__(self):
-        self.atrule = None
         self.rules = [ ]
     def __str__(self):
         r = "[CSSMatchRule"
-        if not self.atrule == None:
-            r += " atrule="
-            r += str(self.atrule)
         if not self.rules == None:
             r += " rules=("
             c = 0
@@ -322,6 +317,7 @@ class CSSNameValue:
         return r
 
 class CSSBlock:
+    atrule = None # CSSAtRule
     rule = None # CSSMatchRule
     nvlist = None # CSSNameValue
     subblocklist = [ ] # CSSBlock
@@ -334,6 +330,9 @@ class CSSBlock:
         if not self.rule == None:
             r += " rule="
             r += str(self.rule)
+        if not self.atrule == None:
+            r += " atrule="
+            r += str(self.atrule)
         if not self.nvlist == None:
             r += " nv=("
             c = 0
@@ -471,8 +470,8 @@ def CSSOneBlock(state):
         return None
     #
     if t.token == 'at-keyword':
-        css.rule.atrule = CSSAtRule()
-        css.rule.atrule.name = t.text
+        css.atrule = CSSAtRule()
+        css.atrule.name = t.text
         state.discard() # discard peek() result
         #
         while True:
@@ -483,7 +482,7 @@ def CSSOneBlock(state):
             if t.token == 'char' and t.text == ';':
                 break
             #
-            css.rule.atrule.tokens.append(t)
+            css.atrule.tokens.append(t)
         #
         return css;
     # selectors
