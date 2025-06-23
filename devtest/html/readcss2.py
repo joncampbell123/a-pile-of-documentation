@@ -67,6 +67,16 @@ class CSSAttributeSelector:
     # 'ends'=[att$=value]
     # 'substr'=[att*=value]
     attribute = None
+    def __str__(self):
+        r = "[CSSAttributeSelector"
+        if not self.attribute == None:
+            r += " attribute="+str(self.attribute)
+        if not self.howMatch == None:
+            r += " howMatch="+str(self.howMatch)
+        if not self.value == None:
+            r += " value="+str(self.value)
+        r += "]"
+        return r
 
 class CSSSimpleSelector:
     pseudoClassSelectors = None
@@ -189,15 +199,19 @@ def CSSParseSimpleSelector(state,ss): # CSSSimpleSelector
                 state.discard()
             #
             if not attr.howMatch == None:
-                t = state.peek()
-                if t.token == 'ident' or t.token == 'string':
-                    attr.value = t.text
+                attr.value = ''
+                while True:
+                    t = state.peek()
+                    if not t:
+                        break
+                    if t.token == 'char' and t.text == ']':
+                        break
+                    attr.value += t.text
                     state.discard()
-                else:
-                    raise Exception("CSS attribute selector expected value "+str(t))
             #
             t = state.peek()
             if t.token == 'char' and t.text == ']':
+                ss.attrSelectors.append(attr)
                 state.discard()
                 break
             else:
