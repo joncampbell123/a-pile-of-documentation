@@ -443,8 +443,8 @@ def CSSBlockNVParse(state,css): # CSSBlock
         if t.token == 'char' and t.text == ':':
             nv.valueType = 'tokens'
             nv.value = [ ]
+            state.skipwhitespace()
             while True:
-                state.skipwhitespace()
                 t = state.peek()
                 if t.token == 'char' and t.text == '}': # *sigh* minified CSS tends to omit ; if closing a block
                     break

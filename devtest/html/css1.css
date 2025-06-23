@@ -119,6 +119,18 @@ h1 {
 	name:value;
 }
 
+h1 {
+	name: value;
+}
+
+h1 {
+	name: value two 0px 0 px;
+}
+
+h1 {
+	name:value;
+}
+
 p::selected {
 	name:value;
 }
