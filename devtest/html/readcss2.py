@@ -564,7 +564,10 @@ def CSSOneBlock(state):
                 if len(subs) == 0:
                     break
             elif t.token == 'char' and t.text == '{':
-                if css.atrule.name == 'layer' or css.atrule.name == 'media':
+                if css.atrule.name == 'font-face':
+                    CSSBlockNVParse(state,css)
+                    break
+                elif css.atrule.name == 'layer' or css.atrule.name == 'media':
                     while True:
                         state.skipwhitespace()
                         t = state.peek()
