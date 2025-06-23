@@ -411,49 +411,56 @@ def CSSSelectorParse(state,css):
             #
             break
 
+def CSSOneBlock(state):
+    css = CSSBlock()
+    #
+    state.skipwhitespace()
+    t = state.peek()
+    if not t:
+        return None
+    #
+    if t.token == 'at-keyword':
+        css.rule.atrule = CSSAtRule()
+        css.rule.atrule.name = t.text
+        state.discard() # discard peek() result
+        #
+        while True:
+            state.skipwhitespace()
+            t = state.get()
+            if not t:
+                break
+            if t.token == 'char' and t.text == ';':
+                break
+            #
+            css.rule.atrule.tokens.append(t)
+        #
+        return css;
+    # selectors
+    CSSSelectorParse(state,css)
+    #
+    state.skipwhitespace()
+    t = state.peek()
+    # block parsing
+    if t.token == 'char' and t.text == '{':
+        state.discard() # discard peek() result
+        CSSBlockNVParse(state,css)
+        return css;
+    # ;
+    if t.token == 'char' and t.text == ';':
+        state.discard()
+        return css;
+    #
+    raise Exception("CSS parsing error "+str(t))
+
 def CSSmidparse(blob,state=CSSmidState()):
     state.start(blob)
     #
     while True:
-        state.skipwhitespace()
-        css = CSSBlock()
-        t = state.peek()
-        if not t:
+        css = CSSOneBlock(state)
+        if css == None:
             break
         #
-        if t.token == 'at-keyword':
-            css.rule.atrule = CSSAtRule()
-            css.rule.atrule.name = t.text
-            state.discard() # discard peek() result
-            #
-            while True:
-                state.skipwhitespace()
-                t = state.get()
-                if t.token == 'char' and t.text == ';':
-                    break
-                #
-                css.rule.atrule.tokens.append(t)
-            #
-            yield css;
-            continue
-        # selectors
-        CSSSelectorParse(state,css)
-        #
-        state.skipwhitespace()
-        t = state.peek()
-        # block parsing
-        if t.token == 'char' and t.text == '{':
-            state.discard() # discard peek() result
-            CSSBlockNVParse(state,css)
-            yield css;
-            continue
-        # ;
-        if t.token == 'char' and t.text == ';':
-            state.discard()
-            yield css;
-            continue
-        #
-        raise Exception("CSS parsing error "+str(t))
+        yield css
 
 for ent in CSSmidparse(rawcss,state):
     print(ent)
