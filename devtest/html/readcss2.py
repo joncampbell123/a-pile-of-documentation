@@ -78,6 +78,27 @@ class CSSAttributeSelector:
         r += "]"
         return r
 
+class CSSPseudoClassSelector:
+    name = None # :class
+    tokens = None # :class(...)
+    def __str__(self):
+        r = "[CSSPseudoClassSelector"
+        if not self.name == None:
+            r += " name="+str(self.name)
+        if not self.tokens == None:
+            r += " tokens=("
+            c = 0
+            for ent in self.tokens:
+                if c > 0:
+                    r += " "
+                r += str(ent)
+                c += 1
+            r += ")"
+        r += "]"
+        return r
+    def __init__(self):
+        self.tokens = [ ]
+
 class CSSSimpleSelector:
     pseudoElementSelectors = None
     pseudoClassSelectors = None
@@ -248,9 +269,27 @@ def CSSParseSimpleSelector(state,ss): # CSSSimpleSelector
             else:
                 # :pseudoclass
                 if t.token == 'ident':
-                    ss.pseudoClassSelectors.append(t.text)
+                    ent = CSSPseudoClassSelector()
+                    ent.name = t.text
                     state.discard() # discard :
                     state.discard() # discard ident
+                    ss.pseudoClassSelectors.append(ent)
+                    continue
+                # :pseudoclass(
+                elif t.token == 'function':
+                    ent = CSSPseudoClassSelector()
+                    ent.name = t.text
+                    state.discard() # discard :
+                    state.discard() # discard function(
+                    while True:
+                        t = state.get()
+                        if not t:
+                            break
+                        if t.token == 'char' and t.text == ')':
+                            break
+                        ent.tokens.append(t)
+                    #
+                    ss.pseudoClassSelectors.append(ent)
                     continue
         break
     #

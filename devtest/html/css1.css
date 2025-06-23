@@ -135,3 +135,22 @@ p::selected {
 	name:value;
 }
 
+p:func {
+	name:value;
+}
+
+p:func() {
+	name:value;
+}
+
+p:func(hello) {
+	name:value;
+}
+
+p:func(hello world) {
+	name:value;
+}
+
+p:func(strong, b.important) {
+	name:value;
+}
