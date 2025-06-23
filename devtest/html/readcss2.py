@@ -437,7 +437,7 @@ def CSSLooksAheadSelectorsAndBlock(state):
         #
         if t.token == 'ident' or t.token == 'class' or t.token == 'hash' or t.token == 'ws':
             True
-        elif t.token == 'char' and (t.text == '+' or t.text == '>' or t.text == '*'):
+        elif t.token == 'char' and (t.text == '+' or t.text == '>' or t.text == '*' or t.text == '~'):
             True
         elif t.token == 'at-keyword':
             return True
@@ -518,7 +518,7 @@ def CSSSelectorParse(state,css):
             state.skipwhitespace()
             t = state.peek()
             if t.token == 'char':
-                if t.text == '>' or t.text == '+':
+                if t.text == '>' or t.text == '+' or t.text == '~':
                     sel.rules.append(t.text)
                     state.discard()
                     continue
