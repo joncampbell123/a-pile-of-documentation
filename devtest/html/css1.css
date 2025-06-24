@@ -18,6 +18,7 @@ h2;
 
 h1, h2 {
 	name: value;
+	name: value2;
 }
 
 h1 h2 {

@@ -161,16 +161,17 @@ def CSSMidFancyStringBlock(ent,indent=1): # ent = CSSBlock
         indent2 = indent + 1
         spc2 = " " * (indent2*4)
         for i,(name,vl) in enumerate(ent.nvlist.items()):
-            if not r == "":
-                r += "\n"
-            r += spc2 + name + ":"
-            if vl.valueType == 'tokens':
-                for t in vl.value:
-                    if t.token == 'ws':
-                        r += " "
-                    else:
-                        r += " " + CSSMidFancyStringToken(t)
-            r += ";"
+            for val in vl:
+                if not r == "":
+                    r += "\n"
+                r += spc2 + name + ":"
+                if val.valueType == 'tokens':
+                    for t in val.value:
+                        if t.token == 'ws':
+                            r += " "
+                        else:
+                            r += " " + CSSMidFancyStringToken(t)
+                r += ";"
     if not ent.subblocklist == None and len(ent.subblocklist) > 0:
         for subent in ent.subblocklist:
             v = CSSMidFancyStringBlock(subent,indent+1)

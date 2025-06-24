@@ -407,11 +407,12 @@ class CSSBlock:
         if not self.nvlist == None:
             r += " nv=("
             c = 0
-            for i,(name,val) in enumerate(self.nvlist.items()):
-                if c > 0:
-                    r += " "
-                r += str(name)+":"+str(val)
-                c += 1
+            for i,(name,vallist) in enumerate(self.nvlist.items()):
+                for val in vallist:
+                    if c > 0:
+                        r += " "
+                    r += str(name)+":"+str(val)
+                    c += 1
             r += ")"
         if not self.subblocklist == None:
             r += " subblocklist=("
@@ -493,7 +494,12 @@ def CSSBlockNVParse(state,css): # CSSBlock
         else:
             raise Exception("CSS parsing error expect colon+value")
         #
-        css.nvlist[nv.name] = nv
+        if nv.name in css.nvlist:
+            vl = css.nvlist[nv.name]
+        else:
+            vl = css.nvlist[nv.name] = [ ]
+        #
+        vl.append(nv)
 
 def CSSSelectorParse(state,css):
     while True:
