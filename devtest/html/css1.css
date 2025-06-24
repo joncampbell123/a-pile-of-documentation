@@ -151,6 +151,10 @@ p:func(hello world) {
 	name:value;
 }
 
+p:func(hello world):hover {
+	name:value;
+}
+
 p:func(strong, b.important) {
 	name:value;
 }
