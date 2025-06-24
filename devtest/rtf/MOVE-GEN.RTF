@@ -1,0 +1,73 @@
+{\rtf1\ansi \deff0{\fonttbl{\f0\froman Tms Rmn;}{\f1\fdecor Symbol;}{\f2\fswiss Helv;}{\f3\fmodern Modern;}}{\colortbl;\red0\green0\blue0;\red0\green0\blue255;\red0\green255\blue255;\red0\green255\blue0;\red255\green0\blue255;
+\red255\green0\blue0;\red255\green255\blue0;\red255\green255\blue255;}{\stylesheet{\s244 \f3\fs16\up6 \sbasedon0\snext0 footnote reference;}{\s245 \f3\fs20 \sbasedon0\snext245 footnote text;}{\f3\fs20 \snext0 Normal;}{\s2 \b\f3\fs20 
+\sbasedon0\snext2 Head;}{\s3\fi-1440\li1800\sa240\tx1800 \f3\fs20 \sbasedon0\snext3 1st indent;}}{\info{\author Daryl K Baker}{\operator Daryl K Baker}{\creatim\yr1990\mo12\dy23\hr22\min50}{\revtim\yr1990\mo12\dy26\hr11\min52}{\version2}{\edmins3}
+{\nofpages1}{\nofwords0}{\nofchars0}{\vern8351}}\widowctrl\ftnbj \sectd \linex0\endnhere \pard\plain \s2 \b\f3\fs20 {\plain \b\f3\up6 #{\footnote \pard\plain \s245 \f3\fs20 {\fs16\up6 #}  move_gen}}{\plain \b\f3  }{\plain \b\f3\up6 ${\footnote 
+\pard\plain \s245 \f3\fs20 {\fs16\up6 $}  GNU Chess Move Generator}}{\plain \b\f3  }{\plain \b\f3\up6 +{\footnote \pard\plain \s245 \f3\fs20 {\fs16\up6 +}  index:0030} }{\plain \b\f3  GNU Chess Move Generator
+\par }\pard\plain \f3\fs20 
+\par \pard \qc This file contains a description of GNU's new move generation algoritm.
+\par    Copyright (C) 1989 Free Software Foundation, Inc.
+\par \pard 
+\par This file is part of CHESS.
+\par 
+\par CHESS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY.  No author or distributor accepts responsibility to anyone for the consequences of using it or for whether it serves any particular purpose or works at all, unless he says 
+so in writing.  Refer to the CHESS General Public License for full details.
+\par 
+\par Everyone is granted permission to copy, modify and redistribute CHESS, but only under the conditions described 
+in the CHESS General Public License.   A copy of this license is supposed to have been given to you along with CHESS so you can know your rights and responsibilities.  It should be in a file named COPYING.  Among other things, the copyright notice and thi
+s notice must be preserved on all copies.
+\par 
+\par New move Generation algoritm:
+\par 
+\par Revision: 1989-09-06
+\par 
+\par Author: Hans Eric Sandstroem.
+\par 
+\par This algortim is the result of an attempt to make an hardware move generator, but since I newer had the time and resources
+ to build the hardware I wrote a software version and incorporated that one into gnuchess. This was the best way I could think of sharing this algorithm with the computer chess community.
+\par 
+\par If there is anybody out there with the time and rescources to build a hardware move generator I will be glad to assist.
+\par 
+\par The general idea behind this algoritm is to pre calculate a lot of data. The data that is pre calculated is every possible move for every piece from every square disregarding any other pieces on the
+ board. This pre calculated data is stored in an array that looks like this:
+\par 
+\par struct sqdata \{
+\par   short nextpos;
+\par   short nextdir;
+\par \};
+\par struct sqdata posdata[8][64][64];
+\par /* posdata[piecetype][fromsquare][destinationsquare] */
+\par example:
+\par \tab the first move for a queen at e8 is stored at;
+\par \tab posdata[queen][e8][e8].nextpos
+\par \tab suppose this is e7 and e7 is occupied then the next move
+\par \tab will be found in;
+\par \tab posdata[queen][e8][e7].nextdir
+\par 
+\par To handle the differeces between white and black pawns (they move in opposite directions) an array ptype has been introduced:  
+\par static const short ptype[2][8] = \{
+\par   no_piece,pawn,knight,bishop,rook,queen,king,no_piece,
+\par   no_piece,bpawn,knight,bishop,rook,queen,king,no_piece\};
+\par            ^^^^^
+\par And it is used like this:
+\par    piecetype = ptype[side][piece]
+\par When generating moves for pieces that are not black pawns, piece can be used directly in posdata. As in the example above.
+\par 
+\par Thus the only thing one has to do when generating the moves is to check for collisions with other pieces.  the move generation to do this looks like this: (for non pawns)
+\par     p = posdata[piece][sq];
+\par     u = p[sq].nextpos;
+\par     do \{
+\par       if (color[u] == neutral) \{
+\par \tab LinkMove(ply,sq,u,xside);
+\par \tab u = p[u].nextpos;
+\par       \}
+\par       else \{
+\par \tab if (color[u] == xside) LinkMove(ply,sq,u,xside);
+\par \tab u = p[u].nextdir;
+\par       \}
+\par     \} while (u != sq);
+\par 
+\par  - I`nt this just beautiful!
+\par 
+\par The array posdata is initialized in the routine Initialize_moves. This routine is called just once and it works so no time has been spen
+t on the structure of this code. GenMoves and CaptureList generates the moves but the routines ataks, BRscan, Sqatakd, KingScan and trapped also relies on the move generation algoritm so they have also been rewritten.
+\par }

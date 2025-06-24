@@ -1,0 +1,36 @@
+{\rtf1\ansi \deff0{\fonttbl{\f0\froman Tms Rmn;}{\f1\fdecor Symbol;}{\f2\fswiss Helv;}{\f3\fmodern Modern;}}{\colortbl;\red0\green0\blue0;\red0\green0\blue255;\red0\green255\blue255;\red0\green255\blue0;\red255\green0\blue255;
+\red255\green0\blue0;\red255\green255\blue0;\red255\green255\blue255;}{\stylesheet{\s244\fi360\sa240 \f3\fs16\up6 \sbasedon0\snext0 footnote reference;}{\s245\fi360\sa240 \f3\fs20 \sbasedon0\snext245 footnote text;}{\fi360\sa240 \f3\fs20 \snext0 Normal;}{
+\s2 \b\f3\fs20 \sbasedon0\snext2 Head;}{\s3\fi-1440\li1800\sa240\tx1800 \f3\fs20 \sbasedon0\snext3 1st indent;}}{\info{\author Daryl K Baker}{\operator Daryl K Baker}{\creatim\yr1990\mo12\dy23\hr21\min59}{\revtim\yr1990\mo12\dy26\hr15\min30}{\version6}
+{\edmins12}{\nofpages1}{\nofwords0}{\nofchars0}{\vern8351}}\widowctrl\ftnbj \sectd \linex0\endnhere \pard\plain \s2 \b\f3\fs20 {\plain \b\f3\up6 #{\footnote \pard\plain \s245\fi360\sa240 \f3\fs20 {\fs16\up6 #}  article_1}}{\plain \b\f3  }{\plain 
+\b\f3\up6 ${\footnote \pard\plain \s245\fi360\sa240 \f3\fs20 {\fs16\up6 $}  Article: Background on GNU Chess}}{\plain \b\f3  }{\plain \b\f3\up6 +{\footnote \pard\plain \s245\fi360\sa240 \f3\fs20 {\fs16\up6 +}  index:0015} }{\plain \b\f3 
+ Background on GNU Chess
+\par }\pard\plain \qc\fi360 \f3\fs20 
+\par GNU Chess
+\par by Stuart Cracraft
+\par Copyright 1987,1988,1989,1990 Stuart Cracraft
+\par \pard \fi360\sa240 
+\par \pard \fi360\sa240 GNU Chess is a
+ communal chess program. Contributors donate their time and effort in order to make it a stronger, better, sleeker program. Contributions take many forms: interfaces to high-resolution displays, opening book treatises, speedups of the underlying algorithm
+s, additions of extra heuristics. These contributions are then distributed to the large user-base so that all may enjoy the fruits of our labor. The original and continuing purpose of this project is to permanently end  the rampant hoarding of computer ch
+ess software that has been the  case for the past 20 years.    
+\par Many people have contributed to GNU Chess. Their contributions have improved the program from being a patzer (weak program) to being a grandpatzer (decently strong program). In its growth since initial release, GNU Chess has gone from approximately class 
+D to strong master strength. It beats the Fidelity Mach 3 (USCF 2265) rather handily when run on a Sparc-1 (RISC). Since these types of RISC chips are becoming fairly common, the age of "master 
+chess in your computer lab" is now a reality. From there, it will be a short hop to master chess in your home with FSF software. 
+\par \pard \fi360\sa240 
+GNU Chess's structure is a hybrid of the Shannon Type-A and Type-B methods. It conducts a full-width search to a fixed-depth and then continues with a quiescence search for many more ply. This quiescence search helps the program find positions which can b
+e safely evaluated and which are not too turbulent. If a terminal position is too turbulent, the evaluation will be highly ina
+ccurate. Additional searching by investigating series of captures, checks, and other potentially imbalance-producing moves is quite helpful.
+\par \pard \fi360\sa240 
+GNU Chess will sacrifice pieces in order to reach known winning endings. Also, it uses a trade-down bonus to encourage the stronger side to trade off certain types of pieces thus reaching a more simplified and therefore ostensibly "clearer" position. 
+
+\par \pard \fi360\sa240 GNU Chess has certain types of knowledge regarding easier endgames.  This allows it to play these endings somewhat better than might be expected.
+\par GNU Chess has time heuristics that it uses to improve its handling of time-controls and hasten its making of "obvious" moves. It also thinks on the opponent's time.
+\par GNU Chess is interfaced to the SUN Windows and X Windows display protocols and can display its pieces in elaborate format, similar to chess diagrams.
+\par GNU Chess has an opening book which consists of many variations from MCO (Modern Chess Openings), and some from ECO.
+\par \pard \fi360\sa240 For comparison purposes, GNU Chess running on a VAX 8650 is stronger than the famous Chess 4.5 running on a CDC 6400. On a Sparc-1, GNU 1.55 (or later) is probably about 2350-2400 strength (USCF rating estimated).
+\par \pard \fi360\sa240 
+We wish to acknowledge the contributions of the following individuals: (in alphabetical order) Jim Aspnes, Wayne Christopher, Steve Dougherty, David Goldberg, Richard Greenblatt, Larry Kaufman, David Kittinger, Hans-Erik Sandstrom, Richard Stallman, John 
+Stanback, Ken Thompson.
+\par Contact information: The author may be reached by a variety of m
+ethods. Via U.S. mail: Stuart Cracraft, P.O. Box 2841, Laguna Hills, Ca. 92654-2841. Via Email: cracraft@wheaties.ai.mit.edu.  The author may also be contacted via the Free Software Foundation, Inc. 675 Massachusetts Ave.,Cambridge MA 02139.
+\par }
