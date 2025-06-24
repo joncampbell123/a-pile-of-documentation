@@ -159,6 +159,19 @@ p:func(strong, b.important) {
 	name:value;
 }
 
+p {
+	name:value
+}
+
+@media page {
+	h1 {
+		name:value;
+	}
+	h2 {
+		name:value;
+	}
+}
+
 @font-face {
 	font-family:'FontAwesome';
 	src:url("fonts/fontawesome-webfont.eot?v=4.7.0");

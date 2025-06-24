@@ -97,20 +97,71 @@ def CSSMidFancyStringMatchRule(rule,indent=0): # rule = CSSMatchRule
     #
     return r
 
-def CSSMidFancyString(ent,indent=1): # ent = CSSBlock
+def CSSMidFancyStringAtRule(atrule,indent=0): # atrule = CSSAtRule
     spc = " " * (indent*4)
     r = ""
     #
+    if not atrule.name == None:
+        if not r == "":
+            r += " "
+        else:
+            r = spc
+        r += "@" + atrule.name
+    #
+    if len(atrule.tokens) > 0:
+        for ent in atrule.tokens:
+            if not r == "":
+                r += " "
+            else:
+                r = spc
+            r += ent.text
+    #
+    return r
+
+def CSSMidFancyStringBlock(ent,indent=1): # ent = CSSBlock
+    spc = " " * (indent*4)
+    r = ""
+    #
+    if not ent.atrule == None:
+        v = CSSMidFancyStringAtRule(ent.atrule,indent+1)
+        if not v == "":
+            if not r == "":
+                r += "\n"
+            r += spc + "at rule:\n" + v
     if not ent.rule == None:
         v = CSSMidFancyStringMatchRule(ent.rule,indent+1)
         if not v == "":
             if not r == "":
                 r += "\n"
             r += spc + "match rule:\n" + v
+    if not ent.nvlist == None and len(ent.nvlist) > 0:
+        if not r == "":
+            r += "\n"
+        r += spc + "nvpairs:"
+        indent2 = indent + 1
+        spc2 = " " * (indent2*4)
+        for i,(name,vl) in enumerate(ent.nvlist.items()):
+            if not r == "":
+                r += "\n"
+            r += spc2 + name + ":"
+            if vl.valueType == 'tokens':
+                for t in vl.value:
+                    if t.token == 'ws':
+                        r += " "
+                    else:
+                        r += " " + t.text
+            r += ";"
+    if not ent.subblocklist == None and len(ent.subblocklist) > 0:
+        for subent in ent.subblocklist:
+            v = CSSMidFancyStringBlock(subent,indent+1)
+            if not v == "":
+                if not r == "":
+                    r += "\n"
+                r += spc + "subblock:\n" + v
     #
     return r
 
 for ent in CSSmidparse(rawcss,state):
     print("----CSS block----")
-    print(CSSMidFancyString(ent))
+    print(CSSMidFancyStringBlock(ent))
 
