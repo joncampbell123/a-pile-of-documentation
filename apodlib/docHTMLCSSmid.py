@@ -589,6 +589,7 @@ def CSSOneBlock(state):
                 if len(subs) > 0 and subs[-1] == '{':
                     subs.pop()
                     if len(subs) == 0:
+                        css.atrule.tokens.append(t)
                         break
             #
             css.atrule.tokens.append(t)

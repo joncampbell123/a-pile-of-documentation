@@ -16,8 +16,7 @@ def CSSMidFancyStringPseudoClassSelector(pcs,indent=0): # pcs = CSSPseudoClassSe
     if not pcs.tokens == None and len(pcs.tokens) > 0:
         r += "("
         for t in pcs.tokens:
-            if not t.text == None:
-                r += t.text
+            r += CSSMidFancyStringToken(t)
         r += ")"
     #
     return r
@@ -116,7 +115,28 @@ def CSSMidFancyStringAtRule(atrule,indent=0): # atrule = CSSAtRule
                 r = spc
             r += ent.text
     #
+    if len(atrule.blocks) > 0:
+        indent2 = indent + 1
+        spc2 = " " * (indent2*4)
+        for bl in atrule.blocks:
+            v = CSSMidFancyStringBlock(bl,indent2+1)
+            if not v == "":
+                if not r == "":
+                    r += "\n"
+                r += spc2 + "block:\n" + v
+    #
     return r
+
+def CSSMidFancyStringToken(t):
+    if t.token == 'url':
+        return "url("+t.text+")"
+    if t.token == 'hash':
+        return "#"+t.text
+    if t.token == 'class':
+        return "."+t.text
+    if t.token == 'function':
+        return t.text+"("
+    return t.text
 
 def CSSMidFancyStringBlock(ent,indent=1): # ent = CSSBlock
     spc = " " * (indent*4)
@@ -149,7 +169,7 @@ def CSSMidFancyStringBlock(ent,indent=1): # ent = CSSBlock
                     if t.token == 'ws':
                         r += " "
                     else:
-                        r += " " + t.text
+                        r += " " + CSSMidFancyStringToken(t)
             r += ";"
     if not ent.subblocklist == None and len(ent.subblocklist) > 0:
         for subent in ent.subblocklist:

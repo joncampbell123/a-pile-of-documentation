@@ -163,6 +163,15 @@ p {
 	name:value
 }
 
+@layer page1 {
+	h1 {
+		name:value;
+	}
+	h2 {
+		name:value;
+	}
+}
+
 @media page {
 	h1 {
 		name:value;
