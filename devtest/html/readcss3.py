@@ -33,7 +33,7 @@ def CSSMidFancyStringSimpleSelector(ss,indent=0): # ss = CSSSimpleSelector
     for ent in ss.idSelectors:
         r += "#" + ent
     #
-    for ent in ss.attrSelectors:
+    for ent in ss.attrSelectors: # ent = CSSAttributeSelector
         r += "["
         r += ent.attribute
         if ent.howMatch == 'exact':
@@ -56,10 +56,10 @@ def CSSMidFancyStringSimpleSelector(ss,indent=0): # ss = CSSSimpleSelector
             r += ent.value
         r += "]"
     #
-    for ent in ss.pseudoClassSelectors:
+    for ent in ss.pseudoClassSelectors: # ent = CSSPseudoClassSelector
         r += ":"+CSSMidFancyStringPseudoClassSelector(ent,indent+1)
     #
-    for ent in ss.pseudoElementSelectors:
+    for ent in ss.pseudoElementSelectors: # ent = str
         r += "::"+ent
     #
     return r
