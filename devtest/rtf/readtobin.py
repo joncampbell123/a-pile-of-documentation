@@ -13,7 +13,42 @@ rawrtf = rawrtfloadfile(inFile)
 
 llrtfstate = RTFllReaderState()
 controlspc = False
+hexasm = None
+dohexasm = False
+
+def hex2bin(hexasm):
+    global controlspc
+    #
+    binary = b''
+    while len(hexasm) >= 2:
+        binary += int(hexasm[0:2].decode('ascii'),16).to_bytes(1,'little')
+        hexasm = hexasm[2:]
+    if len(binary) > 0:
+        if controlspc:
+            controlspc = False
+            if re.match(b'[a-zA-Z0-9\- ]',ent.text):
+                sys.stdout.buffer.write(b' ')
+    return binary
+
 for ent in RTFllParse(rawrtf,llrtfstate):
+    if ent.token == 'text':
+        sys.stderr.buffer.write(ent.text)
+        if dohexasm:
+            if re.match(b'^[0-9a-fA-F]+$',ent.text):
+                hexasm += ent.text
+                continue
+            else:
+                binary = hex2bin(hexasm)
+                sys.stdout.buffer.write(b'\\bin'+str(len(binary)).encode('ascii'))
+                sys.stdout.buffer.write(binary)
+                dohexasm = False
+    else:
+        if dohexasm:
+            binary = hex2bin(hexasm)
+            sys.stdout.buffer.write(b'\\bin'+str(len(binary)).encode('ascii'))
+            sys.stdout.buffer.write(binary)
+            dohexasm = False
+    #
     if ent.token == 'control':
         if ent.destination:
             sys.stdout.buffer.write(b'\\*')
@@ -21,6 +56,10 @@ for ent in RTFllParse(rawrtf,llrtfstate):
         if not ent.param == None:
             sys.stdout.buffer.write(str(ent.param).encode('ascii'))
         controlspc = True
+        #
+        if ent.text == b'objdata':
+            dohexasm = True
+            hexasm = b''
     else:
         if controlspc:
             controlspc = False
