@@ -20,9 +20,8 @@ def hex2bin(hexasm):
     global controlspc
     #
     binary = b''
-    while len(hexasm) >= 2:
-        binary += int(hexasm[0:2].decode('ascii'),16).to_bytes(1,'little')
-        hexasm = hexasm[2:]
+    for i in range(0,len(hexasm) & (~1),2):
+        binary += int(hexasm[i:i+2].decode('ascii'),16).to_bytes(1,'little')
     if len(binary) > 0:
         if controlspc:
             controlspc = False
