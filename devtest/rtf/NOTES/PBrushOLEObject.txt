@@ -1,0 +1,31 @@
+
+Example, Word 2.0 PBrush embed:
+
+{\object\objemb\rsltmerge\objsetsize\objw8266\objh5476{\*\objclass PBrush}{\*\objdata 01050000020000000700000050427275736800000000000c00000030203020353531203336350000670000
+424de6660000000000003e00000028000000270200006d0100000100010000000000a8660000c40e0000c40e0000000000000000000000000000ffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+
+Example, Word 97 MS Paint embed:
+
+{\*\do\dobxcolumn\dobypara\dodhgt8192\dptxbx{\dptxbxtext\pard\plain \widctlpar\adjustright \fs20\cgrid {\pard\plain \widctlpar\adjustright \fs20\cgrid {\object\objemb\objw4906\objh3105\objscalex63\objscaley63{\*\objclass PBrush}
+{\*\objdata 010500000200000007000000504272757368000000000000000000801f0000
+424d7e1f0000000000003e0000002800000040010000c80000000100010000000000401f0000ce0e0000c40e0000000000000000000000000000ffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+
+Obviously there is some data structure at the start that preceeds a BMP file
+structure. It's also obvious there is a 32-bit DWORD just before the BMP file
+header that gives the length of the BMP file.
+
+What is the data before that? Well...
+
+[OLE Stream Header]
+DWORD    dwVerFromFile (0x0501 = 5.1?)
+DWORD    ctype (0x2 = CT_EMBEDDED)
+DWORD    class string length (including NUL byte at end of string)
+char[]   class string (here: "PBrush")
+[???]
+DWORD    0 (unknown)
+DWORD    length of unknown text string (Windows 3.1) or 0 (Windows 95 and later)
+char[]   unknown text string (Windows 3.1: dimensions of the image as text?)
+[PBrush]
+DWORD    Length of the following BMP file
+char[]   BMP file (file header, BMP header, palette, bits, everything)
+
