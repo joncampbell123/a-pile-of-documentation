@@ -42,6 +42,8 @@ for ent in RTFllParse(rawrtf,llrtfstate):
                 sys.stdout.buffer.write(b'\\bin'+str(len(binary)).encode('ascii'))
                 sys.stdout.buffer.write(binary)
                 dohexasm = False
+    elif ent.token == 'control' and dohexasm and len(hexasm) == 0:
+        True
     else:
         if dohexasm:
             binary = hex2bin(hexasm)
@@ -57,7 +59,7 @@ for ent in RTFllParse(rawrtf,llrtfstate):
             sys.stdout.buffer.write(str(ent.param).encode('ascii'))
         controlspc = True
         #
-        if ent.text == b'objdata':
+        if ent.text == b'objdata' or ent.text == b'pict':
             dohexasm = True
             hexasm = b''
     else:
