@@ -32,7 +32,6 @@ def hex2bin(hexasm):
 
 for ent in RTFllParse(rawrtf,llrtfstate):
     if ent.token == 'text':
-        sys.stderr.buffer.write(ent.text)
         if dohexasm:
             if re.match(b'^[0-9a-fA-F]+$',ent.text):
                 hexasm += ent.text
