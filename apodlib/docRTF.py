@@ -73,7 +73,7 @@ def RTFllParse(blob,state=RTFllReaderState()):
                 t.token = curbr.decode('ascii')
                 yield t
             elif not ctlesc == None:
-                if ctlesc == b'\\' or ctlesc == b'\'' or ctlesc == b'\"':
+                if ctlesc == b'\\' or ctlesc == b'{' or ctlesc == b'}':
                     t = RTFToken()
                     t.token = 'text'
                     t.text = ctlesc.decode('ascii')
