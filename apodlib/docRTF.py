@@ -96,7 +96,20 @@ def RTFllParse(blob,state=RTFllReaderState()):
                 t.text = ctlaz
                 if not desttag == None and not desttag == '':
                     t.destination = True
-                yield t
+                #
+                # Special handling: \binN N bytes of binary data follow
+                if t.text == b'bin':
+                    if t.param > 0:
+                        i = end
+                        end = i + t.param
+                        if end > len(blob):
+                            end = len(blob)
+                        t = RTFToken()
+                        t.token = 'binary'
+                        t.binary = blob[i:end]
+                        yield t
+                else:
+                    yield t
             else:
                 raise Exception("Unexpected! "+str([desttag,ctlaz,ctlN,ctlesc,curbr,hexen,nl]))
             #

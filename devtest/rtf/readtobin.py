@@ -17,16 +17,9 @@ hexasm = None
 dohexasm = False
 
 def hex2bin(hexasm):
-    global controlspc
-    #
     binary = b''
     for i in range(0,len(hexasm) & (~1),2):
         binary += int(hexasm[i:i+2].decode('ascii'),16).to_bytes(1,'little')
-    if len(binary) > 0:
-        if controlspc:
-            controlspc = False
-            if re.match(b'[a-zA-Z0-9\- ]',ent.text):
-                sys.stdout.buffer.write(b' ')
     return binary
 
 for ent in RTFllParse(rawrtf,llrtfstate):
@@ -38,7 +31,7 @@ for ent in RTFllParse(rawrtf,llrtfstate):
             else:
                 binary = hex2bin(hexasm)
                 if len(binary) > 0:
-                    sys.stdout.buffer.write(b'\\bin'+str(len(binary)).encode('ascii'))
+                    sys.stdout.buffer.write(b'\\bin'+str(len(binary)).encode('ascii')+b' ')
                     sys.stdout.buffer.write(binary)
                     controlspc = True
                 dohexasm = False
@@ -48,7 +41,7 @@ for ent in RTFllParse(rawrtf,llrtfstate):
         if dohexasm:
             binary = hex2bin(hexasm)
             if len(binary) > 0:
-                sys.stdout.buffer.write(b'\\bin'+str(len(binary)).encode('ascii'))
+                sys.stdout.buffer.write(b'\\bin'+str(len(binary)).encode('ascii')+b' ')
                 sys.stdout.buffer.write(binary)
                 controlspc = True
             dohexasm = False
@@ -64,6 +57,10 @@ for ent in RTFllParse(rawrtf,llrtfstate):
         if ent.text == b'objdata' or ent.text == b'pict':
             dohexasm = True
             hexasm = b''
+    elif ent.token == 'binary':
+        sys.stdout.buffer.write(b'\\bin'+str(len(ent.binary)).encode('ascii')+b' ')
+        controlspc = True
+        sys.stdout.buffer.write(ent.binary)
     else:
         if controlspc:
             controlspc = False
