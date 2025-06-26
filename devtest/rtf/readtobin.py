@@ -38,18 +38,20 @@ for ent in RTFllParse(rawrtf,llrtfstate):
                 continue
             else:
                 binary = hex2bin(hexasm)
-                sys.stdout.buffer.write(b'\\bin'+str(len(binary)).encode('ascii'))
-                sys.stdout.buffer.write(binary)
-                controlspc = True
+                if len(binary) > 0:
+                    sys.stdout.buffer.write(b'\\bin'+str(len(binary)).encode('ascii'))
+                    sys.stdout.buffer.write(binary)
+                    controlspc = True
                 dohexasm = False
     elif ent.token == 'control' and dohexasm and len(hexasm) == 0:
         True
     else:
         if dohexasm:
             binary = hex2bin(hexasm)
-            sys.stdout.buffer.write(b'\\bin'+str(len(binary)).encode('ascii'))
-            sys.stdout.buffer.write(binary)
-            controlspc = True
+            if len(binary) > 0:
+                sys.stdout.buffer.write(b'\\bin'+str(len(binary)).encode('ascii'))
+                sys.stdout.buffer.write(binary)
+                controlspc = True
             dohexasm = False
     #
     if ent.token == 'control':
