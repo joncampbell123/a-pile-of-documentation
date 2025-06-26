@@ -69,7 +69,8 @@ def RTFllParse(blob,state=RTFllReaderState()):
                 True # ignore whitespace
             elif not curbr == None:
                 t = RTFToken()
-                t.text = t.token = curbr.decode('ascii')
+                t.text = curbr
+                t.token = curbr.decode('ascii')
                 yield t
             elif not ctlesc == None:
                 if ctlesc == b'\\' or ctlesc == b'\'' or ctlesc == b'\"':
@@ -97,7 +98,7 @@ def RTFllParse(blob,state=RTFllReaderState()):
                     t.destination = True
                 yield t
             else:
-                print(str([desttag,ctlaz,ctlN,ctlesc,curbr,hexen,nl]))
+                raise Exception("Unexpected! "+str([desttag,ctlaz,ctlN,ctlesc,curbr,hexen,nl]))
             #
             i = end
         else:
