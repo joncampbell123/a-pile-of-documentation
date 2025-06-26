@@ -12,6 +12,7 @@ inFile = sys.argv[1]
 rawrtf = rawrtfloadfile(inFile)
 
 llrtfstate = RTFllReaderState()
+controlspc = False
 for ent in RTFllParse(rawrtf,llrtfstate):
     if ent.token == 'control':
         if ent.destination:
@@ -19,7 +20,11 @@ for ent in RTFllParse(rawrtf,llrtfstate):
         sys.stdout.buffer.write(b'\\'+ent.text)
         if not ent.param == None:
             sys.stdout.buffer.write(str(ent.param).encode('ascii'))
-        sys.stdout.buffer.write(b' ')
+        controlspc = True
     else:
+        if controlspc:
+            controlspc = False
+            if re.match(b'[a-zA-Z0-9\- ]',ent.text):
+                sys.stdout.buffer.write(b' ')
         sys.stdout.buffer.write(ent.text)
 
