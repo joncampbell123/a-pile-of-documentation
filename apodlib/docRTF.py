@@ -38,8 +38,8 @@ def rawrtfloadfile(path):
 def RTFllParse(blob,state=RTFllReaderState()):
     i = 0
     while i < len(blob):
-        p = re.search(b'\\\\(\\*\\\\)?([a-zA-Z]+)(\-?[0-9]*)? ?|\\\\\'([0-9a-fA-F]{2})|\\\\([^a-zA-Z0-9 ])|(\{|\})|(\r\n|\n\r|[\r\n\f])',blob[i:])
-        # group             0         1          2                    3                    4                      5       6
+        p = re.search(b'\\\\(\\*\\\\)?([a-zA-Z]+)(\-?[0-9]*)? ?|\\\\\'([0-9a-fA-F]{2})|\\\\([^a-zA-Z0-9 ])|(\{|\})|(\r\n|\n\r|[\r\n\t])',blob[i:])
+        # group             0         1          2                    3                    4               5       6
         if p:
             begin = p.span()[0]+i
             end = p.span()[1]+i
@@ -66,7 +66,13 @@ def RTFllParse(blob,state=RTFllReaderState()):
                 yield t
             #
             if not nl == None:
-                True # ignore whitespace
+                if nl == b'\t':
+                    t = RTFToken()
+                    t.token = 'special'
+                    t.text = nl
+                    yield t
+                else:
+                    True # ignore whitespace
             elif not curbr == None:
                 t = RTFToken()
                 t.text = curbr
