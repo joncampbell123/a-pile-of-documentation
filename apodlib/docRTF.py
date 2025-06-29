@@ -116,6 +116,19 @@ def RTFllParse(blob,state=RTFllReaderState()):
                         yield t
                 else:
                     yield t
+            # NTS: You know how \u and \uc work where you skip \uc N bytes after \u? Well, apparently by "N" bytes
+            #      they really mean N characters after decoding escapes. See "word2000-unicode.rtf" where \uc1 is
+            #      expected to skip one byte as follows:
+            #
+            #      \uh      skip "h"
+            #      \u\'aa   skip 0xAA (if you skip one byte in the RTF, you'll then read 'aa as text!)
+            #
+            #      So in typical Microsoft fashion, this raises more questions. Questions like:
+            #      - Does \\ count as one byte?
+            #      - If the file is RTF-J, does one byte mean one byte or one DBCS character? (i'm guessing one DBCS,
+            #        because Microsoft)
+            #
+            #      Right.
             else:
                 raise Exception("Unexpected! "+str([desttag,ctlaz,ctlN,ctlesc,curbr,hexen,nl]))
             #
