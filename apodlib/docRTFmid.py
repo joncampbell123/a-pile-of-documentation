@@ -148,13 +148,20 @@ def RTFmidParseLL(blob,state=RTFmidReaderState()):
                         # if the next token is text, peek() and modify the token in place to chop off the first N "bytes"
                         # so that next loop iteration, the truncated text is handled normally
                         t = state.peek()
-                        if t.token == 'text':
-                            skip = state.state['uc']
-                            if skip > len(t.text):
-                                skip = len(t.text)
-                            t.text = t.text[skip:]
-                            if len(t.text) == 0: # if truncation removes all the text, discard the token entirely and continue to next
+                        skip = state.state['uc']
+                        while t.token == 'text':
+                            cut = skip
+                            if cut > len(t.text):
+                                cut = len(t.text)
+                            skip = skip - cut
+                            # truncate bytes according to cut, remove text token entirely if no text left
+                            t.text = t.text[cut:]
+                            if len(t.text) == 0:
                                 state.discard()
+                            else:
+                                break
+                            # next!
+                            t = state.peek()
                         continue
         #
         yield t
