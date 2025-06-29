@@ -43,7 +43,13 @@ class RTFmidReaderState:
     def fill(self,i=1):
         while len(self.lookahead) < i:
             try:
-                self.lookahead.append(next(self.riter))
+                t = next(self.riter)
+                # convert token control codes as if ascii text
+                if t.token == 'control' or t.token == '{' or t.token == '}' or t.token == '\\' or t.token == 'special':
+                    if not t.text == None and isinstance(t.text,bytes):
+                        t.text = t.text.decode('ascii')
+                #
+                self.lookahead.append(t)
             except StopIteration:
                 self.lookahead.append(RTFToken())
     def peek(self,i=0):
@@ -68,15 +74,15 @@ def RTFmidParse(blob,state=RTFmidReaderState()):
             state.pushstate()
         elif t.token == '}':
             state.popstate()
-        elif t.token == 'control' and t.text == b'rtf' and t.param == 1:
+        elif t.token == 'control' and t.text == 'rtf' and t.param == 1:
             state.state["inRTF"] = True
         elif state.state["inRTF"] == True:
             if t.token == 'control':
-                if t.text == b'ansi' or t.text == b'mac' or t.text == b'pc' or t.text == b'pca':
-                    state.encoding = t.text.decode('ascii')
-                elif t.text == b'ansicpg':
+                if t.text == 'ansi' or t.text == 'mac' or t.text == 'pc' or t.text == 'pca':
+                    state.encoding = t.text
+                elif t.text == 'ansicpg':
                     state.codepage = t.param
-                elif t.text == b'uc':
+                elif t.text == 'uc':
                     if state.readMode == 'ansi':
                         continue # pretend to be pre-unicode reader that ignores unicode controls
                     if state.readMode == 'unicode':
@@ -85,7 +91,7 @@ def RTFmidParse(blob,state=RTFmidReaderState()):
                         else:
                             state.state['uc'] = 1
                         continue # do not pass to caller
-                elif t.text == b'u':
+                elif t.text == 'u':
                     if state.readMode == 'ansi':
                         continue # pretend to be pre-unicode reader that ignores unicode controls
                     if state.readMode == 'unicode':
@@ -101,7 +107,7 @@ def RTFmidParse(blob,state=RTFmidReaderState()):
                                     uc = 0
                         #
                         t.token = 'text'
-                        t.text = chr(uc).encode('utf-8')
+                        t.text = chr(uc)
                         t.param = None
                         yield t
                         # and then we have to use the last \ucN value to skip over the next N "bytes" of text.
