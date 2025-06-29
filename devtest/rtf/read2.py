@@ -21,10 +21,13 @@ rawrtf = rawrtfloadfile(inFile)
 class RTFmidReaderState:
     llstate = RTFllReaderState()
     readMode = 'unicode' # 'raw', 'ansi' or 'unicode'
-    encoding = None # set by \ansi \mac \pc \pca
-    codepage = None # set by \ansicpgN
     stateStack = None
-    stateInit = { "uc": 1, "inRTF": False }
+    stateInit = {
+        "uc": 1,
+        "inRTF": False,
+        "encoding": None, # set by \ansi \mac \pc \pca
+        "codepage": None  # set by \ansicpgN
+    }
     state = None
     lookahead = None
     riter = None
@@ -81,9 +84,9 @@ def RTFmidParseLL(blob,state=RTFmidReaderState()):
         elif state.state["inRTF"] == True:
             if t.token == 'control':
                 if t.text == 'ansi' or t.text == 'mac' or t.text == 'pc' or t.text == 'pca':
-                    state.encoding = t.text
+                    state.state['encoding'] = t.text
                 elif t.text == 'ansicpg':
-                    state.codepage = t.param
+                    state.state['codepage'] = t.param
                 elif t.text == 'uc':
                     if state.readMode == 'ansi':
                         continue # pretend to be pre-unicode reader that ignores unicode controls
