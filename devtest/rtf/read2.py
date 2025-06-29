@@ -146,27 +146,27 @@ def RTFcharsetToUnicode(bt,state):
     return bt.decode(state.getCharset())
 
 def RTFmidParse(blob,state=RTFmidReaderState()):
-    accumText = ''
-    accumTextBin = b''
+    state.accumText = ''
+    state.accumTextBin = b''
     #
     for ent in RTFmidParseLL(blob,state):
         if ent.token == 'text':
             if not ent.text == None:
                 if isinstance(ent.text,bytes):
-                    accumTextBin += ent.text
+                    state.accumTextBin += ent.text
                 elif isinstance(ent.text,str):
-                    accumText += RTFcharsetToUnicode(accumTextBin,state)
-                    accumText += ent.text
-                    accumTextBin = b''
+                    state.accumText += RTFcharsetToUnicode(state.accumTextBin,state)
+                    state.accumText += ent.text
+                    state.accumTextBin = b''
         else:
-            if len(accumTextBin) > 0:
-                accumText += RTFcharsetToUnicode(accumTextBin,state)
-                accumTextBin = b''
-            if len(accumText) > 0:
+            if len(state.accumTextBin) > 0:
+                state.accumText += RTFcharsetToUnicode(state.accumTextBin,state)
+                state.accumTextBin = b''
+            if len(state.accumText) > 0:
                 n = RTFToken()
                 n.token = 'text'
-                n.text = accumText
-                accumText = ''
+                n.text = state.accumText
+                state.accumText = ''
                 yield n
             #
             yield ent
