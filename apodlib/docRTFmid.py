@@ -5,16 +5,6 @@ import sys
 
 from apodlib.docRTF import *
 
-inFile = sys.argv[1]
-if len(sys.argv) > 2:
-    fileReadMode = sys.argv[2]
-    if not fileReadMode == 'raw' and not fileReadMode == 'unicode' and not fileReadMode == 'ansi':
-        raise Exception("File read mode must be raw, unicode, or ansi")
-else:
-    fileReadMode = None
-#
-rawrtf = rawrtfloadfile(inFile)
-
 class RTFmidReaderState:
     llstate = RTFllReaderState()
     readMode = 'unicode' # 'raw', 'ansi' or 'unicode'
