@@ -21,6 +21,7 @@ class RTFmidReaderState:
     stateStack = None
     stateInit = {
         "uc": 1,
+        "mode": None,
         "inRTF": False,
         "encoding": None, # set by \ansi \mac \pc \pca
         "codepage": None  # set by \ansicpgN
@@ -111,11 +112,26 @@ def RTFmidParseLL(blob,state=RTFmidReaderState()):
         elif t.token == 'control' and t.text == 'rtf':
             state.state["inRTF"] = True
         elif state.state["inRTF"] == True:
+            # \upr in ansi mode: do not pass tokens if unicode reading
+            if state.state['mode'] == 'upr:ansi':
+                if t.token == 'control' and t.text == 'ud' and t.destination == True:
+                    state.state['mode'] = 'upr:unicode'
+                    continue # do not pass
+                else:
+                    if state.readMode == 'unicode':
+                        continue # do not pass
+            # \upr in unicode mode (having read the \*\ud control code): do not pass tokens if ansi reading
+            elif state.state['mode'] == 'upr:unicode':
+                if state.readMode == 'ansi':
+                    continue # do not pass
+            #
             if t.token == 'control':
                 if t.text == 'ansi' or t.text == 'mac' or t.text == 'pc' or t.text == 'pca':
                     state.state['encoding'] = t.text
                 elif t.text == 'ansicpg':
                     state.state['codepage'] = t.param
+                elif t.text == 'upr':
+                    state.state['mode'] = 'upr:ansi'
                 elif t.text == 'uc':
                     if state.readMode == 'ansi':
                         continue # pretend to be pre-unicode reader that ignores unicode controls
