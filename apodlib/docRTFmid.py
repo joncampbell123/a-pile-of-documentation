@@ -124,6 +124,10 @@ def RTFmidParseLL(blob,state=RTFmidReaderState()):
         #
         if t.token == '{':
             state.pushstate()
+            # hex2bin is only supposed to occur at the same level as the control code
+            if state.state['mode'] == 'hex2bin':
+                state.state['mode'] = None
+            #
             t.stackDepth = len(state.stateStack)
         elif t.token == '}':
             state.popstate()
