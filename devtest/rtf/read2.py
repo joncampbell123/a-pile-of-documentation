@@ -65,6 +65,18 @@ class RTFmidReaderState:
         self.discard()
         return t
     def getCharset(self):
+        if self.state['encoding'] == 'ansi':
+            if not self.state['codepage'] == None and self.state['codepage'] > 0:
+                return 'cp'+str(self.state['codepage']) # i.e. \ansicpg1252 -> cp1252
+            #
+            return 'cp1252' # Windows Western ANSI is a good default to assume
+        if self.state['encoding'] == 'mac':
+            return 'mac'
+        if self.state['encoding'] == 'pc':
+            return 'cp437'
+        if self.state['encoding'] == 'pca':
+            return 'cp850'
+        #
         return 'cp1252' # Windows Western ANSI is a good default to assume
 
 def RTFmidParseLL(blob,state=RTFmidReaderState()):
