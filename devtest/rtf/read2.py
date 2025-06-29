@@ -78,6 +78,26 @@ class RTFmidReaderState:
             return 'cp850'
         #
         return 'cp1252' # Windows Western ANSI is a good default to assume
+    def initAccumText(self):
+        self.accumText = ''
+        self.accumTextBin = b''
+    def addAccumText(self,text):
+        if isinstance(text,bytes):
+            self.accumTextBin += text
+        elif isinstance(ent.text,str):
+            self.accumText += RTFcharsetToUnicode(self.accumTextBin,self)
+            self.accumText += text
+            self.accumTextBin = b''
+    def getAccumText(self):
+        if len(self.accumTextBin) > 0:
+            self.accumText += RTFcharsetToUnicode(self.accumTextBin,self)
+            self.accumTextBin = b''
+        if len(self.accumText) > 0:
+            r = self.accumText
+            self.accumText = ''
+            return r
+        #
+        return None
 
 def RTFmidParseLL(blob,state=RTFmidReaderState()):
     state.blob = blob
@@ -146,32 +166,30 @@ def RTFcharsetToUnicode(bt,state):
     return bt.decode(state.getCharset())
 
 def RTFmidParse(blob,state=RTFmidReaderState()):
-    state.accumText = ''
-    state.accumTextBin = b''
+    state.initAccumText()
     #
     for ent in RTFmidParseLL(blob,state):
         if ent.token == 'text':
             if not ent.text == None:
-                if isinstance(ent.text,bytes):
-                    state.accumTextBin += ent.text
-                elif isinstance(ent.text,str):
-                    state.accumText += RTFcharsetToUnicode(state.accumTextBin,state)
-                    state.accumText += ent.text
-                    state.accumTextBin = b''
+                state.addAccumText(ent.text)
         else:
-            if len(state.accumTextBin) > 0:
-                state.accumText += RTFcharsetToUnicode(state.accumTextBin,state)
-                state.accumTextBin = b''
-            if len(state.accumText) > 0:
+            r = state.getAccumText()
+            if not r == None:
                 n = RTFToken()
                 n.token = 'text'
-                n.text = state.accumText
-                state.accumText = ''
+                n.text = r
                 yield n
             #
             yield ent
             if not ent:
                 break
+    #
+    r = state.getAccumText()
+    if not r == None:
+        n = RTFToken()
+        n.token = 'text'
+        n.text = r
+        yield n
 
 midrtfstate = RTFmidReaderState()
 if not fileReadMode == None:
