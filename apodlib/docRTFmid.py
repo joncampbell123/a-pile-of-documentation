@@ -8,6 +8,10 @@ from apodlib.docRTF import *
 class RTFmidReaderState:
     llstate = RTFllReaderState()
     readMode = 'unicode' # 'raw', 'ansi' or 'unicode'
+    hexToBin = {
+        "pict": True,
+        "objdata": True
+    }
     stateStack = None
     stateInit = {
         "uc": 1,
@@ -70,22 +74,45 @@ class RTFmidReaderState:
         self.accumText = ''
         self.accumTextBin = b''
     def addAccumText(self,text):
-        if isinstance(text,bytes):
-            self.accumTextBin += text
-        elif isinstance(text,str):
-            self.accumText += RTFcharsetToUnicode(self.accumTextBin,self)
-            self.accumText += text
+        if self.accumMode == 'text':
+            if isinstance(text,bytes):
+                self.accumTextBin += text
+            elif isinstance(text,str):
+                self.accumText += RTFcharsetToUnicode(self.accumTextBin,self)
+                self.accumText += text
+                self.accumTextBin = b''
+    def addAccumBinary(self,text):
+        if self.accumMode == 'binary':
+            if isinstance(text,bytes):
+                self.accumTextBin += text
+    def getAccum(self):
+        if self.accumMode == 'text':
+            if len(self.accumTextBin) > 0:
+                self.accumText += RTFcharsetToUnicode(self.accumTextBin,self)
+                self.accumTextBin = b''
+            if len(self.accumText) > 0:
+                r = RTFToken()
+                r.token = 'text'
+                r.text = self.accumText
+                self.accumText = ''
+                return r
+        elif self.accumMode == 'binary':
+                r = RTFToken()
+                r.token = 'binary'
+                r.text = self.accumTextBin
+                self.accumTextBin = b''
+                return r
+        else:
             self.accumTextBin = b''
-    def getAccumText(self):
-        if len(self.accumTextBin) > 0:
-            self.accumText += RTFcharsetToUnicode(self.accumTextBin,self)
-            self.accumTextBin = b''
-        if len(self.accumText) > 0:
-            r = self.accumText
             self.accumText = ''
-            return r
         #
         return None
+
+def RTFhex2bin(h):
+    r = b''
+    for i in range(0,len(h) & (~1),2):
+        r += bytes([int(h[i:i+2],16)])
+    return r
 
 def RTFmidParseLL(blob,state=RTFmidReaderState()):
     state.blob = blob
@@ -116,6 +143,12 @@ def RTFmidParseLL(blob,state=RTFmidReaderState()):
             elif state.state['mode'] == 'upr:unicode':
                 if state.readMode == 'ansi':
                     continue # do not pass
+            # hex to bin conversion
+            if t.token == 'text' and state.state['mode'] == 'hex2bin':
+                if re.match(b'^[0-9a-fA-F]+$',t.text):
+                    t.token = 'binary'
+                    t.binary = RTFhex2bin(t.text)
+                    t.text = None
             #
             if t.token == 'control':
                 if t.text == 'ansi' or t.text == 'mac' or t.text == 'pc' or t.text == 'pca':
@@ -123,7 +156,16 @@ def RTFmidParseLL(blob,state=RTFmidReaderState()):
                 elif t.text == 'ansicpg':
                     state.state['codepage'] = t.param
                 elif t.text == 'upr':
-                    state.state['mode'] = 'upr:ansi'
+                    if state.state['mode'] == None:
+                        state.state['mode'] = 'upr:ansi'
+                elif t.text == 'objdata' and t.destination == True:
+                    if state.state['mode'] == None:
+                        if state.hexToBin['objdata'] == True:
+                            state.state['mode'] = 'hex2bin'
+                elif t.text == 'pict':
+                    if state.state['mode'] == None:
+                        if state.hexToBin['pict'] == True:
+                            state.state['mode'] = 'hex2bin'
                 elif t.text == 'uc':
                     if state.readMode == 'ansi':
                         continue # pretend to be pre-unicode reader that ignores unicode controls
@@ -179,27 +221,25 @@ def RTFcharsetToUnicode(bt,state):
 
 def RTFmidParse(blob,state=RTFmidReaderState()):
     state.initAccumText()
+    state.accumMode = ''
     #
     for ent in RTFmidParseLL(blob,state):
+        if not state.accumMode == ent.token:
+            r = state.getAccum()
+            if not r == None:
+                yield r
+            state.accumMode = ent.token
+        #
         if ent.token == 'text':
             if not ent.text == None:
                 state.addAccumText(ent.text)
+        elif ent.token == 'binary':
+            if not ent.binary == None:
+                state.addAccumBinary(ent.binary)
         else:
-            r = state.getAccumText()
-            if not r == None:
-                n = RTFToken()
-                n.token = 'text'
-                n.text = r
-                yield n
-            #
             yield ent
-            if not ent:
-                break
     #
-    r = state.getAccumText()
+    r = state.getAccum()
     if not r == None:
-        n = RTFToken()
-        n.token = 'text'
-        n.text = r
-        yield n
+        yield r
 
