@@ -28,6 +28,10 @@ class RTFToken:
             r += ' text='+str(self.text)
         r += ']'
         return r
+    def __bool__(self):
+        if not self.token == None:
+            return True
+        return False
 
 def rawrtfloadfile(path):
     f = open(path,"rb")
