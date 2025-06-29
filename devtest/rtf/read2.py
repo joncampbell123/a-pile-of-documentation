@@ -61,8 +61,10 @@ class RTFmidReaderState:
         t = self.peek()
         self.discard()
         return t
+    def getCharset(self):
+        return 'cp1252' # Windows Western ANSI is a good default to assume
 
-def RTFmidParse(blob,state=RTFmidReaderState()):
+def RTFmidParseLL(blob,state=RTFmidReaderState()):
     state.blob = blob
     state.riter = iter(RTFllParse(state.blob,state.llstate))
     while True:
@@ -74,7 +76,7 @@ def RTFmidParse(blob,state=RTFmidReaderState()):
             state.pushstate()
         elif t.token == '}':
             state.popstate()
-        elif t.token == 'control' and t.text == 'rtf' and t.param == 1:
+        elif t.token == 'control' and t.text == 'rtf':
             state.state["inRTF"] = True
         elif state.state["inRTF"] == True:
             if t.token == 'control':
@@ -124,6 +126,37 @@ def RTFmidParse(blob,state=RTFmidReaderState()):
                         continue
         #
         yield t
+
+def RTFcharsetToUnicode(bt,state):
+    return bt.decode(state.getCharset())
+
+def RTFmidParse(blob,state=RTFmidReaderState()):
+    accumText = ''
+    accumTextBin = b''
+    #
+    for ent in RTFmidParseLL(blob,state):
+        if ent.token == 'text':
+            if not ent.text == None:
+                if isinstance(ent.text,bytes):
+                    accumTextBin += ent.text
+                elif isinstance(ent.text,str):
+                    accumText += RTFcharsetToUnicode(accumTextBin,state)
+                    accumText += ent.text
+                    accumTextBin = b''
+        else:
+            if len(accumTextBin) > 0:
+                accumText += RTFcharsetToUnicode(accumTextBin,state)
+                accumTextBin = b''
+            if len(accumText) > 0:
+                n = RTFToken()
+                n.token = 'text'
+                n.text = accumText
+                accumText = ''
+                yield n
+            #
+            yield ent
+            if not ent:
+                break
 
 midrtfstate = RTFmidReaderState()
 if not fileReadMode == None:
