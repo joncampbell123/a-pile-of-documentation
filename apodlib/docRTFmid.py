@@ -107,8 +107,10 @@ def RTFmidParseLL(blob,state=RTFmidReaderState()):
         #
         if t.token == '{':
             state.pushstate()
+            t.stackDepth = len(state.stateStack)
         elif t.token == '}':
             state.popstate()
+            t.stackDepth = len(state.stateStack)
         elif t.token == 'control' and t.text == 'rtf':
             state.state["inRTF"] = True
         elif state.state["inRTF"] == True:

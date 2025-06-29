@@ -8,6 +8,7 @@ class RTFllReaderState:
 
 class RTFToken:
     destination = None
+    stackDepth = None
     binary = None # \bin data
     token = None
     param = None
@@ -16,6 +17,8 @@ class RTFToken:
         True
     def __str__(self):
         r = '['+type(self).__name__
+        if not self.stackDepth == None:
+            r += ' stackdepth='+str(self.stackDepth)
         if not self.destination == None:
             r += ' dest='+str(self.destination)
         if not self.binary == None:
