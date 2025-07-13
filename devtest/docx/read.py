@@ -9,6 +9,98 @@ sys.path.append(os.path.join(os.path.dirname(__file__),'..','..'))
 
 inFile = sys.argv[1]
 
+# version made by                 2 bytes
+# version needed to extract       2 bytes
+# general purpose bit flag        2 bytes
+# compression method              2 bytes
+# last mod file time              2 bytes
+# last mod file date              2 bytes
+# crc-32                          4 bytes
+# compressed size                 4 bytes
+# uncompressed size               4 bytes
+# filename length                 2 bytes
+# extra field length              2 bytes
+# file comment length             2 bytes
+# disk number start               2 bytes
+# internal file attributes        2 bytes
+# external file attributes        4 bytes
+# relative offset of local header 4 bytes
+#                                 =42 bytes
+#
+# filename (variable size)
+# extra field (variable size)
+# file comment (variable size)
+
+class ZIPCentralDirectoryFileHeader:
+    signature = 0x02014b50
+    versionMadeBy = None
+    versionNeededToExtract = None
+    generalPurposeBitFlag = None
+    compressionMethod = None
+    lastModFileTime = None
+    lastModFileDate = None
+    crc32 = None
+    compressedSize = None
+    uncompressedSize = None
+    filenameLength = None
+    extraFieldLength = None
+    fileCommentLength = None
+    diskNumberStart = None
+    internalFileAttributes = None
+    externalFileAttributes = None
+    relativeOffsetOfLocalHeader = None
+    filename = None
+    extraField = None
+    fileComment = None
+    def __init__(self,f):
+        if f:
+            [
+                self.versionMadeBy,
+                self.versionNeededToExtract,
+                self.generalPurposeBitFlag,
+                self.compressionMethod,
+                self.lastModFileTime,
+                self.lastModFileDate,
+                self.crc32,
+                self.compressedSize,
+                self.uncompressedSize,
+                self.filenameLength,
+                self.extraFieldLength,
+                self.fileCommentLength,
+                self.diskNumberStart,
+                self.internalFileAttributes,
+                self.externalFileAttributes,
+                self.relativeOffsetOfLocalHeader
+            ] = struct.unpack("<HHHHHHLLLHHHHHLL",f.read(42))
+            if not self.filenameLength == None and self.filenameLength > 0:
+                self.filename = f.read(self.filenameLength)
+            if not self.extraFieldLength == None and self.extraFieldLength > 0:
+                self.extraField = f.read(self.extraFieldLength)
+            if not self.fileCommentLength == None and self.fileCommentLength > 0:
+                self.fileComment = f.read(self.fileCommentLength)
+    def __str__(self):
+        r = "[ZIPCentralDirectoryFileHeader"
+        if not self.versionNeededToExtract == None:
+            r += " versionNeed="+str(self.versionNeededToExtract)
+        if not self.generalPurposeBitFlag == None:
+            r += " genBitFlag="+hex(self.generalPurposeBitFlag)
+        if not self.compressionMethod == None:
+            r += " compression="+str(self.compressionMethod)
+        if not self.filename == None:
+            r += " filename="+str(self.filename)
+        if not self.compressedSize == None:
+            r += " csize="+str(self.compressedSize)
+        if not self.uncompressedSize == None:
+            r += " usize="+str(self.uncompressedSize)
+        if not self.relativeOffsetOfLocalHeader == None:
+            r += " lhoffset="+str(self.relativeOffsetOfLocalHeader)
+        if not self.extraField == None:
+            r += " extra="+str(self.extraField)
+        if not self.fileComment == None:
+            r += " comment="+str(self.fileComment)
+        r += "]"
+        return r
+
 # local file header signature     4 bytes  (0x04034b50)
 # version needed to extract       2 bytes
 # general purpose bit flag        2 bytes
@@ -21,7 +113,7 @@ inFile = sys.argv[1]
 # filename length                 2 bytes
 # extra field length              2 bytes
 #                                =26 bytes
-
+#
 # filename (variable size)
 # extra field (variable size)
 
@@ -44,7 +136,8 @@ class ZIPLocalFileHeader:
     #
     def __init__(self,f):
         if f:
-            [   self.versionNeededToExtract,
+            [
+                self.versionNeededToExtract,
                 self.generalPurposeBitFlag,
                 self.compressionMethod,
                 self.lastModFileTime,
@@ -215,6 +308,10 @@ class ZIPReader:
                 self.scanPos = self.fileObject.seek(0,2) # we do not support this!
                 return None
             self.scanPos = self.fileObject.tell() + zh.compressedSize
+            return zh
+        if sig == ZIPCentralDirectoryFileHeader.signature:
+            zh = ZIPCentralDirectoryFileHeader(self.fileObject)
+            self.scanPos = self.fileObject.tell()
             return zh
         return None
     def readall(self):
