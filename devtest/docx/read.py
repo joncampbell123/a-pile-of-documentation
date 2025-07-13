@@ -35,6 +35,9 @@ class ZIPEndOfCentralDirectory:
     offsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber = None
     zipfileCommentLength = None
     zipfileComment = None
+    #
+    dataOffset = None
+    #
     def __init__(self,f):
         if f:
             [
@@ -48,6 +51,8 @@ class ZIPEndOfCentralDirectory:
             ] = struct.unpack("<HHHHLLH",f.read(18))
             if not self.zipfileCommentLength == None and self.zipfileCommentLength > 0:
                 self.zipfileComment = f.read(self.zipfileCommentLength)
+            #
+            self.dataOffset = f.tell()
     def __str__(self):
         r = "[ZIPEndOfCentralDirectory"
         if not self.sizeOfTheCentralDirectory == None:
@@ -56,6 +61,8 @@ class ZIPEndOfCentralDirectory:
             r += " cdofs="+str(self.offsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber)
         if not self.zipfileComment == None:
             r += " comment="+str(self.zipfileComment)
+        if not self.dataOffset == None:
+            r += " dataoffset="+str(self.dataOffset)
         r += "]"
         return r
 
@@ -102,6 +109,9 @@ class ZIPCentralDirectoryFileHeader:
     filename = None
     extraField = None
     fileComment = None
+    #
+    dataOffset = None
+    #
     def __init__(self,f):
         if f:
             [
@@ -128,6 +138,8 @@ class ZIPCentralDirectoryFileHeader:
                 self.extraField = f.read(self.extraFieldLength)
             if not self.fileCommentLength == None and self.fileCommentLength > 0:
                 self.fileComment = f.read(self.fileCommentLength)
+            #
+            self.dataOffset = f.tell()
     def __str__(self):
         r = "[ZIPCentralDirectoryFileHeader"
         if not self.versionNeededToExtract == None:
@@ -148,6 +160,8 @@ class ZIPCentralDirectoryFileHeader:
             r += " extra="+str(self.extraField)
         if not self.fileComment == None:
             r += " comment="+str(self.fileComment)
+        if not self.dataOffset == None:
+            r += " dataoffset="+str(self.dataOffset)
         r += "]"
         return r
 
