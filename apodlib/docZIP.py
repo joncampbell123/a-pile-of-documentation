@@ -31,10 +31,12 @@ class ZIPEndOfCentralDirectory:
     zipfileCommentLength = None
     zipfileComment = None
     #
+    headerOffset = None
     dataOffset = None
     #
     def __init__(self,f):
         if f:
+            self.headerOffset = f.tell()-4
             [
                 self.numberOfThisDisk,
                 self.numberOfTheDiskWithTheStartOfTheCentralDirectory,
@@ -56,6 +58,8 @@ class ZIPEndOfCentralDirectory:
             r += " cdofs="+str(self.offsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber)
         if not self.zipfileComment == None:
             r += " comment="+str(self.zipfileComment)
+        if not self.headerOffset == None:
+            r += " hdroffset="+str(self.headerOffset)
         if not self.dataOffset == None:
             r += " dataoffset="+str(self.dataOffset)
         r += "]"
@@ -105,10 +109,12 @@ class ZIPCentralDirectoryFileHeader:
     extraField = None
     fileComment = None
     #
+    headerOffset = None
     dataOffset = None
     #
     def __init__(self,f):
         if f:
+            self.headerOffset = f.tell()-4
             [
                 self.versionMadeBy,
                 self.versionNeededToExtract,
@@ -155,6 +161,8 @@ class ZIPCentralDirectoryFileHeader:
             r += " extra="+str(self.extraField)
         if not self.fileComment == None:
             r += " comment="+str(self.fileComment)
+        if not self.headerOffset == None:
+            r += " hdroffset="+str(self.headerOffset)
         if not self.dataOffset == None:
             r += " dataoffset="+str(self.dataOffset)
         r += "]"
@@ -191,10 +199,12 @@ class ZIPLocalFileHeader:
     filename = None # filename
     extraField = None # extraField
     #
+    headerOffset = None
     dataOffset = None
     #
     def __init__(self,f):
         if f:
+            self.headerOffset = f.tell()-4
             [
                 self.versionNeededToExtract,
                 self.generalPurposeBitFlag,
@@ -227,6 +237,8 @@ class ZIPLocalFileHeader:
             r += " csize="+str(self.compressedSize)
         if not self.uncompressedSize == None:
             r += " usize="+str(self.uncompressedSize)
+        if not self.headerOffset == None:
+            r += " hdroffset="+str(self.headerOffset)
         if not self.dataOffset == None:
             r += " dataoffset="+str(self.dataOffset)
         if not self.extraField == None:
@@ -365,10 +377,23 @@ class ZIPReader:
             self.fileObject = f
         #
         self.scanPos = 0
+    def startFromEnd(self):
+        t = self.fileObject.seek(0,2) - (65536 + 24 + 20) # seek to end - 64KB and search backwards for PK\x06\x05
+        if t < 0:
+            t = 0
+        self.fileObject.seek(t)
+        eb = self.fileObject.read()
+        lb = eb.rfind(b'PK\x05\x06')
+        if lb < 0:
+            return False
+        self.seek(lb+t)
+        return True
     def close(self):
         if self.fileObject:
             self.fileObject.close()
         self.fileObject = None
+    def tell(self):
+        return self.scanPos
     def seek(self,pos):
         if self.fileObject:
             self.scanPos = pos
