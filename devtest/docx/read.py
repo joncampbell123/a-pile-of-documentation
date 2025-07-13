@@ -2,6 +2,7 @@
 
 import os
 import sys
+import zlib
 import struct
 
 sys.path.append(os.path.join(os.path.dirname(__file__),'..','..'))
@@ -81,6 +82,105 @@ class ZIPLocalFileHeader:
         r += "]"
         return r
 
+class ZIPReaderFile:
+    zipreader = None # ZIPReader
+    lfheader = None # ZIPLocalFileHeader
+    filePos = None
+    readPos = None
+    fileSize = None
+    seekable = False
+    zlibdec = None
+    zlibmore = None
+    def __init__(self,zr,lfh):
+        self.zipreader = zr
+        self.lfheader = lfh
+        self.filePos = 0
+        self.readPos = 0
+        self.fileSize = lfh.uncompressedSize
+        if self.lfheader.compressionMethod == 0: # store
+            self.seekable = True
+        elif self.lfheader.compressionMethod == 8: # deflate
+            self.zlibdec = zlib.decompressobj(-15)
+            self.zlibmore = bytes()
+    def seek(self,pos):
+        if self.seekable:
+            if pos < 0:
+                pos = 0
+            if pos > self.fileSize:
+                pos = self.fileSize
+            self.filePos = self.readPos = pos
+    def rewind(self):
+        self.filePos = 0
+        self.readPos = 0
+        if self.zlibdec:
+            del self.zlibdec
+        if self.lfheader.compressionMethod == 8: # deflate
+            self.zlibdec = zlib.decompressobj(-15)
+            self.zlibmore = bytes()
+    def __del__(self):
+        if self.zlibdec:
+            del self.zlibdec
+    def size(self):
+        return self.fileSize
+    def read(self,n=None):
+        if self.lfheader.compressionMethod == 0: # store
+            return self.readStore(n)
+        elif self.lfheader.compressionMethod == 8: # deflate
+            return self.readDeflate(n)
+        return None
+    def readStore(self,n=None):
+        rem = self.fileSize - self.filePos
+        if not n == None and rem > n:
+            rem = n
+        if rem > 0:
+            self.zipreader.fileObject.seek(self.lfheader.dataOffset+self.filePos)
+            b = self.zipreader.fileObject.read(rem)
+            if not b == None:
+                self.filePos += len(b)
+                return b
+        #
+        return None
+    def readDeflate(self,n=None):
+        crem = self.lfheader.compressedSize - self.readPos
+        rem = self.fileSize - self.filePos
+        if not n == None and rem > n:
+            rem = n
+        #
+        if self.zlibdec.eof:
+            return None
+        #
+        rb = bytes()
+        while rem > 0:
+            self.zipreader.fileObject.seek(self.lfheader.dataOffset+self.readPos)
+            #
+            if crem > 0:
+                zb = self.zipreader.fileObject.read(crem)
+                if not zb == None:
+                    self.readPos += len(zb)
+                    self.zlibmore += zb
+                    crem -= len(zb)
+            #
+            if len(self.zlibmore) == 0:
+                break
+            #
+            ub = self.zlibdec.decompress(self.zlibmore,rem)
+            if self.zlibdec.unconsumed_tail:
+                self.zlibmore = self.zlibdec.unconsumed_tail
+            else:
+                self.zlibmore = bytes()
+            #
+            self.filePos += len(ub)
+            rem -= len(ub)
+            rb += ub
+            #
+            if self.zlibdec.eof:
+                break
+        #
+        if len(rb) > 0:
+            return rb
+        #
+        return None
+
 class ZIPReader:
     fileObject = None
     scanPos = None
@@ -123,9 +223,22 @@ class ZIPReader:
             if ent == None:
                 break
             yield ent
+    def open(self,what):
+        if isinstance(what,ZIPLocalFileHeader):
+            return ZIPReaderFile(self,what)
+        return None
 
 zr = ZIPReader(inFile)
+#
 for ze in zr.readall():
     print(ze)
+    zf = zr.open(ze)
+    if not zf == None:
+        b = zf.read()
+        print("Length "+str(zf.size())+"/"+str(len(b)))
+        print("Data: "+str(b))
+        if not zf.size() == len(b):
+            print("WARNING: Size mismatch")
+#
 zr.close()
 
