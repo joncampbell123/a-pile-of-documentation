@@ -194,6 +194,19 @@ class ZIPReaderFile:
             self.compressedSize = fh.compressedSize
             self.fileSize = fh.uncompressedSize
             self.dataOffset = fh.dataOffset
+        elif isinstance(fh,ZIPCentralDirectoryFileHeader):
+            self.compressionMethod = fh.compressionMethod
+            self.compressedSize = fh.compressedSize
+            self.fileSize = fh.uncompressedSize
+            self.dataOffset = None
+            # then look up local file header
+            oldPos = self.zipreader.scanPos
+            self.zipreader.scanPos = fh.relativeOffsetOfLocalHeader
+            lh = self.zipreader.read()
+            if lh == None or not isinstance(lh,ZIPLocalFileHeader):
+                raise Exception("Unable to look up local file header")
+            self.zipreader.scanPos = oldPos
+            self.dataOffset = lh.dataOffset
         else:
             raise Exception("Unexpected object")
         #
@@ -330,7 +343,7 @@ class ZIPReader:
                 break
             yield ent
     def open(self,what):
-        if isinstance(what,ZIPLocalFileHeader):
+        if isinstance(what,ZIPLocalFileHeader) or isinstance(what,ZIPCentralDirectoryFileHeader):
             return ZIPReaderFile(self,what)
         return None
 
