@@ -9,6 +9,56 @@ sys.path.append(os.path.join(os.path.dirname(__file__),'..','..'))
 
 inFile = sys.argv[1]
 
+# number of this disk             2 bytes
+# number of the disk with the
+# start of the central directory  2 bytes
+# total number of entries in
+# the central dir on this disk    2 bytes
+# total number of entries in
+# the central dir                 2 bytes
+# size of the central directory   4 bytes
+# offset of start of central
+# directory with respect to
+# the starting disk number        4 bytes
+# zipfile comment length          2 bytes
+#                                =18 bytes
+#
+# zipfile comment (variable size)
+
+class ZIPEndOfCentralDirectory:
+    signature = 0x06054b50
+    numberOfThisDisk = None
+    numberOfTheDiskWithTheStartOfTheCentralDirectory = None
+    totalNumberOfEntriesInTheCentralDirOnThisDisk = None
+    totalNumberOfEntriesInTheCentralDir = None
+    sizeOfTheCentralDirectory = None
+    offsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber = None
+    zipfileCommentLength = None
+    zipfileComment = None
+    def __init__(self,f):
+        if f:
+            [
+                self.numberOfThisDisk,
+                self.numberOfTheDiskWithTheStartOfTheCentralDirectory,
+                self.totalNumberOfEntriesInTheCentralDirOnThisDisk,
+                self.totalNumberOfEntriesInTheCentralDir,
+                self.sizeOfTheCentralDirectory,
+                self.offsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber,
+                self.zipfileCommentLength
+            ] = struct.unpack("<HHHHLLH",f.read(18))
+            if not self.zipfileCommentLength == None and self.zipfileCommentLength > 0:
+                self.zipfileComment = f.read(self.zipfileCommentLength)
+    def __str__(self):
+        r = "[ZIPEndOfCentralDirectory"
+        if not self.sizeOfTheCentralDirectory == None:
+            r += " cdsize="+str(self.sizeOfTheCentralDirectory)
+        if not self.offsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber == None:
+            r += " cdofs="+str(self.offsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber)
+        if not self.zipfileComment == None:
+            r += " comment="+str(self.zipfileComment)
+        r += "]"
+        return r
+
 # version made by                 2 bytes
 # version needed to extract       2 bytes
 # general purpose bit flag        2 bytes
@@ -322,7 +372,10 @@ class ZIPReader:
         if not self.fileObject.tell() == self.scanPos:
             self.fileObject.seek(self.scanPos)
         #
-        sig = struct.unpack("<L",self.fileObject.read(4))[0]
+        b = self.fileObject.read(4)
+        if len(b) < 4:
+            return None
+        sig = struct.unpack("<L",b)[0]
         #print(str(sig)+" "+str(self.fileObject.tell()))
         if sig == ZIPLocalFileHeader.signature:
             zh = ZIPLocalFileHeader(self.fileObject)
@@ -333,6 +386,10 @@ class ZIPReader:
             return zh
         if sig == ZIPCentralDirectoryFileHeader.signature:
             zh = ZIPCentralDirectoryFileHeader(self.fileObject)
+            self.scanPos = self.fileObject.tell()
+            return zh
+        if sig == ZIPEndOfCentralDirectory.signature:
+            zh = ZIPEndOfCentralDirectory(self.fileObject)
             self.scanPos = self.fileObject.tell()
             return zh
         return None
