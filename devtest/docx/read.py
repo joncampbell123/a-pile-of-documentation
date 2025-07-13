@@ -186,14 +186,19 @@ class ZIPReaderFile:
     dataOffset = None
     compressedSize = None
     compressionMethod = None
-    def __init__(self,zr,lfh):
+    def __init__(self,zr,fh):
         self.zipreader = zr
-        self.compressionMethod = lfh.compressionMethod
-        self.compressedSize = lfh.compressedSize
-        self.dataOffset = lfh.dataOffset
+        #
+        if isinstance(fh,ZIPLocalFileHeader):
+            self.compressionMethod = fh.compressionMethod
+            self.compressedSize = fh.compressedSize
+            self.fileSize = fh.uncompressedSize
+            self.dataOffset = fh.dataOffset
+        else:
+            raise Exception("Unexpected object")
+        #
         self.filePos = 0
         self.readPos = 0
-        self.fileSize = lfh.uncompressedSize
         if self.compressionMethod == 0: # store
             self.seekable = True
         elif self.compressionMethod == 8: # deflate
