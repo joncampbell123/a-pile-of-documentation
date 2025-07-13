@@ -177,22 +177,26 @@ class ZIPLocalFileHeader:
 
 class ZIPReaderFile:
     zipreader = None # ZIPReader
-    lfheader = None # ZIPLocalFileHeader
     filePos = None
     readPos = None
     fileSize = None
     seekable = False
     zlibdec = None
     zlibmore = None
+    dataOffset = None
+    compressedSize = None
+    compressionMethod = None
     def __init__(self,zr,lfh):
         self.zipreader = zr
-        self.lfheader = lfh
+        self.compressionMethod = lfh.compressionMethod
+        self.compressedSize = lfh.compressedSize
+        self.dataOffset = lfh.dataOffset
         self.filePos = 0
         self.readPos = 0
         self.fileSize = lfh.uncompressedSize
-        if self.lfheader.compressionMethod == 0: # store
+        if self.compressionMethod == 0: # store
             self.seekable = True
-        elif self.lfheader.compressionMethod == 8: # deflate
+        elif self.compressionMethod == 8: # deflate
             self.zlibdec = zlib.decompressobj(-15)
             self.zlibmore = bytes()
     def seek(self,pos):
@@ -207,7 +211,7 @@ class ZIPReaderFile:
         self.readPos = 0
         if self.zlibdec:
             del self.zlibdec
-        if self.lfheader.compressionMethod == 8: # deflate
+        if self.compressionMethod == 8: # deflate
             self.zlibdec = zlib.decompressobj(-15)
             self.zlibmore = bytes()
     def __del__(self):
@@ -216,9 +220,9 @@ class ZIPReaderFile:
     def size(self):
         return self.fileSize
     def read(self,n=None):
-        if self.lfheader.compressionMethod == 0: # store
+        if self.compressionMethod == 0: # store
             return self.readStore(n)
-        elif self.lfheader.compressionMethod == 8: # deflate
+        elif self.compressionMethod == 8: # deflate
             return self.readDeflate(n)
         return None
     def readStore(self,n=None):
@@ -226,7 +230,7 @@ class ZIPReaderFile:
         if not n == None and rem > n:
             rem = n
         if rem > 0:
-            self.zipreader.fileObject.seek(self.lfheader.dataOffset+self.filePos)
+            self.zipreader.fileObject.seek(self.dataOffset+self.filePos)
             b = self.zipreader.fileObject.read(rem)
             if not b == None:
                 self.filePos += len(b)
@@ -234,7 +238,7 @@ class ZIPReaderFile:
         #
         return None
     def readDeflate(self,n=None):
-        crem = self.lfheader.compressedSize - self.readPos
+        crem = self.compressedSize - self.readPos
         rem = self.fileSize - self.filePos
         if not n == None and rem > n:
             rem = n
@@ -244,7 +248,7 @@ class ZIPReaderFile:
         #
         rb = bytes()
         while rem > 0:
-            self.zipreader.fileObject.seek(self.lfheader.dataOffset+self.readPos)
+            self.zipreader.fileObject.seek(self.dataOffset+self.readPos)
             #
             if crem > 0:
                 zb = self.zipreader.fileObject.read(crem)
