@@ -415,7 +415,7 @@ class ZIPReader:
             zh = ZIPLocalFileHeader(self.fileObject)
             if zh.generalPurposeBitFlag & 8: # stream compression, and the crc32/compressed/uncompressed are appended to the end
                 self.scanPos = self.fileObject.seek(0,2) # we do not support this!
-                return None
+                return zh # we have to return it anyway for header lookup to work
             self.scanPos = self.fileObject.tell() + zh.compressedSize
             return zh
         if sig == ZIPCentralDirectoryFileHeader.signature:
