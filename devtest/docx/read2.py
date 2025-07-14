@@ -29,10 +29,11 @@ if not ze == None:
             zf = zr.open(ze)
             if not zf == None:
                 b = zf.read()
-                print("Length "+str(zf.size())+"/"+str(len(b)))
-                print("Data: "+str(b))
-                if not zf.size() == len(b):
-                    print("WARNING: Size mismatch")
+                if not b == None:
+                    print("Length "+str(zf.size())+"/"+str(len(b)))
+                    print("Data: "+str(b))
+                    if not zf.size() == len(b):
+                        print("WARNING: Size mismatch")
 #
 zr.close()
 
