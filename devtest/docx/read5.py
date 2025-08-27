@@ -17,6 +17,9 @@ class OOXMLReader:
     ok = False
     zipreader = None
     zipmetamap = None
+    documentPath = None
+    corePropertiesPath = None
+    extendedPropertiesPath = None
     #
     class relationship:
         Id = None
@@ -60,10 +63,17 @@ class OOXMLReader:
         self.zipreader.scan()
         self.zipmetainit()
         self.parsecontenttype()
+        #
         rels = self.parserelationshipsfile("/_rels/.rels")
         if rels:
             for rel in rels:
-                print(rel)
+                if rel.Target and rel.Type:
+                    if re.search(r'\/officeDocument$',rel.Type,flags=re.IGNORECASE):
+                        self.documentPath = self.zipreader.normalizepath(rel.Target)
+                    elif re.search(r'\/core-properties$',rel.Type,flags=re.IGNORECASE):
+                        self.corePropertiesPath = self.zipreader.normalizepath(rel.Target)
+                    elif re.search(r'\/extended-properties$',rel.Type,flags=re.IGNORECASE):
+                        self.extendedPropertiesPath = self.zipreader.normalizepath(rel.Target)
     def close(self):
         if self.zipreader:
             self.zipreader.close()
@@ -184,13 +194,23 @@ class OOXMLReader:
                     #
         # done
         del zf
+    def dbg_dump(self):
+        print("Debug dump")
+        print("  ok="+str(self.ok))
+        if self.documentPath:
+            print("  documentPath="+str(self.documentPath))
+        if self.corePropertiesPath:
+            print("  documentPath="+str(self.corePropertiesPath))
+        if self.extendedPropertiesPath:
+            print("  documentPath="+str(self.extendedPropertiesPath))
+        #
+        self.dbg_dump_metamap()
     def dbg_dump_metamap(self):
         print("Debug dump zipmetamap")
         for ent in self.zipmetamap:
-            print(str(ent)+": "+str(self.zipmetamap[ent]))
-        print("")
+            print("  "+str(ent)+": "+str(self.zipmetamap[ent]))
 
 zr = OOXMLReader(inFile)
-zr.dbg_dump_metamap()
+zr.dbg_dump()
 zr.close()
 
