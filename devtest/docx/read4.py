@@ -23,6 +23,28 @@ class ZIPHighReader:
     rootdir = None
     def __init__(self,f):
         self.zipreader = ZIPMidReader(f)
+
+    def pathtoelems(self,path):
+        fname = None
+        path = re.sub(r'/+',r'/',path)
+        pathelems = path.split('/')
+        if len(pathelems) > 0 and pathelems[0] == "":
+            pathelems = pathelems[1:]
+        if len(pathelems) > 0:
+            fname = pathelems.pop()
+            if fname == "":
+                fname = None
+        #
+        class PTEResponse:
+            fname = None
+            pathelems = None
+        #
+        resp = PTEResponse()
+        resp.fname = fname
+        resp.pathelems = pathelems
+        #
+        return resp
+
     def scan(self):
         self.zipreader.scan()
         self.rootdir = ZIPHighReader.Directory()
@@ -31,24 +53,18 @@ class ZIPHighReader:
             origpath = path
             path = path.decode(self.encoding)
             origpathstr = path
-            path = re.sub(r'/+',r'/',path)
-            if len(path) > 0 and path[0] == '/': # remove leading /
-                path = path[1:]
-            if len(path) > 0 and path[-1] == '/': # if a trailing /, it's a directory
+            resp = self.pathtoelems(path)
+            if resp == None:
                 continue
-            if len(path) == 0: # null name? forget it
+            pathelems = resp.pathelems
+            if pathelems == None:
                 continue
-            pathelems = path.split('/')
-            if len(pathelems) == 0:
-                continue
-            fname = pathelems.pop()
-            if fname == "." or fname == "..":
-                return
+            fname = resp.fname
+            if fname == None:
+                continue # can happen for /directory/ entries that end in a slash, which we want to skip
             #
             cdir = self.rootdir
             for ent in pathelems:
-                if ent == "." or ent == "..":
-                    break
                 if ent in cdir.contents:
                     ce = cdir.contents[ent]
                     if not isinstance(ce,ZIPHighReader.Directory):
@@ -61,6 +77,7 @@ class ZIPHighReader:
             if fname in cdir.contents:
                 raise Exception("ZIPHigh redefined file: "+origpathstr)
             cdir.contents[fname] = origpath
+
     def dbg_dump_dirs(self,cdir=None,cpath=""):
         if cdir == None:
             cdir = self.rootdir
@@ -72,6 +89,7 @@ class ZIPHighReader:
                 print("ZIPHIGH debug dump of "+cpath)
             else:
                 print("  "+ent+" -> "+cdir.contents[ent].decode(self.encoding))
+
     def close(self):
         if self.zipreader:
             self.zipreader.close()
