@@ -27,26 +27,23 @@ class OOXMLReader:
             r += "]"
             return r
     #
+    def zipmetainit(self,ppath="/"):
+        spath = ppath
+        if spath == "/":
+            spath = ""
+        #
+        for ent in self.zipreader.opendir(ppath):
+            if ent.dtype == 'dir':
+                self.zipmetainit(ppath=spath+"/"+ent.dname)
+            else:
+                fpath = self.zipreader.normalizepath(spath+"/"+ent.dname)
+                if not fpath in self.zipmetamap:
+                    self.zipmetamap[fpath] = OOXMLReader.zipfilemeta()
     def __init__(self,inFile):
         self.zipmetamap = { }
         self.zipreader = ZIPHighReader(inFile)
         self.zipreader.scan()
-        #
-        def metainit(self,ppath="/"):
-            spath = ppath
-            if spath == "/":
-                spath = ""
-            #
-            for ent in self.zipreader.opendir(ppath):
-                if ent.dtype == 'dir':
-                    metainit(self,ppath=spath+"/"+ent.dname)
-                else:
-                    fpath = self.zipreader.normalizepath(spath+"/"+ent.dname)
-                    if not fpath in self.zipmetamap:
-                        self.zipmetamap[fpath] = OOXMLReader.zipfilemeta()
-        #
-        metainit(self)
-        #
+        self.zipmetainit()
         self.parsecontenttype()
     def close(self):
         if self.zipreader:
