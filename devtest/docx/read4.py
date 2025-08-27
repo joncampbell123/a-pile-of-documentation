@@ -90,13 +90,98 @@ class ZIPHighReader:
             else:
                 print("  "+ent+" -> "+cdir.contents[ent].decode(self.encoding))
 
+    def opendir(self,path=None):
+        class direntstruct:
+            dtype = None
+            dname = None
+            zippath = None
+            def __str__(self):
+                r = "[direntstruct"
+                if not self.dtype == None:
+                    r += " dtype="+str(self.dtype)
+                if not self.dname == None:
+                    r += " dname="+str(self.dname)
+                if not self.zippath == None:
+                    r += " zippath="+str(self.zippath)
+                if not self.fpath == None:
+                    r += " fpath="+str(self.fpath)
+                r += "]"
+                return r
+        class dirent:
+            fpath = None
+            cdir = None
+            cit = None
+            def __init__(self,cdir):
+                self.cdir = cdir
+                self.cit = iter(cdir.contents.keys())
+            def rewind(self):
+                self.cit = iter(cdir.contents.keys())
+            def readdir(self):
+                try:
+                    nxt = next(self.cit)
+                    nv = self.cdir.contents[nxt]
+                    rsp = direntstruct()
+                    rsp.fpath = self.fpath + "/" + nxt
+                    rsp.cdir = self.cdir
+                    rsp.dname = nxt
+                    if isinstance(nv,ZIPHighReader.Directory):
+                        rsp.dtype = "dir"
+                    else:
+                        rsp.dtype = "file"
+                        rsp.zippath = nv
+                    return rsp
+                except StopIteration:
+                    return None
+            def __iter__(self):
+                return self
+            def __next__(self):
+                x = self.readdir()
+                if x == None:
+                    raise StopIteration
+                return x
+        #
+        if path == None:
+            path = ""
+        #
+        resp = self.pathtoelems(path+"/")
+        if resp == None:
+            return
+        pathelems = resp.pathelems
+        if pathelems == None:
+            return
+        fname = resp.fname
+        if not fname == None: # we did a directory (trailing slash) lookup
+            return
+        fpath = ""
+        cdir = self.rootdir
+        for ent in pathelems:
+            if isinstance(cdir.contents[ent],ZIPHighReader.Directory):
+                fpath = fpath + "/" + ent
+                cdir = cdir.contents[ent]
+            else:
+                return
+        #
+        dr = dirent(cdir)
+        dr.fpath = fpath
+        return dr
+
     def close(self):
         if self.zipreader:
             self.zipreader.close()
         self.zipreader = None
 
+def opendirenum(zr,path=None):
+    if path == None:
+        path = ""
+    #
+    for x in zr.opendir(path):
+        print(x)
+        if x.dtype == 'dir':
+            opendirenum(zr,path+"/"+x.dname)
+
 zr = ZIPHighReader(inFile)
 zr.scan()
 zr.dbg_dump_dirs()
+opendirenum(zr)
 zr.close()
 
