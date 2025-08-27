@@ -18,6 +18,21 @@ class OOXMLReader:
     zipreader = None
     zipmetamap = None
     #
+    class relationship:
+        Id = None
+        Type = None
+        Target = None
+        def __str__(self):
+            r = "[ooxml.relationship"
+            if not self.Id == None:
+                r += " Id="+str(self.Id)
+            if not self.Type == None:
+                r += " Type="+str(self.Type)
+            if not self.Target == None:
+                r += " Target="+str(self.Target)
+            r += "]"
+            return r
+    #
     class zipfilemeta:
         contentType = None
         def __str__(self):
@@ -45,10 +60,48 @@ class OOXMLReader:
         self.zipreader.scan()
         self.zipmetainit()
         self.parsecontenttype()
+        rels = self.parserelationshipsfile("/_rels/.rels")
+        if rels:
+            for rel in rels:
+                print(rel)
     def close(self):
         if self.zipreader:
             self.zipreader.close()
         self.zipreader = None
+    def parserelationshipsfile(self,path):
+        rels = [ ]
+        #
+        if self.zipreader == None:
+            return None
+        zf = self.zipreader.open(path)
+        if zf == None:
+            return None
+        raw = zf.read()
+        xml = HTMLhiReaderState()
+        HTMLhiParseAll(raw,xml)
+        xroot = xml.getRoot()
+        xRels = None
+        if xroot:
+            for tag in xroot.children:
+                if tag.elemType == 'tag':
+                    if tag.tag.lower() == 'relationships':
+                        xRels = tag
+        #
+        if xRels:
+            for tag in xRels.children:
+                if tag.elemType == 'tag':
+                    nRel = OOXMLReader.relationship()
+                    for attr in tag.attr:
+                        if attr.name.lower() == 'id':
+                            nRel.Id = attr.value
+                        elif attr.name.lower() == 'type':
+                            nRel.Type = attr.value
+                        elif attr.name.lower() == 'target':
+                            nRel.Target = self.zipreader.normalizepath(attr.value)
+                    if nRel.Id and nRel.Type and nRel.Target:
+                        rels.append(nRel)
+        #
+        return rels
     def registerZIPContentType(self,path,contenttype,*,policy=None): # WARNING: path is expected to contain normalized path, caller must do it
         if policy == None:
             policy = { }
