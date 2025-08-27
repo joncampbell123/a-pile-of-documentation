@@ -165,6 +165,37 @@ class ZIPHighReader:
         dr.fpath = fpath
         return dr
 
+    def open(self,path):
+        if path == None:
+            path = ""
+        #
+        resp = self.pathtoelems(path)
+        if resp == None:
+            return
+        pathelems = resp.pathelems
+        if pathelems == None:
+            return
+        fname = resp.fname
+        if fname == None: # we did a directory (trailing slash) lookup
+            return
+        #
+        cdir = self.rootdir
+        for ent in pathelems:
+            if isinstance(cdir.contents[ent],ZIPHighReader.Directory):
+                cdir = cdir.contents[ent]
+            else:
+                return
+        #
+        if fname in cdir.contents:
+            cent = cdir.contents[fname]
+        else:
+            return
+        #
+        if cent:
+            return self.zipreader.open(cent)
+        else:
+            return
+
     def close(self):
         if self.zipreader:
             self.zipreader.close()
