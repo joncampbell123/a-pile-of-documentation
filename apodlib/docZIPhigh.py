@@ -37,8 +37,18 @@ class ZIPHighReader:
         resp = PTEResponse()
         resp.fname = fname
         resp.pathelems = pathelems
+        resp.fdir = "/" + "/".join(pathelems)
+        resp.fpath = resp.fdir
+        if not resp.fname == None:
+            if not resp.fdir[-1] == "/":
+                resp.fpath += "/"
+            resp.fpath += resp.fname
         #
         return resp
+
+    def normalizepath(self,path):
+        r = self.pathtoelems(path)
+        return r.fpath
 
     def scan(self):
         self.zipreader.scan()
