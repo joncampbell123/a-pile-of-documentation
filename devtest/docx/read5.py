@@ -85,6 +85,29 @@ class OOXMLReader:
             self.zipreader.close()
         self.zipreader = None
     #
+    def opendata(self,path):
+        if self.zipreader == None:
+            return None
+        zf = self.zipreader.open(path)
+        if zf == None:
+            return None
+        #
+        return zf
+    #
+    def closedata(self,zf):
+        del zf
+    #
+    def readdata(self,path):
+        if self.zipreader == None:
+            return None
+        zf = self.zipreader.open(path)
+        if zf == None:
+            return None
+        raw = zf.read()
+        del zf
+        #
+        return raw
+    #
     def readxml(self,path):
         if self.zipreader == None:
             return None
