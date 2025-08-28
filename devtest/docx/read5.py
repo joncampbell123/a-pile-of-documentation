@@ -98,6 +98,22 @@ class OOXMLReader:
         #
         return xml.getRoot()
     #
+    def pathtorels(self,path):
+        if path == None:
+            return None
+        if path == "":
+            return "/[Content_Types].xml"
+        #
+        pels = self.zipreader.pathtoelems(path)
+        # word/document.xml -> word/_rels/document.xml.rels
+        # pels.fdir = word
+        # pels.dname = document.xml
+        fpath = pels.fdir + "/_rels/"
+        if pels.fname:
+            fpath += pels.fname
+        fpath += ".rels"
+        return self.zipreader.normalizepath(fpath)
+    #
     def parserelationshipsfile(self,path):
         rels = { }
         #
