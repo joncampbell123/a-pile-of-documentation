@@ -57,6 +57,7 @@ class OOXMLReader:
                 fpath = self.zipreader.normalizepath(spath+"/"+ent.dname)
                 if not fpath in self.zipmetamap:
                     self.zipmetamap[fpath] = OOXMLReader.zipfilemeta()
+    #
     def __init__(self,inFile):
         self.zipmetamap = { }
         self.zipreader = ZIPHighReader(inFile)
@@ -74,13 +75,16 @@ class OOXMLReader:
                         self.corePropertiesPath = self.zipreader.normalizepath(rel.Target)
                     elif re.search(r'\/extended-properties$',rel.Type,flags=re.IGNORECASE):
                         self.extendedPropertiesPath = self.zipreader.normalizepath(rel.Target)
+        #
+        if self.documentPath:
+            self.ok = True
+    #
     def close(self):
         if self.zipreader:
             self.zipreader.close()
         self.zipreader = None
-    def parserelationshipsfile(self,path):
-        rels = [ ]
-        #
+    #
+    def readxml(self,path):
         if self.zipreader == None:
             return None
         zf = self.zipreader.open(path)
@@ -89,7 +93,17 @@ class OOXMLReader:
         raw = zf.read()
         xml = HTMLhiReaderState()
         HTMLhiParseAll(raw,xml)
-        xroot = xml.getRoot()
+        del zf
+        #
+        return xml.getRoot()
+    #
+    def parserelationshipsfile(self,path):
+        rels = [ ]
+        #
+        xroot = self.readxml(path)
+        if xroot == None:
+            return None
+        #
         xRels = None
         if xroot:
             for tag in xroot.children:
@@ -111,8 +125,8 @@ class OOXMLReader:
                     if nRel.Id and nRel.Type and nRel.Target:
                         rels.append(nRel)
         #
-        del zf
         return rels
+    #
     def registerZIPContentType(self,path,contenttype,*,policy=None): # WARNING: path is expected to contain normalized path, caller must do it
         if policy == None:
             policy = { }
@@ -131,6 +145,7 @@ class OOXMLReader:
             zmm.contentType = contenttype
         else:
             zmm.contentType = None
+    #
     def registerZIPContentTypeByExtension(self,ext,contenttype,*,ppath="/"):
         ext = ext.lower()
         spath = ppath
@@ -150,15 +165,10 @@ class OOXMLReader:
                     self.registerZIPContentType(self.zipreader.normalizepath(spath+"/"+ent.dname),contenttype,policy={ "replace": False })
     # parse [Content_Types].xml
     def parsecontenttype(self):
-        if self.zipreader == None:
-            return
-        zf = self.zipreader.open("/[Content_Types].xml")
-        if zf == None:
-            return
-        raw = zf.read()
-        xml = HTMLhiReaderState()
-        HTMLhiParseAll(raw,xml)
-        xroot = xml.getRoot()
+        xroot = self.readxml("/[Content_Types].xml")
+        if xroot == None:
+            return None
+        #
         xTypes = None
         # look for Types
         if xroot:
@@ -193,9 +203,7 @@ class OOXMLReader:
                         #
                         if Extension and ContentType:
                             self.registerZIPContentTypeByExtension(Extension,ContentType)
-                    #
-        # done
-        del zf
+    #
     def dbg_dump(self):
         print("Debug dump")
         print("  ok="+str(self.ok))
@@ -207,6 +215,7 @@ class OOXMLReader:
             print("  documentPath="+str(self.extendedPropertiesPath))
         #
         self.dbg_dump_metamap()
+    #
     def dbg_dump_metamap(self):
         print("Debug dump zipmetamap")
         for ent in self.zipmetamap:
