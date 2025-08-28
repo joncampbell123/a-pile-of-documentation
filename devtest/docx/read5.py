@@ -111,6 +111,7 @@ class OOXMLReader:
                     if nRel.Id and nRel.Type and nRel.Target:
                         rels.append(nRel)
         #
+        del zf
         return rels
     def registerZIPContentType(self,path,contenttype,*,policy=None): # WARNING: path is expected to contain normalized path, caller must do it
         if policy == None:
@@ -131,6 +132,7 @@ class OOXMLReader:
         else:
             zmm.contentType = None
     def registerZIPContentTypeByExtension(self,ext,contenttype,*,ppath="/"):
+        ext = ext.lower()
         spath = ppath
         if spath == "/":
             spath = ""
