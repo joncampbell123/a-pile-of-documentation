@@ -67,8 +67,9 @@ class OOXMLReader:
         #
         rels = self.parserelationshipsfile("/_rels/.rels")
         if rels:
-            for rel in rels:
-                if rel.Target and rel.Type:
+            for relname in rels:
+                rel = rels[relname]
+                if rel.Target and rel.Type and rel.Id == relname:
                     if re.search(r'\/officeDocument$',rel.Type,flags=re.IGNORECASE):
                         self.documentPath = self.zipreader.normalizepath(rel.Target)
                     elif re.search(r'\/core-properties$',rel.Type,flags=re.IGNORECASE):
@@ -98,7 +99,7 @@ class OOXMLReader:
         return xml.getRoot()
     #
     def parserelationshipsfile(self,path):
-        rels = [ ]
+        rels = { }
         #
         xroot = self.readxml(path)
         if xroot == None:
@@ -123,7 +124,7 @@ class OOXMLReader:
                         elif attr.name.lower() == 'target':
                             nRel.Target = self.zipreader.normalizepath(attr.value)
                     if nRel.Id and nRel.Type and nRel.Target:
-                        rels.append(nRel)
+                        rels[nRel.Id] = nRel
         #
         return rels
     #
