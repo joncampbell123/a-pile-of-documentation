@@ -11,17 +11,32 @@ def rbilloadfile(path):
     return raw
 
 def rbilexpandtabs(l):
-    r = ""
-    count = 0
-    for ent in l.split('\t'):
-        if count > 0:
-            addlen = 8 - (len(r) % 8)
-            r += ' ' * addlen
+    if isinstance(l,str):
+        r = ""
+        count = 0
+        for ent in l.split('\t'):
+            if count > 0:
+                addlen = 8 - (len(r) % 8)
+                r += ' ' * addlen
+            #
+            count += 1
+            r += ent
         #
-        count += 1
-        r += ent
+        return r
+    else:
+        r = b""
+        count = 0
+        for ent in l.split(b'\t'):
+            if count > 0:
+                addlen = 8 - (len(r) % 8)
+                r += b' ' * addlen
+            #
+            count += 1
+            r += ent
+        #
+        return r
     #
-    return r
+    return l
 
 # eight '-' then a marker char, more '-', the unique ID, trailing '-'
 # --------!---CONTACT_INFO---------------------
