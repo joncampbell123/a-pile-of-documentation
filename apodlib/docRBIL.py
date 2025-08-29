@@ -10,6 +10,19 @@ def rbilloadfile(path):
     f.close()
     return raw
 
+def rbilexpandtabs(l):
+    r = ""
+    count = 0
+    for ent in l.split('\t'):
+        if count > 0:
+            addlen = 8 - (len(r) % 8)
+            r += ' ' * addlen
+        #
+        count += 1
+        r += ent
+    #
+    return r
+
 # eight '-' then a marker char, more '-', the unique ID, trailing '-'
 # --------!---CONTACT_INFO---------------------
 # --------m-02----SI0714-----------------------
@@ -71,7 +84,7 @@ class RBILReader:
             while len(r.entryIDs) > 0 and r.entryIDs[-1] == '':
                 r.entryIDs.pop()
         else:
-            r.body.append(cr)
+            r.body.append(rbilexpandtabs(cr))
         #
         self.gotoNextLine()
         #
@@ -82,7 +95,7 @@ class RBILReader:
             if self.isDividerLine(cr):
                 break
             #
-            r.body.append(cr)
+            r.body.append(rbilexpandtabs(cr))
             self.gotoNextLine()
         #
         return r
