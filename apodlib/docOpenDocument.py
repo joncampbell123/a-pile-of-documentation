@@ -9,12 +9,19 @@ from apodlib.docHTMLhi import *
 
 class OpenDocumentReader:
     ok = False
+    mimeType = None
     zipreader = None
     #
     def __init__(self,inFile):
         self.zipreader = ZIPHighReader(inFile)
         self.zipreader.scan()
-        self.ok = True
+        #
+        x = self.readdata("/mimetype")
+        if x:
+            self.mimeType = x.decode('ascii')
+        #
+        if self.mimeType:
+            self.ok = True
     #
     def close(self):
         if self.zipreader:
@@ -60,6 +67,8 @@ class OpenDocumentReader:
     def dbg_dump(self):
         print("Debug dump")
         print("  ok="+str(self.ok))
+        if self.mimeType:
+            print("  mimeType="+str(self.mimeType))
         #
         print("Debug dump files")
         self.dbg_dump_files()
