@@ -186,7 +186,7 @@ class ZIPHighReader:
         #
         cdir = self.rootdir
         for ent in pathelems:
-            if isinstance(cdir.contents[ent],ZIPHighReader.Directory):
+            if ent in cdir.contents and isinstance(cdir.contents[ent],ZIPHighReader.Directory):
                 cdir = cdir.contents[ent]
             else:
                 return
