@@ -12,24 +12,114 @@ encoding = 'utf-8'
 if len(sys.argv) > 2:
     encoding = sys.argv[2]
 
-rawtxt = rawtextloadfile(inFile)
+def rbilloadfile(path):
+    f = open(path,"rb")
+    raw = f.read()
+    f.close()
+    return raw
 
-print("-----RAW-----")
-for line in rawtextsplitlines(rawtxt):
-    print(b"Line> \""+line+b"\" <eol>")
+rawtxt = rbilloadfile(inFile)
 
-print("-----"+encoding+"-----")
+# eight '-' then a marker char, more '-', the unique ID, trailing '-'
+# --------!---CONTACT_INFO---------------------
+# --------m-02----SI0714-----------------------
+# ----------P0000001F--------------------------
 
-dosplitline = rawtextsplitlines
-if encoding == 'utf-16le' or encoding == 'utf_16_le':
-    dosplitline = rawtextsplitlines16le
-elif encoding == 'utf-16be' or encoding == 'utf_16_be':
-    dosplitline = rawtextsplitlines16be
+class RBILReader:
+    currentLine = None
+    lineIter = None
+    #
+    class entry:
+        entryIDs = None
+        marker = None
+        body = None
+        def __init__(self):
+            self.body = [ ]
+    #
+    def __init__(self,blob):
+        self.lineIter = iter(rawtextsplitlinesgen(blob))
+    def isDividerLine(self,cr):
+        if not cr == None:
+            if cr[0:8] == "--------":
+                return True
+        #
+        return False
+    def getCurrentLine(self):
+        if self.currentLine == None:
+            try:
+                self.currentLine = next(self.lineIter).decode('utf-8')
+            except StopIteration:
+                return None
+        #
+        return self.currentLine
+    def gotoNextLine(self):
+        self.currentLine = None
+    def read(self):
+        while True:
+            cr = self.getCurrentLine()
+            if cr == None:
+                return None
+            if cr.strip() == '':
+                self.gotoNextLine()
+                continue
+            break
+        #
+        r = RBILReader.entry()
+        #
+        cr = self.getCurrentLine()
+        if cr == None:
+            return None
+        if self.isDividerLine(cr):
+            # 8th position is the marker, if any
+            cr = cr[8:]
+            if len(cr) > 0 and not cr[0] == '-':
+                r.marker = cr[0];
+                cr = cr[1:]
+            while len(cr) > 0 and cr[0] == '-':
+                cr = cr[1:]
+            r.entryIDs = re.split(r'--+',cr)
+            while len(r.entryIDs) > 0 and r.entryIDs[-1] == '':
+                r.entryIDs.pop()
+        else:
+            r.body.append(cr)
+        #
+        self.gotoNextLine()
+        #
+        while True:
+            cr = self.getCurrentLine()
+            if cr == None:
+                break
+            if self.isDividerLine(cr):
+                break
+            #
+            r.body.append(cr)
+            self.gotoNextLine()
+        #
+        return r
+    def __iter__(self):
+        while True:
+            x = self.read()
+            if x == None:
+                break
+            yield x
 
-for rawline in dosplitline(rawtxt):
-    try:
-        line = rawline.decode(encoding)
-        print("Line> \""+line+"\" <eol>")
-    except:
-        print("Line> (failed to decode)")
+rbr = RBILReader(rawtxt)
+for ri in rbr:
+    print("=================================================")
+    print("ENTRY")
+    if ri.marker:
+        print("Marker: '"+ri.marker+"'")
+    if ri.entryIDs:
+        x = ""
+        for e in ri.entryIDs:
+            if not x == "":
+                x += ","
+            x += "'"+e+"'"
+        print("Entry IDs: "+x)
+    print("=================================================")
+    if ri.body:
+        for l in ri.body:
+            print("content:"+l)
+    print("-------------------------------------------------")
+    print("")
 
