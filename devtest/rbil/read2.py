@@ -102,7 +102,14 @@ class RBILmidProc:
                 if ri.body[i].strip() == '':
                     i += 1
                     continue
+                #
                 x = re.match(r'^([a-zA-Z0-9]+): *',ri.body[i])
+                if ri.entryType == 'PORT' and not x:
+                    # 0140  R-  read SCSI data register
+                    x2 = re.match(r'^([a-fA-F0-9]{4}|\+[a-fA-F0-9]{3})( |w|d) +( |\-|\?|r|R|w|W|C){2} +',ri.body[i])
+                else:
+                    x2 = None
+                #
                 if x:
                     sec = RBILmidSection()
                     sec.name = x.group(1)
@@ -137,6 +144,25 @@ class RBILmidProc:
                             if not ri.body[i][0:en] == (' '*en):
                                 break
                         sec.lines.append(ri.body[i][en:])
+                        ri.body.pop(i)
+                    #
+                    sec.lstriplines()
+                    ri.body.insert(i,sec)
+                    i += 1
+                elif x2:
+                    sec = RBILmidSection()
+                    sec.name = "PortSpec"
+                    #
+                    sec.lines = [ ri.body[i] ]
+                    ri.body.pop(i)
+                    #
+                    while i < len(ri.body):
+                        if ri.body[i].strip() == '':
+                            break
+                        x2 = re.match(r'^([a-fA-F0-9]{4}|\+[a-fA-F0-9]{3})( |w|d) +( |\-|\?|r|R|w|W|C){2} +',ri.body[i])
+                        if x2:
+                            break
+                        sec.lines.append(ri.body[i])
                         ri.body.pop(i)
                     #
                     sec.lstriplines()
