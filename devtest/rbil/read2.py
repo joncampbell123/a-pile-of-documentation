@@ -92,6 +92,16 @@ class RBILmidProc:
                     #
                     sec.lines = [ ri.body[i][en:] ]
                     ri.body.pop(i)
+                    # if it's something like
+                    # something:
+                    # abc
+                    # abc
+                    #
+                    # rather than:
+                    # something: abc abc
+                    if sec.lines[0] == '':
+                        sec.lines.pop(0)
+                        en = 0
                     #
                     while i < len(ri.body):
                         if ri.body[i].strip() == '':
