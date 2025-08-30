@@ -100,6 +100,12 @@ class RBILmidProc:
                         if x:
                             break
                         if en > 0:
+                            if en > 8:
+                                x = re.match(r'^ +',ri.body[i])
+                                if x:
+                                    lx = x.span()[1]
+                                    if lx >= 8 and en > lx:
+                                        en = lx
                             if not ri.body[i][0:en] == (' '*en):
                                 break
                         sec.lines.append(ri.body[i][en:])
