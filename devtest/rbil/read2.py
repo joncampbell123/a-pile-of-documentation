@@ -26,6 +26,47 @@ class RBILmidProc:
                 # empty lines
                 while len(ri.body) > 0 and ri.body[0].strip() == '':
                     ri.body.pop(0)
+        # INT input registers
+        if not ri.marker == '!' and ri.entryType == 'INT':
+            # AX = 3902h
+            # DS:BX = 2111h
+            name = "InputRegs"
+            while len(ri.body) > 0:
+                if ri.body[0].strip() == '':
+                    ri.body.pop(0)
+                    continue
+                x = re.match(r' *[a-zA-Z\:]+ +(=|->) +',ri.body[0])
+                if x:
+                    en = x.span()[0]
+                    #
+                    what = [ ri.body[0][en:] ]
+                    ri.body.pop(0)
+                    #
+                    while len(ri.body) > 0:
+                        if ri.body[0].strip() == '':
+                            break
+                        x = re.match(r' *[a-zA-Z\:]+ +(=|->) +',ri.body[0])
+                        if x:
+                            break
+                        x = re.match(r'^([a-zA-Z0-9]+): *',ri.body[0])
+                        if x:
+                            break
+                        if en > 0:
+                            if not ri.body[0][0:en] == (' '*en):
+                                break
+                        what.append(ri.body[0][en:])
+                        ri.body.pop(0)
+                    #
+                    if not ri.sections:
+                        ri.sections = { }
+                    sec = ri.sections
+                    if not name in sec:
+                        sec[name] = what
+                    else:
+                        for l in what:
+                            sec[name].append(l)
+                else:
+                    break
         # something: etc
         #
         #   etc blah blah                            <- block 1
