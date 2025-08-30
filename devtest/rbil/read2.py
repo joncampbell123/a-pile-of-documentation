@@ -12,9 +12,13 @@ encoding = 'utf-8'
 if len(sys.argv) > 2:
     encoding = sys.argv[2]
 
-class RBILmidProc:
+class RBILmidSection:
+    name = None
+    lines = None
     def __init__(self):
-        True
+        self.lines = [ ]
+
+class RBILmidProc:
     def fillin(self,ri):
         # first line starts with INT / PROC / etc.
         if ri.title == None and len(ri.body) > 0:
@@ -30,7 +34,8 @@ class RBILmidProc:
         if not ri.marker == '!' and ri.entryType == 'INT':
             # AX = 3902h
             # DS:BX = 2111h
-            name = "InputRegs"
+            sec = RBILmidSection()
+            sec.name = "InputRegs"
             while len(ri.body) > 0:
                 if ri.body[0].strip() == '':
                     ri.body.pop(0)
@@ -39,7 +44,7 @@ class RBILmidProc:
                 if x:
                     en = x.span()[0]
                     #
-                    what = [ ri.body[0][en:] ]
+                    sec.lines.append(ri.body[0][en:])
                     ri.body.pop(0)
                     #
                     while len(ri.body) > 0:
@@ -54,19 +59,14 @@ class RBILmidProc:
                         if en > 0:
                             if not ri.body[0][0:en] == (' '*en):
                                 break
-                        what.append(ri.body[0][en:])
+                        sec.lines.append(ri.body[0][en:])
                         ri.body.pop(0)
                     #
-                    if not ri.sections:
-                        ri.sections = { }
-                    sec = ri.sections
-                    if not name in sec:
-                        sec[name] = what
-                    else:
-                        for l in what:
-                            sec[name].append(l)
                 else:
                     break
+            #
+            if len(sec.lines) > 0:
+                ri.body.insert(0,sec)
         # something: etc
         #
         #   etc blah blah                            <- block 1
@@ -76,16 +76,21 @@ class RBILmidProc:
             True
         else:
             i = 0
+            sec = RBILmidSection()
             while i < len(ri.body):
+                if not isinstance(ri.body[i],str):
+                    i += 1
+                    continue
                 if ri.body[i].strip() == '':
                     i += 1
                     continue
                 x = re.match(r'^([a-zA-Z0-9]+): *',ri.body[i])
                 if x:
-                    name = x.group(1)
+                    sec = RBILmidSection()
+                    sec.name = x.group(1)
                     en = x.span()[1]
                     #
-                    what = [ ri.body[i][en:] ]
+                    sec.lines = [ ri.body[i][en:] ]
                     ri.body.pop(i)
                     #
                     while i < len(ri.body):
@@ -97,27 +102,13 @@ class RBILmidProc:
                         if en > 0:
                             if not ri.body[i][0:en] == (' '*en):
                                 break
-                        what.append(ri.body[i][en:])
+                        sec.lines.append(ri.body[i][en:])
                         ri.body.pop(i)
                     #
-                    if not ri.sections:
-                        ri.sections = { }
-                    sec = ri.sections
-                    if not name in sec:
-                        sec[name] = what
-                    else:
-                        if name == 'SeeAlso':
-                            True
-                        else:
-                            sec[name].append(True)
-                        #
-                        for l in what:
-                            sec[name].append(l)
+                    ri.body.insert(i,sec)
+                    i += 1
                 else:
                     i += 1
-        # empty lines
-        while len(ri.body) > 0 and ri.body[0].strip() == '':
-            ri.body.pop(0)
 
 rawtxt = rbilloadfile(inFile)
 rbr = RBILReader(rawtxt)
@@ -139,20 +130,15 @@ for ri in rbr:
         print("Entry type: "+ri.entryType)
     if ri.title:
         print("Title: "+ri.title)
-    if ri.sections:
-        for name in ri.sections:
-            print("Section '"+name+"':")
-            sec = ri.sections[name]
-            if sec:
-                for lin in sec:
-                    if lin == True:
-                        print("   +---------------------")
-                    else:
-                        print("   |"+lin)
     print("=================================================")
     if ri.body:
         for l in ri.body:
-            print("   |"+l)
+            if isinstance(l,RBILmidSection):
+                print(l.name+":")
+                for lin in l.lines:
+                    print("   >"+lin)
+            else:
+                print("   |"+l)
     print("-------------------------------------------------")
     print("")
 
