@@ -51,6 +51,11 @@ class RBILReader:
         entryIDs = None
         marker = None
         body = None
+        # from mid reader, not for this code
+        title = None # The entire first line, if applicable
+        entryType = None # INT / PORT / MEM / MSR / I2C
+        sections = None # dictionary of sections
+        #
         def __init__(self):
             self.body = [ ]
     #
