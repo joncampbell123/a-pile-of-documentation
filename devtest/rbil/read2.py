@@ -17,6 +17,23 @@ class RBILmidSection:
     lines = None
     def __init__(self):
         self.lines = [ ]
+    def lstriplines(self):
+        minx = None
+        for lin in self.lines:
+            tlin = lin.rstrip()
+            if len(tlin) > 0:
+                x = re.match(r'^ *',tlin)
+                if x:
+                    nx = x.span()[1]
+                    if minx == None:
+                        minx = nx
+                    elif minx > nx:
+                        minx = nx
+        if not minx == None and minx > 0:
+            for i in range(0,len(self.lines)):
+                if not self.lines[i][0:minx] == (' '*minx):
+                    raise Exception("OOPS")
+                self.lines[i] = self.lines[i][minx:]
 
 class RBILmidProc:
     def fillin(self,ri):
@@ -66,6 +83,7 @@ class RBILmidProc:
                     break
             #
             if len(sec.lines) > 0:
+                sec.lstriplines()
                 ri.body.insert(0,sec)
         # something: etc
         #
@@ -121,6 +139,7 @@ class RBILmidProc:
                         sec.lines.append(ri.body[i][en:])
                         ri.body.pop(i)
                     #
+                    sec.lstriplines()
                     ri.body.insert(i,sec)
                     i += 1
                 else:
